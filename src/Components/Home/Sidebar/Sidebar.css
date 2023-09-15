@@ -1,0 +1,70 @@
+.sidebar-expanded{
+  height: 100vh;
+  max-width: 150px;
+  width: 100%;
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: rgb(246, 218, 146);
+}
+.sidebar-expand-toggle{
+  border: 0px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+}
+.sidebar-expand-toggle img{
+  min-width: 70px;
+  padding: 1em;
+}
+.sidebar-expanded,
+.sidebar-closed{
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.sidebar-nav{
+  list-style-type: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-evenly;
+  font-family: 'Allura';
+  font-size: 30px;
+  font-weight: bold;
+  max-height: 400px;
+}
+.sidebar-nav li,
+.sidebar-nav button{
+  cursor: pointer;
+}
+.sidebar-nav .checkout button:hover{
+  background-color: rgb(194, 3, 3);
+}
+.sidebar-nav .cart{
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em;
+}
+.sidebar-nav .checkout button{
+  border: 0px solid transparent;
+  border-radius: 8px;
+  background-color: red;
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: 'Allura';
+  padding: 0.5em;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+}
+.sidebar-nav .cart img{
+  width: 35px;
+}

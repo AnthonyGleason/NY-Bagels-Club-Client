@@ -1,0 +1,52 @@
+.init-load{
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 30px;
+  font-family: 'Allura';
+  padding: 1em;
+  gap: 10px;
+  font-weight: 500;
+  z-index: 97;
+}
+.init-load-background{
+  background-image: url('../../Assets/loadingBagels.jpg');
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 98;
+}
+.init-load-overlay{
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 99;
+  background-color: rgba(241, 241, 191, 0.8);
+}
+
+.init-load p,
+.init-load h3,
+.loading-spinner{
+  text-align: center;
+  z-index: 100;
+}
+.init-load p span{
+  font-weight: bold;
+}
+.init-load p span,
+.init-load h3{
+  color: red;
+  font-size: 35px;
+}
+.init-load .loading-spinner{
+  width: 100%;
+  max-width: 60px;
+}

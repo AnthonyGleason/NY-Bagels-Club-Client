@@ -1,0 +1,14 @@
+.footer{
+  width: 100%;
+  text-align: center;
+  color: white;
+  background-color: rgb(58, 17, 2);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 1em;
+}
+.footer .copyright{
+  padding: 0.5em;
+  text-align: center;
+}
