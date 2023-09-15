@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1587b5c8.css",
+    "main.js": "/static/js/main.a77adf70.js",
+    "static/js/787.20178b2a.chunk.js": "/static/js/787.20178b2a.chunk.js",
+    "static/media/loadingBagels.jpg": "/static/media/loadingBagels.29149ce8ac8769476b85.jpg",
+    "static/media/storefront.jpeg": "/static/media/storefront.2516ba38ed063391cfd0.jpeg",
+    "static/media/plain.jpg": "/static/media/plain.690e0e8d2bb08062fb69.jpg",
+    "static/media/bubble-loading.svg": "/static/media/bubble-loading.4f1c50c50d1ed5d49c8fb4667a33209c.svg",
+    "index.html": "/index.html",
+    "static/media/menu.svg": "/static/media/menu.412e9a9125255de5cc1cd50c63f01f74.svg",
+    "static/media/cart.svg": "/static/media/cart.618fb1ff0b97e10f39c46a7a2ba6923b.svg",
+    "main.1587b5c8.css.map": "/static/css/main.1587b5c8.css.map",
+    "main.a77adf70.js.map": "/static/js/main.a77adf70.js.map",
+    "787.20178b2a.chunk.js.map": "/static/js/787.20178b2a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1587b5c8.css",
+    "static/js/main.a77adf70.js"
+  ]
+}
