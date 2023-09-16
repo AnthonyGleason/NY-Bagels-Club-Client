@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/brendels-webstore-demo/static/css/main.25342906.css",
+    "main.css": "/brendels-webstore-demo/static/css/main.eb767a07.css",
     "main.js": "/brendels-webstore-demo/static/js/main.79a11896.js",
     "static/js/787.20178b2a.chunk.js": "/brendels-webstore-demo/static/js/787.20178b2a.chunk.js",
     "static/media/loadingBagels.jpg": "/brendels-webstore-demo/static/media/loadingBagels.29149ce8ac8769476b85.jpg",
@@ -12,12 +12,12 @@
     "index.html": "/brendels-webstore-demo/index.html",
     "static/media/menu.svg": "/brendels-webstore-demo/static/media/menu.412e9a9125255de5cc1cd50c63f01f74.svg",
     "static/media/cart.svg": "/brendels-webstore-demo/static/media/cart.618fb1ff0b97e10f39c46a7a2ba6923b.svg",
-    "main.25342906.css.map": "/brendels-webstore-demo/static/css/main.25342906.css.map",
+    "main.eb767a07.css.map": "/brendels-webstore-demo/static/css/main.eb767a07.css.map",
     "main.79a11896.js.map": "/brendels-webstore-demo/static/js/main.79a11896.js.map",
     "787.20178b2a.chunk.js.map": "/brendels-webstore-demo/static/js/787.20178b2a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.25342906.css",
+    "static/css/main.eb767a07.css",
     "static/js/main.79a11896.js"
   ]
 }
