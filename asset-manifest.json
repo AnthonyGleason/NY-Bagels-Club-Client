@@ -1,23 +1,27 @@
 {
   "files": {
-    "main.css": "/brendels-webstore-demo/static/css/main.ff61cfe2.css",
-    "main.js": "/brendels-webstore-demo/static/js/main.5eddda41.js",
+    "main.css": "/brendels-webstore-demo/static/css/main.c85b832d.css",
+    "main.js": "/brendels-webstore-demo/static/js/main.64ca93f6.js",
     "static/js/787.20178b2a.chunk.js": "/brendels-webstore-demo/static/js/787.20178b2a.chunk.js",
     "static/media/loadingBagels.jpg": "/brendels-webstore-demo/static/media/loadingBagels.838f4f19d64be5b06bde.jpg",
     "static/media/storefront.jpeg": "/brendels-webstore-demo/static/media/storefront.2516ba38ed063391cfd0.jpeg",
     "static/media/plain.jpg": "/brendels-webstore-demo/static/media/plain.880b6884e7ff92c119c7.jpg",
+    "static/media/visa-fill.jpeg": "/brendels-webstore-demo/static/media/visa-fill.652da96ef883bf9b4404.jpeg",
     "static/media/everything.jpeg": "/brendels-webstore-demo/static/media/everything.b5c165d6ccb95bc691e5.jpeg",
     "static/media/pianoNotes.mp3": "/brendels-webstore-demo/static/media/pianoNotes.16525c148124c63bc426.mp3",
+    "static/media/mastercard.svg": "/brendels-webstore-demo/static/media/mastercard.9ceea7ca5d8665e4dd52f08598efe933.svg",
     "static/media/bubble-loading.svg": "/brendels-webstore-demo/static/media/bubble-loading.4f1c50c50d1ed5d49c8fb4667a33209c.svg",
+    "static/media/google-pay.svg": "/brendels-webstore-demo/static/media/google-pay.7bfeb229d88247630057d0b2dc41ec9d.svg",
+    "static/media/apple-pay.svg": "/brendels-webstore-demo/static/media/apple-pay.9df3111b4366c26c5377e591ff66b59f.svg",
     "index.html": "/brendels-webstore-demo/index.html",
     "static/media/menu.svg": "/brendels-webstore-demo/static/media/menu.412e9a9125255de5cc1cd50c63f01f74.svg",
     "static/media/cart.svg": "/brendels-webstore-demo/static/media/cart.618fb1ff0b97e10f39c46a7a2ba6923b.svg",
-    "main.ff61cfe2.css.map": "/brendels-webstore-demo/static/css/main.ff61cfe2.css.map",
-    "main.5eddda41.js.map": "/brendels-webstore-demo/static/js/main.5eddda41.js.map",
+    "main.c85b832d.css.map": "/brendels-webstore-demo/static/css/main.c85b832d.css.map",
+    "main.64ca93f6.js.map": "/brendels-webstore-demo/static/js/main.64ca93f6.js.map",
     "787.20178b2a.chunk.js.map": "/brendels-webstore-demo/static/js/787.20178b2a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ff61cfe2.css",
-    "static/js/main.5eddda41.js"
+    "static/css/main.c85b832d.css",
+    "static/js/main.64ca93f6.js"
   ]
 }
