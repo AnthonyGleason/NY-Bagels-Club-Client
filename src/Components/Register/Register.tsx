@@ -4,6 +4,13 @@ import './Register.css';
 
 export default function Register(){
   const [errorMessage,setErrorMessage] = useState<string>('');
+  
+  const [firstNameInput,setFirstNameInput] = useState<string>('');
+  const [lastNameInput,setLastNameInput] = useState<string>('');
+  const [emailInput,setEmailInput] = useState<string>('');
+  const [passwordInput,setPasswordInput] = useState<string>('');
+  const [passwordConfirmInput,setPasswordConfirmInput] = useState<string>('');
+
   const navigate = useNavigate();
   const genErrorMessageElement = function(){
     //an error does not exist
@@ -14,8 +21,27 @@ export default function Register(){
     );
   };
   
-  const submitRegister = function(){
-    
+  const submitRegister = async function(){
+    const response = await fetch('http://localhost:5000/api/users/register',{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+        email: emailInput,
+        password: passwordInput,
+        passwordConfirm: passwordConfirmInput,
+      })
+    });
+    const responseData = await response.json();
+    if (responseData.token){
+      localStorage.setItem('loginToken',responseData.token);
+      navigate('/');
+    }else{
+      setErrorMessage(responseData.message);
+    }
   };
 
   return(
@@ -24,23 +50,23 @@ export default function Register(){
         <h3>Register</h3>
         <div>
           <label>First Name</label>
-          <input type='text' min={1} required/>
+          <input value={firstNameInput} onChange={(e)=>{setFirstNameInput(e.target.value)}} type='text' min={1} required/>
         </div>
         <div>
           <label>Last Name</label>
-          <input type='text' min={1} required/>
+          <input value={lastNameInput} onChange={(e)=>{setLastNameInput(e.target.value)}} type='text' min={1} required/>
         </div>
         <div>
           <label>Email</label>
-          <input type='email' required/>
+          <input value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' required/>
         </div>
         <div>
           <label>Password</label>
-          <input type='password' required/>
+          <input value={passwordInput} onChange={(e)=>{setPasswordInput(e.target.value)}} type='password' required/>
         </div>
         <div>
           <label>Password (again)</label>
-          <input type='password' required/>
+          <input value={passwordConfirmInput} onChange={(e)=>{setPasswordConfirmInput(e.target.value)}} type='password' required/>
         </div>
         <ol>
           <li>
@@ -53,5 +79,5 @@ export default function Register(){
         {genErrorMessageElement()}
       </form>
     </section>
-  )
-}
+  );
+};

@@ -13,7 +13,11 @@ export default function Home(){
   if (isLoaded){
     return(
       <main className='home'>
-        <Sidebar totalCartItems={totalCartItems} isExpanded={isSidebarExpanded} setIsExpanded={setIsSidebarExpanded} />
+        <Sidebar 
+          totalCartItems={totalCartItems} 
+          isExpanded={isSidebarExpanded} 
+          setIsExpanded={setIsSidebarExpanded}
+        />
         <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
           <About />
           <h3>New York to Your Doorstep</h3>

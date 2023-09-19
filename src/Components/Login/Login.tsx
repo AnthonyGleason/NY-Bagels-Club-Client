@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 export default function Login(){
   const [errorMessage,setErrorMessage] = useState<string>('');
+
+  const [emailInput,setEmailInput] = useState<string>('');
+  const [passwordInput,setPasswordInput] = useState<string>('');
+
   const navigate = useNavigate();
   const genErrorMessageElement = function(){
     //an error does not exist
@@ -13,8 +17,24 @@ export default function Login(){
     );
   };
   
-  const submitLogin = function(){
-    
+  const submitLogin = async function(){
+    const response = await fetch('http://localhost:5000/api/users/login',{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: emailInput,
+        password: passwordInput,
+      }),
+    });
+    const responseData = await response.json();
+    if (responseData.token){
+      localStorage.setItem('loginToken',responseData.token);
+      navigate('/');
+    }else{
+      setErrorMessage(responseData.message);
+    }
   };
 
   return(
@@ -23,11 +43,11 @@ export default function Login(){
         <h3>Login</h3>
         <div>
           <label>Email</label>
-          <input type='email' required/>
+          <input value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' required/>
         </div>
         <div>
           <label>Password</label>
-          <input type='password' required/>
+          <input value={passwordInput} onChange={(e)=>{setPasswordInput(e.target.value)}} type='password' required/>
         </div>
         <ol>
           <li>

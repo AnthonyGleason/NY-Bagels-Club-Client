@@ -1,9 +1,10 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import menuImg from '../../../Assets/menu.svg';
 import './Sidebar.css';
 import cartImg from '../../../Assets/cart.svg';
 import pianoNotes from '../../../Assets/audio/pianoNotes.mp3';
 import { useNavigate } from 'react-router-dom';
+
 export default function Sidebar(
   {
     totalCartItems,
@@ -15,8 +16,17 @@ export default function Sidebar(
     setIsExpanded:Function
   }
 ){
-  const navigate = useNavigate();
   const [hasAudioPlayed,setHasAudioPlayed] = useState<boolean>(false);
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  //check if user is logged in and login token is valid on initial page load
+  useEffect(()=>{
+    if (localStorage.getItem('loginToken')){
+      verifyToken();
+    };
+  },[])
+
   const toggleExpandMenu = function(){
     //menu audio has not played yet in the current session
     if (!hasAudioPlayed) {
@@ -30,6 +40,33 @@ export default function Sidebar(
     setIsExpanded(isExpanded===true ? false : true);
   };
 
+  const verifyToken = async function(){
+    const response = await fetch('http://localhost:5000/api/users/verify',{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      }
+    });
+    const responseData = await response.json();
+    if (responseData.isValid===true){
+      setIsSignedIn(true);
+    };
+  };
+
+  const handleLogout = async function(){
+    await fetch('http://localhost:5000/api/users/logout',{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      }
+    });
+    setIsSignedIn(false);
+    //remove the token locally
+    localStorage.removeItem('loginToken');
+  };
+
   //sidebar is expanded
   if (isExpanded){
     return(
@@ -38,12 +75,29 @@ export default function Sidebar(
           <img src={menuImg} alt='expand sidebar menu' /> 
         </button>
         <ol className='sidebar-nav'>
-          <li>
-            <button onClick={()=>{navigate('/login')}}>Login</button>
-          </li>
-          <li>
-            <button onClick={()=>{navigate('/register')}}>Register</button>
-          </li>
+          {
+            isSignedIn===false 
+            ?
+              <>
+                <li>
+                  <button onClick={()=>{navigate('/login')}}>Login</button>
+                </li>
+                <li>
+                  <button onClick={()=>{navigate('/register')}}>Register</button>
+                </li>
+              </> 
+            :
+              <>
+                <li>
+                  Welcome
+                  <br />
+                  Back!
+                </li>
+                <li>
+                  <button onClick={()=>{handleLogout()}}>Logout</button> 
+                </li>
+              </>
+          }
           <li className='cart'>
             <button onClick={()=>{navigate('/cart')}}>
               <img src={cartImg} alt='cart' />
