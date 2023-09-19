@@ -1,14 +1,29 @@
 .footer{
   width: 100%;
   text-align: center;
-  color: white;
-  background-color: rgb(58, 17, 2);
+  color: black;
+  background-color: rgb(255, 240, 202);
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   padding: 1em;
 }
 .footer .copyright{
-  padding: 0.5em;
+  padding: 0.4em;
   text-align: center;
+  font-size: 17px;
+  font-family: 'Titillium Web';
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+.footer .payment-methods{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: max-content;
+  align-self: center;
+  padding: 1em;
+}
+.footer .payment-methods img{
+  max-width: 50px;
+  cursor: pointer;
 }

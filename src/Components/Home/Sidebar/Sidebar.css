@@ -1,12 +1,12 @@
 .sidebar-expanded{
   height: 100vh;
-  max-width: 150px;
+  max-width: 165px;
   width: 100%;
   min-width: 100px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background-color: rgb(246, 218, 146);
+  background-color: rgb(255, 237, 190);
 }
 .sidebar-expand-toggle{
   border: 0px solid transparent;
@@ -40,9 +40,20 @@
   font-weight: bold;
   max-height: 400px;
 }
-.sidebar-nav li,
 .sidebar-nav button{
   cursor: pointer;
+  background-color: transparent;
+  border: 0px solid transparent;
+  font-family: 'Allura';
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+  color: black;
+  font-weight: bold;
+}
+.sidebar-nav li{
+  display: flex;
+  justify-content: center;
 }
 .sidebar-nav .checkout button:hover{
   background-color: rgb(194, 3, 3);
@@ -52,7 +63,10 @@
   gap: 5px;
   justify-content: center;
   align-items: center;
-  padding: 0.5em;
+  padding: 0.2em;
+}
+.sidebar-nav .cart span{
+  margin-top: 10px;
 }
 .sidebar-nav .checkout button{
   border: 0px solid transparent;
@@ -66,5 +80,5 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 .sidebar-nav .cart img{
-  width: 35px;
+  width: 40px;
 }

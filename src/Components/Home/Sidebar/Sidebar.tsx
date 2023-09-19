@@ -2,20 +2,35 @@ import React,{useState} from 'react';
 import menuImg from '../../../Assets/menu.svg';
 import './Sidebar.css';
 import cartImg from '../../../Assets/cart.svg';
+import pianoNotes from '../../../Assets/audio/pianoNotes.mp3';
+import { useNavigate } from 'react-router-dom';
 export default function Sidebar(
   {
     totalCartItems,
-    setTotalCartItems
+    isExpanded,
+    setIsExpanded
   }:{
     totalCartItems:number,
-    setTotalCartItems:Function
+    isExpanded:boolean,
+    setIsExpanded:Function
   }
 ){
-  const [isExpanded,setIsExpanded] = useState<boolean>(false);
-
+  const navigate = useNavigate();
+  const [hasAudioPlayed,setHasAudioPlayed] = useState<boolean>(false);
   const toggleExpandMenu = function(){
-    isExpanded===true ? setIsExpanded(false) : setIsExpanded(true);
+    //menu audio has not played yet in the current session
+    if (!hasAudioPlayed) {
+      //play the audio
+      const audio = new Audio(pianoNotes);
+      audio.play();
+      //update the state so the audio doesn't play twice in a single user browsing session
+      setHasAudioPlayed(true);
+    };
+    //expand the menu
+    setIsExpanded(isExpanded===true ? false : true);
   };
+
+  //sidebar is expanded
   if (isExpanded){
     return(
       <section className='sidebar-expanded'>
@@ -23,18 +38,24 @@ export default function Sidebar(
           <img src={menuImg} alt='expand sidebar menu' /> 
         </button>
         <ol className='sidebar-nav'>
-          <li>Login</li>
-          <li>Register</li>
+          <li>
+            <button onClick={()=>{navigate('/login')}}>Login</button>
+          </li>
+          <li>
+            <button onClick={()=>{navigate('/register')}}>Register</button>
+          </li>
           <li className='cart'>
-            <img src={cartImg} alt='cart' />
-            <p>{totalCartItems} items</p>
+            <button onClick={()=>{navigate('/cart')}}>
+              <img src={cartImg} alt='cart' />
+              <span>{totalCartItems} items</span>
+            </button>
           </li>
           <li className='checkout'>
-            <button>Checkout</button>
+            <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button>
           </li>
         </ol>
       </section>
-    )
+    );
   }else{
     return(
       <section className='sidebar-closed'>

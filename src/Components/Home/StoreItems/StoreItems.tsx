@@ -2,6 +2,7 @@ import React from 'react';
 import './StoreItems.css';
 import plainBagelsImg from '../../../Assets/bagels/plain.jpg';
 import mixedBagelsImg from '../../../Assets/loadingBagels.jpg';
+import everythingBagelsImg from '../../../Assets/bagels/everything.jpeg';
 import StoreItem from './StoreItem/StoreItem';
 export default function StoreItems(
     {
@@ -17,21 +18,22 @@ export default function StoreItems(
       <StoreItem 
         itemImgUrl={plainBagelsImg}
         itemName='Plain Bagels'
-        itemPrice={85}
+        itemDozenPrice={29.99}
         setTotalCartItems={setTotalCartItems}
         totalCartItems={totalCartItems}
       />
       <StoreItem 
-        itemImgUrl={plainBagelsImg}
+        itemImgUrl={everythingBagelsImg}
         itemName='Everything Bagels'
-        itemPrice={85}
+        itemDozenPrice={34.99}
         setTotalCartItems={setTotalCartItems}
         totalCartItems={totalCartItems}
       />
       <StoreItem 
         itemImgUrl={mixedBagelsImg}
-        itemName='Build Your Own Dozen Bagels'
-        itemPrice={85}
+        itemName='Mix and Match'
+        itemDozenPrice={39.99}
+        itemFourPackPrice={16.99}
         setTotalCartItems={setTotalCartItems}
         totalCartItems={totalCartItems}
       />
