@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import { getServerUrlPrefix } from '../../Config/clientSettings';
 export default function Login(){
   const [errorMessage,setErrorMessage] = useState<string>('');
 
@@ -18,7 +19,7 @@ export default function Login(){
   };
   
   const submitLogin = async function(){
-    const response = await fetch('http://localhost:5000/api/users/login',{
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/login`,{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json'

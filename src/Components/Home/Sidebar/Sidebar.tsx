@@ -4,6 +4,7 @@ import './Sidebar.css';
 import cartImg from '../../../Assets/cart.svg';
 import pianoNotes from '../../../Assets/audio/pianoNotes.mp3';
 import { useNavigate } from 'react-router-dom';
+import { getServerUrlPrefix } from '../../../Config/clientSettings';
 
 export default function Sidebar(
   {
@@ -41,7 +42,7 @@ export default function Sidebar(
   };
 
   const verifyToken = async function(){
-    const response = await fetch('http://localhost:5000/api/users/verify',{
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/verify`,{
       method: 'GET',
       headers:{
         'Content-Type': 'application/json',
@@ -55,7 +56,7 @@ export default function Sidebar(
   };
 
   const handleLogout = async function(){
-    await fetch('http://localhost:5000/api/users/logout',{
+    await fetch(`${getServerUrlPrefix()}/api/users/logout`,{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',

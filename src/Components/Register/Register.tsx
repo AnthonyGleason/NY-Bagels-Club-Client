@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
+import { getServerUrlPrefix } from '../../Config/clientSettings';
 
 export default function Register(){
   const [errorMessage,setErrorMessage] = useState<string>('');
@@ -22,7 +23,7 @@ export default function Register(){
   };
   
   const submitRegister = async function(){
-    const response = await fetch('http://localhost:5000/api/users/register',{
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/register`,{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json'
