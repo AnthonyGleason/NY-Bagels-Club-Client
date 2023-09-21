@@ -5,21 +5,36 @@ import cartImg from '../../../Assets/cart.svg';
 import pianoNotes from '../../../Assets/audio/pianoNotes.mp3';
 import { useNavigate } from 'react-router-dom';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
+import { Item } from '../../../Interfaces/interfaces';
 
 export default function Sidebar(
   {
-    totalCartItems,
+    cart,
     isExpanded,
     setIsExpanded
   }:{
-    totalCartItems:number,
+    cart:Item[];
     isExpanded:boolean,
     setIsExpanded:Function
   }
 ){
   const [hasAudioPlayed,setHasAudioPlayed] = useState<boolean>(false);
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [totalQuantity,setTotalQuantity] = useState<number>(0);
   const navigate = useNavigate();
+  
+  const calculateTotalQuantity = function(){
+    let totalItems = 0;
+    cart.forEach((item:Item)=>{
+      if (item.quantity) totalItems+=item.quantity;
+    });
+    return totalItems;
+  };
+  
+  //when cart is updated calculate new total quantity
+  useEffect(()=>{
+    setTotalQuantity(calculateTotalQuantity());
+  },[cart])
 
   //check if user is logged in and login token is valid on initial page load
   useEffect(()=>{
@@ -102,7 +117,7 @@ export default function Sidebar(
           <li className='cart'>
             <button onClick={()=>{navigate('/cart')}}>
               <img src={cartImg} alt='cart' />
-              <span>{totalCartItems} items</span>
+              <span>{totalQuantity} Items</span>
             </button>
           </li>
           <li className='checkout'>

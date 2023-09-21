@@ -4,13 +4,15 @@ import plainBagelsImg from '../../../Assets/bagels/plain.jpg';
 import mixedBagelsImg from '../../../Assets/loadingBagels.jpg';
 import everythingBagelsImg from '../../../Assets/bagels/everything.jpeg';
 import StoreItem from './StoreItem/StoreItem';
+import { Item } from '../../../Interfaces/interfaces';
+
 export default function StoreItems(
     {
-      totalCartItems,
-      setTotalCartItems
+      cart,
+      setCart
     }:{
-      totalCartItems:number,
-      setTotalCartItems:Function
+      cart: Item[],
+      setCart: Function
     }
   ){
   return(
@@ -18,24 +20,26 @@ export default function StoreItems(
       <StoreItem 
         itemImgUrl={plainBagelsImg}
         itemName='Plain Bagels'
+        itemIdentifier='Plain Bagels Dozen'
         itemDozenPrice={29.99}
-        setTotalCartItems={setTotalCartItems}
-        totalCartItems={totalCartItems}
+        cart={cart}
+        setCart={setCart}
       />
       <StoreItem 
         itemImgUrl={everythingBagelsImg}
         itemName='Everything Bagels'
+        itemIdentifier='Everything Bagels Dozen'
         itemDozenPrice={34.99}
-        setTotalCartItems={setTotalCartItems}
-        totalCartItems={totalCartItems}
+        cart={cart}
+        setCart={setCart}
       />
       <StoreItem 
         itemImgUrl={mixedBagelsImg}
         itemName='Mix and Match'
         itemDozenPrice={39.99}
         itemFourPackPrice={16.99}
-        setTotalCartItems={setTotalCartItems}
-        totalCartItems={totalCartItems}
+        cart={cart}
+        setCart={setCart}
       />
     </section>
   )
