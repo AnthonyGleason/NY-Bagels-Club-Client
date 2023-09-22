@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Item } from '../../../../Interfaces/interfaces';
+import { getServerUrlPrefix } from '../../../../Config/clientSettings';
 
 export default function StoreItem({
   itemImgUrl,
@@ -18,42 +19,77 @@ export default function StoreItem({
   cart:Item[],
   setCart:Function
 }){
-  const getCurrentQuantityFromCart = function(itemName:string,cart:Item[]):number{
-    let index:number | undefined;
-    //handle cart length is 0 (empty cart)
-    if (cart.length===0) return 0;
-    //find index of item
-    for(let i=0;i<=cart.length;i++){
-      if (cart[i].name===itemName){
-        index=i;
-        break;
-      };
+  const [amountOfDozenInCart,setAmountOfDozenInCart] = useState<number>(0);
+  const [plainFourPacks,setPlainFourPacks] = useState<number>(0);
+  const [everythingFourPacks,setEverythingFourPacks] = useState<number>(0);
+  const [cinRaisin,setCinRaisinFourPacks] = useState<number>(0);
+  const [sesameFourPacks,setSesameFourPacks] = useState<number>(0);
+  const [poppyFourPacks,setPoppyFourPacks] = useState<number>(0);
+  const [blueberryFourPacks,setBlueberryFourPacks] = useState<number>(0);
+  
+  const modifyCart = async function(modifier:number,curVal:number,itemQuantitySetter:Function,itemName:string){
+    //calculate new quantity based on modifier
+    const updatedQuantity:number = curVal + modifier;
+    //make a request to the server to update quantity for cart
+    const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts`,{
+      method: 'PUT',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('cartToken')}`
+      },
+      body: JSON.stringify({
+        itemName: itemName,
+        quantity: updatedQuantity,
+      })
+    });
+    const responseData = await response.json();
+    if (responseData.cartToken && responseData.cart){
+      //replace the cartToken in localStorage with the updated cartToken
+      localStorage.setItem('cartToken',responseData.cartToken);
+      //set the item quantity with the updated quantity with the updated cart (so that we know their request was successfully processed)
+      itemQuantitySetter(updatedQuantity);
+      //update cart state
+      setCart(responseData.cart.items);
     };
-    //an index and quantity was found
-    if (index){
-      const quantity:number | undefined = cart[index].quantity;
-      return quantity || 0;
-    }else{
-      return 0;
-    }
   };
 
-  const [amountOfDozenInCart,setAmountOfDozenInCart] = useState<number>(getCurrentQuantityFromCart(itemIdentifier || '',cart));
-  const [plainFourPacks,setPlainFourPacks] = useState<number>(getCurrentQuantityFromCart('Plain Four Pack',cart));
-  const [everythingFourPacks,setEverythingFourPacks] = useState<number>(getCurrentQuantityFromCart('Everything Four Pack',cart));
-  const [cinRaisin,setCinRaisinFourPacks] = useState<number>(getCurrentQuantityFromCart('Cinnamon Raisin Four Pack',cart));
-  const [sesameFourPacks,setSesameFourPacks] = useState<number>(getCurrentQuantityFromCart('Sesame Seeds Four Pack',cart));
-  const [poppyFourPacks,setPoppyFourPacks] = useState<number>(getCurrentQuantityFromCart('Poppy Seeds Four Pack',cart));
-  const [blueberryFourPacks,setBlueberryFourPacks] = useState<number>(getCurrentQuantityFromCart('Blueberry Four Pack',cart));
-  
-  
-  const modifyCart = function(modifier:number,curVal:number,itemQuantitySetter:Function,itemName:string){
-    //calculate new quantity based on modifier
-    //make a request to the server to update quantity for cart
-    //replace the cartToken in localStorage with the updated cartToken
-    //set the item quantity with the updated quantity with the updated cart (so that we know their request was successfully processed)
-    //update cart state
-  };
+  //when cart is updated update the quantities of items
+  useEffect(()=>{
+    //handle empty cart
+    if (!cart) return;
+
+    //cart is populated with items
+    cart.forEach((item:Item)=>{
+      switch(item.name){
+        case 'Plain Four Pack':
+          setPlainFourPacks(item.quantity);
+          break;
+        case 'Everything Four Pack':
+          setEverythingFourPacks(item.quantity);
+          break;
+        case 'Cinnamon Raisin Four Pack':
+          setCinRaisinFourPacks(item.quantity);
+          break;
+        case 'Sesame Seeds Four Pack':
+          setSesameFourPacks(item.quantity);
+          break;
+        case 'Poppy Seeds Four Pack':
+          setPoppyFourPacks(item.quantity);
+          break;
+        case 'Blueberry Four Pack':
+          setBlueberryFourPacks(item.quantity);
+          break;
+        case 'Plain Bagels Dozen':
+          setAmountOfDozenInCart(item.quantity);
+          break;
+        case 'Everything Bagels Dozen':
+          setAmountOfDozenInCart(item.quantity);
+          break;
+        default:
+          break;
+      };
+    });
+  },[cart]);
 
   if (itemName==='Mix and Match'){
     return(

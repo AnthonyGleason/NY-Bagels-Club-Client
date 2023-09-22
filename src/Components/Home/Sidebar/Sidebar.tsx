@@ -25,6 +25,8 @@ export default function Sidebar(
   
   const calculateTotalQuantity = function(){
     let totalItems = 0;
+    //handle empty cart
+    if (!cart) return totalItems;
     cart.forEach((item:Item)=>{
       if (item.quantity) totalItems+=item.quantity;
     });

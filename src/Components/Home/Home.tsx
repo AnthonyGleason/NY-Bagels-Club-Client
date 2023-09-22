@@ -17,11 +17,14 @@ export default function Home(){
       method: 'GET',
       headers:{
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+        'Authorization': `Bearer ${localStorage.getItem('cartToken')}`
       }
     });
     const responseData = await response.json();
-    return responseData.isValid;
+    if (responseData.isValid){
+      setCart(responseData.cart.items);
+      return responseData.isValid;
+    }
   };
 
   const requestCartToken = async function(){
@@ -29,19 +32,20 @@ export default function Home(){
       method: 'POST',
     });
     const responseData = await response.json();
-    //update cart state
-    setCart(responseData.cart);
-    //return the cart session token
-    return responseData.cartToken;
+    if (responseData.cartToken){
+      //return the cart session token
+      return responseData.cartToken;  
+    }
   };
 
   const handleInitialPageLoad = async function(){
-    //get the token from localstorage if it exists
-    const token:string | null = localStorage.getItem('cartToken');
     //token exists and is valid
-    if (token && await verifyCartToken()) return;
+    if (localStorage.getItem('cartToken') && await verifyCartToken()) return;
     //otherwise request a new cart session and save the cart token to localStorage
-    localStorage.setItem('cartToken', await requestCartToken()); 
+    const token:string = await requestCartToken();
+    if (token){
+      localStorage.setItem('cartToken',token); 
+    }
   };
 
   //handle initial page load
