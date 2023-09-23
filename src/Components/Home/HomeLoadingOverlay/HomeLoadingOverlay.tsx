@@ -1,14 +1,14 @@
 import React, {useRef, useEffect} from 'react';
 import Aos from 'aos';
 import "aos/dist/aos.css";
-import './InitLoad.css';
+import './HomeLoadingOverlay.css';
 import bubbleLoadingImg from '../../../Assets/bubble-loading.svg';
 
-export default function InitLoad(
+export default function HomeLoadingOverlay(
   {
-    setIsLoaded
+    setIsPageLoaded
   }:{
-    setIsLoaded:Function
+    setIsPageLoaded:Function
   }
 ){
   useEffect(()=>{
@@ -16,7 +16,7 @@ export default function InitLoad(
     Aos.init({duration: 2500});
     //redirect user to new url after time has passed
     setTimeout(()=>{
-      setIsLoaded(true);
+      setIsPageLoaded(true);
     },5000)
   },[]);
 

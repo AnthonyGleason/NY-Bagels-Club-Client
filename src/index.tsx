@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
 import { HashRouter, Routes, Route } from 'react-router-dom';
+import reportWebVitals from './reportWebVitals';
+//import components
+import Nav from './Components/Nav/Nav';
+import Footer from './Components/Home/Footer/Footer';
 import Home from './Components/Home/Home';
-import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
+import Register from './Components/Register/Register';
 import CartSummary from './Components/Checkout/CartSummary/CartSummary';
 import Checkout from './Components/Checkout/Checkout';
-import Footer from './Components/Home/Footer/Footer';
-import Nav from './Components/Nav/Nav';
+//import css
+import './index.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,9 +20,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <HashRouter>
-
       <Nav />
-      
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
@@ -28,9 +28,7 @@ root.render(
         <Route path='/cart/checkout' element={<Checkout />} />
         <Route path='/cart' element={<CartSummary />} />
       </Routes>
-
       <Footer />
-    
     </HashRouter>
   </React.StrictMode>
 );
