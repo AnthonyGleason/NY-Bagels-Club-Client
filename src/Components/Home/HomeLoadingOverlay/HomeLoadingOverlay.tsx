@@ -17,18 +17,18 @@ export default function HomeLoadingOverlay(
     //redirect user to new url after time has passed
     setTimeout(()=>{
       setIsPageLoaded(true);
-    },5000)
+    },4000)
   },[]);
 
   return(
     <section className='init-load'>
       <div className='init-load-background' />
       <div className='init-load-overlay' />
-      <h3 data-aos='fade-in' >Brendel's Bagels</h3>
+      <h1 data-aos='fade-in'>
+        New York Bagels Club
+      </h1>
       <p data-aos='fade-in'>
-        Now shipping nationwide!
-        <br />
-        Order for yourself or a fellow New Yorker <span>authentic</span> New York style bagels!
+        Authentic New York City Bagels Straight from the Heart of Long Island to Your Doorstep!
       </p>
       <img data-aos='fade-in' className='loading-spinner' src={bubbleLoadingImg} alt='loading' />
     </section>

@@ -9,15 +9,32 @@ export default function Footer(){
   return(
     <section className='footer'>
       <article className='copyright'>
-        © 2023 Brendel's Bagels & Eatery of New York.
-        <br />
-        All rights reserved.
+        <span>
+          © 2023 New York Bagels Club.
+        </span>
+        <span>
+          © 2023 Brendel's Bagels & Eatery of New York.
+          <br />
+          All rights reserved.
+        </span>
       </article>
       <article className='payment-methods'>
         <img src={visaIcon} alt='visa' />
         <img src={masterCardIcon} alt='mastercard' />
         <img src={applePayIcon} alt='apple pay' />
         <img src={googlePayIcon} alt='google pay' />
+      </article>
+      <article className='support'>
+        <p>Do you need assistance with an order, or would you like to provide feedback on your experience with us?</p>
+        <ul>
+          <li>Phone Number: 123-456-7890</li>
+          <li>Email: <a href="mailto:contact@nybagelsclub.com">contact@nybagelsclub.com</a></li>
+        </ul>
+        <p>
+          <strong>Your satisfaction is our priority!</strong>
+          <br />
+          Feel free to get in touch anytime.
+        </p>
       </article>
     </section>
   )

@@ -9,9 +9,8 @@ export default function Nav(){
     <nav className='nav'>
       <button onClick={()=>{navigate('/')}}>
         <h3>
-          Brendel's Bagels
-          <br />
-          Made With Love
+          <span>New York Bagel's Club</span>
+          <span>Always Fresh</span>
         </h3>
       </button>
     </nav>

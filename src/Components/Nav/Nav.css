@@ -6,9 +6,14 @@
 
 .nav button{
   color: red;
-  font-size: 30px;
+  font-size: 8vw;
   font-weight: bold;
   font-family: 'Allura';
   border: 0px solid transparent;
   background-color: transparent;
+}
+.nav button h3{
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
 }

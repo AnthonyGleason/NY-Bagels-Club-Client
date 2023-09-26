@@ -10,7 +10,7 @@ import HomeLoadingOverlay from './HomeLoadingOverlay/HomeLoadingOverlay';
 import './Home.css';
 
 export default function Home(){
-  const [isPageLoaded, setIsPageLoaded] = useState<boolean>(true);
+  const [isPageLoaded, setIsPageLoaded] = useState<boolean>(false);
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Item[]>([]);
 
@@ -33,7 +33,7 @@ export default function Home(){
         />
         <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
           <About />
-          <h3>New York to Your Doorstep</h3>
+          <h3>A Taste of New York to Your Doorstep</h3>
           <StoreItems cart={cart} setCart={setCart} />
         </div>
       </main>

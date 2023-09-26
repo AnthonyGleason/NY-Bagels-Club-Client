@@ -34,22 +34,27 @@
 }
 .init-load p{
   font-size: 25px;
+  padding: 0.5em;
 }
 .init-load p,
-.init-load h3,
+.init-load h1,
 .loading-spinner{
   text-align: center;
   z-index: 100;
 }
-.init-load p span,
-.init-load h3{
+.init-load h1{
   color: red;
-  font-size: 35px;
-
+  font-size: 11vw;
   font-weight: bold;
   font-family: 'Allura';
+  text-wrap: nowrap;
+}
+.init-load h1{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 .init-load .loading-spinner{
   width: 100%;
-  max-width: 50px;
+  max-width: 70px;
 }

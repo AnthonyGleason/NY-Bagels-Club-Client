@@ -35,14 +35,10 @@ export const fetchAndHandleCart = async function(setCart:Function){
 };
 
 export const modifyCart = async function(
-  modifier:number,
-  curVal:number,
-  itemName:string,
-  setCart:Function,
-  itemQuantitySetter?:Function,
-  ){
-  //calculate new quantity based on modifier
-  const updatedQuantity:number = curVal + modifier;
+  updatedQuantity:number,
+  itemID:string,
+  setCart:Function
+){
   //make a request to the server to update quantity for cart
   const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts`,{
     method: 'PUT',
@@ -51,18 +47,14 @@ export const modifyCart = async function(
       'Authorization': `Bearer ${localStorage.getItem('cartToken')}`
     },
     body: JSON.stringify({
-      itemName: itemName,
-      quantity: updatedQuantity,
+      itemID: itemID,
+      updatedQuantity: updatedQuantity,
     })
   });
   const responseData = await response.json();
   if (responseData.cartToken && responseData.cart){
     //replace the cartToken in localStorage with the updated cartToken
     localStorage.setItem('cartToken',responseData.cartToken);
-    if (itemQuantitySetter){
-      //set the item quantity with the updated quantity with the updated cart (so the user knows their request was successfully processed)
-      itemQuantitySetter(updatedQuantity);
-    };
     //update cart state
     setCart(responseData.cart.items);
   };

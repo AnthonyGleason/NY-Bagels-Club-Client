@@ -37,23 +37,12 @@ export default function CartSummary(){
             value={cartItem.quantity}
             onChange={(e)=>{
               const newVal:number = parseInt(e.target.value) || 0;
-              console.log(cart,newVal,cartItem);
-              modifyCart(
-                0+newVal,
-                cartItem.quantity,
-                cartItem.name,
-                setCart
-              )
+              modifyCart(newVal,cartItem._id,setCart)
             }}
           />
           <span className='item-subtotal'>${parseFloat((cartItem.price*cartItem.quantity).toString()).toFixed(2)}</span>
           <button onClick={()=>{
-            modifyCart(
-              0-cartItem.quantity, //get difference from cart to get a value of 0
-              cartItem.quantity,
-              cartItem.name,
-              setCart,
-            )
+            modifyCart(0,cartItem._id,setCart)
           }}>
             <img src={removeImg} alt='remove from cart' />
           </button>
@@ -80,7 +69,7 @@ export default function CartSummary(){
       </ol>
       <div className='cart-subtotal'>
         <span>Cart Subtotal:</span>
-        <span>${totalPrice}</span>
+        <span>${totalPrice.toFixed(2)}</span>
       </div>
       <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
       <button>Checkout Now</button>
