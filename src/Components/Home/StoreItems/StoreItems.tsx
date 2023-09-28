@@ -27,10 +27,13 @@ export default function StoreItems({
     fetchAndSetStoreItems(setStoreItems);
   },[]);
 
+  let counter:number = 1;
+
   return(
     <section className='store-items-container'>
       {
         storeItems.map((storeItem:Item)=>{
+          counter+=1;
           return(
             <StoreItem
               key={storeItem._id}
@@ -39,6 +42,7 @@ export default function StoreItems({
               itemPrice={storeItem.price}
               cart={cart}
               setCart={setCart}
+              isAltTheme={counter%2===0}
             />
           )
         })

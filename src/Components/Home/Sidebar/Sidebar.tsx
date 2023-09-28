@@ -1,11 +1,15 @@
 import React,{useEffect, useState} from 'react';
 import menuImg from '../../../Assets/menu.svg';
 import './Sidebar.css';
+import registerImg from '../../../Assets/register.svg';
+import loginImg from '../../../Assets/login.svg';
 import cartImg from '../../../Assets/cart.svg';
+import logoutImg from '../../../Assets/logout.svg';
 import pianoNotes from '../../../Assets/audio/pianoNotes.mp3';
 import { useNavigate } from 'react-router-dom';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import { Item } from '../../../Interfaces/interfaces';
+import {motion} from 'framer-motion';
 
 export default function Sidebar(
   {
@@ -57,7 +61,7 @@ export default function Sidebar(
     //expand the menu
     setIsExpanded(isExpanded===true ? false : true);
   };
-
+  
   const verifyToken = async function(){
     const response = await fetch(`${getServerUrlPrefix()}/api/users/verify`,{
       method: 'GET',
@@ -88,7 +92,12 @@ export default function Sidebar(
   //sidebar is expanded
   if (isExpanded){
     return(
-      <section className='sidebar-expanded'>
+      <motion.section 
+        className='sidebar-expanded'
+        initial={{ right: -200 }}
+        animate={{ right: isExpanded ? 0 : -200 }}
+        transition={{ duration: 0.5 }}
+      >
         <button className='sidebar-expand-toggle' onClick={()=>{toggleExpandMenu()}}>
           <img src={menuImg} alt='expand sidebar menu' /> 
         </button>
@@ -98,10 +107,16 @@ export default function Sidebar(
             ?
               <>
                 <li>
-                  <button onClick={()=>{navigate('/login')}}>Login</button>
+                  <button onClick={()=>{navigate('/login')}}>
+                    <img src={loginImg} alt='login' />
+                    <span>Login</span>
+                  </button>
                 </li>
                 <li>
-                  <button onClick={()=>{navigate('/register')}}>Register</button>
+                  <button onClick={()=>{navigate('/register')}}>
+                    <img src={registerImg} alt='register' />
+                    <span>Register</span>
+                  </button>
                 </li>
               </> 
             :
@@ -112,7 +127,10 @@ export default function Sidebar(
                   Back!
                 </li>
                 <li>
-                  <button onClick={()=>{handleLogout()}}>Logout</button> 
+                  <button onClick={()=>{handleLogout()}}>
+                    <img src={logoutImg} alt='logout' />
+                    <span>Logout</span>
+                  </button> 
                 </li>
               </>
           }
@@ -123,10 +141,12 @@ export default function Sidebar(
             </button>
           </li>
           <li className='checkout'>
-            <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button>
+            <button onClick={()=>{navigate('/cart/checkout')}}>
+              <span>Checkout</span>
+            </button>
           </li>
         </ol>
-      </section>
+      </motion.section>
     );
   }else{
     return(

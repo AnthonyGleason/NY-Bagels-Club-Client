@@ -1,4 +1,4 @@
-const USE_LOCALHOST:boolean = true;
+const USE_LOCALHOST:boolean = false;
 
 export const getServerUrlPrefix = function(){
   if (USE_LOCALHOST){

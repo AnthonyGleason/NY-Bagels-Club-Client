@@ -1,14 +1,12 @@
 .nav{
+  padding-top: 70px;
   text-align: center;
-  padding: 1em;
-  background-color: rgb(255, 240, 202);
 }
-
 .nav button{
-  color: red;
-  font-size: 8vw;
-  font-weight: bold;
-  font-family: 'Allura';
+  color: #5d1917;
+  font-size: 7vw;
+  font-weight: 400;
+  font-family: 'Sedgwick Ave Display';
   border: 0px solid transparent;
   background-color: transparent;
 }

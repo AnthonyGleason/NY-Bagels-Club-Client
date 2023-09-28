@@ -9,7 +9,7 @@ export default function Nav(){
     <nav className='nav'>
       <button onClick={()=>{navigate('/')}}>
         <h3>
-          <span>New York Bagel's Club</span>
+          <span>New York Bagels Club</span>
           <span>Always Fresh</span>
         </h3>
       </button>

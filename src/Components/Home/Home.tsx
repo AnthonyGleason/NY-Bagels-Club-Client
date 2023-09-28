@@ -33,7 +33,11 @@ export default function Home(){
         />
         <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
           <About />
-          <h3>A Taste of New York to Your Doorstep</h3>
+          <h3>
+            A Taste of New York
+            <br />
+            to Your Doorstep
+          </h3>
           <StoreItems cart={cart} setCart={setCart} />
         </div>
       </main>

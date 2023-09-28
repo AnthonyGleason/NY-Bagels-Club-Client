@@ -2,7 +2,6 @@
   width: 100%;
   text-align: center;
   color: black;
-  background-color: rgb(255, 240, 202);
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -39,4 +38,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
+}
+.footer .support a{
+  color: black;
 }

@@ -9,23 +9,23 @@
   gap: 5px;
   justify-content: center;
   align-items: center;
-  background-color: rgb(255, 240, 202);
   padding-top: 2em;
   padding-bottom: 2em;
 }
 .about-us img{
   width: 100%;
   max-width: 400px;
-  border-radius: 18px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
-
 .home h3{
-  color: red;
-  font-family: 'Allura';
-  font-size: 30px;
+  color: #5d1917;
+  font-family: 'Sedgwick Ave Display';
+  font-size: 8vw;
   font-weight: bolder;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   padding: 1em;
   padding-top: 2em;
+  margin: 0.5em;
 }
