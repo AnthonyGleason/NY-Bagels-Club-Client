@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/brendels-webstore-demo/static/css/main.288cf1cb.css",
+    "main.css": "/brendels-webstore-demo/static/css/main.6ec22037.css",
     "main.js": "/brendels-webstore-demo/static/js/main.fe3ad100.js",
     "static/js/869.924e9362.chunk.js": "/brendels-webstore-demo/static/js/869.924e9362.chunk.js",
     "static/js/191.b6ea6172.chunk.js": "/brendels-webstore-demo/static/js/191.b6ea6172.chunk.js",
@@ -12,11 +12,11 @@
     "static/js/150.d5aa5488.chunk.js": "/brendels-webstore-demo/static/js/150.d5aa5488.chunk.js",
     "static/js/669.70c0c62a.chunk.js": "/brendels-webstore-demo/static/js/669.70c0c62a.chunk.js",
     "static/js/787.20178b2a.chunk.js": "/brendels-webstore-demo/static/js/787.20178b2a.chunk.js",
+    "static/media/wood-grain-alt.jpg": "/brendels-webstore-demo/static/media/wood-grain-alt.035ce572c1015a0fd383.jpg",
+    "static/media/wood-grain.jpg": "/brendels-webstore-demo/static/media/wood-grain.d876d611ab0cf98050bc.jpg",
     "static/media/jpg": "/brendels-webstore-demo/static/media/650c9f9d3843aa9fa7ae75d1.e8290a59d13a2a50c40e.jpg",
-    "static/media/wood-grain-alt.jpg": "/brendels-webstore-demo/static/media/wood-grain-alt.13db2d8f0283a0bc3dbb.jpg",
-    "static/media/wood-grain.jpg": "/brendels-webstore-demo/static/media/wood-grain.7306d3f53b7de06ccea2.jpg",
+    "static/media/bricks.jpg": "/brendels-webstore-demo/static/media/bricks.497dc5c3b717486e0d64.jpg",
     "static/media/loadingBagels.jpg": "/brendels-webstore-demo/static/media/loadingBagels.838f4f19d64be5b06bde.jpg",
-    "static/media/bricks.jpg": "/brendels-webstore-demo/static/media/bricks.ed7f5d2ec0bd077a8736.jpg",
     "static/media/storefront.jpeg": "/brendels-webstore-demo/static/media/storefront.2516ba38ed063391cfd0.jpeg",
     "static/media/visa-fill.jpeg": "/brendels-webstore-demo/static/media/visa-fill.652da96ef883bf9b4404.jpeg",
     "static/media/pianoNotes.mp3": "/brendels-webstore-demo/static/media/pianoNotes.16525c148124c63bc426.mp3",
@@ -31,12 +31,12 @@
     "static/media/register.svg": "/brendels-webstore-demo/static/media/register.a3cf5373e80a91fa58456c93bda7169f.svg",
     "static/media/login.svg": "/brendels-webstore-demo/static/media/login.7acd31c799612391a579c0ddacdcf868.svg",
     "static/media/logout.svg": "/brendels-webstore-demo/static/media/logout.f6d2e89e1521811a90b3791f0306a0f0.svg",
-    "main.288cf1cb.css.map": "/brendels-webstore-demo/static/css/main.288cf1cb.css.map",
+    "main.6ec22037.css.map": "/brendels-webstore-demo/static/css/main.6ec22037.css.map",
     "main.fe3ad100.js.map": "/brendels-webstore-demo/static/js/main.fe3ad100.js.map",
     "787.20178b2a.chunk.js.map": "/brendels-webstore-demo/static/js/787.20178b2a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.288cf1cb.css",
+    "static/css/main.6ec22037.css",
     "static/js/main.fe3ad100.js"
   ]
 }
