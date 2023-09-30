@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/brendels-webstore-demo/static/css/main.72c8a5e3.css",
-    "main.js": "/brendels-webstore-demo/static/js/main.1a0e066e.js",
+    "main.css": "/brendels-webstore-demo/static/css/main.b1b32f6d.css",
+    "main.js": "/brendels-webstore-demo/static/js/main.79054ed1.js",
     "static/js/869.924e9362.chunk.js": "/brendels-webstore-demo/static/js/869.924e9362.chunk.js",
     "static/js/191.b6ea6172.chunk.js": "/brendels-webstore-demo/static/js/191.b6ea6172.chunk.js",
     "static/js/755.9e4a7894.chunk.js": "/brendels-webstore-demo/static/js/755.9e4a7894.chunk.js",
@@ -13,6 +13,7 @@
     "static/js/669.70c0c62a.chunk.js": "/brendels-webstore-demo/static/js/669.70c0c62a.chunk.js",
     "static/js/787.20178b2a.chunk.js": "/brendels-webstore-demo/static/js/787.20178b2a.chunk.js",
     "static/media/wood-grain-alt.jpg": "/brendels-webstore-demo/static/media/wood-grain-alt.035ce572c1015a0fd383.jpg",
+    "static/media/coffee.jpg": "/brendels-webstore-demo/static/media/coffee.e213ccd56eb596d0f270.jpg",
     "static/media/wood-grain.jpg": "/brendels-webstore-demo/static/media/wood-grain.d876d611ab0cf98050bc.jpg",
     "static/media/loading.jpg": "/brendels-webstore-demo/static/media/loading.19483d2288f43f9275ec.jpg",
     "static/media/jpg": "/brendels-webstore-demo/static/media/650c9f9d3843aa9fa7ae75d1.e8290a59d13a2a50c40e.jpg",
@@ -32,12 +33,12 @@
     "static/media/register.svg": "/brendels-webstore-demo/static/media/register.a3cf5373e80a91fa58456c93bda7169f.svg",
     "static/media/login.svg": "/brendels-webstore-demo/static/media/login.7acd31c799612391a579c0ddacdcf868.svg",
     "static/media/logout.svg": "/brendels-webstore-demo/static/media/logout.f6d2e89e1521811a90b3791f0306a0f0.svg",
-    "main.72c8a5e3.css.map": "/brendels-webstore-demo/static/css/main.72c8a5e3.css.map",
-    "main.1a0e066e.js.map": "/brendels-webstore-demo/static/js/main.1a0e066e.js.map",
+    "main.b1b32f6d.css.map": "/brendels-webstore-demo/static/css/main.b1b32f6d.css.map",
+    "main.79054ed1.js.map": "/brendels-webstore-demo/static/js/main.79054ed1.js.map",
     "787.20178b2a.chunk.js.map": "/brendels-webstore-demo/static/js/787.20178b2a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.72c8a5e3.css",
-    "static/js/main.1a0e066e.js"
+    "static/css/main.b1b32f6d.css",
+    "static/js/main.79054ed1.js"
   ]
 }
