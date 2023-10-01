@@ -120,19 +120,12 @@ export default function Sidebar(
                 </li>
               </> 
             :
-              <>
-                <li>
-                  Welcome
-                  <br />
-                  Back!
-                </li>
-                <li>
-                  <button onClick={()=>{handleLogout()}}>
-                    <img src={logoutImg} alt='logout' />
-                    <span>Logout</span>
-                  </button> 
-                </li>
-              </>
+              <li>
+                <button onClick={()=>{handleLogout()}}>
+                  <img src={logoutImg} alt='logout' />
+                  <span>Logout</span>
+                </button> 
+              </li>
           }
           <li className='cart'>
             <button onClick={()=>{navigate('/cart')}}>

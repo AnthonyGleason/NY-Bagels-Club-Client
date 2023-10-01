@@ -12,5 +12,6 @@ export interface Item{
   price: number,
   name: string,
   quantity: number,
-  _id: string
+  _id: string,
+  index: number
 };

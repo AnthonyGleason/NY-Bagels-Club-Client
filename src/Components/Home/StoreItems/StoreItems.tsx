@@ -32,7 +32,13 @@ export default function StoreItems({
   return(
     <section className='store-items-container'>
       {
-        storeItems.map((storeItem:Item)=>{
+        storeItems.sort((a:Item,b:Item)=>{
+          if (a.index>b.index){
+            return 1;
+          }else{
+            return -1;
+          }
+        }).map((storeItem:Item)=>{
           counter+=1;
           return(
             <StoreItem

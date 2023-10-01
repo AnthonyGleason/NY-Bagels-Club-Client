@@ -6,11 +6,11 @@ export default function Nav(){
   const navigate = useNavigate();
 
   return(
-    <nav className='nav'>
+    <nav id='nav' className='nav'>
       <button onClick={()=>{navigate('/')}}>
         <h3>
           <span>New York Bagels Club</span>
-          <span>Always Fresh</span>
+          <span>"Always Fresh"</span>
         </h3>
       </button>
     </nav>

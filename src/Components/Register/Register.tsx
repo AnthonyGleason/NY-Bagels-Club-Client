@@ -1,7 +1,9 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import { getServerUrlPrefix } from '../../Config/clientSettings';
+import Aos from 'aos';
+import "aos/dist/aos.css";
 
 export default function Register(){
   const [errorMessage,setErrorMessage] = useState<string>('');
@@ -11,6 +13,11 @@ export default function Register(){
   const [emailInput,setEmailInput] = useState<string>('');
   const [passwordInput,setPasswordInput] = useState<string>('');
   const [passwordConfirmInput,setPasswordConfirmInput] = useState<string>('');
+  
+  useEffect(()=>{
+    //setup fade animation length
+    Aos.init({duration: 1500});
+  },[]);
 
   const navigate = useNavigate();
   const genErrorMessageElement = function(){
@@ -39,14 +46,14 @@ export default function Register(){
     const responseData = await response.json();
     if (responseData.token){
       localStorage.setItem('loginToken',responseData.token);
-      navigate('/');
+      window.history.back();
     }else{
       setErrorMessage(responseData.message);
     }
   };
 
   return(
-    <section className='register-wrapper'>
+    <section data-aos='fade-in' className='register-wrapper'>
       <form className='register'>
         <h3>Register</h3>
         <div>

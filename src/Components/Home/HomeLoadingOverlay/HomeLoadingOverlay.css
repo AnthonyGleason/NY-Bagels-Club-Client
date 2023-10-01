@@ -8,18 +8,32 @@
   flex-direction: column;
   font-size: 30px;
   font-family: 'Titillium Web';
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   padding: 1em;
   gap: 10px;
   font-weight: 500;
   z-index: 97;
   top: 0;
 }
+.loading-content-wrapper{
+  z-index: 100;
+  background-color: rgba(230, 223, 223, 0.9);
+  padding: 0.5em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .init-load-background{
-  background-image: url('../../../Assets/loadingBagels.jpg');
+  background-image: url('../../../Assets/loading.jpg');
   width: 100vw;
   height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
   position: fixed;
   top: 0;
   left: 0;
@@ -30,12 +44,12 @@
   width: 100vw;
   position: fixed;
   z-index: 99;
-  background-color: rgba(241, 241, 191, 0.8);
 }
 .init-load p{
   font-size: 22px;
   padding: 0.5em;
   font-weight: 500;
+  color: black;
 }
 .init-load p,
 .init-load h1,
@@ -43,15 +57,20 @@
   text-align: center;
   z-index: 100;
 }
+.init-load h1 span:nth-child(2){
+  font-family: 'Titillium Web';
+  font-size: 7vw;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 .init-load h1{
   color: #5d1917;
-  font-size: 8vw;
+  font-size: 7vw;
   font-weight: bold;
-  font-family: 'Sedgwick Ave Display';
+  font-family: 'Courgette';
   text-wrap: nowrap;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 5px;
 }
 .init-load .loading-spinner{
   width: 100%;

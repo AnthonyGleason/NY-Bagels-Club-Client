@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import './CartSummary.css';
-import removeImg from '../../../Assets/x.svg';
 import { Item } from '../../../Interfaces/interfaces';
 import { fetchAndHandleCart, modifyCart } from '../../../Helpers/auth';
+import CartSummaryItem from '../CartSummaryItem/CartSummaryItem';
+import { useNavigate } from 'react-router-dom';
 
-export default function CartSummary(){
+export default function CartSummary({
+  isCheckoutView
+}:{
+  isCheckoutView:boolean
+}){
   const [cart,setCart] = useState<Item[]>([]);
   const [totalPrice,setTotalPrice] = useState<number>(0);
   
+  const navigate = useNavigate();
   //handle initial page load (grab latest cart data);
   useEffect(()=>{
     fetchAndHandleCart(setCart);
@@ -21,58 +27,79 @@ export default function CartSummary(){
   const getCartTotalPrice = function():number{
     let totalPrice:number = 0;
     cart.forEach((cartItem)=>{
-      totalPrice+=cartItem.price*cartItem.quantity;
+      totalPrice += cartItem.price * cartItem.quantity;
     });
     return totalPrice;
   };
 
-  const getCartItems = function(){
-    //loop over cart items
-    const cartElement = cart.map((cartItem:Item,index:number)=>{
-      return(
-        <li key={index}>
-          <span className='item-name'>{cartItem.name}</span>
-          <input 
-            type='number'
-            value={cartItem.quantity}
-            onChange={(e)=>{
-              const newVal:number = parseInt(e.target.value) || 0;
-              modifyCart(newVal,cartItem._id,setCart)
-            }}
-          />
-          <span className='item-subtotal'>${parseFloat((cartItem.price*cartItem.quantity).toString()).toFixed(2)}</span>
-          <button onClick={()=>{
-            modifyCart(0,cartItem._id,setCart)
-          }}>
-            <img src={removeImg} alt='remove from cart' />
-          </button>
-        </li>
-      )
+  const getCartItems = function () {
+    // Loop over cart items
+    const cartRows = cart.map((cartItem, index) => {
+      return (
+        <CartSummaryItem 
+          key={index}
+          cartItem={cartItem}
+          setCart={setCart}
+          isCheckoutView={isCheckoutView}
+        />
+      );
     });
-    //return the cart element
-    return cartElement;
-  };
+    // Return the cart rows
+    return cartRows;
+  };  
 
-  return(
-    <div className='cart-summary'>
-      <h3>Shopping Cart</h3>
-      <ol>
-        <li>
-          <b className='item-name'>Name</b>
-          <b className='item-quantity'>Quantity</b>
-          <b className='item-subtotal'>Subtotal</b>
-          <b className='item-remove'>Remove</b>
-        </li>
-        {
-          getCartItems()
-        }
-      </ol>
-      <div className='cart-subtotal'>
-        <span>Cart Subtotal:</span>
-        <span>${totalPrice.toFixed(2)}</span>
+  //handle empty shopping cart
+  if (cart.length===0){
+    return(
+      <div className='cart-summary'>
+        <h3>Basket</h3>
+        <strong>Your Basket is Currently Empty.</strong>
       </div>
-      <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
-      <button>Checkout Now</button>
-    </div>
-  );
+    );
+  }else if (cart.length>0 && !isCheckoutView){
+    return(
+      <div className='cart-summary'>
+        <h3>Basket</h3>
+        <table>
+          <thead>
+            <tr>
+              <th className="item-name">Name</th>
+              <th className="item-quantity">Quantity</th>
+              <th className="item-subtotal">Subtotal</th>
+              <th className="item-remove">Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            {getCartItems()}
+          </tbody>
+        </table>
+        <div className='cart-subtotal'>
+          <span><strong>Basket Subtotal: ${totalPrice.toFixed(2)}</strong></span>
+        </div>
+        <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
+        <button onClick={()=>{navigate('/cart/checkout')}}>Checkout Now</button>
+      </div>
+    );
+  }else{
+    return(
+      <div className='cart-summary checkout-cart-summary'>
+        <h3>Basket Summary</h3>
+        <table>
+          <thead>
+            <tr>
+              <th className="item-name">Name</th>
+              <th className="item-quantity">Quantity</th>
+              <th className="item-subtotal">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {getCartItems()}
+          </tbody>
+        </table>
+        <div className='cart-subtotal'>
+          <span><strong>Basket Subtotal: ${totalPrice.toFixed(2)}</strong></span>
+        </div>
+      </div>
+    )
+  }
 };

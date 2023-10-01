@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Allura&family=Titillium+Web:wght@300;400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
 *{
   margin: 0;
   padding: 0;
@@ -22,6 +21,7 @@ code {
 #root{
   background-size: contain;
   background-image: url('./Assets/bricks.jpg');
+  min-height: 100vh;
 }
 button{
   cursor: pointer;

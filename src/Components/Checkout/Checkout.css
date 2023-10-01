@@ -1,4 +1,30 @@
-.Checkout{
+.checkout{
   display: flex;
   justify-content: center;
+}
+.checkout-logged-out{
+  padding: 1em;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.checkout-logged-out h3{
+  font-size: 20px;
+}
+.checkout-logged-out .checkout-button-wrapper{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.checkout-logged-out .checkout-button-wrapper button{
+  border: 0px solid transparent;
+  border-radius: 8px;
+  background-color: #5d1917;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Allura';
+  padding: 0.5em 1em;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }

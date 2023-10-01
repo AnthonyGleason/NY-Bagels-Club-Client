@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Item } from '../../../../Interfaces/interfaces';
 import { modifyCart } from '../../../../Helpers/auth';
-import Aos from 'aos';
-import "aos/dist/aos.css";
 
 export default function StoreItem({
   itemName,
@@ -21,6 +19,22 @@ export default function StoreItem({
 }){
   const [itemQuantity,setItemQuantity] = useState(0);
   const [itemImgSrc, setItemImgSrc] = useState<string | undefined>();
+  const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
+  
+ //handle initial page load
+ useEffect(()=>{
+    //dynamically import images
+    import(`../../../../Assets/bagels/${itemID}.jpg`)
+      .then((module)=>{
+        setItemImgSrc(module.default);
+      });
+  },[]);
+
+  //whenever the cart is updated update the quantities of items
+  useEffect(()=>{
+    setItemQuantity(getItemQuantityFromCart(itemID,cart));
+  },[cart]);
+
   const getItemQuantityFromCart = function(itemID:string,cart:Item[]):number{
     let itemQuantity:number = 0;
     const item:Item | undefined= cart.find((cartItem:Item)=>{
@@ -30,34 +44,14 @@ export default function StoreItem({
     return itemQuantity;
   };
 
-  //handle initial page load
-  useEffect(()=>{
-    //dynamically import images
-    import(`../../../../Assets/bagels/${itemID}.jpg`)
-      .then((module)=>{
-        setItemImgSrc(module.default);
-      });
-    //setup fade animation length
-    Aos.init({duration: 1500});
-  },[]);
-
-  //whenever the cart is updated update the quantities of items
-  useEffect(()=>{
-    setItemQuantity(getItemQuantityFromCart(itemID,cart));
-  },[cart]);
-
-  const getAltThemeClass = function(){
-    if (isAltTheme===true){
-      return 'alt-store-item';
-    }else{
-      return '';
-    };
+  const getAltThemeClass = function() {
+    return isAltTheme ? 'alt-store-item' : '';
   };
-
-  const altThemeClass:string = getAltThemeClass();
-
+  
+  const altThemeClass: string = getAltThemeClass();
+  
   return(
-    <article className={`store-item ${altThemeClass}`}>
+    <article id={`item-${itemID}`} className={`store-item ${altThemeClass}`}>
       <p data-aos='fade-right' className='item-info'>
         {itemName} 
         <br />
@@ -70,14 +64,18 @@ export default function StoreItem({
           modifyCart(
             getItemQuantityFromCart(itemID,cart)+1,
             itemID,
-            setCart
+            setCart,
+            isRequestPending,
+            setIsRequestPending
           )
         }}>+</button>
         <button className='quantity-button' onClick={()=>{
           modifyCart(
             getItemQuantityFromCart(itemID,cart)-1,
             itemID,
-            setCart
+            setCart,
+            isRequestPending,
+            setIsRequestPending
           )
         }}>-</button>
       </div>

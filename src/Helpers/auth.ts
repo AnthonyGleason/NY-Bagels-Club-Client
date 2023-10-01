@@ -12,7 +12,7 @@ export const verifyCartToken = async function(setCart:Function){
   if (responseData.isValid){
     setCart(responseData.cart.items);
     return responseData.isValid;
-  }
+  };
 };
 
 export const requestCartToken = async function(){
@@ -34,11 +34,35 @@ export const fetchAndHandleCart = async function(setCart:Function){
   };
 };
 
+export const verifyLoginToken = async function():Promise<boolean>{
+  let isValid:boolean = false;
+  try{
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/verify`,{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      }
+    });
+    const responseData = await response.json();
+    isValid=responseData.isValid;
+  }catch(err){
+    console.log(err);
+  };
+  return isValid;
+};
+
 export const modifyCart = async function(
   updatedQuantity:number,
   itemID:string,
-  setCart:Function
+  setCart:Function,
+  isRequestPending:boolean,
+  setIsRequestPending:Function
 ){
+  //handle request is already pending limited users to 1 request at a time
+  if (isRequestPending) return;
+  //set request to pending
+  setIsRequestPending(true);
   //make a request to the server to update quantity for cart
   const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts`,{
     method: 'PUT',
@@ -58,4 +82,6 @@ export const modifyCart = async function(
     //update cart state
     setCart(responseData.cart.items);
   };
+  //allow another request to the server
+  setIsRequestPending(false);
 };

@@ -1,12 +1,19 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { getServerUrlPrefix } from '../../Config/clientSettings';
+import Aos from 'aos';
+import "aos/dist/aos.css";
+
 export default function Login(){
   const [errorMessage,setErrorMessage] = useState<string>('');
-
   const [emailInput,setEmailInput] = useState<string>('');
   const [passwordInput,setPasswordInput] = useState<string>('');
+
+  useEffect(()=>{
+    //setup fade animation length
+    Aos.init({duration: 1500});
+  },[]);
 
   const navigate = useNavigate();
   const genErrorMessageElement = function(){
@@ -32,7 +39,7 @@ export default function Login(){
     const responseData = await response.json();
     if (responseData.token){
       localStorage.setItem('loginToken',responseData.token);
-      navigate('/');
+      window.history.back();
     }else{
       setErrorMessage(responseData.message);
     }
@@ -40,7 +47,7 @@ export default function Login(){
 
   return(
     <section className='login-wrapper'>
-      <form className='login'>
+      <form data-aos='fade-in' className='login'>
         <h3>Login</h3>
         <div>
           <label>Email</label>

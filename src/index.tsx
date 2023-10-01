@@ -26,7 +26,7 @@ root.render(
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/cart/checkout' element={<Checkout />} />
-        <Route path='/cart' element={<CartSummary />} />
+        <Route path='/cart' element={<CartSummary isCheckoutView={false} />} />
       </Routes>
       <Footer />
     </HashRouter>
