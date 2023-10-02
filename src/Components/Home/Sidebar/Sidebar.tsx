@@ -5,6 +5,7 @@ import registerImg from '../../../Assets/register.svg';
 import loginImg from '../../../Assets/login.svg';
 import cartImg from '../../../Assets/cart.svg';
 import logoutImg from '../../../Assets/logout.svg';
+import vipImg from '../../../Assets/vip.svg';
 import pianoNotes from '../../../Assets/audio/pianoNotes.mp3';
 import { useNavigate } from 'react-router-dom';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
@@ -120,12 +121,20 @@ export default function Sidebar(
                 </li>
               </> 
             :
-              <li>
-                <button onClick={()=>{handleLogout()}}>
-                  <img src={logoutImg} alt='logout' />
-                  <span>Logout</span>
-                </button> 
-              </li>
+              <>
+                <li>
+                  <button onClick={()=>{handleLogout()}}>
+                    <img src={logoutImg} alt='logout' />
+                    <span>Logout</span>
+                  </button> 
+                </li>
+                <li>
+                  <button onClick={()=>{navigate('/subscribe')}}>
+                    <img src={vipImg} alt='subscribe' />
+                    <span>Subscribe</span>
+                  </button>
+                </li>
+              </>
           }
           <li className='cart'>
             <button onClick={()=>{navigate('/cart')}}>

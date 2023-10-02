@@ -1,54 +1,60 @@
 import React, { useEffect, useState } from 'react';
 import './Checkout.css';
 import { verifyLoginToken } from '../../Helpers/auth';
+import { getServerUrlPrefix } from '../../Config/clientSettings';
+import { StripeElementsOptions, loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import CheckoutForm from './CheckoutForm';
 import { useNavigate } from 'react-router-dom';
 import CartSummary from './CartSummary/CartSummary';
 
+const stripePromise = loadStripe("pk_test_51MkbRQJ42zMuNqyLhOP6Aluvz4TVAxVFFeofdem3PAvRDUoRzwYxfm0tBeOKYhdCNhbIzSSKeVFdrp7IvVku60Yz001xBUoHhk");
+
 export default function Checkout(){
-  const [isLoginValid,setIsLoginValid] = useState<boolean>(true);
+  const [isLoginValid,setIsLoginValid] = useState<boolean>(false);
+  const [clientSecret,setClientSecret] = useState<string>('');
+
+  const navigate = useNavigate();
 
   const verifyAccessToPage = async function(){
     setIsLoginValid(await verifyLoginToken());
-  }
-  const navigate = useNavigate();
+  };
+
+  const getPaymentIntentToken =async function(){
+    const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-payment-intent`,{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('cartToken')}`
+      }
+    });
+    const responseData = await response.json();
+    setClientSecret(responseData.paymentIntentToken);
+  };
+
   useEffect(()=>{
     verifyAccessToPage();
   },[]);
 
-  //gift inputs
-  const [isGiftInput, setIsGiftInput] = useState<boolean>(false);
-  const [giftMessageInput, setGiftMessageInput] = useState<string>('');
+  useEffect(()=>{
+    getPaymentIntentToken();
+  },[]);
 
-  if (isLoginValid){
+  const appearance:any= {
+    theme: 'stripe',
+  };
+  const options:any= {
+    clientSecret,
+    appearance,
+  };
+
+  if (isLoginValid && clientSecret){
     return(
-      <div className='checkout'>
+      <Elements options={options} stripe={stripePromise}>
         <CartSummary isCheckoutView={true} />
-        <h3>Gift?</h3>
-        <div className='gift-options-content'>
-          <div className='gift-toggle-container'>
-            <input
-              type='checkbox'
-              checked={isGiftInput}
-              onChange={(e) => setIsGiftInput(e.target.checked)}
-            />
-          </div>
-          {
-            isGiftInput===true
-            ?
-              <form className='gift-options-form'>
-                <div>
-                  <label>Message:</label>
-                  <textarea value={giftMessageInput} onChange={(e)=>{setGiftMessageInput(e.target.value)}} />
-                </div>
-              </form>
-            :
-             null
-          }
-        </div>
-        <h3>Shipping Information</h3>
-        <h3>Payment Information</h3>
-      </div>
-    );
+        <CheckoutForm />
+      </Elements>
+    )
   }else{
     return(
       <div className='checkout-logged-out'>
@@ -58,6 +64,6 @@ export default function Checkout(){
           <button onClick={()=>{navigate('/register')}}>Register</button>
         </div>
       </div>
-    )
+    );
   };
 };

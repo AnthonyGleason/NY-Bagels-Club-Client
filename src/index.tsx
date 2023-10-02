@@ -10,8 +10,11 @@ import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import CartSummary from './Components/Checkout/CartSummary/CartSummary';
 import Checkout from './Components/Checkout/Checkout';
+
 //import css
 import './index.css';
+import CheckoutSuccess from './Components/CheckoutSuccess/CheckoutSuccess';
+import SubscriptionPage from './Components/SubscriptionPage/SubscriptionPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -25,6 +28,8 @@ root.render(
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/subscribe' element={<SubscriptionPage />} />
+        <Route path='/cart/checkout/success' element={<CheckoutSuccess />} />
         <Route path='/cart/checkout' element={<Checkout />} />
         <Route path='/cart' element={<CartSummary isCheckoutView={false} />} />
       </Routes>

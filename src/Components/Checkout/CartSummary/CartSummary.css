@@ -31,6 +31,8 @@
 }
 .cart-subtotal{
   align-self: flex-end;
+  display: flex;
+  flex-direction: column;
 }
 .cart-shipping-note{
   align-self: flex-end;
@@ -54,8 +56,8 @@
   flex-direction: column;
   gap: 30px;
 }
-.checkout .checkout-cart-summary table thead tr,
-.checkout .checkout-cart-summary table tbody tr{
+#root .checkout-cart-summary table thead tr,
+#root .checkout-cart-summary table tbody tr{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;

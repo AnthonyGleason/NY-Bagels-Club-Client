@@ -11,8 +11,8 @@ export default function CartSummary({
   isCheckoutView:boolean
 }){
   const [cart,setCart] = useState<Item[]>([]);
-  const [totalPrice,setTotalPrice] = useState<number>(0);
-  
+  const [cartSubtotalPrice,setCartSubtotalPrice] = useState<number>(0);
+  const [taxPrice,setTaxPrice] = useState<number>(0);
   const navigate = useNavigate();
   //handle initial page load (grab latest cart data);
   useEffect(()=>{
@@ -21,10 +21,10 @@ export default function CartSummary({
   
   //when the cart is updated, update the total price of all items in the cart
   useEffect(()=>{
-    setTotalPrice(getCartTotalPrice());
+    setCartSubtotalPrice(getCartSubtotalPrice());
   },[cart])
 
-  const getCartTotalPrice = function():number{
+  const getCartSubtotalPrice = function():number{
     let totalPrice:number = 0;
     cart.forEach((cartItem)=>{
       totalPrice += cartItem.price * cartItem.quantity;
@@ -74,7 +74,7 @@ export default function CartSummary({
           </tbody>
         </table>
         <div className='cart-subtotal'>
-          <span><strong>Basket Subtotal: ${totalPrice.toFixed(2)}</strong></span>
+          <span><strong>Basket Subtotal: ${cartSubtotalPrice.toFixed(2)}</strong></span>
         </div>
         <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
         <button onClick={()=>{navigate('/cart/checkout')}}>Checkout Now</button>
@@ -97,7 +97,8 @@ export default function CartSummary({
           </tbody>
         </table>
         <div className='cart-subtotal'>
-          <span><strong>Basket Subtotal: ${totalPrice.toFixed(2)}</strong></span>
+          <span><strong>Calculated Tax: ${taxPrice.toFixed(2) || '0.00'}</strong></span>
+          <span><strong>Basket Total: ${(cartSubtotalPrice+taxPrice).toFixed(2)}</strong></span>
         </div>
       </div>
     )
