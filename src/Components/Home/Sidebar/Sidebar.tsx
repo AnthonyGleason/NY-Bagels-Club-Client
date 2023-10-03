@@ -1,16 +1,17 @@
 import React,{useEffect, useState} from 'react';
-import menuImg from '../../../Assets/menu.svg';
+import menuImg from '../../../Assets/icons/menu.svg';
+import registerImg from '../../../Assets/icons/register.svg';
+import loginImg from '../../../Assets/icons/login.svg';
+import cartImg from '../../../Assets/icons/cart.svg';
+import logoutImg from '../../../Assets/icons/logout.svg';
+import vipImg from '../../../Assets/icons/vip.svg';
 import './Sidebar.css';
-import registerImg from '../../../Assets/register.svg';
-import loginImg from '../../../Assets/login.svg';
-import cartImg from '../../../Assets/cart.svg';
-import logoutImg from '../../../Assets/logout.svg';
-import vipImg from '../../../Assets/vip.svg';
-import pianoNotes from '../../../Assets/audio/pianoNotes.mp3';
 import { useNavigate } from 'react-router-dom';
-import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import { Item } from '../../../Interfaces/interfaces';
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
+import { calculateTotalCartQuantity } from '../../../Helpers/cart';
+import { handleLogout, verifyLoginToken } from '../../../Helpers/auth';
+import { toggleExpandMenu } from '../../../Helpers/sidebar';
 
 export default function Sidebar(
   {
@@ -27,68 +28,18 @@ export default function Sidebar(
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const [totalQuantity,setTotalQuantity] = useState<number>(0);
   const navigate = useNavigate();
-  
-  const calculateTotalQuantity = function(){
-    let totalItems = 0;
-    //handle empty cart
-    if (!cart) return totalItems;
-    cart.forEach((item:Item)=>{
-      if (item.quantity) totalItems+=item.quantity;
-    });
-    return totalItems;
-  };
-  
-  //when cart is updated calculate new total quantity
-  useEffect(()=>{
-    setTotalQuantity(calculateTotalQuantity());
-  },[cart])
 
-  //check if user is logged in and login token is valid on initial page load
-  useEffect(()=>{
+   //check if user is logged in and login token is valid on initial page load
+   useEffect(()=>{
     if (localStorage.getItem('loginToken')){
-      verifyToken();
+      verifyLoginToken(setIsSignedIn);
     };
   },[])
 
-  const toggleExpandMenu = function(){
-    //menu audio has not played yet in the current session
-    if (!hasAudioPlayed) {
-      //play the audio
-      const audio = new Audio(pianoNotes);
-      audio.play();
-      //update the state so the audio doesn't play twice in a single user browsing session
-      setHasAudioPlayed(true);
-    };
-    //expand the menu
-    setIsExpanded(isExpanded===true ? false : true);
-  };
-  
-  const verifyToken = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/users/verify`,{
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      }
-    });
-    const responseData = await response.json();
-    if (responseData.isValid===true){
-      setIsSignedIn(true);
-    };
-  };
-
-  const handleLogout = async function(){
-    await fetch(`${getServerUrlPrefix()}/api/users/logout`,{
-      method: 'POST',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      }
-    });
-    setIsSignedIn(false);
-    //remove the token locally
-    localStorage.removeItem('loginToken');
-  };
+  //when cart is updated calculate new total quantity
+  useEffect(()=>{
+    setTotalQuantity(calculateTotalCartQuantity(cart));
+  },[cart])
 
   //sidebar is expanded
   if (isExpanded){
@@ -99,7 +50,14 @@ export default function Sidebar(
         animate={{ right: isExpanded ? 0 : -200 }}
         transition={{ duration: 0.5 }}
       >
-        <button className='sidebar-expand-toggle' onClick={()=>{toggleExpandMenu()}}>
+        <button className='sidebar-expand-toggle' onClick={()=>{
+          toggleExpandMenu(
+            hasAudioPlayed,
+            setHasAudioPlayed,
+            isExpanded,
+            setIsExpanded
+          )
+        }}>
           <img src={menuImg} alt='expand sidebar menu' /> 
         </button>
         <ol className='sidebar-nav'>
@@ -123,7 +81,7 @@ export default function Sidebar(
             :
               <>
                 <li>
-                  <button onClick={()=>{handleLogout()}}>
+                  <button onClick={()=>{handleLogout(setIsSignedIn)}}>
                     <img src={logoutImg} alt='logout' />
                     <span>Logout</span>
                   </button> 
@@ -153,7 +111,12 @@ export default function Sidebar(
   }else{
     return(
       <section className='sidebar-closed'>
-        <button className='sidebar-expand-toggle' onClick={()=>{toggleExpandMenu()}}>
+        <button className='sidebar-expand-toggle' onClick={()=>{toggleExpandMenu(
+            hasAudioPlayed,
+            setHasAudioPlayed,
+            isExpanded,
+            setIsExpanded
+        )}}>
           <img src={menuImg} alt='expand sidebar menu' /> 
         </button>
       </section>

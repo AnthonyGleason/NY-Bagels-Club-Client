@@ -28,7 +28,7 @@
   align-items: center;
 }
 .init-load-background{
-  background-image: url('../../../Assets/loading.jpg');
+  background-image: url('../../../Assets/backgrounds/loading.jpg');
   width: 100vw;
   height: 100vh;
   background-size: cover;

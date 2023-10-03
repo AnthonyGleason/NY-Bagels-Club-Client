@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import './Checkout.css';
 import { verifyLoginToken } from '../../Helpers/auth';
 import { getServerUrlPrefix } from '../../Config/clientSettings';
-import { StripeElementsOptions, loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import CheckoutForm from './CheckoutForm';
-import { useNavigate } from 'react-router-dom';
 import CartSummary from './CartSummary/CartSummary';
+import CheckoutForm from './CheckoutForm/CheckoutForm';
+import { useNavigate } from 'react-router-dom';
+import './Checkout.css';
 
 const stripePromise = loadStripe("pk_test_51MkbRQJ42zMuNqyLhOP6Aluvz4TVAxVFFeofdem3PAvRDUoRzwYxfm0tBeOKYhdCNhbIzSSKeVFdrp7IvVku60Yz001xBUoHhk");
 

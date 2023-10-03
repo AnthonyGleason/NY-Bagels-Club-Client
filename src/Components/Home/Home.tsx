@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { Item} from '../../Interfaces/interfaces';
-import { fetchAndHandleCart } from '../../Helpers/auth';
 //import components
 import Sidebar from './Sidebar/Sidebar';
 import StoreItems from './StoreItems/StoreItems';
@@ -8,9 +7,10 @@ import About from './About/About';
 import HomeLoadingOverlay from './HomeLoadingOverlay/HomeLoadingOverlay';
 //import css
 import './Home.css';
+import upArrowImg from '../../Assets/icons/arrow-up-outline.svg';
 import Aos from 'aos';
 import "aos/dist/aos.css";
-import upArrowImg from '../../Assets/arrow-up-outline.svg';
+import { fetchAndHandleCart } from '../../Helpers/cart';
 
 export default function Home(){
   const [isPageLoaded, setIsPageLoaded] = useState<boolean>(false);

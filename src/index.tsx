@@ -13,8 +13,8 @@ import Checkout from './Components/Checkout/Checkout';
 
 //import css
 import './index.css';
-import CheckoutSuccess from './Components/CheckoutSuccess/CheckoutSuccess';
-import SubscriptionPage from './Components/SubscriptionPage/SubscriptionPage';
+import CheckoutSuccess from './Components/Checkout/CheckoutSuccess/CheckoutSuccess';
+import SubscriptionPage from './Components/Accounts/SubscriptionPage/SubscriptionPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

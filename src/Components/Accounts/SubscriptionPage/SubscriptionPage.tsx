@@ -17,12 +17,6 @@ export default function SubscriptionPage(){
     // Set the source attribute to the URL of the external script
     script.src = 'https://js.stripe.com/v3/pricing-table.js';
 
-    // Add an event listener to know when the script has loaded
-    script.onload = () => {
-      console.log('External script has loaded.');
-      // You can now use functions or variables defined in the external script
-    };
-
     // Append the script element to the document's head
     document.head.appendChild(script);
 

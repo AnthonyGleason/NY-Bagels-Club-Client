@@ -26,15 +26,7 @@ export const requestCartToken = async function(){
   }
 };
 
-export const fetchAndHandleCart = async function(setCart:Function){
-  const cartToken:string | null = localStorage.getItem('cartToken');
-  //a cart token exists but is invalid, or a cart token does not exist
-  if ((cartToken && !await verifyCartToken(setCart)) || !cartToken){
-    localStorage.setItem('cartToken',await requestCartToken());
-  };
-};
-
-export const verifyLoginToken = async function():Promise<boolean>{
+export const verifyLoginToken = async function(setIsSignedIn?:Function):Promise<boolean>{
   let isValid:boolean = false;
   try{
     const response = await fetch(`${getServerUrlPrefix()}/api/users/verify`,{
@@ -49,39 +41,19 @@ export const verifyLoginToken = async function():Promise<boolean>{
   }catch(err){
     console.log(err);
   };
+  if (setIsSignedIn) setIsSignedIn(isValid);
   return isValid;
 };
 
-export const modifyCart = async function(
-  updatedQuantity:number,
-  itemID:string,
-  setCart:Function,
-  isRequestPending:boolean,
-  setIsRequestPending:Function
-){
-  //handle request is already pending limited users to 1 request at a time
-  if (isRequestPending) return;
-  //set request to pending
-  setIsRequestPending(true);
-  //make a request to the server to update quantity for cart
-  const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts`,{
-    method: 'PUT',
+export const handleLogout = async function(setIsSignedIn?:Function){
+  await fetch(`${getServerUrlPrefix()}/api/users/logout`,{
+    method: 'POST',
     headers:{
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('cartToken')}`
-    },
-    body: JSON.stringify({
-      itemID: itemID,
-      updatedQuantity: updatedQuantity,
-    })
+      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+    }
   });
-  const responseData = await response.json();
-  if (responseData.cartToken && responseData.cart){
-    //replace the cartToken in localStorage with the updated cartToken
-    localStorage.setItem('cartToken',responseData.cartToken);
-    //update cart state
-    setCart(responseData.cart.items);
-  };
-  //allow another request to the server
-  setIsRequestPending(false);
+  if (setIsSignedIn) setIsSignedIn(false);
+  //remove the token locally
+  localStorage.removeItem('loginToken');
 };

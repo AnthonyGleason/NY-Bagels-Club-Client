@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { modifyCart } from '../../../Helpers/auth';
+import { getCartItemSubtotal, handleCartItemInputChange, modifyCart } from '../../../Helpers/cart';
 import { Item } from '../../../Interfaces/interfaces';
-import removeImg from '../../../Assets/x.svg';
+import removeImg from '../../../Assets/icons/x.svg';
 
 export default function CartSummaryItem(
   {
@@ -14,11 +14,18 @@ export default function CartSummaryItem(
     isCheckoutView:boolean
   }
 ){
-  const [cartQuantity,setCartQuantity] = useState<number | string>(cartItem.quantity);
+  const [cartItemQuantity,setCartItemQuantity] = useState<number | string>(cartItem.quantity);
+  const [cartItemSubtotal,setCartItemSubtotal] = useState<number>(getCartItemSubtotal(cartItem));
   const [isRequestPending,setIsRequestPending] = useState<boolean>(false);
+
+  //whenever the cartItem quantity is updated, update the states
   useEffect(()=>{
-    setCartQuantity(cartItem.quantity);
-  },[cartItem])
+    //update item quantity
+    setCartItemQuantity(cartItem.quantity);
+    //update subtotal
+    setCartItemSubtotal(getCartItemSubtotal(cartItem))
+  },[cartItem.quantity])
+
   if (!isCheckoutView){
     return(
       <tr>
@@ -26,26 +33,21 @@ export default function CartSummaryItem(
         <td>
           <input
             type='number'
-            value={cartQuantity}
-            onChange={(e) => {
-              const newVal: number = parseInt(e.target.value);
-              //we dont want users to accidently delete their cart so lets prevent that
-              if (!newVal) {
-                setCartQuantity('');
-                return ;
-              }
-              modifyCart(
-                newVal,
-                cartItem._id,
+            value={cartItemQuantity}
+            onChange={(e) => { 
+              handleCartItemInputChange(
+                e,
+                setCartItemQuantity,
+                cartItem,
                 setCart,
                 isRequestPending,
                 setIsRequestPending
-              );
+              )
             }}
           />
         </td>
         <td className='item-subtotal'>
-          ${parseFloat((cartItem.price * cartItem.quantity).toString()).toFixed(2)}
+          ${cartItemSubtotal}
         </td>
         <td className='item-remove-wrapper'>
           <button onClick={() => {
@@ -67,7 +69,7 @@ export default function CartSummaryItem(
       <tr>
         <td className='item-name'>{cartItem.name}</td>
         <td>
-          <span>{cartQuantity}</span>
+          <span>{cartItemSubtotal}</span>
         </td>
         <td className='item-subtotal'>
           ${parseFloat((cartItem.price * cartItem.quantity).toString()).toFixed(2)}

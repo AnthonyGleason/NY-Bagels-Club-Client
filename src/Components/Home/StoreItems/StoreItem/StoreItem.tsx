@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Item } from '../../../../Interfaces/interfaces';
-import { modifyCart } from '../../../../Helpers/auth';
+import { modifyCart } from '../../../../Helpers/cart';
+import './StoreItem.css';
 
 export default function StoreItem({
   itemName,
@@ -24,7 +25,7 @@ export default function StoreItem({
  //handle initial page load
  useEffect(()=>{
     //dynamically import images
-    import(`../../../../Assets/bagels/${itemID}.jpg`)
+    import(`../../../../Assets/storeItems/${itemID}.jpg`)
       .then((module)=>{
         setItemImgSrc(module.default);
       });
@@ -44,11 +45,9 @@ export default function StoreItem({
     return itemQuantity;
   };
 
-  const getAltThemeClass = function() {
+  const altThemeClass: string = function() {
     return isAltTheme ? 'alt-store-item' : '';
-  };
-  
-  const altThemeClass: string = getAltThemeClass();
+  }();
   
   return(
     <article id={`item-${itemID}`} className={`store-item ${altThemeClass}`}>

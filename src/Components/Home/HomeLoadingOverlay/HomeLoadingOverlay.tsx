@@ -2,7 +2,8 @@ import React, {useRef, useEffect} from 'react';
 import Aos from 'aos';
 import "aos/dist/aos.css";
 import './HomeLoadingOverlay.css';
-import bubbleLoadingImg from '../../../Assets/bubble-loading.svg';
+import bubbleLoadingImg from '../../../Assets/icons/bubble-loading.svg';
+import { HOME_LOADING_DELAY } from '../../../Config/clientSettings';
 
 export default function HomeLoadingOverlay(
   {
@@ -17,7 +18,7 @@ export default function HomeLoadingOverlay(
     //redirect user to new url after time has passed
     setTimeout(()=>{
       setIsPageLoaded(true);
-    },4000)
+    },HOME_LOADING_DELAY)
   },[]);
 
   return(
@@ -36,4 +37,4 @@ export default function HomeLoadingOverlay(
       </div>
     </section>
   )
-}
+};

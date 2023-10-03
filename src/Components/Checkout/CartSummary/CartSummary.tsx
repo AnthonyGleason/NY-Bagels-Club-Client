@@ -1,52 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import './CartSummary.css';
 import { Item } from '../../../Interfaces/interfaces';
-import { fetchAndHandleCart, modifyCart } from '../../../Helpers/auth';
-import CartSummaryItem from '../CartSummaryItem/CartSummaryItem';
+import { fetchAndHandleCart, getCartItems,getCartSubtotalPrice  } from '../../../Helpers/cart';
 import { useNavigate } from 'react-router-dom';
+import './CartSummary.css';
 
 export default function CartSummary({
   isCheckoutView
 }:{
   isCheckoutView:boolean
 }){
+  const navigate = useNavigate();
   const [cart,setCart] = useState<Item[]>([]);
   const [cartSubtotalPrice,setCartSubtotalPrice] = useState<number>(0);
   const [taxPrice,setTaxPrice] = useState<number>(0);
-  const navigate = useNavigate();
+
   //handle initial page load (grab latest cart data);
   useEffect(()=>{
     fetchAndHandleCart(setCart);
   },[]);
-  
+
   //when the cart is updated, update the total price of all items in the cart
   useEffect(()=>{
-    setCartSubtotalPrice(getCartSubtotalPrice());
+    setCartSubtotalPrice(getCartSubtotalPrice(cart));
   },[cart])
-
-  const getCartSubtotalPrice = function():number{
-    let totalPrice:number = 0;
-    cart.forEach((cartItem)=>{
-      totalPrice += cartItem.price * cartItem.quantity;
-    });
-    return totalPrice;
-  };
-
-  const getCartItems = function () {
-    // Loop over cart items
-    const cartRows = cart.map((cartItem, index) => {
-      return (
-        <CartSummaryItem 
-          key={index}
-          cartItem={cartItem}
-          setCart={setCart}
-          isCheckoutView={isCheckoutView}
-        />
-      );
-    });
-    // Return the cart rows
-    return cartRows;
-  };  
 
   //handle empty shopping cart
   if (cart.length===0){
@@ -58,7 +34,7 @@ export default function CartSummary({
     );
   }else if (cart.length>0 && !isCheckoutView){
     return(
-      <div className='cart-summary'>
+      <section className='cart-summary'>
         <h3>Basket</h3>
         <table>
           <thead>
@@ -70,7 +46,7 @@ export default function CartSummary({
             </tr>
           </thead>
           <tbody>
-            {getCartItems()}
+            {getCartItems(cart,setCart,isCheckoutView)}
           </tbody>
         </table>
         <div className='cart-subtotal'>
@@ -78,11 +54,11 @@ export default function CartSummary({
         </div>
         <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
         <button onClick={()=>{navigate('/cart/checkout')}}>Checkout Now</button>
-      </div>
+      </section>
     );
   }else{
     return(
-      <div className='cart-summary checkout-cart-summary'>
+      <section className='cart-summary checkout-cart-summary'>
         <h3>Basket Summary</h3>
         <table>
           <thead>
@@ -93,14 +69,14 @@ export default function CartSummary({
             </tr>
           </thead>
           <tbody>
-            {getCartItems()}
+            {getCartItems(cart,setCart,isCheckoutView)}
           </tbody>
         </table>
         <div className='cart-subtotal'>
           <span><strong>Calculated Tax: ${taxPrice.toFixed(2) || '0.00'}</strong></span>
           <span><strong>Basket Total: ${(cartSubtotalPrice+taxPrice).toFixed(2)}</strong></span>
         </div>
-      </div>
+      </section>
     )
-  }
+  };
 };
