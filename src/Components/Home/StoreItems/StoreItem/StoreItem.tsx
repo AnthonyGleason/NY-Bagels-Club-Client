@@ -53,9 +53,24 @@ export default function StoreItem({
   return(
     <article id={`item-${itemID}`} className={`store-item ${altThemeClass}`}>
       <p data-aos='fade-right' className='item-info'>
+        {/* dynamically show prices based on access level, server will verify price and membership level */}
         {itemName} 
         <br />
+        Non-Member:
+        <br />
         ${itemPrice} each
+        <br />
+        Gold Member:
+        <br />
+        ${(itemPrice-(itemPrice*0.05)).toFixed(2)} each
+        <br />
+        Platinum Member:
+        <br />
+        ${(itemPrice-(itemPrice*0.10)).toFixed(2)} each
+        <br />
+        Diamond Member:
+        <br />
+        ${(itemPrice-(itemPrice*0.15)).toFixed(2)} each
       </p>
       <img data-aos='fade-right' src={itemImgSrc} alt={`Item ${itemID}`} />
       <div data-aos='fade-right' className='store-item-buttons'>
