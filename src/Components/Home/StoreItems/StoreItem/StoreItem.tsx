@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Item } from '../../../../Interfaces/interfaces';
 import { modifyCart } from '../../../../Helpers/cart';
 import './StoreItem.css';
+import { getServerUrlPrefix } from '../../../../Config/clientSettings';
 
 export default function StoreItem({
   itemName,
@@ -21,7 +22,8 @@ export default function StoreItem({
   const [itemQuantity,setItemQuantity] = useState(0);
   const [itemImgSrc, setItemImgSrc] = useState<string | undefined>();
   const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
-  
+  const [userTier, setUserTier] = useState<string>('Non-Member');
+
  //handle initial page load
  useEffect(()=>{
     //dynamically import images
@@ -29,12 +31,27 @@ export default function StoreItem({
       .then((module)=>{
         setItemImgSrc(module.default);
       });
+
+      //get user tier
+      getUserTier();
   },[]);
 
   //whenever the cart is updated update the quantities of items
   useEffect(()=>{
     setItemQuantity(getItemQuantityFromCart(itemID,cart));
   },[cart]);
+
+  const getUserTier = async function(){
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/membershipLevel`,{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      }
+    });
+    const responseData = await response.json();
+    setUserTier(responseData.membershipLevel);
+  };
 
   const getItemQuantityFromCart = function(itemID:string,cart:Item[]):number{
     let itemQuantity:number = 0;
@@ -49,27 +66,38 @@ export default function StoreItem({
     return isAltTheme ? 'alt-store-item' : '';
   }();
   
+  const calcPriceByUserTier = function(itemPrice:number,userTier:string):string{
+    switch(userTier){
+      case 'Non-Member':
+        return (itemPrice).toFixed(2);
+      case 'Gold Member':
+        return (itemPrice-(itemPrice*0.05)).toFixed(2);
+      case 'Platinum Member':
+        return (itemPrice-(itemPrice*0.10)).toFixed(2);
+      case 'Diamond Member':
+        return (itemPrice-(itemPrice*0.15)).toFixed(2)
+      default:
+        return (itemPrice).toFixed(2);
+    }
+  };
+
+  const getCurrentUserTierPricing = function(itemPrice:number,userTier:string){
+    return(
+      <>
+        {userTier} Pricing
+        <br />
+        ${calcPriceByUserTier(itemPrice,userTier)}
+      </>
+    )
+  };
+  
   return(
     <article id={`item-${itemID}`} className={`store-item ${altThemeClass}`}>
       <p data-aos='fade-right' className='item-info'>
         {/* dynamically show prices based on access level, server will verify price and membership level */}
         {itemName} 
         <br />
-        Non-Member:
-        <br />
-        ${itemPrice} each
-        <br />
-        Gold Member:
-        <br />
-        ${(itemPrice-(itemPrice*0.05)).toFixed(2)} each
-        <br />
-        Platinum Member:
-        <br />
-        ${(itemPrice-(itemPrice*0.10)).toFixed(2)} each
-        <br />
-        Diamond Member:
-        <br />
-        ${(itemPrice-(itemPrice*0.15)).toFixed(2)} each
+        {getCurrentUserTierPricing(itemPrice,userTier)}
       </p>
       <img data-aos='fade-right' src={itemImgSrc} alt={`Item ${itemID}`} />
       <div data-aos='fade-right' className='store-item-buttons'>
