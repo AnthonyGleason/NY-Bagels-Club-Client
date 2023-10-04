@@ -47,7 +47,8 @@ export const modifyCart = async function(
     method: 'PUT',
     headers:{
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('cartToken')}`
+      'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
+      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
     },
     body: JSON.stringify({
       itemID: itemID,

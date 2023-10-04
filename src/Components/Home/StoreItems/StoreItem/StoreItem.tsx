@@ -11,8 +11,7 @@ export default function StoreItem({
   cart,
   setCart,
   isAltTheme,
-  isSignedIn,
-  setIsSignedIn
+  userTier
 }:{
   itemName: string,
   itemID:string,
@@ -20,13 +19,12 @@ export default function StoreItem({
   cart:Item[],
   setCart:Function,
   isAltTheme:boolean,
-  isSignedIn: boolean,
-  setIsSignedIn: Function
+  userTier:string
 }){
   const [itemQuantity,setItemQuantity] = useState(0);
   const [itemImgSrc, setItemImgSrc] = useState<string | undefined>();
   const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
-  const [userTier, setUserTier] = useState<string>('Non-Member');
+  
 
  //handle initial page load
  useEffect(()=>{
@@ -35,36 +33,12 @@ export default function StoreItem({
       .then((module)=>{
         setItemImgSrc(module.default);
       });
-
-    //get user tier
-    getUserTier();
   },[]);
-
-  //if the user logs out the price will adjust accordingly
-  useEffect(()=>{
-    getUserTier();
-  },[isSignedIn])
 
   //whenever the cart is updated update the quantities of items
   useEffect(()=>{
     setItemQuantity(getItemQuantityFromCart(itemID,cart));
   },[cart]);
-
-  const getUserTier = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/users/membershipLevel`,{
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      }
-    });
-    const responseData = await response.json();
-    if (responseData.membershipLevel){
-      setUserTier(responseData.membershipLevel);
-    }else{
-      setUserTier('Non-Member');
-    };
-  };
 
   const getItemQuantityFromCart = function(itemID:string,cart:Item[]):number{
     let itemQuantity:number = 0;

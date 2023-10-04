@@ -90,7 +90,6 @@ export default function Home(){
           </h3>
           <StoreItems 
             isSignedIn={isSignedIn}
-            setIsSignedIn={setIsSignedIn}
             cart={cart}
             setCart={setCart} />
         </div>

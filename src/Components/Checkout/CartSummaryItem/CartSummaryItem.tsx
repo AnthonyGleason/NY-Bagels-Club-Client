@@ -69,7 +69,7 @@ export default function CartSummaryItem(
       <tr>
         <td className='item-name'>{cartItem.name}</td>
         <td>
-          <span>{cartItemSubtotal}</span>
+          <span>{cartItemQuantity}</span>
         </td>
         <td className='item-subtotal'>
           ${parseFloat((cartItem.price * cartItem.quantity).toString()).toFixed(2)}

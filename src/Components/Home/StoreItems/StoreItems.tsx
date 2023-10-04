@@ -7,15 +7,14 @@ import { getServerUrlPrefix } from '../../../Config/clientSettings';
 export default function StoreItems({
     cart,
     setCart,
-    isSignedIn,
-    setIsSignedIn
+    isSignedIn
   }:{
     cart: Item[],
     setCart: Function,
-    isSignedIn: boolean,
-    setIsSignedIn: Function
+    isSignedIn: boolean
   }){
   const [storeItems,setStoreItems] = useState<Item[]>([]); 
+  const [userTier, setUserTier] = useState<string>('Non-Member');
 
   const fetchAndSetStoreItems = async function(storeItemSetter:Function){
     const response = await fetch(`${getServerUrlPrefix()}/api/shop/all`,{
@@ -29,7 +28,28 @@ export default function StoreItems({
   //get store items on initial load
   useEffect(()=>{
     fetchAndSetStoreItems(setStoreItems);
+    populateUserTier();
   },[]);
+
+  useEffect(()=>{
+    populateUserTier()
+  },[isSignedIn]);
+
+  const populateUserTier = async function(){
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/membershipLevel`,{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      }
+    });
+    const responseData = await response.json();
+    if (responseData.membershipLevel){
+      setUserTier(responseData.membershipLevel);
+    }else{
+      setUserTier('Non-Member');
+    };
+  };
 
   let counter:number = 1;
 
@@ -53,8 +73,7 @@ export default function StoreItems({
               cart={cart}
               setCart={setCart}
               isAltTheme={counter%2===0}
-              isSignedIn={isSignedIn}
-              setIsSignedIn={setIsSignedIn}
+              userTier={userTier}
             />
           )
         })

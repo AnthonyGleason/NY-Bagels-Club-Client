@@ -20,13 +20,13 @@ export default function Checkout(){
     setIsLoginValid(await verifyLoginToken());
   };
 
-  const getPaymentIntentToken =async function(){
+  const getPaymentIntentToken = async function(){
     const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-payment-intent`,{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
-        'CartAuthorization': `Bearer ${localStorage.getItem('cartToken')}`
+        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
       }
     });
     const responseData = await response.json();

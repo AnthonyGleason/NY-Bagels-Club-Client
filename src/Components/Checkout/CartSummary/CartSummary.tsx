@@ -56,7 +56,7 @@ export default function CartSummary({
         <button onClick={()=>{navigate('/cart/checkout')}}>Checkout Now</button>
       </section>
     );
-  }else{
+  }else{ //is checkout view
     return(
       <section className='cart-summary checkout-cart-summary'>
         <h3>Basket Summary</h3>
