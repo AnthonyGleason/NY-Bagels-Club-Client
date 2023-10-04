@@ -16,6 +16,7 @@ export default function Home(){
   const [isPageLoaded, setIsPageLoaded] = useState<boolean>(false);
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Item[]>([]);
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 
   //handle initial page load
   useEffect(()=>{
@@ -40,6 +41,8 @@ export default function Home(){
           cart={cart}
           isExpanded={isSidebarExpanded} 
           setIsExpanded={setIsSidebarExpanded}
+          isSignedIn={isSignedIn}
+          setIsSignedIn={setIsSignedIn}
         />
         <button onClick={()=>{scrollToID('nav')}} className='scroll-up-button'>
           <img src={upArrowImg} alt='scroll up'/>
@@ -85,7 +88,11 @@ export default function Home(){
             <br />
             to Your Doorstep
           </h3>
-          <StoreItems cart={cart} setCart={setCart} />
+          <StoreItems 
+            isSignedIn={isSignedIn}
+            setIsSignedIn={setIsSignedIn}
+            cart={cart}
+            setCart={setCart} />
         </div>
       </main>
     );

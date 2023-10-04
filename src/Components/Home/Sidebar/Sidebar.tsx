@@ -17,15 +17,18 @@ export default function Sidebar(
   {
     cart,
     isExpanded,
-    setIsExpanded
+    setIsExpanded,
+    isSignedIn,
+    setIsSignedIn
   }:{
     cart:Item[];
     isExpanded:boolean,
-    setIsExpanded:Function
+    setIsExpanded:Function,
+    isSignedIn:boolean,
+    setIsSignedIn:Function
   }
 ){
   const [hasAudioPlayed,setHasAudioPlayed] = useState<boolean>(false);
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const [totalQuantity,setTotalQuantity] = useState<number>(0);
   const navigate = useNavigate();
 
@@ -86,14 +89,14 @@ export default function Sidebar(
                     <span>Logout</span>
                   </button> 
                 </li>
-                <li>
-                  <button onClick={()=>{navigate('/subscribe')}}>
-                    <img src={vipImg} alt='subscribe' />
-                    <span>Subscribe</span>
-                  </button>
-                </li>
               </>
           }
+          <li>
+            <button onClick={()=>{navigate('/subscribe')}}>
+              <img src={vipImg} alt='subscribe' />
+              <span>Subscribe</span>
+            </button>
+          </li>
           <li className='cart'>
             <button onClick={()=>{navigate('/cart')}}>
               <img src={cartImg} alt='cart' />

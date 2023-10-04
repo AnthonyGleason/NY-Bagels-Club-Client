@@ -10,14 +10,18 @@ export default function StoreItem({
   itemPrice,
   cart,
   setCart,
-  isAltTheme
+  isAltTheme,
+  isSignedIn,
+  setIsSignedIn
 }:{
   itemName: string,
   itemID:string,
   itemPrice:number,
   cart:Item[],
   setCart:Function,
-  isAltTheme:boolean
+  isAltTheme:boolean,
+  isSignedIn: boolean,
+  setIsSignedIn: Function
 }){
   const [itemQuantity,setItemQuantity] = useState(0);
   const [itemImgSrc, setItemImgSrc] = useState<string | undefined>();
@@ -32,9 +36,14 @@ export default function StoreItem({
         setItemImgSrc(module.default);
       });
 
-      //get user tier
-      getUserTier();
+    //get user tier
+    getUserTier();
   },[]);
+
+  //if the user logs out the price will adjust accordingly
+  useEffect(()=>{
+    getUserTier();
+  },[isSignedIn])
 
   //whenever the cart is updated update the quantities of items
   useEffect(()=>{
@@ -50,7 +59,11 @@ export default function StoreItem({
       }
     });
     const responseData = await response.json();
-    setUserTier(responseData.membershipLevel);
+    if (responseData.membershipLevel){
+      setUserTier(responseData.membershipLevel);
+    }else{
+      setUserTier('Non-Member');
+    };
   };
 
   const getItemQuantityFromCart = function(itemID:string,cart:Item[]):number{

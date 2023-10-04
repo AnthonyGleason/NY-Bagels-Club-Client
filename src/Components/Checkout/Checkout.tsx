@@ -25,7 +25,8 @@ export default function Checkout(){
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('cartToken')}`
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
+        'CartAuthorization': `Bearer ${localStorage.getItem('cartToken')}`
       }
     });
     const responseData = await response.json();
@@ -34,9 +35,6 @@ export default function Checkout(){
 
   useEffect(()=>{
     verifyAccessToPage();
-  },[]);
-
-  useEffect(()=>{
     getPaymentIntentToken();
   },[]);
 

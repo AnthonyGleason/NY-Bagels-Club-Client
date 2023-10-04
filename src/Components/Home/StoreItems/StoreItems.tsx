@@ -6,10 +6,14 @@ import { getServerUrlPrefix } from '../../../Config/clientSettings';
 
 export default function StoreItems({
     cart,
-    setCart
+    setCart,
+    isSignedIn,
+    setIsSignedIn
   }:{
     cart: Item[],
-    setCart: Function
+    setCart: Function,
+    isSignedIn: boolean,
+    setIsSignedIn: Function
   }){
   const [storeItems,setStoreItems] = useState<Item[]>([]); 
 
@@ -49,6 +53,8 @@ export default function StoreItems({
               cart={cart}
               setCart={setCart}
               isAltTheme={counter%2===0}
+              isSignedIn={isSignedIn}
+              setIsSignedIn={setIsSignedIn}
             />
           )
         })

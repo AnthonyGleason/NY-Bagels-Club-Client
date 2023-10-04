@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SubscriptionPage.css';
+import { useNavigate } from 'react-router-dom';
+import { verifyLoginToken } from '../../../Helpers/auth';
 
 declare global {
   namespace JSX {
@@ -10,7 +12,15 @@ declare global {
 };
 
 export default function SubscriptionPage(){
+  const navigate = useNavigate();
+  const [isLoginValid,setIsLoginValid] = useState<boolean>(false);
+  
+  const verifyAccessToPage = async function(){
+    setIsLoginValid(await verifyLoginToken());
+  };
+  
   useEffect(() => {
+
     // Create a script element
     const script = document.createElement('script');
 
@@ -19,19 +29,36 @@ export default function SubscriptionPage(){
 
     // Append the script element to the document's head
     document.head.appendChild(script);
-
+    
     // Cleanup function to remove the script when the component unmounts
     return () => {
       document.head.removeChild(script);
     };
   }, []); // Empty dependency array ensures this effect runs once when the component mounts
-
-  return(
-    <section className='pricing-table'>
-      <stripe-pricing-table
-        pricing-table-id="prctbl_1NwrH1J42zMuNqyLurtliui8"
-        publishable-key="pk_test_51MkbRQJ42zMuNqyLhOP6Aluvz4TVAxVFFeofdem3PAvRDUoRzwYxfm0tBeOKYhdCNhbIzSSKeVFdrp7IvVku60Yz001xBUoHhk" 
-      />
-    </section>
-  )
+  
+  useEffect(()=>{
+    //verify access to page
+    verifyAccessToPage();
+  },[]);
+  
+  if (isLoginValid){
+    return(
+      <section className='pricing-table'>
+        <stripe-pricing-table
+          pricing-table-id="prctbl_1NwrH1J42zMuNqyLurtliui8"
+          publishable-key="pk_test_51MkbRQJ42zMuNqyLhOP6Aluvz4TVAxVFFeofdem3PAvRDUoRzwYxfm0tBeOKYhdCNhbIzSSKeVFdrp7IvVku60Yz001xBUoHhk" 
+        />
+      </section>
+    )
+  }else{
+    return(
+      <div className='checkout-logged-out'>
+        <h3>Please login or register to join the club.</h3>
+        <div className='checkout-button-wrapper'>
+          <button onClick={()=>{navigate('/login')}}>Login</button>
+          <button onClick={()=>{navigate('/register')}}>Register</button>
+        </div>
+      </div>
+    );
+  };
 };
