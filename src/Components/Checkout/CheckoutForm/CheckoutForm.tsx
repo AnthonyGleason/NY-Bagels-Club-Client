@@ -7,12 +7,16 @@ import {
   useElements,
   AddressElement
 } from "@stripe/react-stripe-js";
-import { CHECKOUT_SUCCESS_REDIRECT_URL } from "../../../Config/clientSettings";
+import { CHECKOUT_SUCCESS_REDIRECT_URL, getServerUrlPrefix } from "../../../Config/clientSettings";
+import { Address } from "../../../Interfaces/interfaces";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({
+  setAddress
+}:{
+  setAddress:Function
+}) {
   const stripe = useStripe();
   const elements = useElements();
-
 
   //gift inputs
   const [isGiftInput, setIsGiftInput] = useState<boolean>(false);
@@ -30,9 +34,7 @@ export default function CheckoutForm() {
       "payment_intent_client_secret"
     );
 
-    if (!clientSecret) {
-      return;
-    }
+    if (!clientSecret) return;
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       if (paymentIntent){
@@ -49,7 +51,7 @@ export default function CheckoutForm() {
           default:
             setMessage("Something went wrong.");
             break;
-        }
+        };
       };
     });
   }, [stripe]);
@@ -103,7 +105,7 @@ export default function CheckoutForm() {
         onChange={(e:any) => { if (e && e.target && e.target.value) setEmail(e.target.value)}}
       />
       <h3>Shipping Information</h3>
-      <AddressElement options={addressElementOptions} />
+      <AddressElement onChange={(e)=>{setAddress(e.value.address)}} options={addressElementOptions} />
       <h3>Payment Information</h3>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <h3>Is this order a gift?</h3>

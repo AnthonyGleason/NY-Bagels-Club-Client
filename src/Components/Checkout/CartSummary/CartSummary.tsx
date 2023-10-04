@@ -1,18 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { Item } from '../../../Interfaces/interfaces';
+import { Address, Item } from '../../../Interfaces/interfaces';
 import { fetchAndHandleCart, getCartItems,getCartSubtotalPrice  } from '../../../Helpers/cart';
 import { useNavigate } from 'react-router-dom';
 import './CartSummary.css';
+import { getServerUrlPrefix } from '../../../Config/clientSettings';
 
 export default function CartSummary({
-  isCheckoutView
+  isCheckoutView,
+  address,
+  setPaymentIntentToken
 }:{
-  isCheckoutView:boolean
+  isCheckoutView:boolean,
+  address?:Address
+  setPaymentIntentToken?:Function
 }){
   const navigate = useNavigate();
   const [cart,setCart] = useState<Item[]>([]);
   const [cartSubtotalPrice,setCartSubtotalPrice] = useState<number>(0);
   const [taxPrice,setTaxPrice] = useState<number>(0);
+
+  const populateTaxCalculation = async function(address:Address){
+    const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-tax-calculation`,{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
+        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
+      },
+      body: JSON.stringify({
+        address: address
+      })
+    });
+    const responseData = await response.json();
+    setCartSubtotalPrice(responseData.total/100);
+    setTaxPrice(responseData.taxAmount/100);
+    if (setPaymentIntentToken) setPaymentIntentToken(responseData.paymentIntentToken);
+  };
+
+  useEffect(()=>{
+    if (address && address.city && address.country && address.line1 && address.postal_code && address.state) populateTaxCalculation(address);
+  },[address])
 
   //handle initial page load (grab latest cart data);
   useEffect(()=>{
@@ -74,7 +101,7 @@ export default function CartSummary({
         </table>
         <div className='cart-subtotal'>
           <span><strong>Calculated Tax: ${taxPrice.toFixed(2) || '0.00'}</strong></span>
-          <span><strong>Basket Total: ${(cartSubtotalPrice+taxPrice).toFixed(2)}</strong></span>
+          <span><strong>Basket Total: ${(cartSubtotalPrice).toFixed(2)}</strong></span>
         </div>
       </section>
     )

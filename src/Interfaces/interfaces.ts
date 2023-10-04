@@ -18,3 +18,13 @@ export interface Item{
   _id: string, // unique id given by mongodb
   index:number
 };
+
+//address
+export interface Address{
+  line1: string,
+  line2: string,
+  city: string,
+  state: string,
+  postal_code: string,
+  country: string
+}
