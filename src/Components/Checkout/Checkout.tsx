@@ -3,25 +3,15 @@ import { verifyLoginToken } from '../../Helpers/auth';
 import { getServerUrlPrefix } from '../../Config/clientSettings';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import CartSummary from './CartSummary/CartSummary';
 import CheckoutForm from './CheckoutForm/CheckoutForm';
 import { useNavigate } from 'react-router-dom';
 import './Checkout.css';
-import { Address } from '../../Interfaces/interfaces';
 
 const stripePromise = loadStripe("pk_test_51MkbRQJ42zMuNqyLhOP6Aluvz4TVAxVFFeofdem3PAvRDUoRzwYxfm0tBeOKYhdCNhbIzSSKeVFdrp7IvVku60Yz001xBUoHhk");
 
 export default function Checkout(){
   const [isLoginValid,setIsLoginValid] = useState<boolean>(false);
   const [clientSecret,setClientSecret] = useState<string>('');
-  const [address,setAddress] = useState<Address>({
-    line1: '',
-    line2: '',
-    city: '',
-    state: '',
-    postal_code: '',
-    country: 'US'
-  });
 
   const navigate = useNavigate();
 
@@ -58,8 +48,7 @@ export default function Checkout(){
   if (isLoginValid && clientSecret){
     return(
       <Elements options={options} stripe={stripePromise}>
-        <CartSummary address={address} setPaymentIntentToken={setClientSecret} isCheckoutView={true} />
-        <CheckoutForm setAddress={setAddress} />
+        <CheckoutForm setClientSecret={setClientSecret} />
       </Elements>
     )
   }else{

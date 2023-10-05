@@ -86,7 +86,7 @@ export default function CartSummary({
   }else{ //is checkout view
     return(
       <section className='cart-summary checkout-cart-summary'>
-        <h3>Basket Summary</h3>
+        <h3>Final Basket Summary</h3>
         <table>
           <thead>
             <tr>

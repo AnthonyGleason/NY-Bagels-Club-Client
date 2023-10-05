@@ -9,11 +9,12 @@ import {
 } from "@stripe/react-stripe-js";
 import { CHECKOUT_SUCCESS_REDIRECT_URL, getServerUrlPrefix } from "../../../Config/clientSettings";
 import { Address } from "../../../Interfaces/interfaces";
+import CartSummary from "../CartSummary/CartSummary";
 
 export default function CheckoutForm({
-  setAddress
+  setClientSecret
 }:{
-  setAddress:Function
+  setClientSecret:Function
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -21,6 +22,15 @@ export default function CheckoutForm({
   //gift inputs
   const [isGiftInput, setIsGiftInput] = useState<boolean>(false);
   const [giftMessageInput, setGiftMessageInput] = useState<string>('');
+  const [address,setAddress] = useState<Address>({
+    line1: '',
+    line2: '',
+    city: '',
+    state: '',
+    postal_code: '',
+    country: 'US'
+  });
+
   const [email, setEmail] = useState<string>('');
   const [message, setMessage] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -131,6 +141,7 @@ export default function CheckoutForm({
         }
       </div>
       <div>
+        <CartSummary address={address} setPaymentIntentToken={setClientSecret} isCheckoutView={true} />
         <button disabled={isLoading || !stripe || !elements} id="submit">
           <span id="button-text">
             {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
