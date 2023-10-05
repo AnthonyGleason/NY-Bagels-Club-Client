@@ -16,7 +16,7 @@ export default function Footer(){
     <section className='footer'>
       <article data-aos='fade-in' className='copyright'>
         <span>
-          © 2023 New York Bagels Club.
+          © 2023 Gleason Holdings Group LLC
         </span>
         <span>
           © 2023 Brendel's Bagels & Eatery of New York.

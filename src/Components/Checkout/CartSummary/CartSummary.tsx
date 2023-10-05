@@ -8,10 +8,12 @@ import { getServerUrlPrefix } from '../../../Config/clientSettings';
 export default function CartSummary({
   isCheckoutView,
   address,
+  paymentIntentToken,
   setPaymentIntentToken
 }:{
   isCheckoutView:boolean,
-  address?:Address
+  paymentIntentToken?:string,
+  address?:Address,
   setPaymentIntentToken?:Function
 }){
   const navigate = useNavigate();
@@ -28,12 +30,14 @@ export default function CartSummary({
         'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
       },
       body: JSON.stringify({
-        address: address
+        address: address,
+        clientSecret: paymentIntentToken
       })
     });
     const responseData = await response.json();
     setCartSubtotalPrice(responseData.total/100);
     setTaxPrice(responseData.taxAmount/100);
+    console.log(responseData);
     if (setPaymentIntentToken) setPaymentIntentToken(responseData.paymentIntentToken);
   };
 
@@ -100,6 +104,7 @@ export default function CartSummary({
           </tbody>
         </table>
         <div className='cart-subtotal'>
+          <span><strong>Basket Subtotal: ${(cartSubtotalPrice - taxPrice).toFixed(2)}</strong></span>
           <span><strong>Calculated Tax: ${taxPrice.toFixed(2) || '0.00'}</strong></span>
           <span><strong>Basket Total: ${(cartSubtotalPrice).toFixed(2)}</strong></span>
         </div>

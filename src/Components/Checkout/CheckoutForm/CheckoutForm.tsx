@@ -12,8 +12,10 @@ import { Address } from "../../../Interfaces/interfaces";
 import CartSummary from "../CartSummary/CartSummary";
 
 export default function CheckoutForm({
+  clientSecret,
   setClientSecret
 }:{
+  clientSecret:string
   setClientSecret:Function
 }) {
   const stripe = useStripe();
@@ -40,12 +42,9 @@ export default function CheckoutForm({
       return;
     }
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
-
     if (!clientSecret) return;
 
+    //retrieve current payment intent information after server updates with tax information
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       if (paymentIntent){
         switch (paymentIntent.status) {
@@ -112,7 +111,7 @@ export default function CheckoutForm({
     <form id="payment-form" onSubmit={handleSubmit}>
       <LinkAuthenticationElement
         id="link-authentication-element"
-        onChange={(e:any) => { if (e && e.target && e.target.value) setEmail(e.target.value)}}
+        onChange={(e:any) => { setEmail(e.value.email)}}
       />
       <h3>Shipping Information</h3>
       <AddressElement onChange={(e)=>{setAddress(e.value.address)}} options={addressElementOptions} />
@@ -141,7 +140,7 @@ export default function CheckoutForm({
         }
       </div>
       <div>
-        <CartSummary address={address} setPaymentIntentToken={setClientSecret} isCheckoutView={true} />
+        <CartSummary paymentIntentToken={clientSecret} address={address} setPaymentIntentToken={setClientSecret} isCheckoutView={true} />
         <button disabled={isLoading || !stripe || !elements} id="submit">
           <span id="button-text">
             {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}

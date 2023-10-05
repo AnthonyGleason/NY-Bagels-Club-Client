@@ -12,7 +12,6 @@ const stripePromise = loadStripe("pk_test_51MkbRQJ42zMuNqyLhOP6Aluvz4TVAxVFFeofd
 export default function Checkout(){
   const [isLoginValid,setIsLoginValid] = useState<boolean>(false);
   const [clientSecret,setClientSecret] = useState<string>('');
-
   const navigate = useNavigate();
 
   const verifyAccessToPage = async function(){
@@ -26,7 +25,10 @@ export default function Checkout(){
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
         'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
-      }
+      },
+      body: JSON.stringify({
+        clientSecret: clientSecret
+      })
     });
     const responseData = await response.json();
     setClientSecret(responseData.paymentIntentToken);
@@ -34,12 +36,18 @@ export default function Checkout(){
 
   useEffect(()=>{
     verifyAccessToPage();
-    getPaymentIntentToken();
   },[]);
+
+  //react strict mode causes a bug in dev mode where two payment intent tokens are fetched causing conflicts at checkout
+  //this workaround ensures only one is obtained
+  useEffect(()=>{
+    if (isLoginValid) getPaymentIntentToken();
+  },[isLoginValid]);
 
   const appearance:any= {
     theme: 'stripe',
   };
+
   const options:any= {
     clientSecret,
     appearance,
@@ -48,7 +56,7 @@ export default function Checkout(){
   if (isLoginValid && clientSecret){
     return(
       <Elements options={options} stripe={stripePromise}>
-        <CheckoutForm setClientSecret={setClientSecret} />
+        <CheckoutForm clientSecret={clientSecret} setClientSecret={setClientSecret} />
       </Elements>
     )
   }else{

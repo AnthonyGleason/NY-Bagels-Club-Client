@@ -1,4 +1,4 @@
-const USE_LOCALHOST:boolean = false;
+const USE_LOCALHOST:boolean = true;
 export const HOME_LOADING_DELAY:number= 4000 //in milliseconds
 export const CHECKOUT_SUCCESS_REDIRECT_URL:string = "http://localhost:3000/cart/checkout/success";
 
