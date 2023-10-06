@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Item } from '../../../../Interfaces/interfaces';
 import { modifyCart } from '../../../../Helpers/cart';
 import './StoreItem.css';
-import { getServerUrlPrefix } from '../../../../Config/clientSettings';
 
 export default function StoreItem({
   itemName,

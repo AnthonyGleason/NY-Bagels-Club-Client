@@ -34,7 +34,7 @@ export default function Footer(){
         <p>Do you need assistance with an order, or would you like to provide feedback on your experience with us?</p>
         <ul>
           <li>Phone Number: 123-456-7890</li>
-          <li>Email: <a href="mailto:contact@nybagelsclub.com">contact@nybagelsclub.com</a></li>
+          <li>Email: <a href="mailto:support@nybagelsclub.com">support@nybagelsclub.com</a></li>
         </ul>
         <p>
           <strong>Your satisfaction is our priority!</strong>

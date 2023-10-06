@@ -7,7 +7,7 @@ import {
   useElements,
   AddressElement
 } from "@stripe/react-stripe-js";
-import { CHECKOUT_SUCCESS_REDIRECT_URL, getServerUrlPrefix } from "../../../Config/clientSettings";
+import { CHECKOUT_SUCCESS_REDIRECT_URL} from "../../../Config/clientSettings";
 import { Address } from "../../../Interfaces/interfaces";
 import CartSummary from "../CartSummary/CartSummary";
 
@@ -44,7 +44,6 @@ export default function CheckoutForm({
 
     if (!clientSecret) return;
 
-    //retrieve current payment intent information after server updates with tax information
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       if (paymentIntent){
         switch (paymentIntent.status) {

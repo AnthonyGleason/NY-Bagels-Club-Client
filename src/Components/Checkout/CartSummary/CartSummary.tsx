@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Address, Item } from '../../../Interfaces/interfaces';
 import { fetchAndHandleCart, getCartItems,getCartSubtotalPrice  } from '../../../Helpers/cart';
-import { useNavigate } from 'react-router-dom';
 import './CartSummary.css';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
+import { useNavigate } from 'react-router-dom';
 
 export default function CartSummary({
   isCheckoutView,
@@ -37,7 +37,6 @@ export default function CartSummary({
     const responseData = await response.json();
     setCartSubtotalPrice(responseData.total/100);
     setTaxPrice(responseData.taxAmount/100);
-    console.log(responseData);
     if (setPaymentIntentToken) setPaymentIntentToken(responseData.paymentIntentToken);
   };
 
@@ -84,7 +83,8 @@ export default function CartSummary({
           <span><strong>Basket Subtotal: ${cartSubtotalPrice.toFixed(2)}</strong></span>
         </div>
         <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
-        <button onClick={()=>{navigate('/cart/checkout')}}>Checkout Now</button>
+        <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>Checkout</button>
+        <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button>
       </section>
     );
   }else{ //is checkout view

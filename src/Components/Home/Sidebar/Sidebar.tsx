@@ -53,17 +53,19 @@ export default function Sidebar(
         animate={{ right: isExpanded ? 0 : -200 }}
         transition={{ duration: 0.5 }}
       >
-        <button className='sidebar-expand-toggle' onClick={()=>{
-          toggleExpandMenu(
-            hasAudioPlayed,
-            setHasAudioPlayed,
-            isExpanded,
-            setIsExpanded
-          )
-        }}>
-          <img src={menuImg} alt='expand sidebar menu' /> 
-        </button>
         <ol className='sidebar-nav'>
+          <li>
+            <button className='sidebar-expand-toggle' onClick={()=>{
+              toggleExpandMenu(
+                hasAudioPlayed,
+                setHasAudioPlayed,
+                isExpanded,
+                setIsExpanded
+              )
+            }}>
+              <img src={menuImg} alt='expand sidebar menu' /> 
+            </button>
+          </li>       
           {
             isSignedIn===false 
             ?

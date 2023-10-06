@@ -3,6 +3,7 @@ import './StoreItems.css';
 import StoreItem from './StoreItem/StoreItem';
 import { Item } from '../../../Interfaces/interfaces';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
+import { getMembershipTier } from '../../../Helpers/auth';
 
 export default function StoreItems({
     cart,
@@ -28,28 +29,13 @@ export default function StoreItems({
   //get store items on initial load
   useEffect(()=>{
     fetchAndSetStoreItems(setStoreItems);
-    populateUserTier();
+    getMembershipTier(setUserTier);
   },[]);
 
   useEffect(()=>{
-    populateUserTier()
+    getMembershipTier(setUserTier);
   },[isSignedIn]);
 
-  const populateUserTier = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/users/membershipLevel`,{
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      }
-    });
-    const responseData = await response.json();
-    if (responseData.membershipLevel){
-      setUserTier(responseData.membershipLevel);
-    }else{
-      setUserTier('Non-Member');
-    };
-  };
 
   let counter:number = 1;
 

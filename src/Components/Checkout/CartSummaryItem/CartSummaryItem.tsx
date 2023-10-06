@@ -17,7 +17,6 @@ export default function CartSummaryItem(
   const [cartItemQuantity,setCartItemQuantity] = useState<number | string>(cartItem.quantity);
   const [cartItemSubtotal,setCartItemSubtotal] = useState<number>(getCartItemSubtotal(cartItem));
   const [isRequestPending,setIsRequestPending] = useState<boolean>(false);
-
   //whenever the cartItem quantity is updated, update the states
   useEffect(()=>{
     //update item quantity

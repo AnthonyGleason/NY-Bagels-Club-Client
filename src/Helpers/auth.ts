@@ -57,3 +57,37 @@ export const handleLogout = async function(setIsSignedIn?:Function){
   //remove the token locally
   localStorage.removeItem('loginToken');
 };
+
+export const getMembershipTier = async function(setMembershipTier?:Function):Promise<string>{
+  const response = await fetch(`${getServerUrlPrefix()}/api/users/membershipLevel`,{
+    method: 'GET',
+    headers:{
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+    }
+  });
+  const responseData = await response.json();
+  if (responseData.membershipLevel){
+    if (setMembershipTier) setMembershipTier(responseData.membershipLevel);
+    return responseData.membershipLevel;
+  }else{
+    if (setMembershipTier) setMembershipTier('Non-Member');
+    return 'Non-Member'
+  };
+};
+
+export const getPaymentIntentToken = async function(clientSecret:string,setClientSecret:Function){
+  const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-payment-intent`,{
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
+      'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
+    },
+    body: JSON.stringify({
+      clientSecret: clientSecret
+    })
+  });
+  const responseData = await response.json();
+  setClientSecret(responseData.paymentIntentToken);
+};

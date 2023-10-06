@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { verifyLoginToken } from '../../Helpers/auth';
+import { getPaymentIntentToken, verifyLoginToken } from '../../Helpers/auth';
 import { getServerUrlPrefix } from '../../Config/clientSettings';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
@@ -17,23 +17,7 @@ export default function Checkout(){
   const verifyAccessToPage = async function(){
     setIsLoginValid(await verifyLoginToken());
   };
-
-  const getPaymentIntentToken = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-payment-intent`,{
-      method: 'POST',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
-        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
-      },
-      body: JSON.stringify({
-        clientSecret: clientSecret
-      })
-    });
-    const responseData = await response.json();
-    setClientSecret(responseData.paymentIntentToken);
-  };
-
+  
   useEffect(()=>{
     verifyAccessToPage();
   },[]);
@@ -41,7 +25,7 @@ export default function Checkout(){
   //react strict mode causes a bug in dev mode where two payment intent tokens are fetched causing conflicts at checkout
   //this workaround ensures only one is obtained
   useEffect(()=>{
-    if (isLoginValid) getPaymentIntentToken();
+    if (isLoginValid) getPaymentIntentToken(clientSecret,setClientSecret);
   },[isLoginValid]);
 
   const appearance:any= {

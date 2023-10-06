@@ -1,7 +1,7 @@
 import CartSummaryItem from "../Components/Checkout/CartSummaryItem/CartSummaryItem";
 import { getServerUrlPrefix } from "../Config/clientSettings";
 import { Item } from "../Interfaces/interfaces";
-import { requestCartToken, verifyCartToken } from "./auth";
+import { getMembershipTier, requestCartToken, verifyCartToken } from "./auth";
 
 export const getCartSubtotalPrice = function(cart:Item[]):number{
   let totalPrice:number = 0;
@@ -59,6 +59,7 @@ export const modifyCart = async function(
   if (responseData.cartToken && responseData.cart){
     //replace the cartToken in localStorage with the updated cartToken
     localStorage.setItem('cartToken',responseData.cartToken);
+    console.log(responseData.cart.items);
     //update cart state
     setCart(responseData.cart.items);
   };
@@ -110,4 +111,27 @@ export const calculateTotalCartQuantity = function(cart:Item[]){
     if (item.quantity) totalItems+=item.quantity;
   });
   return totalItems;
+};
+
+export const applyMembershipCartPricing = async function(cart:Item[],setCart:Function){
+  const membershipTier:string = await getMembershipTier();
+  let discountMultiplier:number = 1; //initalize discount to 1
+  switch (membershipTier){
+    case 'Gold Member':
+      discountMultiplier = 0.05;
+      break;
+    case 'Platinum Member':
+      discountMultiplier = 0.10;
+      break;
+    case 'Diamond Member':
+      discountMultiplier = 0.15;
+      break;
+    default:
+      discountMultiplier = 1;
+  };
+  let updatedCart:Item[] = cart;
+  cart.forEach((cartItem:Item, index:number)=>{
+    updatedCart[index].price = cartItem.price - (cartItem.price * discountMultiplier);
+  });
+  setCart(updatedCart);
 };
