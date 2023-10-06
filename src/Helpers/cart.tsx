@@ -59,7 +59,6 @@ export const modifyCart = async function(
   if (responseData.cartToken && responseData.cart){
     //replace the cartToken in localStorage with the updated cartToken
     localStorage.setItem('cartToken',responseData.cartToken);
-    console.log(responseData.cart.items);
     //update cart state
     setCart(responseData.cart.items);
   };

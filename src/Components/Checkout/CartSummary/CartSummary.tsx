@@ -84,7 +84,7 @@ export default function CartSummary({
         </div>
         <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
         <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>Checkout</button>
-        <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button>
+        {/* <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button> */}
       </section>
     );
   }else{ //is checkout view
