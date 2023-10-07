@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { getPaymentIntentToken, verifyLoginToken } from '../../Helpers/auth';
-import { getServerUrlPrefix } from '../../Config/clientSettings';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './CheckoutForm/CheckoutForm';

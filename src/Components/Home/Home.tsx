@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { Item} from '../../Interfaces/interfaces';
 //import components
 import Sidebar from './Sidebar/Sidebar';
 import StoreItems from './StoreItems/StoreItems';
@@ -11,39 +10,33 @@ import upArrowImg from '../../Assets/icons/arrow-up-outline.svg';
 import Aos from 'aos';
 import "aos/dist/aos.css";
 import { fetchAndHandleCart } from '../../Helpers/cart';
+import { Cart } from '../../Interfaces/interfaces';
 
 export default function Home(){
   const [isPageLoaded, setIsPageLoaded] = useState<boolean>(false);
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
-  const [cart,setCart] = useState<Item[]>([]);
+  const [cart,setCart] = useState<Cart>({
+    items: [],
+    subtotal: 0,
+    tax: 0,
+    totalQuantity: 0
+  });
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 
   //menu states
   const [isFourPacksVisible, setIsFourPacksVisible] = useState<boolean>(false);
   const [isDozensVisible, setIsDozensVisible] = useState<boolean>(false);
-
-  const handleMenuChange = function(type:string, isOpen:boolean) {
-    if (type === 'dozens' && isOpen) {
-      setIsDozensVisible(true);
-      setIsFourPacksVisible(false);
-    } else if (type === 'four packs' && isOpen) {
-      setIsDozensVisible(false);
-      setIsFourPacksVisible(true);
-    } else {
-      setIsDozensVisible(false);
-      setIsFourPacksVisible(false);
-    }
-  };  
+  const [isSpreadsVisible,setIsSpreadsVisible] = useState<boolean>(false);
 
   //hide other menu options when one option is expanded
   useEffect(()=>{
     const buttonHeadingElements:any = document.querySelectorAll('.menu-button-heading');
-    if (isDozensVisible || isFourPacksVisible && buttonHeadingElements){
+    if (isDozensVisible || isFourPacksVisible || isSpreadsVisible && buttonHeadingElements){
       buttonHeadingElements.forEach((buttonHeadingElement:any)=>buttonHeadingElement.style.display='none');
     }else{
       buttonHeadingElements.forEach((buttonHeadingElement:any)=>buttonHeadingElement.style.display='flex');
     }
-  },[isFourPacksVisible,isDozensVisible]);
+  },[isFourPacksVisible,isDozensVisible,isSpreadsVisible]);
 
   //handle initial page load
   useEffect(()=>{
@@ -81,14 +74,14 @@ export default function Home(){
             {
               isFourPacksVisible===false ?
                 <div data-aos='fade-in' className='menu-button-heading'>
-                  <button onClick={()=>handleMenuChange('four packs',true)}>
+                  <button onClick={()=>setIsFourPacksVisible(true)}>
                     Four Packs
                   </button>
                 </div>
               :
               <div className='menu-left'>
                 <div data-aos='fade-in'>
-                  <button onClick={()=>handleMenuChange('four packs',false)}>Four Packs</button>
+                  <button onClick={()=>setIsFourPacksVisible(false)}>Four Packs</button>
                 </div>
                 <div data-aos='fade-in'>
                   <button onClick={()=>{scrollToID('item-650c9f303843aa9fa7ae75cf')}}>Plain Four Pack</button>
@@ -113,12 +106,12 @@ export default function Home(){
             {
               isDozensVisible===false ?
                 <div data-aos='fade-in' className='menu-button-heading'>
-                  <button onClick={()=>{handleMenuChange('dozens',true)}}>Dozens</button>
+                  <button onClick={()=>{setIsDozensVisible(true)}}>Dozens</button>
                 </div>
               :
               <div className='menu-right'>
                 <div data-aos='fade-in'>
-                  <button onClick={()=>{handleMenuChange('dozens',false)}}>Dozens</button>
+                  <button onClick={()=>{setIsDozensVisible(false)}}>Dozens</button>
                 </div>
                 <div data-aos='fade-in'>
                   <button onClick={()=>{scrollToID('item-650ca27e3843aa9fa7ae75d6')}}>Plain Dozen</button>
@@ -128,6 +121,36 @@ export default function Home(){
                 </div>
                 <div data-aos='fade-in'>
                   <button onClick={()=>{scrollToID('item-650ca2b83843aa9fa7ae75d7')}}>Everything Dozen</button>
+                </div>
+                <div data-aos='fade-in'>
+                  <button onClick={()=>{scrollToID('item-6520108eb238aa6da6be33f8')}}>Cinnamon Raisin Dozen</button>
+                </div>
+                <div data-aos='fade-in'>
+                  <button onClick={()=>{scrollToID('item-652010fab238aa6da6be33f9')}}>Poppy Seeds Dozen</button>
+                </div>
+                <div data-aos='fade-in'>
+                  <button onClick={()=>{scrollToID('item-65201111b238aa6da6be33fa')}}>Blueberry Dozen</button>
+                </div>
+              </div>
+            }
+            {
+              isSpreadsVisible === false ?
+                <div data-aos='fade-in' className='menu-button-heading'>
+                  <button onClick={()=>{setIsSpreadsVisible(true)}}>Brendel's Favorite Spreads</button>
+                </div>
+              :
+              <div className='menu-right'>
+                <div data-aos='fade-in'>
+                  <button onClick={()=>{setIsSpreadsVisible(false)}}>Brendel's Favorite Spreads</button>
+                </div>
+                <div data-aos='fade-in'>
+                  <button>Placeholder 1</button>
+                </div>
+                <div data-aos='fade-in'>
+                  <button>Placeholder 2</button>
+                </div>
+                <div data-aos='fade-in'>
+                  <button>Placeholder 3</button>
                 </div>
               </div>
             }

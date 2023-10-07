@@ -7,11 +7,10 @@ import logoutImg from '../../../Assets/icons/logout.svg';
 import vipImg from '../../../Assets/icons/vip.svg';
 import './Sidebar.css';
 import { useNavigate } from 'react-router-dom';
-import { Item } from '../../../Interfaces/interfaces';
 import { motion } from 'framer-motion';
-import { calculateTotalCartQuantity } from '../../../Helpers/cart';
 import { handleLogout, verifyLoginToken } from '../../../Helpers/auth';
 import { toggleExpandMenu } from '../../../Helpers/sidebar';
+import { Cart } from '../../../Interfaces/interfaces';
 
 export default function Sidebar(
   {
@@ -21,7 +20,7 @@ export default function Sidebar(
     isSignedIn,
     setIsSignedIn
   }:{
-    cart:Item[];
+    cart:Cart;
     isExpanded:boolean,
     setIsExpanded:Function,
     isSignedIn:boolean,
@@ -41,7 +40,7 @@ export default function Sidebar(
 
   //when cart is updated calculate new total quantity
   useEffect(()=>{
-    setTotalQuantity(calculateTotalCartQuantity(cart));
+    setTotalQuantity(totalQuantity);
   },[cart])
 
   //sidebar is expanded

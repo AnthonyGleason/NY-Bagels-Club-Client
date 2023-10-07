@@ -1,42 +1,15 @@
 import CartSummaryItem from "../Components/Checkout/CartSummaryItem/CartSummaryItem";
 import { getServerUrlPrefix } from "../Config/clientSettings";
-import { Item } from "../Interfaces/interfaces";
-import { getMembershipTier, requestCartToken, verifyCartToken } from "./auth";
-
-export const getCartSubtotalPrice = function(cart:Item[]):number{
-  let totalPrice:number = 0;
-  cart.forEach((cartItem:Item)=>{
-    totalPrice += cartItem.price * cartItem.quantity;
-  });
-  return totalPrice;
-};
-
-export const getCartItems = function (
-  cart:Item[],
-  setCart:Function,
-  isCheckoutView:boolean
-) {
-  // Loop over cart items
-  const cartRows = cart.map((cartItem, index) => {
-    return (
-      <CartSummaryItem 
-        key={index}
-        cartItem={cartItem}
-        setCart={setCart}
-        isCheckoutView={isCheckoutView}
-      />
-    );
-  });
-  // Return the cart rows
-  return cartRows;
-};  
+import { BagelItem, Cart, CartItem, SpreadItem } from "../Interfaces/interfaces";
+import { requestCartToken, verifyCartToken } from "./auth";
 
 export const modifyCart = async function(
   updatedQuantity:number,
   itemID:string,
   setCart:Function,
   isRequestPending:boolean,
-  setIsRequestPending:Function
+  setIsRequestPending:Function,
+  selection: string
 ){
   //handle request is already pending limited users to 1 request at a time
   if (isRequestPending) return;
@@ -53,14 +26,16 @@ export const modifyCart = async function(
     body: JSON.stringify({
       itemID: itemID,
       updatedQuantity: updatedQuantity,
+      selection: selection
     })
   });
   const responseData = await response.json();
   if (responseData.cartToken && responseData.cart){
     //replace the cartToken in localStorage with the updated cartToken
     localStorage.setItem('cartToken',responseData.cartToken);
+    console.log(responseData);
     //update cart state
-    setCart(responseData.cart.items);
+    setCart(responseData.cart);
   };
   //allow another request to the server
   setIsRequestPending(false);
@@ -73,14 +48,29 @@ export const fetchAndHandleCart = async function(setCart:Function){
     localStorage.setItem('cartToken',await requestCartToken());
   };
 };
+export const getUnitPriceFromCartItem = function(storeItem:SpreadItem | BagelItem, selection?:string):number{
+  let price:number = 0;
+  if (storeItem.cat==='bagel' && selection==='four'){
+    const tempStoreItem:BagelItem = storeItem as BagelItem;
+    price = tempStoreItem.fourPrice;
+  }else if (storeItem.cat==='bagel' && selection==='dozen'){
+    const tempStoreItem:BagelItem = storeItem as BagelItem;
+    price = tempStoreItem.dozenPrice;
+  }else if (storeItem.cat==='spread'){
+    const tempCartItem:SpreadItem = storeItem as SpreadItem;
+    price = tempCartItem.price;
+  };
+  return price;
+};
 
 export const handleCartItemInputChange = function(
   e:any,
   setCartQuantity:Function,
-  cartItem:Item,
+  cartItem:CartItem,
   setCart:Function,
   isRequestPending:boolean,
-  setIsRequestPending:Function
+  setIsRequestPending:Function,
+  selection: string
 ){ //accepts an event from an input onChange 
   const newVal: number = parseInt(e.target.value);
   //we dont want users to accidently delete their cart so lets prevent that
@@ -90,47 +80,38 @@ export const handleCartItemInputChange = function(
   }
   modifyCart(
     newVal,
-    cartItem._id,
+    cartItem.itemData._id,
     setCart,
     isRequestPending,
-    setIsRequestPending
+    setIsRequestPending,
+    selection
   );
 };
 
-export const getCartItemSubtotal = function(cartItem: Item): number {
-  const cartSubtotal: number = parseFloat((cartItem.price * cartItem.quantity).toFixed(2));
-  return cartSubtotal;
+export const getCartItemSubtotal = function(cartItem:CartItem):number{
+  return cartItem.quantity * cartItem.unitPrice;
 };
 
-export const calculateTotalCartQuantity = function(cart:Item[]){
-  let totalItems = 0;
-  //handle empty cart
-  if (!cart) return totalItems;
-  cart.forEach((item:Item)=>{
-    if (item.quantity) totalItems+=item.quantity;
-  });
-  return totalItems;
-};
+//the below functions are enabled to avoid errors but have not been vetted
 
-export const applyMembershipCartPricing = async function(cart:Item[],setCart:Function){
-  const membershipTier:string = await getMembershipTier();
-  let discountMultiplier:number = 1; //initalize discount to 1
-  switch (membershipTier){
-    case 'Gold Member':
-      discountMultiplier = 0.05;
-      break;
-    case 'Platinum Member':
-      discountMultiplier = 0.10;
-      break;
-    case 'Diamond Member':
-      discountMultiplier = 0.15;
-      break;
-    default:
-      discountMultiplier = 1;
-  };
-  let updatedCart:Item[] = cart;
-  cart.forEach((cartItem:Item, index:number)=>{
-    updatedCart[index].price = cartItem.price - (cartItem.price * discountMultiplier);
+
+
+export const getCartItems = function (
+  cart:CartItem[],
+  setCart:Function,
+  isCheckoutView:boolean
+) {
+  // Loop over cart items
+  const cartRows = cart.map((cartItem, index) => {
+    return (
+      <CartSummaryItem 
+        key={index}
+        cartItem={cartItem}
+        setCart={setCart}
+        isCheckoutView={isCheckoutView}
+      />
+    );
   });
-  setCart(updatedCart);
+  // Return the cart rows
+  return cartRows;
 };

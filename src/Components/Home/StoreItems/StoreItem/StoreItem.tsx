@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Item } from '../../../../Interfaces/interfaces';
-import { modifyCart } from '../../../../Helpers/cart';
 import './StoreItem.css';
+import { BagelItem, Cart, CartItem, SpreadItem } from '../../../../Interfaces/interfaces';
+import { modifyCart } from '../../../../Helpers/cart';
 
 export default function StoreItem({
   itemName,
@@ -10,21 +10,22 @@ export default function StoreItem({
   cart,
   setCart,
   isAltTheme,
-  userTier
+  userTier,
+  selection
 }:{
   itemName: string,
   itemID:string,
   itemPrice:number,
-  cart:Item[],
+  cart:Cart,
   setCart:Function,
   isAltTheme:boolean,
-  userTier:string
+  userTier:string,
+  selection?:string
 }){
   const [itemQuantity,setItemQuantity] = useState(0);
   const [itemImgSrc, setItemImgSrc] = useState<string | undefined>();
   const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
   
-
  //handle initial page load
  useEffect(()=>{
     //dynamically import images
@@ -34,19 +35,33 @@ export default function StoreItem({
       });
   },[]);
 
+  const getItemQuantityFromCart = function(itemName: string, selection?: string): number {
+    if (!cart || !cart.items) return 0;
+  
+    let quantity = 0;
+  
+    for (let index = 0; index < cart.items.length; index++) {
+      const cartItem: CartItem = cart.items[index];
+  
+      // Check if the selection and itemName match
+      if (
+        cartItem.selection === selection &&
+        (cartItem.itemData.cat === 'bagel' || cartItem.itemData.cat === 'spread') &&
+        cartItem.itemData.name === itemName
+      ) {
+        quantity = cartItem.quantity;
+        break; // Exit the loop if the item is found
+      }
+    };
+    
+    return quantity;
+  };
+  
+
   //whenever the cart is updated update the quantities of items
   useEffect(()=>{
-    setItemQuantity(getItemQuantityFromCart(itemID,cart));
+    setItemQuantity(getItemQuantityFromCart(itemName,selection));
   },[cart]);
-
-  const getItemQuantityFromCart = function(itemID:string,cart:Item[]):number{
-    let itemQuantity:number = 0;
-    const item:Item | undefined= cart.find((cartItem:Item)=>{
-      return cartItem._id===itemID
-    });
-    if (item) itemQuantity = item.quantity;
-    return itemQuantity;
-  };
 
   const altThemeClass: string = function() {
     return isAltTheme ? 'alt-store-item' : '';
@@ -90,20 +105,22 @@ export default function StoreItem({
         <span>{itemQuantity} in Basket</span>
         <button className='quantity-button' onClick={()=>{
           modifyCart(
-            getItemQuantityFromCart(itemID,cart)+1,
+            getItemQuantityFromCart(itemName,selection)+1,
             itemID,
             setCart,
             isRequestPending,
-            setIsRequestPending
+            setIsRequestPending,
+            selection || ''
           )
         }}>+</button>
         <button className='quantity-button' onClick={()=>{
           modifyCart(
-            getItemQuantityFromCart(itemID,cart)-1,
+            getItemQuantityFromCart(itemName,selection)-1,
             itemID,
             setCart,
             isRequestPending,
-            setIsRequestPending
+            setIsRequestPending,
+            selection || ''
           )
         }}>-</button>
       </div>

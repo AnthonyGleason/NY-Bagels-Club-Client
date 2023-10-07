@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Address, Item } from '../../../Interfaces/interfaces';
-import { fetchAndHandleCart, getCartItems,getCartSubtotalPrice  } from '../../../Helpers/cart';
+import { Address, Cart, CartItem } from '../../../Interfaces/interfaces';
+import { fetchAndHandleCart, getCartItems  } from '../../../Helpers/cart';
 import './CartSummary.css';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,12 @@ export default function CartSummary({
   setPaymentIntentToken?:Function
 }){
   const navigate = useNavigate();
-  const [cart,setCart] = useState<Item[]>([]);
+  const [cart,setCart] = useState<Cart>({
+    totalQuantity: 0,
+    items: [],
+    tax: 0,
+    subtotal: 0
+  });
   const [cartSubtotalPrice,setCartSubtotalPrice] = useState<number>(0);
   const [taxPrice,setTaxPrice] = useState<number>(0);
 
@@ -51,18 +56,18 @@ export default function CartSummary({
 
   //when the cart is updated, update the total price of all items in the cart
   useEffect(()=>{
-    setCartSubtotalPrice(getCartSubtotalPrice(cart));
+    setCartSubtotalPrice(cart.subtotal);
   },[cart])
 
   //handle empty shopping cart
-  if (cart.length===0){
+  if (cart.items.length===0){
     return(
       <div className='cart-summary'>
         <h3>Basket</h3>
         <strong>Your Basket is Currently Empty.</strong>
       </div>
     );
-  }else if (cart.length>0 && !isCheckoutView){
+  }else if (cart.items.length>0 && !isCheckoutView){
     return(
       <section className='cart-summary'>
         <h3>Basket</h3>
@@ -76,7 +81,7 @@ export default function CartSummary({
             </tr>
           </thead>
           <tbody>
-            {getCartItems(cart,setCart,isCheckoutView)}
+            {getCartItems(cart.items,setCart,isCheckoutView)}
           </tbody>
         </table>
         <div className='cart-subtotal'>
@@ -100,7 +105,7 @@ export default function CartSummary({
             </tr>
           </thead>
           <tbody>
-            {getCartItems(cart,setCart,isCheckoutView)}
+            {getCartItems(cart.items,setCart,isCheckoutView)}
           </tbody>
         </table>
         <div className='cart-subtotal'>

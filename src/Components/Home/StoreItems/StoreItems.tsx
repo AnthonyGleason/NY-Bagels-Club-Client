@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './StoreItems.css';
 import StoreItem from './StoreItem/StoreItem';
-import { Item } from '../../../Interfaces/interfaces';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import { getMembershipTier } from '../../../Helpers/auth';
+import { BagelItem, Cart, CartItem, SpreadItem } from '../../../Interfaces/interfaces';
+import { getUnitPriceFromCartItem } from '../../../Helpers/cart';
 
 export default function StoreItems({
     cart,
     setCart,
     isSignedIn
   }:{
-    cart: Item[],
+    cart: Cart,
     setCart: Function,
     isSignedIn: boolean
   }){
-  const [storeItems,setStoreItems] = useState<Item[]>([]); 
+  const [storeItems,setStoreItems] = useState<(SpreadItem | BagelItem)[]>([]); 
   const [userTier, setUserTier] = useState<string>('Non-Member');
 
   const fetchAndSetStoreItems = async function(storeItemSetter:Function){
@@ -22,7 +23,7 @@ export default function StoreItems({
       method: 'GET'
     });
     const responseData = await response.json();
-    const allItems: Item[] | null = responseData.allItems;
+    const allItems: (BagelItem | SpreadItem)[] | null = responseData.allItems;
     if (allItems) storeItemSetter(responseData.allItems);
   };
 
@@ -42,26 +43,38 @@ export default function StoreItems({
   return(
     <section className='store-items-container'>
       {
-        storeItems.sort((a:Item,b:Item)=>{
-          if (a.index>b.index){
-            return 1;
-          }else{
-            return -1;
-          }
-        }).map((storeItem:Item)=>{
+        storeItems.map((storeItem:SpreadItem | BagelItem)=>{  
           counter+=1;
-          return(
-            <StoreItem
-              key={storeItem._id}
-              itemName={storeItem.name}
-              itemID={storeItem._id}
-              itemPrice={storeItem.price}
-              cart={cart}
-              setCart={setCart}
-              isAltTheme={counter%2===0}
-              userTier={userTier}
-            />
-          )
+          if (storeItem.cat==='bagel'){
+            const price = getUnitPriceFromCartItem(storeItem, 'four');
+            return(
+              <StoreItem
+                key={storeItem._id}
+                itemName={storeItem.name}
+                itemID={storeItem._id}
+                itemPrice={price}
+                cart={cart}
+                setCart={setCart}
+                isAltTheme={counter%2===0}
+                userTier={userTier}
+                selection={'four'}
+              />
+            )
+          }else{
+            const price = getUnitPriceFromCartItem(storeItem);
+            return(
+              <StoreItem
+                key={storeItem._id}
+                itemName={storeItem.name}
+                itemID={storeItem._id}
+                itemPrice={price}
+                cart={cart}
+                setCart={setCart}
+                isAltTheme={counter%2===0}
+                userTier={userTier}
+              />
+            )
+          };
         })
       }
     </section>

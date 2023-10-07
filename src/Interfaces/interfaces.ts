@@ -10,13 +10,27 @@ export interface User{
   _id:string //unique id given by mongodb
 };
 
-//item
-export interface Item{
+export interface SpreadItem{
   price: number,
   name: string,
-  quantity: number,
+  _id: string //unique id given by mongodb,
+  cat:string,
+};
+
+//item
+export interface BagelItem{
+  dozenPrice:number,
+  fourPrice:number,
+  name: string,
   _id: string, // unique id given by mongodb
-  index:number
+  cat:string,
+};
+
+export interface CartItem{
+  itemData: BagelItem | SpreadItem,
+  selection?: string
+  quantity: number,
+  unitPrice: number,
 };
 
 //address
@@ -27,4 +41,10 @@ export interface Address{
   state: string,
   postal_code: string,
   country: string
+}
+export interface Cart{
+  items:CartItem[];
+  subtotal:number;
+  tax:number;
+  totalQuantity:number;
 }
