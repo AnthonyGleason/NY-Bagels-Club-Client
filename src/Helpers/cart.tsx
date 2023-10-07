@@ -33,7 +33,6 @@ export const modifyCart = async function(
   if (responseData.cartToken && responseData.cart){
     //replace the cartToken in localStorage with the updated cartToken
     localStorage.setItem('cartToken',responseData.cartToken);
-    console.log(responseData);
     //update cart state
     setCart(responseData.cart);
   };
@@ -91,6 +90,29 @@ export const handleCartItemInputChange = function(
 export const getCartItemSubtotal = function(cartItem:CartItem):number{
   return cartItem.quantity * cartItem.unitPrice;
 };
+
+
+export const getItemQuantityFromCart = function(cart:Cart, itemName: string, selection?: string): number {
+  if (!cart || !cart.items) return 0;
+
+  let quantity = 0;
+
+  for (let index = 0; index < cart.items.length; index++) {
+    const cartItem: CartItem = cart.items[index];
+
+    // Check if the selection and itemName match
+    if (
+      cartItem.selection === selection &&
+      (cartItem.itemData.cat === 'bagel' || cartItem.itemData.cat === 'spread') &&
+      cartItem.itemData.name === itemName
+    ) {
+      quantity = cartItem.quantity;
+      break; // Exit the loop if the item is found
+    }
+  };
+  return quantity;
+};
+
 
 //the below functions are enabled to avoid errors but have not been vetted
 

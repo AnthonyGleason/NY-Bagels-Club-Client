@@ -10,7 +10,7 @@ import upArrowImg from '../../Assets/icons/arrow-up-outline.svg';
 import Aos from 'aos';
 import "aos/dist/aos.css";
 import { fetchAndHandleCart } from '../../Helpers/cart';
-import { Cart } from '../../Interfaces/interfaces';
+import { BagelItem, Cart, SpreadItem } from '../../Interfaces/interfaces';
 
 export default function Home(){
   const [isPageLoaded, setIsPageLoaded] = useState<boolean>(false);
@@ -24,19 +24,19 @@ export default function Home(){
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 
   //menu states
-  const [isFourPacksVisible, setIsFourPacksVisible] = useState<boolean>(false);
-  const [isDozensVisible, setIsDozensVisible] = useState<boolean>(false);
+  const [isBagelsVisible, setIsBagelsVisible] = useState<boolean>(false);
   const [isSpreadsVisible,setIsSpreadsVisible] = useState<boolean>(false);
+  const [storeItems,setStoreItems] = useState<(SpreadItem | BagelItem)[]>([]); 
 
   //hide other menu options when one option is expanded
   useEffect(()=>{
     const buttonHeadingElements:any = document.querySelectorAll('.menu-button-heading');
-    if (isDozensVisible || isFourPacksVisible || isSpreadsVisible && buttonHeadingElements){
+    if (isBagelsVisible || isSpreadsVisible && buttonHeadingElements){
       buttonHeadingElements.forEach((buttonHeadingElement:any)=>buttonHeadingElement.style.display='none');
     }else{
       buttonHeadingElements.forEach((buttonHeadingElement:any)=>buttonHeadingElement.style.display='flex');
     }
-  },[isFourPacksVisible,isDozensVisible,isSpreadsVisible]);
+  },[isBagelsVisible,isSpreadsVisible]);
 
   //handle initial page load
   useEffect(()=>{
@@ -48,6 +48,30 @@ export default function Home(){
   const scrollToID = function(elementID:string){
     const element: HTMLElement | null= document.getElementById(elementID);
     if (element) element.scrollIntoView();
+  };
+
+  const getBagelMenuItems = function(){
+    const bagelItems:BagelItem[] = storeItems.filter(item => item.cat === 'bagel') as BagelItem[];
+    const allItems = bagelItems.map((bagelItem:BagelItem,index:number)=>{
+      return(
+        <div key={index}>
+          <button onClick={()=>{scrollToID(`item-${bagelItem._id}`)}}>{bagelItem.name}</button>
+        </div>
+        )
+    });
+    return allItems;
+  };
+
+  const getSpreadMenuItems = function(){
+    const spreadItems:SpreadItem[] = storeItems.filter(item => item.cat === 'spread') as SpreadItem[];
+    const allItems = spreadItems.map((spreadItem:SpreadItem,index:number)=>{
+      return(
+        <div key={index}>
+          <button onClick={()=>{scrollToID(`item-${spreadItem._id}`)}}>{spreadItem.name}</button>
+        </div>
+        )
+    });
+    return allItems;
   };
 
   if (!isPageLoaded){
@@ -70,88 +94,37 @@ export default function Home(){
         <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
           <About />
           <h3 data-aos='fade-in' className='our-menu-heading'>Our Menu</h3>
-          <div className='our-menu'>
+          <div data-aos='fade-in' className='our-menu'>
             {
-              isFourPacksVisible===false ?
-                <div data-aos='fade-in' className='menu-button-heading'>
-                  <button onClick={()=>setIsFourPacksVisible(true)}>
-                    Four Packs
+              isBagelsVisible===false ?
+                <div className='menu-button-heading'>
+                  <button onClick={()=>setIsBagelsVisible(true)}>
+                    Bagels
                   </button>
                 </div>
               :
-              <div className='menu-left'>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>setIsFourPacksVisible(false)}>Four Packs</button>
+              <div className='menu-option'>
+                <div>
+                  <button onClick={()=>setIsBagelsVisible(false)}>Bagels</button>
                 </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-650c9f303843aa9fa7ae75cf')}}>Plain Four Pack</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-650c9fb23843aa9fa7ae75d2')}}>Sesame Seeds Four Pack</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-650c9f8d3843aa9fa7ae75d0')}}>Everything Four Pack</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-650c9f9d3843aa9fa7ae75d1')}}>Cinnamon Raisin Four Pack</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-650c9fc43843aa9fa7ae75d3')}}>Poppy Seeds Four Pack</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-650c9fda3843aa9fa7ae75d5')}}>Blueberry Four Pack</button>
-                </div>
-              </div>
-            }
-            {
-              isDozensVisible===false ?
-                <div data-aos='fade-in' className='menu-button-heading'>
-                  <button onClick={()=>{setIsDozensVisible(true)}}>Dozens</button>
-                </div>
-              :
-              <div className='menu-right'>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{setIsDozensVisible(false)}}>Dozens</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-650ca27e3843aa9fa7ae75d6')}}>Plain Dozen</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-6510e084bd5877435d3f2f40')}}>Sesame Seeds Dozen</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-650ca2b83843aa9fa7ae75d7')}}>Everything Dozen</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-6520108eb238aa6da6be33f8')}}>Cinnamon Raisin Dozen</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-652010fab238aa6da6be33f9')}}>Poppy Seeds Dozen</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{scrollToID('item-65201111b238aa6da6be33fa')}}>Blueberry Dozen</button>
-                </div>
+                {
+                  getBagelMenuItems()
+                }
               </div>
             }
             {
               isSpreadsVisible === false ?
-                <div data-aos='fade-in' className='menu-button-heading'>
-                  <button onClick={()=>{setIsSpreadsVisible(true)}}>Brendel's Favorite Spreads</button>
+                <div className='menu-button-heading'>
+                  <button onClick={()=>{setIsSpreadsVisible(true)}}>Brendel's Gourmet Spreads</button>
                 </div>
               :
-              <div className='menu-right'>
-                <div data-aos='fade-in'>
-                  <button onClick={()=>{setIsSpreadsVisible(false)}}>Brendel's Favorite Spreads</button>
+              <div className='menu-option'>
+                <div>
+                  <button onClick={()=>{setIsSpreadsVisible(false)}}>Brendel's Gourmet Spreads</button>
                 </div>
-                <div data-aos='fade-in'>
-                  <button>Placeholder 1</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button>Placeholder 2</button>
-                </div>
-                <div data-aos='fade-in'>
-                  <button>Placeholder 3</button>
-                </div>
+                {
+                  getSpreadMenuItems()
+                }
               </div>
             }
           </div>
@@ -163,7 +136,10 @@ export default function Home(){
           <StoreItems 
             isSignedIn={isSignedIn}
             cart={cart}
-            setCart={setCart} />
+            setCart={setCart}
+            storeItems = {storeItems}
+            setStoreItems = {setStoreItems}
+          />
         </div>
       </main>
     );

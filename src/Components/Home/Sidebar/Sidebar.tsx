@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { handleLogout, verifyLoginToken } from '../../../Helpers/auth';
 import { toggleExpandMenu } from '../../../Helpers/sidebar';
 import { Cart } from '../../../Interfaces/interfaces';
+import { getItemQuantityFromCart } from '../../../Helpers/cart';
 
 export default function Sidebar(
   {
@@ -28,7 +29,7 @@ export default function Sidebar(
   }
 ){
   const [hasAudioPlayed,setHasAudioPlayed] = useState<boolean>(false);
-  const [totalQuantity,setTotalQuantity] = useState<number>(0);
+  const [totalQuantity,setTotalQuantity] = useState<number>(cart.totalQuantity || 0);
   const navigate = useNavigate();
 
    //check if user is logged in and login token is valid on initial page load
@@ -40,7 +41,7 @@ export default function Sidebar(
 
   //when cart is updated calculate new total quantity
   useEffect(()=>{
-    setTotalQuantity(totalQuantity);
+    setTotalQuantity(cart.totalQuantity);
   },[cart])
 
   //sidebar is expanded

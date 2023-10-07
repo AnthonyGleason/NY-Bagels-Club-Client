@@ -10,7 +10,7 @@ export const verifyCartToken = async function(setCart:Function){
   });
   const responseData = await response.json();
   if (responseData.isValid){
-    setCart(responseData.cart.items);
+    setCart(responseData.cart);
     return responseData.isValid;
   };
 };

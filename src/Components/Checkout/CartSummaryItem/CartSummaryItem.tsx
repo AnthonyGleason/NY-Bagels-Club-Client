@@ -25,10 +25,20 @@ export default function CartSummaryItem(
     setCartItemSubtotal(getCartItemSubtotal(cartItem))
   },[cartItem.quantity])
 
+  const getSelectionName = function(){
+    if (cartItem.selection==='four'){
+      return 'Four Pack(s)';
+    }else if (cartItem.selection==='dozen'){
+      return 'Dozen(s)';
+    }else if (cartItem.itemData.cat==='spread'){
+      return 'One Pound';
+    }
+  };
+
   if (!isCheckoutView){
     return(
       <tr>
-        <td className='item-name'>{cartItem.itemData.name}</td>
+        <td className='item-name'>{cartItem.itemData.name} {getSelectionName()}</td>
         <td>
           <input
             type='number'
@@ -47,7 +57,7 @@ export default function CartSummaryItem(
           />
         </td>
         <td className='item-subtotal'>
-          ${cartItemSubtotal}
+          ${cartItemSubtotal.toFixed(2)}
         </td>
         <td className='item-remove-wrapper'>
           <button onClick={() => {
@@ -68,7 +78,7 @@ export default function CartSummaryItem(
   }else{
     return(
       <tr>
-        <td className='item-name'>{cartItem.itemData.name}</td>
+        <td className='item-name'>{cartItem.itemData.name} {getSelectionName()}</td>
         <td>
           <span>{cartItemQuantity}</span>
         </td>

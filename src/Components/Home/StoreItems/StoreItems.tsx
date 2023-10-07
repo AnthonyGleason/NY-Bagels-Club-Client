@@ -9,13 +9,16 @@ import { getUnitPriceFromCartItem } from '../../../Helpers/cart';
 export default function StoreItems({
     cart,
     setCart,
-    isSignedIn
+    isSignedIn,
+    storeItems,
+    setStoreItems
   }:{
     cart: Cart,
     setCart: Function,
-    isSignedIn: boolean
+    isSignedIn: boolean,
+    storeItems: (BagelItem | SpreadItem)[],
+    setStoreItems: Function
   }){
-  const [storeItems,setStoreItems] = useState<(SpreadItem | BagelItem)[]>([]); 
   const [userTier, setUserTier] = useState<string>('Non-Member');
 
   const fetchAndSetStoreItems = async function(storeItemSetter:Function){
@@ -50,14 +53,11 @@ export default function StoreItems({
             return(
               <StoreItem
                 key={storeItem._id}
-                itemName={storeItem.name}
-                itemID={storeItem._id}
-                itemPrice={price}
+                storeItem={storeItem}
                 cart={cart}
                 setCart={setCart}
                 isAltTheme={counter%2===0}
                 userTier={userTier}
-                selection={'four'}
               />
             )
           }else{
@@ -65,9 +65,7 @@ export default function StoreItems({
             return(
               <StoreItem
                 key={storeItem._id}
-                itemName={storeItem.name}
-                itemID={storeItem._id}
-                itemPrice={price}
+                storeItem={storeItem}
                 cart={cart}
                 setCart={setCart}
                 isAltTheme={counter%2===0}

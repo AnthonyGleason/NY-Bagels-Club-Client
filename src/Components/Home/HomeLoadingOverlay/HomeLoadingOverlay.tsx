@@ -3,7 +3,7 @@ import Aos from 'aos';
 import "aos/dist/aos.css";
 import './HomeLoadingOverlay.css';
 import bubbleLoadingImg from '../../../Assets/icons/bubble-loading.svg';
-import { HOME_LOADING_DELAY } from '../../../Config/clientSettings';
+import { HOME_LOADING_DELAY, IS_MAINTENANCE_MODE } from '../../../Config/clientSettings';
 
 export default function HomeLoadingOverlay(
   {
@@ -16,9 +16,11 @@ export default function HomeLoadingOverlay(
     //setup fade animation length
     Aos.init({duration: 2500});
     //redirect user to new url after time has passed
-    setTimeout(()=>{
-      setIsPageLoaded(true);
-    },HOME_LOADING_DELAY)
+    if (!IS_MAINTENANCE_MODE){
+      setTimeout(()=>{
+        setIsPageLoaded(true);
+      },HOME_LOADING_DELAY)
+    }
   },[]);
 
   return(
@@ -30,10 +32,20 @@ export default function HomeLoadingOverlay(
           <span>New York Bagels Club</span>
           <span>"Always Fresh"</span>
         </h1>
-        <p data-aos='fade-in'>
-          Authentic New York City Style Bagels Directly From the Heart of Long Island to Your Doorstep!
-        </p>
-        <img data-aos='fade-in' className='loading-spinner' src={bubbleLoadingImg} alt='loading' />
+        {
+          IS_MAINTENANCE_MODE === true
+          ?
+          <p data-aos='fade-in'>
+            We are undergoing scheduled maintenance and will return shortly. Thank you for your patience!
+          </p>
+          :
+          <>
+            <p data-aos='fade-in'>
+              Authentic New York City Style Bagels Directly From the Heart of Long Island to Your Doorstep!
+            </p>
+            <img data-aos='fade-in' className='loading-spinner' src={bubbleLoadingImg} alt='loading' />
+          </>
+        }
       </div>
     </section>
   )
