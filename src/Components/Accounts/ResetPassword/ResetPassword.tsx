@@ -38,7 +38,7 @@ export default function ResetPassword(){
     const responseData = await response.json();
     setIsExpired(responseData.isExpired);
     if (responseData.wasUpdated){
-      navigate('/accounts/login');
+      navigate('/login');
     }else if (!isExpired){
       setMessage('Passwords do not match or user does not exist.')
     };
