@@ -7,6 +7,7 @@ import HomeLoadingOverlay from './HomeLoadingOverlay/HomeLoadingOverlay';
 //import css
 import './Home.css';
 import upArrowImg from '../../Assets/icons/arrow-up-outline.svg';
+import foodMenuImg from '../../Assets/icons/foodMenu.svg';
 import Aos from 'aos';
 import "aos/dist/aos.css";
 import { fetchAndHandleCart } from '../../Helpers/cart';
@@ -88,12 +89,17 @@ export default function Home(){
           isSignedIn={isSignedIn}
           setIsSignedIn={setIsSignedIn}
         />
-        <button onClick={()=>{scrollToID('nav')}} className='scroll-up-button'>
-          <img src={upArrowImg} alt='scroll up'/>
-        </button>
+        <div className='corner-buttons'>
+          <button onClick={()=>{scrollToID('our-menu')}} className='scroll-menu-button'>
+            <img src={foodMenuImg} alt='scroll up'/>
+          </button>
+          <button onClick={()=>{scrollToID('nav')}} className='scroll-up-button'>
+            <img src={upArrowImg} alt='scroll up'/>
+          </button>
+        </div>
         <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
           <About />
-          <h3 data-aos='fade-in' className='our-menu-heading'>Our Menu</h3>
+          <h3 data-aos='fade-in' id='our-menu' className='our-menu-heading'>Our Menu</h3>
           <div data-aos='fade-in' className='our-menu'>
             {
               isBagelsVisible===false ?

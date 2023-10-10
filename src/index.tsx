@@ -15,6 +15,9 @@ import Checkout from './Components/Checkout/Checkout';
 import './index.css';
 import CheckoutSuccess from './Components/Checkout/CheckoutSuccess/CheckoutSuccess';
 import SubscriptionPage from './Components/Accounts/SubscriptionPage/SubscriptionPage';
+import MyOrders from './Components/Accounts/MyOrders/MyOrders';
+import AccountSettings from './Components/Accounts/AccountSettings/AccountSettings';
+import ResetPassword from './Components/Accounts/ResetPassword/ResetPassword';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -32,6 +35,9 @@ root.render(
         <Route path='/cart/checkout/success' element={<CheckoutSuccess />} />
         <Route path='/cart/checkout' element={<Checkout />} />
         <Route path='/cart' element={<CartSummary isCheckoutView={false} />} />
+        <Route path='/accounts/password/reset/:resetID' element={<ResetPassword />} />
+        <Route path='/accounts/orders' element={<MyOrders />} />
+        <Route path='/accounts/settings' element={<AccountSettings />} />
       </Routes>
       <Footer />
     </HashRouter>

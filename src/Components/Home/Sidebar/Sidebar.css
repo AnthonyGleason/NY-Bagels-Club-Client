@@ -48,13 +48,12 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  justify-content: space-evenly;
   font-family: 'Allura';
   font-size: 30px;
   font-weight: bold;
-  max-height: 500px;
   width: 80%;
-  gap: 10px;
+  gap: 15px;
+  margin: 20px;
 }
 .sidebar-nav button{
   border: 0px solid transparent;

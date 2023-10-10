@@ -5,7 +5,8 @@ export const verifyCartToken = async function(setCart:Function){
     method: 'GET',
     headers:{
       'Content-Type': 'application/json',
-      'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
+      'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
+      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
     }
   });
   const responseData = await response.json();

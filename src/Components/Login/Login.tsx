@@ -45,6 +45,25 @@ export default function Login(){
     }
   };
 
+  const handleForgotPassword = async function(){
+    if (!emailInput){
+      alert('Please enter a email in the email field to perform this action.');
+    };
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/forgotPassword`,{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: emailInput
+      })
+    });
+    const responseData = await response.json();
+    if (responseData.isEmailSent){
+      alert('Your request has been processed. Please check your email for a password reset link.');
+    };
+  };
+
   return(
     <section className='login-wrapper'>
       <form data-aos='fade-in' className='login'>
@@ -65,7 +84,7 @@ export default function Login(){
             <button type='button' onClick={()=>{navigate('/register')}}>Register</button>
           </li>
           <li>
-            <button type='button' onClick={()=>{}}>Forgot Password</button>
+            <button type='button' onClick={()=>{handleForgotPassword()}}>Forgot Password</button>
           </li>
         </ol>
         {genErrorMessageElement()}

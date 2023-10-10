@@ -5,6 +5,10 @@ import loginImg from '../../../Assets/icons/login.svg';
 import cartImg from '../../../Assets/icons/cart.svg';
 import logoutImg from '../../../Assets/icons/logout.svg';
 import vipImg from '../../../Assets/icons/vip.svg';
+import ordersImg from '../../../Assets/icons/orders.svg';
+import settingsImg from '../../../Assets/icons/settings.svg';
+import creditCardImg from '../../../Assets/icons/creditcard.svg';
+
 import './Sidebar.css';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -65,51 +69,76 @@ export default function Sidebar(
             }}>
               <img src={menuImg} alt='expand sidebar menu' /> 
             </button>
-          </li>       
-          {
-            isSignedIn===false 
-            ?
-              <>
-                <li>
-                  <button onClick={()=>{navigate('/login')}}>
-                    <img src={loginImg} alt='login' />
-                    <span>Login</span>
-                  </button>
-                </li>
-                <li>
-                  <button onClick={()=>{navigate('/register')}}>
-                    <img src={registerImg} alt='register' />
-                    <span>Register</span>
-                  </button>
-                </li>
-              </> 
-            :
-              <>
-                <li>
-                  <button onClick={()=>{handleLogout(setIsSignedIn)}}>
-                    <img src={logoutImg} alt='logout' />
-                    <span>Logout</span>
-                  </button> 
-                </li>
-              </>
-          }
-          <li>
-            <button onClick={()=>{navigate('/subscribe')}}>
-              <img src={vipImg} alt='subscribe' />
-              <span>Subscribe</span>
-            </button>
           </li>
           <li className='cart'>
             <button onClick={()=>{navigate('/cart')}}>
               <img src={cartImg} alt='cart' />
               <span>{totalQuantity} Items</span>
             </button>
-          </li>
+          </li>    
+          {
+            isSignedIn===false 
+            ?
+            // user is not signed in
+             null
+            :
+            // user is signed in
+              <>
+                <li>
+                  <button onClick={()=>{navigate('/accounts/orders')}}>
+                    <img src={ordersImg} alt='my orders' />
+                    <span>Orders</span>
+                  </button> 
+                </li>
+              </>
+          }
           <li className='checkout'>
             <button onClick={()=>{navigate('/cart/checkout')}}>
+              <img src={creditCardImg} alt='checkout' />
               <span>Checkout</span>
             </button>
           </li>
+          <li>
+            <button onClick={()=>{navigate('/subscribe')}}>
+              <img src={vipImg} alt='subscribe' />
+              <span>Subscribe</span>
+            </button>
+          </li>  
+          {
+            isSignedIn===false 
+            ?
+            // user is not signed in
+            <>
+              <li>
+                <button onClick={()=>{navigate('/login')}}>
+                  <img src={loginImg} alt='login' />
+                  <span>Login</span>
+                </button>
+              </li>
+              <li>
+                <button onClick={()=>{navigate('/register')}}>
+                  <img src={registerImg} alt='register' />
+                  <span>Register</span>
+                </button>
+              </li>
+            </> 
+            :
+            // user is signed in
+            <>
+              <li>
+                <button onClick={()=>{navigate('/accounts/settings')}}>
+                  <img src={settingsImg} alt='account settings' />
+                  <span>Settings</span>
+                </button> 
+              </li>
+              <li>
+                <button onClick={()=>{handleLogout(setIsSignedIn)}}>
+                  <img src={logoutImg} alt='logout' />
+                  <span>Logout</span>
+                </button> 
+              </li>
+            </>
+          }
         </ol>
       </motion.section>
     );
