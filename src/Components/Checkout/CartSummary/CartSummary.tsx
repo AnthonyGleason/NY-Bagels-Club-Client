@@ -29,6 +29,7 @@ export default function CartSummary({
   const populateTaxCalculation = async function(address:Address){
     const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-tax-calculation`,{
       method: 'POST',
+      mode: 'cors',
       headers:{
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
@@ -88,8 +89,8 @@ export default function CartSummary({
           <span><strong>Basket Subtotal: ${cartSubtotalPrice.toFixed(2)}</strong></span>
         </div>
         <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
-        <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>Checkout</button>
-        {/* <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button> */}
+        {/* <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>Checkout</button> */}
+        <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button>
       </section>
     );
   }else{ //is checkout view

@@ -18,6 +18,7 @@ export const modifyCart = async function(
   //make a request to the server to update quantity for cart
   const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts`,{
     method: 'PUT',
+    mode: 'cors',
     headers:{
       'Content-Type': 'application/json',
       'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,

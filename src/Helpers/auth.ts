@@ -3,6 +3,7 @@ import { getServerUrlPrefix } from "../Config/clientSettings";
 export const verifyCartToken = async function(setCart:Function){
   const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/verify`,{
     method: 'GET',
+    mode: 'cors',
     headers:{
       'Content-Type': 'application/json',
       'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
@@ -19,6 +20,7 @@ export const verifyCartToken = async function(setCart:Function){
 export const requestCartToken = async function(){
   const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts`,{
     method: 'POST',
+    mode: 'cors'
   });
   const responseData = await response.json();
   if (responseData.cartToken){
@@ -32,6 +34,7 @@ export const verifyLoginToken = async function(setIsSignedIn?:Function):Promise<
   try{
     const response = await fetch(`${getServerUrlPrefix()}/api/users/verify`,{
       method: 'GET',
+      mode: 'cors',
       headers:{
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
@@ -49,6 +52,7 @@ export const verifyLoginToken = async function(setIsSignedIn?:Function):Promise<
 export const handleLogout = async function(setIsSignedIn?:Function){
   await fetch(`${getServerUrlPrefix()}/api/users/logout`,{
     method: 'POST',
+    mode: 'cors',
     headers:{
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
@@ -62,6 +66,7 @@ export const handleLogout = async function(setIsSignedIn?:Function){
 export const getMembershipTier = async function(setMembershipTier?:Function):Promise<string>{
   const response = await fetch(`${getServerUrlPrefix()}/api/users/membershipLevel`,{
     method: 'GET',
+    mode: 'cors',
     headers:{
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
@@ -80,6 +85,7 @@ export const getMembershipTier = async function(setMembershipTier?:Function):Pro
 export const getPaymentIntentToken = async function(clientSecret:string,setClientSecret:Function){
   const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-payment-intent`,{
     method: 'POST',
+    mode: 'cors',
     headers:{
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,

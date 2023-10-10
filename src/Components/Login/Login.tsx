@@ -28,6 +28,7 @@ export default function Login(){
   const submitLogin = async function(){
     const response = await fetch(`${getServerUrlPrefix()}/api/users/login`,{
       method: 'POST',
+      mode: 'cors',
       headers:{
         'Content-Type': 'application/json'
       },

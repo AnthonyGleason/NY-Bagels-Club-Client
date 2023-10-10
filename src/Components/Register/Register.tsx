@@ -35,6 +35,7 @@ export default function Register(){
       headers:{
         'Content-Type': 'application/json'
       },
+      mode: 'cors',
       body: JSON.stringify({
         firstName: firstNameInput,
         lastName: lastNameInput,
