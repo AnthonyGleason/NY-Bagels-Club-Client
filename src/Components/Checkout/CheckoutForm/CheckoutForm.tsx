@@ -7,9 +7,9 @@ import {
   useElements,
   AddressElement
 } from "@stripe/react-stripe-js";
-import { CHECKOUT_SUCCESS_REDIRECT_URL} from "../../../Config/clientSettings";
 import { Address } from "../../../Interfaces/interfaces";
 import CartSummary from "../CartSummary/CartSummary";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutForm({
   clientSecret,
@@ -21,6 +21,7 @@ export default function CheckoutForm({
   const stripe = useStripe();
   const elements = useElements();
 
+  const navigate = useNavigate();
   //gift inputs
   const [isGiftInput, setIsGiftInput] = useState<boolean>(false);
   const [giftMessageInput, setGiftMessageInput] = useState<string>('');
@@ -79,7 +80,7 @@ export default function CheckoutForm({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: CHECKOUT_SUCCESS_REDIRECT_URL,
+        return_url: 'https://nybagelsclub.com/#/cart/checkout/success',
         receipt_email: email,
       },
     });
@@ -107,47 +108,54 @@ export default function CheckoutForm({
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-      <LinkAuthenticationElement
-        id="link-authentication-element"
-        onChange={(e:any) => { setEmail(e.value.email)}}
-      />
-      <h3>Shipping Information</h3>
-      <AddressElement onChange={(e)=>{setAddress(e.value.address)}} options={addressElementOptions} />
-      <h3>Payment Information</h3>
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <h3>Is this order a gift?</h3>
-      <div className='gift-options-content'>
-        <div className='gift-toggle-container'>
-          <input
-            type='checkbox'
-            checked={isGiftInput}
-            onChange={(e) => setIsGiftInput(e.target.checked)}
-          />
-        </div>
-        {
-          isGiftInput===true
-          ?
-            <div className='gift-options-form'>
-              <div>
-                <label>Message:</label>
-                <textarea value={giftMessageInput} onChange={(e)=>{setGiftMessageInput(e.target.value)}} />
+    <div className="payment-form-wrapper">
+      <form id="payment-form" onSubmit={handleSubmit}>
+        <LinkAuthenticationElement
+          id="link-authentication-element"
+          onChange={(e:any) => { setEmail(e.value.email)}}
+        />
+        <h3>Shipping Information</h3>
+        <AddressElement onChange={(e)=>{setAddress(e.value.address)}} options={addressElementOptions} />
+        <h3>Payment Information</h3>
+        <PaymentElement id="payment-element" options={paymentElementOptions} />
+        <h3>Is This Order A Gift?</h3>
+        <div className='gift-options-content'>
+          <div className='gift-toggle-container'>
+            <input
+              type='checkbox'
+              checked={isGiftInput}
+              onChange={(e) => setIsGiftInput(e.target.checked)}
+            />
+          </div>
+          {
+            isGiftInput===true
+            ?
+              <div className='gift-options-form'>
+                <div>
+                  <label>Gift Message</label>
+                  <textarea value={giftMessageInput} onChange={(e)=>{setGiftMessageInput(e.target.value)}} />
+                </div>
               </div>
-            </div>
-          :
-            null
-        }
-      </div>
-      <div>
-        <CartSummary paymentIntentToken={clientSecret} address={address} setPaymentIntentToken={setClientSecret} isCheckoutView={true} />
-        <button disabled={isLoading || !stripe || !elements} id="submit">
-          <span id="button-text">
-            {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-          </span>
-        </button>
-        {/* Show any error or success messages */}
-        {message && <div id="payment-message">{message}</div>}
-      </div>
-    </form>
+            :
+              null
+          }
+        </div>
+        <div className="payment-form-button-container">
+          <CartSummary paymentIntentToken={clientSecret} address={address} setPaymentIntentToken={setClientSecret} isCheckoutView={true} />
+          <button disabled={isLoading || !stripe || !elements} id="submit">
+            <span id="button-text">
+              {isLoading ? <div className="spinner" id="spinner"></div> : "Pay Now"}
+            </span>
+          </button>
+          <button onClick={()=>{navigate('/')}}>
+            <span>
+              Cancel
+            </span>
+          </button>
+          {/* Show any error or success messages
+          {message && <div id="payment-message">{message}</div>} */}
+        </div>
+      </form>
+    </div>
   );
 };

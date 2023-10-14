@@ -18,7 +18,6 @@ export const modifyCart = async function(
   //make a request to the server to update quantity for cart
   const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts`,{
     method: 'PUT',
-    mode: 'cors',
     headers:{
       'Content-Type': 'application/json',
       'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
@@ -114,11 +113,6 @@ export const getItemQuantityFromCart = function(cart:Cart, itemName: string, sel
   return quantity;
 };
 
-
-//the below functions are enabled to avoid errors but have not been vetted
-
-
-
 export const getCartItems = function (
   cart:CartItem[],
   setCart:Function,
@@ -137,4 +131,11 @@ export const getCartItems = function (
   });
   // Return the cart rows
   return cartRows;
+};
+
+export const emptyCart = {
+  items: [],
+  subtotal: 0,
+  tax: 0,
+  totalQuantity: 0
 };

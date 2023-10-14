@@ -5,6 +5,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './CheckoutForm/CheckoutForm';
 import { useNavigate } from 'react-router-dom';
 import './Checkout.css';
+import loadingImg from '../../Assets/icons/bubble-loading.svg';
 
 const stripePromise = loadStripe("pk_test_51MkbRQJ42zMuNqyLhOP6Aluvz4TVAxVFFeofdem3PAvRDUoRzwYxfm0tBeOKYhdCNhbIzSSKeVFdrp7IvVku60Yz001xBUoHhk");
 
@@ -42,7 +43,7 @@ export default function Checkout(){
         <CheckoutForm clientSecret={clientSecret} setClientSecret={setClientSecret} />
       </Elements>
     )
-  }else{
+  }else if (!isLoginValid){
     return(
       <div className='checkout-logged-out'>
         <h3>Please login or register to checkout your basket.</h3>
@@ -52,5 +53,12 @@ export default function Checkout(){
         </div>
       </div>
     );
+  }else{
+    return(
+      <div className='checkout-loading'>
+        <p>Loading...</p>
+        <img src={loadingImg} alt='loading' />
+      </div>
+    )
   };
 };

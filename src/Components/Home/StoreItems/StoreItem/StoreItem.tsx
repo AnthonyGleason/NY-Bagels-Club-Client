@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './StoreItem.css';
-import { BagelItem, Cart, CartItem, SpreadItem } from '../../../../Interfaces/interfaces';
+import { BagelItem, Cart, SpreadItem } from '../../../../Interfaces/interfaces';
 import { getItemQuantityFromCart, modifyCart } from '../../../../Helpers/cart';
 
 export default function StoreItem({

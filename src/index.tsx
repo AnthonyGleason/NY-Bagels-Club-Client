@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+
 //import components
 import Nav from './Components/Nav/Nav';
 import Footer from './Components/Home/Footer/Footer';
@@ -18,6 +19,7 @@ import SubscriptionPage from './Components/Accounts/SubscriptionPage/Subscriptio
 import MyOrders from './Components/Accounts/MyOrders/MyOrders';
 import AccountSettings from './Components/Accounts/AccountSettings/AccountSettings';
 import ResetPassword from './Components/Accounts/ResetPassword/ResetPassword';
+import Admin from './Components/Admin/Admin';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -29,6 +31,7 @@ root.render(
       <Nav />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/admin' element={<Admin />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/subscribe' element={<SubscriptionPage />} />

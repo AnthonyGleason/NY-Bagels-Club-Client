@@ -8,14 +8,16 @@ import vipImg from '../../../Assets/icons/vip.svg';
 import ordersImg from '../../../Assets/icons/orders.svg';
 import settingsImg from '../../../Assets/icons/settings.svg';
 import creditCardImg from '../../../Assets/icons/creditcard.svg';
+import adminImg from '../../../Assets/icons/admin.svg';
 
 import './Sidebar.css';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { handleLogout, verifyLoginToken } from '../../../Helpers/auth';
+import { handleLogout, updateAdminStatus, verifyLoginToken } from '../../../Helpers/auth';
 import { toggleExpandMenu } from '../../../Helpers/sidebar';
 import { Cart } from '../../../Interfaces/interfaces';
 import { getItemQuantityFromCart } from '../../../Helpers/cart';
+import { getServerUrlPrefix } from '../../../Config/clientSettings';
 
 export default function Sidebar(
   {
@@ -34,14 +36,20 @@ export default function Sidebar(
 ){
   const [hasAudioPlayed,setHasAudioPlayed] = useState<boolean>(false);
   const [totalQuantity,setTotalQuantity] = useState<number>(cart.totalQuantity || 0);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const navigate = useNavigate();
 
-   //check if user is logged in and login token is valid on initial page load
-   useEffect(()=>{
+  //check if user is logged in and login token is valid on initial page load
+  useEffect(()=>{
     if (localStorage.getItem('loginToken')){
       verifyLoginToken(setIsSignedIn);
     };
   },[])
+
+  //when the user signs in verify admin status for admin panel
+  useEffect(()=>{
+    updateAdminStatus(setIsAdmin);
+  },[isSignedIn]);
 
   //when cart is updated calculate new total quantity
   useEffect(()=>{
@@ -70,6 +78,22 @@ export default function Sidebar(
               <img src={menuImg} alt='expand sidebar menu' /> 
             </button>
           </li>
+          {
+            isAdmin===false
+            ?
+            // user is not an admin
+             null
+            :
+            // user is an admin
+              <>
+                <li>
+                  <button onClick={()=>{navigate('/admin')}}>
+                    <img src={adminImg} alt='admin panel' />
+                    <span>Admin</span>
+                  </button> 
+                </li>
+              </>
+          }
           <li className='cart'>
             <button onClick={()=>{navigate('/cart')}}>
               <img src={cartImg} alt='cart' />

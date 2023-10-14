@@ -18,8 +18,7 @@ export default function ResetPassword(){
 
   const getResetTokenStatus = async function(){
     const response = await fetch(`${getServerUrlPrefix()}/api/users/forgotPassword/${resetID}`,{
-      method: 'GET',
-      mode: 'cors'
+      method: 'GET'
     });
     const responseData = await response.json();
     setIsExpired(responseData.isExpired);
@@ -28,7 +27,6 @@ export default function ResetPassword(){
   const handleSubmitForgotPassword = async function(){
     const response = await fetch(`${getServerUrlPrefix()}/api/users/forgotPassword/${resetID}`,{
       method: 'PUT',
-      mode: 'cors',
       headers:{
         'Content-Type': 'application/json',
       },

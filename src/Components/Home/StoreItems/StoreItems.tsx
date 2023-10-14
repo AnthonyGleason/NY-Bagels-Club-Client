@@ -23,8 +23,7 @@ export default function StoreItems({
 
   const fetchAndSetStoreItems = async function(storeItemSetter:Function){
     const response = await fetch(`${getServerUrlPrefix()}/api/shop/all`,{
-      method: 'GET',
-      mode: 'cors'
+      method: 'GET'
     });
     const responseData = await response.json();
     const allItems: (BagelItem | SpreadItem)[] | null = responseData.allItems;

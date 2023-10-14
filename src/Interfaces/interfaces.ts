@@ -41,10 +41,24 @@ export interface Address{
   state: string,
   postal_code: string,
   country: string
-}
+};
+
 export interface Cart{
   items:CartItem[];
   subtotal:number;
   tax:number;
   totalQuantity:number;
-}
+};
+
+//order
+export interface Order{
+  dateCreated:Date,
+  userID:string,
+  status:string,
+  totalAmount:number,
+  cart:Cart,
+  shippingAddress:Address,
+  trackingNumber?:string,
+  giftMessage?:string  
+  _id: string // unique id given by mongodb
+};

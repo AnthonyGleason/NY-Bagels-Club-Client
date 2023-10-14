@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Address, Cart, CartItem } from '../../../Interfaces/interfaces';
+import { Address, Cart } from '../../../Interfaces/interfaces';
 import { fetchAndHandleCart, getCartItems  } from '../../../Helpers/cart';
 import './CartSummary.css';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
@@ -29,7 +29,6 @@ export default function CartSummary({
   const populateTaxCalculation = async function(address:Address){
     const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-tax-calculation`,{
       method: 'POST',
-      mode: 'cors',
       headers:{
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,

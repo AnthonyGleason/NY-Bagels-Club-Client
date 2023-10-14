@@ -5,7 +5,7 @@
   gap: 10px;
   padding: 0.8em;
 }
-.cart-summary h3{
+#root .cart-summary h3{
   font-size: 35px;
   font-family: 'Allura';
   text-align: center;
