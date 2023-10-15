@@ -40,7 +40,9 @@ export interface Address{
   city: string,
   state: string,
   postal_code: string,
-  country: string
+  country: string,
+  phone: string,
+  fullName: string
 };
 
 export interface Cart{

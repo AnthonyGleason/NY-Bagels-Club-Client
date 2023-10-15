@@ -46,7 +46,7 @@ export default function CartSummary({
   };
 
   useEffect(()=>{
-    if (address && address.city && address.country && address.line1 && address.postal_code && address.state) populateTaxCalculation(address);
+    if (address && address.city && address.country && address.line1 && address.postal_code && address.state && address.phone && address.fullName) populateTaxCalculation(address);
   },[address])
 
   //handle initial page load (grab latest cart data);

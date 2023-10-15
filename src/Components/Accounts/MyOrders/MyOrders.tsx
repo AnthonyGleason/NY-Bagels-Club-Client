@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Address, Cart, CartItem, Order } from '../../../Interfaces/interfaces';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
+import './MyOrders.css';
 
 export default function MyOrders(){
   const [orders,setOrders] = useState<Order[]>([]);
@@ -22,7 +23,7 @@ export default function MyOrders(){
   },[]);
 
   return(
-    <div>
+    <div className='my-orders'>
       <h3>My Orders</h3>
       <ul className='orders-container'>
         {
@@ -56,6 +57,8 @@ export default function MyOrders(){
                 <div>
                   <h4>Shipping Address</h4>
                   <ul>
+                    <li>{shippingAddress.fullName}</li>
+                    <li>{shippingAddress.phone}</li>
                     <li>{shippingAddress.line1}</li>
                     <li>{shippingAddress.city}</li>
                     <li>{shippingAddress.state}, {shippingAddress.postal_code}</li>

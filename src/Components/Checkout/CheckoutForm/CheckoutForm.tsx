@@ -10,6 +10,7 @@ import {
 import { Address } from "../../../Interfaces/interfaces";
 import CartSummary from "../CartSummary/CartSummary";
 import { useNavigate } from "react-router-dom";
+import { getServerUrlPrefix } from "../../../Config/clientSettings";
 
 export default function CheckoutForm({
   clientSecret,
@@ -31,7 +32,9 @@ export default function CheckoutForm({
     city: '',
     state: '',
     postal_code: '',
-    country: 'US'
+    country: 'US',
+    phone: '',
+    fullName: ''
   });
 
   const [email, setEmail] = useState<string>('');
@@ -41,7 +44,7 @@ export default function CheckoutForm({
   useEffect(() => {
     if (!stripe) {
       return;
-    }
+    };
 
     if (!clientSecret) return;
 
@@ -104,7 +107,48 @@ export default function CheckoutForm({
   };
 
   const addressElementOptions:any={
-    mode: "shipping"
+    mode: "shipping",
+    allowedCountries: ['US'],
+    fields: {
+      phone: 'always'
+    },
+    validation:{
+      phone:{
+        required: 'always'
+      }
+    }
+  };
+
+  const updateGiftMessage = async function(giftMessage:string){
+    let tempGiftMessage:string = giftMessage;
+    //if the is a gift box was unchecked remove the gift message
+    if (!isGiftInput) tempGiftMessage='';
+    const response = await fetch(`${getServerUrlPrefix()}/api/shop/giftMessage`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
+        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
+      },
+      body:JSON.stringify({
+        updatedGiftMessage: tempGiftMessage,
+        clientSecret: clientSecret
+      })
+    });
+    const responseData = await response.json();
+    setClientSecret(responseData.paymentIntentToken);
+  };
+
+  //if the gift input box was ticked handle updating the field
+  useEffect(()=>{
+    updateGiftMessage(giftMessageInput);
+  },[isGiftInput]);
+
+  const updateAddressInfo = function(stripeAddress:any,fullName:string,phone:string){
+    let tempAddress = stripeAddress;
+    tempAddress.phone = phone;
+    tempAddress.fullName = fullName;
+    setAddress(tempAddress as Address);
   };
 
   return (
@@ -115,7 +159,7 @@ export default function CheckoutForm({
           onChange={(e:any) => { setEmail(e.value.email)}}
         />
         <h3>Shipping Information</h3>
-        <AddressElement onChange={(e)=>{setAddress(e.value.address)}} options={addressElementOptions} />
+        <AddressElement onChange={(e)=>updateAddressInfo(e.value.address,e.value.name,e.value.phone || '')} options={addressElementOptions} />
         <h3>Payment Information</h3>
         <PaymentElement id="payment-element" options={paymentElementOptions} />
         <h3>Is This Order A Gift?</h3>
@@ -132,8 +176,8 @@ export default function CheckoutForm({
             ?
               <div className='gift-options-form'>
                 <div>
-                  <label>Gift Message</label>
-                  <textarea value={giftMessageInput} onChange={(e)=>{setGiftMessageInput(e.target.value)}} />
+                  <label>Gift Message For Recipient</label>
+                  <textarea maxLength={400} onBlur={(e)=>{updateGiftMessage(e.target.value)}} value={giftMessageInput} onChange={(e)=>{setGiftMessageInput(e.target.value)}} />
                 </div>
               </div>
             :

@@ -1,0 +1,40 @@
+.account-settings{
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.account-settings .settings-input-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 1em;
+  width: 100%;
+  flex-direction: column;
+}
+.account-settings h3{
+  font-size: 22px;
+}
+.account-settings label{
+  font-size: 20px;
+  flex-grow: 1;
+}
+.account-settings input{
+  padding: 1em;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 5px;
+}
+.account-settings button{
+  border: 0px solid transparent;
+  border-radius: 8px;
+  background-color: #5d1917;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Allura';
+  padding: 0.5em 1em;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+}
