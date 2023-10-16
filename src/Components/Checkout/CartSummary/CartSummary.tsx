@@ -4,6 +4,8 @@ import { fetchAndHandleCart, getCartItems  } from '../../../Helpers/cart';
 import './CartSummary.css';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import { useNavigate } from 'react-router-dom';
+import { verifyLoginToken } from '../../../Helpers/auth';
+import Sidebar from '../../Home/Sidebar/Sidebar';
 
 export default function CartSummary({
   isCheckoutView,
@@ -52,45 +54,69 @@ export default function CartSummary({
   //handle initial page load (grab latest cart data);
   useEffect(()=>{
     fetchAndHandleCart(setCart);
+    
+    verifyLoginToken(setIsSignedIn);
   },[]);
 
+  const [isSignedIn,setIsSignedIn] = useState<boolean>(true);
+  const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
+  
   //when the cart is updated, update the total price of all items in the cart
   useEffect(()=>{
     setCartSubtotalPrice(cart.subtotal);
   },[cart])
 
+
   //handle empty shopping cart
   if (cart.items.length===0){
     return(
-      <div className='cart-summary'>
-        <h3>Basket</h3>
-        <strong>Your Basket is Currently Empty.</strong>
-      </div>
+      <>
+        <Sidebar 
+          cart={cart}
+          isExpanded={isSidebarExpanded} 
+          setIsExpanded={setIsSidebarExpanded}
+          isSignedIn={isSignedIn}
+          setIsSignedIn={setIsSignedIn}
+        />
+        <div className='cart-summary' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
+          <h3>Basket</h3>
+          <strong>Your Basket is Currently Empty.</strong>
+        </div>
+      </>
     );
   }else if (cart.items.length>0 && !isCheckoutView){
     return(
-      <section className='cart-summary'>
-        <h3>Basket</h3>
-        <table>
-          <thead>
-            <tr>
-              <th className="item-name">Name</th>
-              <th className="item-quantity">Quantity</th>
-              <th className="item-subtotal">Subtotal</th>
-              <th className="item-remove">Remove</th>
-            </tr>
-          </thead>
-          <tbody>
-            {getCartItems(cart.items,setCart,isCheckoutView)}
-          </tbody>
-        </table>
-        <div className='cart-subtotal'>
-          <span><strong>Basket Subtotal: ${cartSubtotalPrice.toFixed(2)}</strong></span>
-        </div>
-        <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
-        {/* <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>Checkout</button> */}
-        <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button>
-      </section>
+      <>
+        <Sidebar 
+          cart={cart}
+          isExpanded={isSidebarExpanded} 
+          setIsExpanded={setIsSidebarExpanded}
+          isSignedIn={isSignedIn}
+          setIsSignedIn={setIsSignedIn}
+        />
+        <section className='cart-summary' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
+          <h3>Basket</h3>
+          <table>
+            <thead>
+              <tr>
+                <th className="item-name">Name</th>
+                <th className="item-quantity">Quantity</th>
+                <th className="item-subtotal">Subtotal</th>
+                <th className="item-remove">Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              {getCartItems(cart.items,setCart,isCheckoutView)}
+            </tbody>
+          </table>
+          <div className='cart-subtotal'>
+            <span><strong>Basket Subtotal: ${cartSubtotalPrice.toFixed(2)}</strong></span>
+          </div>
+          <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
+          <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>Checkout</button>
+          {/* <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button> */}
+        </section>
+      </>
     );
   }else{ //is checkout view
     return(

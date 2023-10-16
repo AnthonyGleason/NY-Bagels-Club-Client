@@ -9,6 +9,7 @@ import ordersImg from '../../../Assets/icons/orders.svg';
 import settingsImg from '../../../Assets/icons/settings.svg';
 import creditCardImg from '../../../Assets/icons/creditcard.svg';
 import adminImg from '../../../Assets/icons/admin.svg';
+import homeImg from '../../../Assets/icons/round-home.svg';
 
 import './Sidebar.css';
 import { useNavigate } from 'react-router-dom';
@@ -78,6 +79,12 @@ export default function Sidebar(
               <img src={menuImg} alt='expand sidebar menu' /> 
             </button>
           </li>
+          <li className='home-sidebar-button'>
+            <button onClick={()=>{navigate('/')}}>
+              <img src={homeImg} alt='home' />
+              <span>Home</span> 
+            </button>
+          </li>
           {
             isAdmin===false
             ?
@@ -117,7 +124,11 @@ export default function Sidebar(
               </>
           }
           <li className='checkout'>
-            <button onClick={()=>{navigate('/cart/checkout')}}>
+            {/* <button onClick={()=>{navigate('/cart/checkout')}}>
+              <img src={creditCardImg} alt='checkout' />
+              <span>Checkout</span>
+            </button> */}
+            <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>
               <img src={creditCardImg} alt='checkout' />
               <span>Checkout</span>
             </button>

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './SubscriptionPage.css';
 import { useNavigate } from 'react-router-dom';
 import { verifyLoginToken } from '../../../Helpers/auth';
+import Sidebar from '../../Home/Sidebar/Sidebar';
+import { emptyCart, fetchAndHandleCart } from '../../../Helpers/cart';
+import { Cart } from '../../../Interfaces/interfaces';
 
 declare global {
   namespace JSX {
@@ -36,19 +39,32 @@ export default function SubscriptionPage(){
     };
   }, []); // Empty dependency array ensures this effect runs once when the component mounts
   
+  const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
+  const [cart,setCart] = useState<Cart>(emptyCart);
+
   useEffect(()=>{
     //verify access to page
     verifyAccessToPage();
+    fetchAndHandleCart(setCart);
   },[]);
   
   if (isLoginValid){
     return(
-      <section className='pricing-table'>
-        <stripe-pricing-table
-          pricing-table-id="prctbl_1NwrH1J42zMuNqyLurtliui8"
-          publishable-key="pk_test_51MkbRQJ42zMuNqyLhOP6Aluvz4TVAxVFFeofdem3PAvRDUoRzwYxfm0tBeOKYhdCNhbIzSSKeVFdrp7IvVku60Yz001xBUoHhk" 
+      <>
+        <Sidebar 
+          cart={cart}
+          isExpanded={isSidebarExpanded} 
+          setIsExpanded={setIsSidebarExpanded}
+          isSignedIn={isLoginValid}
+          setIsSignedIn={setIsLoginValid}
         />
-      </section>
+        <section className='pricing-table' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
+          <stripe-pricing-table
+            pricing-table-id="prctbl_1NwrH1J42zMuNqyLurtliui8"
+            publishable-key="pk_test_51MkbRQJ42zMuNqyLhOP6Aluvz4TVAxVFFeofdem3PAvRDUoRzwYxfm0tBeOKYhdCNhbIzSSKeVFdrp7IvVku60Yz001xBUoHhk" 
+          />
+        </section>
+      </>
     )
   }else{
     return(

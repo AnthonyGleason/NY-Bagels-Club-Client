@@ -23,11 +23,12 @@
 }
 .account-settings input{
   padding: 1em;
-  font-size: 18px;
+  font-size: 14px;
   text-align: center;
   border-radius: 5px;
+  width: 100%;
 }
-.account-settings button{
+.account-settings .apply-account-settings{
   border: 0px solid transparent;
   border-radius: 8px;
   background-color: #5d1917;
@@ -37,4 +38,7 @@
   font-family: 'Allura';
   padding: 0.5em 1em;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+}
+.account-settings h4{
+  padding: 1em;
 }

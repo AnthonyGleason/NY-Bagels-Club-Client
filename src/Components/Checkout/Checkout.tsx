@@ -6,6 +6,9 @@ import CheckoutForm from './CheckoutForm/CheckoutForm';
 import { useNavigate } from 'react-router-dom';
 import './Checkout.css';
 import loadingImg from '../../Assets/icons/bubble-loading.svg';
+import Sidebar from '../Home/Sidebar/Sidebar';
+import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
+import { Cart } from '../../Interfaces/interfaces';
 
 const stripePromise = loadStripe("pk_test_51MkbRQJ42zMuNqyLhOP6Aluvz4TVAxVFFeofdem3PAvRDUoRzwYxfm0tBeOKYhdCNhbIzSSKeVFdrp7IvVku60Yz001xBUoHhk");
 
@@ -40,18 +43,20 @@ export default function Checkout(){
   if (isLoginValid && clientSecret){
     return(
       <Elements options={options} stripe={stripePromise}>
-        <CheckoutForm clientSecret={clientSecret} setClientSecret={setClientSecret} />
+        <CheckoutForm clientSecret={clientSecret} setClientSecret={setClientSecret} isLoginValid={isLoginValid} setIsLoginValid={setIsLoginValid} />
       </Elements>
     )
   }else if (!isLoginValid){
     return(
-      <div className='checkout-logged-out'>
-        <h3>Please login or register to checkout your basket.</h3>
-        <div className='checkout-button-wrapper'>
-          <button onClick={()=>{navigate('/login')}}>Login</button>
-          <button onClick={()=>{navigate('/register')}}>Register</button>
+      <>
+        <div className='checkout-logged-out'>
+          <h3>Please login or register to checkout your basket.</h3>
+          <div className='checkout-button-wrapper'>
+            <button onClick={()=>{navigate('/login')}}>Login</button>
+            <button onClick={()=>{navigate('/register')}}>Register</button>
+          </div>
         </div>
-      </div>
+      </>
     );
   }else{
     return(
