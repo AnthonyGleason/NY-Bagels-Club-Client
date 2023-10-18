@@ -5,29 +5,20 @@ import './MyOrders.css';
 import Sidebar from '../../Home/Sidebar/Sidebar';
 import { emptyCart, fetchAndHandleCart } from '../../../Helpers/cart';
 import { verifyLoginToken } from '../../../Helpers/auth';
+import { fetchOrders } from '../../../Helpers/accounts';
 
 export default function MyOrders(){
   const [orders,setOrders] = useState<Order[]>([]);
-
-  const fetchOrders = async function(setOrders:Function){
-    const response = await fetch(`${getServerUrlPrefix()}/api/shop/orders`,{
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      }
-    });
-    const responseData = await response.json();
-    if (responseData.orders) setOrders(responseData.orders);
-  };
-
   const [isSignedIn,setIsSignedIn] = useState<boolean>(true);
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Cart>(emptyCart);
 
   useEffect(()=>{
+    //fetch orders
     fetchOrders(setOrders);
+    //fetch and set cart
     fetchAndHandleCart(setCart);
+    //verify login token
     verifyLoginToken(setIsSignedIn);
   },[]);
 

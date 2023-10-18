@@ -1,6 +1,6 @@
 import CartSummaryItem from "../Components/Checkout/CartSummaryItem/CartSummaryItem";
 import { getServerUrlPrefix } from "../Config/clientSettings";
-import { BagelItem, Cart, CartItem, SpreadItem } from "../Interfaces/interfaces";
+import { Address, BagelItem, Cart, CartItem, SpreadItem } from "../Interfaces/interfaces";
 import { requestCartToken, verifyCartToken } from "./auth";
 
 export const modifyCart = async function(
@@ -29,13 +29,22 @@ export const modifyCart = async function(
       selection: selection
     })
   });
+  //if the cart token is invalid request a fresh one and call modifyCart again
+  if (response.status===403 || !response.ok){
+    //remove the login token
+    localStorage.removeItem('loginToken');
+    //request a new cart token
+    localStorage.setItem('cartToken',await requestCartToken());
+    modifyCart(updatedQuantity,itemID,setCart,isRequestPending,setIsRequestPending,selection);
+  };
   const responseData = await response.json();
+
   if (responseData.cartToken && responseData.cart){
     //replace the cartToken in localStorage with the updated cartToken
     localStorage.setItem('cartToken',responseData.cartToken);
     //update cart state
     setCart(responseData.cart);
-  };
+  }
   //allow another request to the server
   setIsRequestPending(false);
 };
@@ -138,4 +147,37 @@ export const emptyCart = {
   subtotal: 0,
   tax: 0,
   totalQuantity: 0
+};
+
+export const populateTaxCalculation = async function(
+    address:Address,
+    paymentIntentToken:string,
+    setCartSubtotalPrice:Function,
+    setTaxPrice:Function,
+    setPaymentIntentToken:Function
+  ){
+  const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-tax-calculation`,{
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
+      'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
+    },
+    body: JSON.stringify({
+      address: address,
+      clientSecret: paymentIntentToken
+    })
+  });
+  const responseData = await response.json();
+  setCartSubtotalPrice(responseData.total/100);
+  setTaxPrice(responseData.taxAmount/100);
+  if (setPaymentIntentToken) setPaymentIntentToken(responseData.paymentIntentToken);
+};
+
+export const getSelectionName = function(cartItem:CartItem){
+  if (cartItem.selection==='four') return 'Four Pack(s)';
+  if (cartItem.selection==='dozen') return 'Dozen(s)';
+  if (cartItem.itemData.cat==='spread') return 'One Pound';
+  
+  return 'N/A';
 };

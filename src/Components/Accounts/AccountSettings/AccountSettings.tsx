@@ -1,39 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { verifyLoginToken } from '../../../Helpers/auth';
-import { getServerUrlPrefix } from '../../../Config/clientSettings';
-import { useNavigate } from 'react-router-dom';
 import './AccountSettings.css';
 import Sidebar from '../../Home/Sidebar/Sidebar';
 import { emptyCart, fetchAndHandleCart } from '../../../Helpers/cart';
 import { Cart } from '../../../Interfaces/interfaces';
+import { applySettingsChanges, fetchAccountSettings } from '../../../Helpers/accounts';
+import { useNavigate } from 'react-router-dom';
 
 export default function AccountSettings(){
+  //form input fields
   const [firstNameInput,setFirstNameInput] = useState<string>('');
   const [lastNameInput,setLastNameInput] = useState<string>('');
   const [emailInput,setEmailInput] = useState<string>('');
   const [passwordInput,setPasswordInput] = useState<string>('');
   const [passwordConfInput,setPasswordConfInput] = useState<string>('');
   const [currentPasswordInput,setCurrentPasswordInput] = useState<string>('');
-  const [isSignedIn,setIsSignedIn] = useState<boolean>(true);
 
+  const [isSignedIn,setIsSignedIn] = useState<boolean>(true);
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Cart>(emptyCart);
   
   const navigate = useNavigate();
-
-  const fetchAccountSettings = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/users/settings`,{
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      }
-    });
-    const responseData = await response.json();
-    setFirstNameInput(responseData.firstName);
-    setLastNameInput(responseData.lastName);
-    setEmailInput(responseData.email);
-  };
 
   //handle initial page load 
   useEffect(()=>{
@@ -42,32 +29,8 @@ export default function AccountSettings(){
   },[]);
 
   useEffect(()=>{
-    fetchAccountSettings();
+    fetchAccountSettings(setFirstNameInput,setLastNameInput,setEmailInput);
   },[isSignedIn]);
-
-  const applySettingsChanges = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/users/settings`,{
-      method: 'PUT',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      },
-      body: JSON.stringify({
-        firstName: firstNameInput,
-        lastName: lastNameInput,
-        emailInput: emailInput,
-        passwordInput: passwordInput,
-        passwordConfInput: passwordConfInput,
-        currentPasswordInput: currentPasswordInput
-      })
-    });
-
-    const responseData = await response.json();
-    if (responseData.wasUserUpdated){
-      localStorage.setItem('loginToken',responseData.loginToken);
-      navigate('/');
-    };
-  };
 
   if (isSignedIn){
     return(
@@ -108,7 +71,17 @@ export default function AccountSettings(){
             <label>Current Password</label>
             <input value={currentPasswordInput} onChange={(e)=>{setCurrentPasswordInput(e.target.value)}} type='password' required/>
           </div>
-          <button className='apply-account-settings' type='button' onClick={()=>{applySettingsChanges()}}>Apply Changes</button>
+          <button className='apply-account-settings' type='button' onClick={()=>{
+            applySettingsChanges(
+              firstNameInput,
+              lastNameInput,
+              emailInput,
+              passwordInput,
+              passwordConfInput,
+              currentPasswordInput,
+              navigate
+            )
+          }}>Apply Changes</button>
         </div>
       </>
     );
@@ -126,7 +99,6 @@ export default function AccountSettings(){
           You must be signed in to access this page.
         </div>
       </>
-
     );
   };
 };

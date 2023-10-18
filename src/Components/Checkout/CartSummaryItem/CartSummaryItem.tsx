@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCartItemSubtotal, handleCartItemInputChange, modifyCart } from '../../../Helpers/cart';
+import { getCartItemSubtotal, getSelectionName, handleCartItemInputChange, modifyCart } from '../../../Helpers/cart';
 import removeImg from '../../../Assets/icons/x.svg';
 import { CartItem } from '../../../Interfaces/interfaces';
 
@@ -17,6 +17,7 @@ export default function CartSummaryItem(
   const [cartItemQuantity,setCartItemQuantity] = useState<number | string>(cartItem.quantity);
   const [cartItemSubtotal,setCartItemSubtotal] = useState<number>(getCartItemSubtotal(cartItem));
   const [isRequestPending,setIsRequestPending] = useState<boolean>(false);
+  
   //whenever the cartItem quantity is updated, update the states
   useEffect(()=>{
     //update item quantity
@@ -25,20 +26,10 @@ export default function CartSummaryItem(
     setCartItemSubtotal(getCartItemSubtotal(cartItem))
   },[cartItem.quantity])
 
-  const getSelectionName = function(){
-    if (cartItem.selection==='four'){
-      return 'Four Pack(s)';
-    }else if (cartItem.selection==='dozen'){
-      return 'Dozen(s)';
-    }else if (cartItem.itemData.cat==='spread'){
-      return 'One Pound';
-    }
-  };
-
   if (!isCheckoutView){
     return(
       <tr>
-        <td className='item-name'>{cartItem.itemData.name} {getSelectionName()}</td>
+        <td className='item-name'>{cartItem.itemData.name} {getSelectionName(cartItem)}</td>
         <td>
           <input
             type='number'
@@ -78,7 +69,7 @@ export default function CartSummaryItem(
   }else{
     return(
       <tr>
-        <td className='item-name'>{cartItem.itemData.name} {getSelectionName()}</td>
+        <td className='item-name'>{cartItem.itemData.name} {getSelectionName(cartItem)}</td>
         <td>
           <span>{cartItemQuantity}</span>
         </td>

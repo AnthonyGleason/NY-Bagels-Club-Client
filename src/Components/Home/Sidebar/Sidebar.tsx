@@ -42,9 +42,7 @@ export default function Sidebar(
 
   //check if user is logged in and login token is valid on initial page load
   useEffect(()=>{
-    if (localStorage.getItem('loginToken')){
-      verifyLoginToken(setIsSignedIn);
-    };
+    verifyLoginToken(setIsSignedIn);
   },[])
 
   //when the user signs in verify admin status for admin panel

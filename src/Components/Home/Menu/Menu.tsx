@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BagelItem, SpreadItem } from '../../../Interfaces/interfaces';
 import { scrollToID } from '../../../Helpers/misc';
 import './Menu.css';
+import { getBagelMenuItems, getSpreadMenuItems, handleHideMenuElements } from '../../../Helpers/menu';
 
 export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]}){
   //menu states
@@ -10,37 +11,8 @@ export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]
 
   //hide other menu options when one option is expanded
   useEffect(()=>{
-    const buttonHeadingElements:any = document.querySelectorAll('.menu-button-heading');
-    if (isBagelsVisible || isSpreadsVisible && buttonHeadingElements){
-      buttonHeadingElements.forEach((buttonHeadingElement:any)=>buttonHeadingElement.style.display='none');
-    }else{
-      buttonHeadingElements.forEach((buttonHeadingElement:any)=>buttonHeadingElement.style.display='flex');
-    }
+    handleHideMenuElements(isBagelsVisible,isSpreadsVisible);
   },[isBagelsVisible,isSpreadsVisible]);
-
-  const getBagelMenuItems = function(){
-    const bagelItems:BagelItem[] = storeItems.filter(item => item.cat === 'bagel') as BagelItem[];
-    const allItems = bagelItems.map((bagelItem:BagelItem,index:number)=>{
-      return(
-        <div key={index}>
-          <button onClick={()=>{scrollToID(`item-${bagelItem._id}`)}}>{bagelItem.name}</button>
-        </div>
-        )
-    });
-    return allItems;
-  };
-
-  const getSpreadMenuItems = function(){
-    const spreadItems:SpreadItem[] = storeItems.filter(item => item.cat === 'spread') as SpreadItem[];
-    const allItems = spreadItems.map((spreadItem:SpreadItem,index:number)=>{
-      return(
-        <div key={index}>
-          <button onClick={()=>{scrollToID(`item-${spreadItem._id}`)}}>{spreadItem.name}</button>
-        </div>
-        )
-    });
-    return allItems;
-  };
 
   return(
     <section>
@@ -59,7 +31,7 @@ export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]
                 <button onClick={()=>setIsBagelsVisible(false)}>Bagels</button>
               </div>
               {
-                getBagelMenuItems()
+                getBagelMenuItems(storeItems)
               }
             </div>
           }
@@ -74,7 +46,7 @@ export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]
                 <button onClick={()=>{setIsSpreadsVisible(false)}}>Brendel's Gourmet Spreads</button>
               </div>
               {
-                getSpreadMenuItems()
+                getSpreadMenuItems(storeItems)
               }
             </div>
           }

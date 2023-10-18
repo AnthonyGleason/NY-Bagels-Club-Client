@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Address, Cart } from '../../../Interfaces/interfaces';
-import { fetchAndHandleCart, getCartItems  } from '../../../Helpers/cart';
+import { emptyCart, fetchAndHandleCart, getCartItems, populateTaxCalculation  } from '../../../Helpers/cart';
 import './CartSummary.css';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import { useNavigate } from 'react-router-dom';
@@ -19,53 +19,38 @@ export default function CartSummary({
   setPaymentIntentToken?:Function
 }){
   const navigate = useNavigate();
-  const [cart,setCart] = useState<Cart>({
-    totalQuantity: 0,
-    items: [],
-    tax: 0,
-    subtotal: 0
-  });
+
+  const [isSignedIn,setIsSignedIn] = useState<boolean>(true);
+  const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
+  const [cart,setCart] = useState<Cart>(emptyCart);
   const [cartSubtotalPrice,setCartSubtotalPrice] = useState<number>(0);
   const [taxPrice,setTaxPrice] = useState<number>(0);
-
-  const populateTaxCalculation = async function(address:Address){
-    const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-tax-calculation`,{
-      method: 'POST',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
-        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
-      },
-      body: JSON.stringify({
-        address: address,
-        clientSecret: paymentIntentToken
-      })
-    });
-    const responseData = await response.json();
-    setCartSubtotalPrice(responseData.total/100);
-    setTaxPrice(responseData.taxAmount/100);
-    if (setPaymentIntentToken) setPaymentIntentToken(responseData.paymentIntentToken);
-  };
-
-  useEffect(()=>{
-    if (address && address.city && address.country && address.line1 && address.postal_code && address.state && address.phone && address.fullName) populateTaxCalculation(address);
-  },[address])
 
   //handle initial page load (grab latest cart data);
   useEffect(()=>{
     fetchAndHandleCart(setCart);
-    
     verifyLoginToken(setIsSignedIn);
   },[]);
 
-  const [isSignedIn,setIsSignedIn] = useState<boolean>(true);
-  const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
-  
   //when the cart is updated, update the total price of all items in the cart
   useEffect(()=>{
     setCartSubtotalPrice(cart.subtotal);
   },[cart])
 
+  useEffect(()=>{
+    if (
+        address &&  //ensure fields are completed
+        address.city && 
+        address.country &&
+        address.line1 &&
+        address.postal_code &&
+        address.state &&
+        address.phone && 
+        address.fullName &&
+        paymentIntentToken && //ensure a token exists
+        setPaymentIntentToken //allows us to dynamically update the payment intent should stripe issue the user a new one
+      ) populateTaxCalculation(address,paymentIntentToken,setCartSubtotalPrice,setTaxPrice,setPaymentIntentToken);
+  },[address]) 
 
   //handle empty shopping cart
   if (cart.items.length===0){

@@ -1,6 +1,6 @@
 import { getServerUrlPrefix } from "../Config/clientSettings";
 
-export const verifyCartToken = async function(setCart:Function){
+export const verifyCartToken = async function(setCart:Function):Promise<boolean>{
   const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/verify`,{
     method: 'GET',
     headers:{
@@ -14,6 +14,7 @@ export const verifyCartToken = async function(setCart:Function){
     setCart(responseData.cart);
     return responseData.isValid;
   };
+  return false;
 };
 
 export const requestCartToken = async function(){
@@ -29,6 +30,11 @@ export const requestCartToken = async function(){
 
 export const verifyLoginToken = async function(setIsSignedIn?:Function):Promise<boolean>{
   let isValid:boolean = false;
+  //handle no login token is present
+  if (!localStorage.getItem('loginToken')){
+    if (setIsSignedIn) setIsSignedIn(false);
+    return false;
+  };
   try{
     const response = await fetch(`${getServerUrlPrefix()}/api/users/verify`,{
       method: 'GET',
@@ -38,7 +44,13 @@ export const verifyLoginToken = async function(setIsSignedIn?:Function):Promise<
       }
     });
     const responseData = await response.json();
-    isValid=responseData.isValid;
+    //handle 403 unauthorized
+    if (response.ok===false || response.status===403){
+      localStorage.removeItem('loginToken');
+      isValid=false;
+    }else{
+      isValid=responseData.isValid;
+    };
   }catch(err){
     console.log(err);
   };
