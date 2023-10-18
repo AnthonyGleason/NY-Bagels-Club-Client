@@ -1,18 +1,40 @@
 import { getServerUrlPrefix } from "../Config/clientSettings";
 import { isValidEmail } from "./verification";
 
-export const fetchAccountSettings = async function(setFirstNameInput:Function,setLastNameInput:Function,setEmailInput:Function){
-  const response = await fetch(`${getServerUrlPrefix()}/api/users/settings`,{
-    method: 'GET',
-    headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-    }
-  });
-  const responseData = await response.json();
-  setFirstNameInput(responseData.firstName);
-  setLastNameInput(responseData.lastName);
-  setEmailInput(responseData.email);
+export const fetchAccountSettings = async function(
+  setFirstNameInput?:Function,
+  setLastNameInput?:Function,
+  setEmailInput?:Function
+):Promise<void>{
+  
+  try{
+    //ensure the user is logged in
+    const loginToken:string | null = localStorage.getItem('loginToken');
+    if (!loginToken) throw new Error('A login token was not provided! Are you logged in?');
+
+    //make the request for the user account settings
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/settings`,{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${loginToken}`
+      }
+    });
+    
+    //verify an ok response was recieved 
+    if (!response.ok) {
+      throw new Error('Failed to fetch account settings');
+    };
+
+    const responseData = await response.json();
+
+    //set the appropriate inputs if they were provided 
+    if (setFirstNameInput) setFirstNameInput(responseData.firstName);
+    if (setLastNameInput) setLastNameInput(responseData.lastName);
+    if (setEmailInput) setEmailInput(responseData.email);
+  }catch(err){
+    console.log(err);
+  };
 };
 
 export const applySettingsChanges = async function(
@@ -22,28 +44,64 @@ export const applySettingsChanges = async function(
   passwordInput:string,
   passwordConfInput:string,
   currentPasswordInput:string,
-  navigate:any
+  navigate:Function
 ){
-  const response = await fetch(`${getServerUrlPrefix()}/api/users/settings`,{
-    method: 'PUT',
-    headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-    },
-    body: JSON.stringify({
-      firstName: firstNameInput,
-      lastName: lastNameInput,
-      emailInput: emailInput,
-      passwordInput: passwordInput,
-      passwordConfInput: passwordConfInput,
-      currentPasswordInput: currentPasswordInput
-    })
-  });
+  try{
+    //required inputs were not provided
+    if (
+      !firstNameInput || 
+      !lastNameInput ||
+      !emailInput ||
+      !currentPasswordInput
+    ) throw new Error('The first name, last name, email and current password input fields are required.');
 
-  const responseData = await response.json();
-  if (responseData.wasUserUpdated){
-    localStorage.setItem('loginToken',responseData.loginToken);
-    navigate('/');
+    if (
+      !isValidEmail(emailInput)
+    ) throw new Error('The provided email is not a valid email');
+
+    //a new password was provided but it does not match the new password confirmation
+    if (
+      passwordInput &&
+      passwordConfInput &&
+      passwordInput!==passwordConfInput
+    ) throw new Error('New passwords do not match!');
+    
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/settings`,{
+      method: 'PUT',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      },
+      body: JSON.stringify({
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+        emailInput: emailInput,
+        passwordInput: passwordInput,
+        passwordConfInput: passwordConfInput,
+        currentPasswordInput: currentPasswordInput
+      })
+    });
+
+    //verify an ok response was recieved 
+    if (!response.ok) {
+      throw new Error('Failed to apply new account settings');
+    };
+
+    const responseData = await response.json();
+    
+    if (responseData.wasUserUpdated){
+      //log the user out the user was updated but a new login token wasnt created properly
+      if (!responseData.loginToken){
+        localStorage.removeItem('loginToken');
+        throw new Error('A new login token was not provided!');
+      };
+
+      //otherwise we can safely update the login token with the response data
+      localStorage.setItem('loginToken',responseData.loginToken);
+      navigate('/');
+    };
+  }catch(err){
+    console.log(err);
   };
 };
 
