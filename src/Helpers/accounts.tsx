@@ -106,26 +106,38 @@ export const applySettingsChanges = async function(
 };
 
 export const fetchOrders = async function(setOrders:Function){
-  const response = await fetch(`${getServerUrlPrefix()}/api/shop/orders`,{
-    method: 'GET',
-    headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-    }
-  });
-  const responseData = await response.json();
-  if (responseData.orders) setOrders(responseData.orders);
+  const loginToken:string | null = localStorage.getItem('loginToken');
+  try{
+    if (!loginToken) throw new Error('A login token was not found! Are you logged in?');
+    const response = await fetch(`${getServerUrlPrefix()}/api/shop/orders`,{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${loginToken}`
+      }
+    });
+    if (!response.ok) throw new Error('Failed to fetch orders for the current user.');
+    const responseData = await response.json();
+    if (responseData.orders) setOrders(responseData.orders);
+  }catch(err){
+    console.log(err);
+  };
 };
 
 export const getResetTokenStatus = async function(
     resetID:string,
     setIsExpired:Function
   ){
-  const response = await fetch(`${getServerUrlPrefix()}/api/users/forgotPassword/${resetID}`,{
-    method: 'GET'
-  });
-  const responseData = await response.json();
-  setIsExpired(responseData.isExpired);
+  try{
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/forgotPassword/${resetID}`,{
+      method: 'GET'
+    });
+    if (!response.ok) throw new Error('Failed to get password reset token status.');
+    const responseData = await response.json();
+    setIsExpired(responseData.isExpired);
+  }catch(err){
+    console.log(err);
+  };
 };
 
 export const handleSubmitForgotPassword = async function(
@@ -133,26 +145,29 @@ export const handleSubmitForgotPassword = async function(
     passwordInput:string,
     passwordConfInput:string,
     setIsExpired:Function,
-    isExpired:boolean,
     navigate:any,
     setMessage:Function
   ){
-  const response = await fetch(`${getServerUrlPrefix()}/api/users/forgotPassword/${resetID}`,{
-    method: 'PUT',
-    headers:{
-      'Content-Type': 'application/json',
-    },
-    body:JSON.stringify({
-      password: passwordInput,
-      passwordConf: passwordConfInput
-    })
-  });
-  const responseData = await response.json();
-  setIsExpired(responseData.isExpired);
-  if (responseData.wasUpdated){
-    navigate('/login');
-  }else if (!isExpired){
-    setMessage('Passwords do not match or user does not exist.')
+  try{
+    if (!resetID || !passwordInput || !passwordConfInput) throw new Error('Required inputs are missing!');
+    if (passwordInput!==passwordConfInput) throw new Error('Passwords do not match!');
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/forgotPassword/${resetID}`,{
+      method: 'PUT',
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify({
+        password: passwordInput,
+        passwordConf: passwordConfInput
+      })
+    });
+    if (!response.ok) throw new Error('Failed to submit the forgot password form. Please try again later.');
+    const responseData = await response.json();
+    setIsExpired(responseData.isExpired);
+    if (responseData.wasUpdated) navigate('/login');
+    if (!responseData.isExpired) setMessage('Passwords do not match or user does not exist.');
+  }catch(err){
+    console.log(err);
   };
 };
 
@@ -166,52 +181,78 @@ export const genErrorMessageElement = function(errorMessage:string,){
 };
 
 export const submitLogin = async function(emailInput:string,passwordInput:string,setErrorMessage:Function){
-  //ensure all inputs are completed
-  if (!emailInput || !passwordInput){
-    setErrorMessage('* Please ensure both the email and password input fields are completed before submitting this form.');
-    return;
+  try{
+    //ensure all inputs are completed
+    if (!emailInput || !passwordInput){
+      const errMessage = '* Please ensure both the email and password input fields are completed before submitting this form.';
+      setErrorMessage(errMessage);
+      throw new Error(errMessage);
+    };
+
+    //ensure email is valid
+    if (!isValidEmail(emailInput)){
+      const errMessage = '* Please enter a valid email to submit this form';
+      setErrorMessage(errMessage);
+      throw new Error(errMessage);
+    };
+
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/login`,{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: emailInput,
+        password: passwordInput,
+      }),
+    });
+
+    if (!response.ok) throw new Error('Failed to log in user.');
+
+    const responseData = await response.json();
+    if (responseData.token){
+      localStorage.setItem('loginToken',responseData.token);
+      window.history.back();
+    }else{
+      setErrorMessage(responseData.message);
+      throw new Error(responseData.message);
+    };
+  }catch(err){
+    console.log(err);
   };
-  //ensure email is valid
-  if (!isValidEmail(emailInput)){
-    setErrorMessage('* Please enter a valid email to submit this form');
-    return;
-  };
-  const response = await fetch(`${getServerUrlPrefix()}/api/users/login`,{
-    method: 'POST',
-    headers:{
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      email: emailInput,
-      password: passwordInput,
-    }),
-  });
-  const responseData = await response.json();
-  if (responseData.token){
-    localStorage.setItem('loginToken',responseData.token);
-    window.history.back();
-  }else{
-    setErrorMessage(responseData.message);
-  }
 };
 
 export const handleForgotPassword = async function(emailInput:string,setErrorMessage:Function){
-  if (!isValidEmail(emailInput)){
-    setErrorMessage('* Please ensure you have entered a valid email');
-    return;
-  };
-  const response = await fetch(`${getServerUrlPrefix()}/api/users/forgotPassword`,{
-    method: 'POST',
-    headers:{
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      email: emailInput
-    })
-  });
-  const responseData = await response.json();
-  if (responseData.isEmailSent){
-    alert('Your request has been processed. If an account exists for the provided email address you will recieve an email with a password reset link.');
+  try{
+    if (!emailInput){
+      const errorMessage:string = '* The email field cannot be left blank.';
+      setErrorMessage(errorMessage);
+      throw new Error(errorMessage);
+    };
+
+    if (!isValidEmail(emailInput)){
+      const errorMessage:string = '* Please ensure you have entered a valid email.';
+      setErrorMessage(errorMessage);
+      throw new Error(errorMessage);
+    };
+
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/forgotPassword`,{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: emailInput
+      })
+    });
+    
+    if (!response.ok) throw new Error('Failed to request a forgot password email.');
+    const responseData = await response.json();
+    if (responseData.isEmailSent){
+      alert('Your request has been processed. If an account exists for the provided email address you will recieve an email with a password reset link.');
+    };
+  }catch(err){
+    console.log(err);
   };
 };
 
@@ -223,39 +264,50 @@ export const submitRegister = async function(
   lastNameInput:string,
   setErrorMessage:Function
 ){
-  //ensure all inputs are completed
-  if (!emailInput || !passwordInput || !passwordConfirmInput || !firstNameInput || !lastNameInput){
-    setErrorMessage('* Please ensure all input fields are completed before submitting this form.');
-    return;
+  try{
+    //ensure all inputs are completed
+    if (!emailInput || !passwordInput || !passwordConfirmInput || !firstNameInput || !lastNameInput){
+      const errMessage:string = '* Please ensure all input fields are completed before submitting this form.';
+      setErrorMessage(errMessage);
+      throw new Error(errMessage);
+    };
+    //ensure email is valid
+    if (!isValidEmail(emailInput)){
+      const errMessage:string = '* Please enter a valid email to submit this form';
+      setErrorMessage(errMessage);
+      throw new Error(errMessage);
+    };
+    //ensure passwords match
+    if (passwordInput!==passwordConfirmInput){
+      const errMessage:string = '* Entered passwords do not match.';
+      setErrorMessage(errMessage);
+      throw new Error(errMessage);
+    };
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/register`,{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+        email: emailInput,
+        password: passwordInput,
+        passwordConfirm: passwordConfirmInput,
+      })
+    });
+
+    if (!response.ok) throw new Error('An error has occured when registering the new user.');
+
+    const responseData = await response.json();
+    if (responseData.token){
+      localStorage.setItem('loginToken',responseData.token);
+      window.history.back();
+    }else{
+      setErrorMessage(responseData.message);
+    };
+    
+  }catch(err){
+    console.log(err);
   };
-  //ensure email is valid
-  if (!isValidEmail(emailInput)){
-    setErrorMessage('* Please enter a valid email to submit this form');
-    return;
-  };
-  //ensure passwords match
-  if (passwordInput!==passwordConfirmInput){
-    setErrorMessage('* Entered passwords do not match.');
-    return;
-  };
-  const response = await fetch(`${getServerUrlPrefix()}/api/users/register`,{
-    method: 'POST',
-    headers:{
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      firstName: firstNameInput,
-      lastName: lastNameInput,
-      email: emailInput,
-      password: passwordInput,
-      passwordConfirm: passwordConfirmInput,
-    })
-  });
-  const responseData = await response.json();
-  if (responseData.token){
-    localStorage.setItem('loginToken',responseData.token);
-    window.history.back();
-  }else{
-    setErrorMessage(responseData.message);
-  }
 };

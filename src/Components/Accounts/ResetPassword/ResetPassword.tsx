@@ -44,7 +44,6 @@ export default function ResetPassword(){
               passwordInput,
               passwordConfInput,
               setIsExpired,
-              isExpired,
               navigate,
               setMessage
             )

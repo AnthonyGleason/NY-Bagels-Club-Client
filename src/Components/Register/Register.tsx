@@ -1,7 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
-import { getServerUrlPrefix } from '../../Config/clientSettings';
 import Aos from 'aos';
 import "aos/dist/aos.css";
 import Sidebar from '../Home/Sidebar/Sidebar';
