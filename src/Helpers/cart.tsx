@@ -11,50 +11,68 @@ export const modifyCart = async function(
   setIsRequestPending:Function,
   selection: string
 ){
-  //handle request is already pending limited users to 1 request at a time
-  if (isRequestPending) return;
-  //set request to pending
-  setIsRequestPending(true);
-  //make a request to the server to update quantity for cart
-  const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts`,{
-    method: 'PUT',
-    headers:{
-      'Content-Type': 'application/json',
-      'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
-      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-    },
-    body: JSON.stringify({
-      itemID: itemID,
-      updatedQuantity: updatedQuantity,
-      selection: selection
-    })
-  });
-  //if the cart token is invalid request a fresh one and call modifyCart again
-  if (response.status===403 || !response.ok){
-    //remove the login token
-    localStorage.removeItem('loginToken');
-    //request a new cart token
-    localStorage.setItem('cartToken',await requestCartToken());
-    modifyCart(updatedQuantity,itemID,setCart,isRequestPending,setIsRequestPending,selection);
-  };
-  const responseData = await response.json();
+  try{
+    //handle request is already pending limited users to 1 request at a time
+    if (isRequestPending) throw new Error('A request is already pending. Please wait for the current request to complete.');
+    //set request to pending
+    setIsRequestPending(true);
+    if (!itemID || updatedQuantity<0) throw new Error('One or more required inputs were left blank.');
+    //make a request to the server to update quantity for cart
+    const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts`,{
+      method: 'PUT',
+      headers:{
+        'Content-Type': 'application/json',
+        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      },
+      body: JSON.stringify({
+        itemID: itemID,
+        updatedQuantity: updatedQuantity,
+        selection: selection
+      })
+    });
+    //if the cart token is invalid request a fresh one and call modifyCart again
+    if (response.status===403){
+      //request a new cart token
+      localStorage.setItem('cartToken',await requestCartToken());
+      modifyCart(updatedQuantity,itemID,setCart,isRequestPending,setIsRequestPending,selection);
+    };
+    if (!response.ok) throw new Error('An error occurred when updating the cart.');
+    const responseData = await response.json();
 
-  if (responseData.cartToken && responseData.cart){
-    //replace the cartToken in localStorage with the updated cartToken
-    localStorage.setItem('cartToken',responseData.cartToken);
-    //update cart state
-    setCart(responseData.cart);
-  }
-  //allow another request to the server
-  setIsRequestPending(false);
+    if (responseData.cartToken && responseData.cart){
+      //replace the cartToken in localStorage with the updated cartToken
+      localStorage.setItem('cartToken',responseData.cartToken);
+      //update cart state
+      setCart(responseData.cart);
+    };
+    //allow another request to the server
+    setIsRequestPending(false);
+  }catch(err){
+    console.log(err);
+    setIsRequestPending(false);
+  };
 };
 
 export const fetchAndHandleCart = async function(setCart:Function){
-  const cartToken:string | null = localStorage.getItem('cartToken');
-  //a cart token exists but is invalid, or a cart token does not exist
-  if ((cartToken && !await verifyCartToken(setCart)) || !cartToken){
-    localStorage.setItem('cartToken',await requestCartToken());
-  };
+  try{
+    const cartToken:string | null = localStorage.getItem('cartToken');
+
+    //if a cart token was not found obtain a fresh one
+    if (!cartToken){
+      //request a new cart token
+      localStorage.setItem('cartToken',await requestCartToken());
+    };
+
+    //a cart token exists but is invalid
+    if (!await verifyCartToken(setCart)){
+      localStorage.setItem('cartToken',await requestCartToken());
+      //because a new cart token was requested we set the cart state back to an empty array
+      setCart([]);
+    };
+  }catch(err){
+    console.log(err);
+  }
 };
 export const getUnitPriceFromCartItem = function(storeItem:SpreadItem | BagelItem, selection?:string):number{
   let price:number = 0;
@@ -94,6 +112,39 @@ export const handleCartItemInputChange = function(
     setIsRequestPending,
     selection
   );
+};
+
+export const populateTaxCalculation = async function(
+    address:Address,
+    paymentIntentToken:string,
+    setCartSubtotalPrice:Function,
+    setTaxPrice:Function,
+    setPaymentIntentToken:Function
+  ){
+  const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-tax-calculation`,{
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
+      'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
+    },
+    body: JSON.stringify({
+      address: address,
+      clientSecret: paymentIntentToken
+    })
+  });
+  const responseData = await response.json();
+  setCartSubtotalPrice(responseData.total/100);
+  setTaxPrice(responseData.taxAmount/100);
+  if (setPaymentIntentToken) setPaymentIntentToken(responseData.paymentIntentToken);
+};
+
+export const getSelectionName = function(cartItem:CartItem){
+  if (cartItem.selection==='four') return 'Four Pack(s)';
+  if (cartItem.selection==='dozen') return 'Dozen(s)';
+  if (cartItem.itemData.cat==='spread') return 'One Pound';
+  
+  return 'N/A';
 };
 
 export const getCartItemSubtotal = function(cartItem:CartItem):number{
@@ -147,37 +198,4 @@ export const emptyCart = {
   subtotal: 0,
   tax: 0,
   totalQuantity: 0
-};
-
-export const populateTaxCalculation = async function(
-    address:Address,
-    paymentIntentToken:string,
-    setCartSubtotalPrice:Function,
-    setTaxPrice:Function,
-    setPaymentIntentToken:Function
-  ){
-  const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-tax-calculation`,{
-    method: 'POST',
-    headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
-      'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
-    },
-    body: JSON.stringify({
-      address: address,
-      clientSecret: paymentIntentToken
-    })
-  });
-  const responseData = await response.json();
-  setCartSubtotalPrice(responseData.total/100);
-  setTaxPrice(responseData.taxAmount/100);
-  if (setPaymentIntentToken) setPaymentIntentToken(responseData.paymentIntentToken);
-};
-
-export const getSelectionName = function(cartItem:CartItem){
-  if (cartItem.selection==='four') return 'Four Pack(s)';
-  if (cartItem.selection==='dozen') return 'Dozen(s)';
-  if (cartItem.itemData.cat==='spread') return 'One Pound';
-  
-  return 'N/A';
 };

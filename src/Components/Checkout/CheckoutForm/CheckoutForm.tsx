@@ -12,8 +12,8 @@ import CartSummary from "../CartSummary/CartSummary";
 import { useNavigate } from "react-router-dom";
 import { getServerUrlPrefix } from "../../../Config/clientSettings";
 import Sidebar from "../../Home/Sidebar/Sidebar";
-import { emptyCart, fetchAndHandleCart } from "../../../Helpers/cart";
-import { verifyLoginToken } from "../../../Helpers/auth";
+import { emptyCart, fetchAndHandleCart, populateTaxCalculation } from "../../../Helpers/cart";
+import { requestCartToken, verifyLoginToken } from "../../../Helpers/auth";
 
 export default function CheckoutForm({
   clientSecret,
@@ -47,6 +47,40 @@ export default function CheckoutForm({
   const [email, setEmail] = useState<string>('');
   const [message, setMessage] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [promoCodeInput,setPromoCodeInput] = useState<string>('');
+  const [isPromoApplied,setIsPromoApplied] = useState<boolean>(false);
+  const [isRequestPending,setIsRequestPending] = useState<boolean>(false);
+ 
+  //get promo code data on initial load
+  useEffect(()=>{
+    getPromoCodeData();
+  },[]);
+  
+  const getPromoCodeData = async function(){
+    const cartToken:string | null = localStorage.getItem('cartToken');
+    const loginToken:string | null = localStorage.getItem('loginToken');
+    try{
+      //validate required fields exist
+      if (!cartToken) throw new Error('There was an error retrieving the cart token. Ensure your cart exists.');
+      if (!loginToken) throw new Error('There was an error retrieving the login token. Ensure you are logged in.');
+      
+      const response = await fetch(`${getServerUrlPrefix()}/api/shop/promoCode`,{
+        method: 'GET',
+        headers:{
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${loginToken}`,
+          'Cart-Token': `Bearer ${cartToken}`
+        }
+      });
+
+      const responseData = await response.json();
+      //set discount amount 
+      //set promo code input
+      //set is promo applied
+    }catch(err){
+      console.log(err);
+    };
+  };
 
   useEffect(() => {
     if (!stripe) {
@@ -126,12 +160,80 @@ export default function CheckoutForm({
     }
   };
 
+  const handleRemovePromoCode = async function(){
+    try{
+      const cartToken:string | null = localStorage.getItem('cartToken');
+      const loginToken:string | null = localStorage.getItem('loginToken');
+
+      //validate required fields exist
+      if (!cartToken) throw new Error('There was an error retrieving the cart token. Ensure your cart exists.');
+      if (!loginToken) throw new Error('There was an error retrieving the login token. Ensure you are logged in.');
+      
+      const response = await fetch(`${getServerUrlPrefix()}/api/shop/promoCode`,{
+        method: 'PUT',
+        headers:{
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${loginToken}`,
+          'Cart-Token': `Bearer ${cartToken}`
+        }
+      });
+      const responseData = await response.json();
+      if (!response.ok) throw new Error('An error occured when removing the promo code from your cart.');
+      console.log(responseData);
+
+      //set new cart token if applicable
+
+      //calculate tax if applicable (if shipping info is present or not)
+    }catch(err){
+      console.log(err);
+    };
+  };
+  
+  const handleApplyPromoCode = async function(){
+    try{
+      if (isRequestPending) throw new Error('A request is already pending.');
+      setIsRequestPending(true);
+      const cartToken:string | null = localStorage.getItem('cartToken');
+      const loginToken:string | null = localStorage.getItem('loginToken');
+
+      //validate required fields exist
+      if (!promoCodeInput) throw new Error('The promo code input cannot be left blank when performing this action.');
+      if (!cartToken) throw new Error('There was an error retrieving the cart token. Ensure your cart exists.');
+      if (!loginToken) throw new Error('There was an error retrieving the login token. Ensure you are logged in.');
+
+      const response = await fetch(`${getServerUrlPrefix()}/api/shop/promoCode`,{
+        method: 'PUT',
+        headers:{
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${loginToken}`,
+          'Cart-Token': `Bearer ${cartToken}`
+        },
+        body:JSON.stringify({
+          promoCodeInput: promoCodeInput,
+          clientSecret: clientSecret
+        })
+      });
+      const responseData = await response.json();
+      if (!response.ok) throw new Error('An error occured when applying the promo code. Is it valid?');
+      console.log(responseData);
+      //set new cart token if applicable
+      setClientSecret(responseData.clientSecret);
+      localStorage.setItem('cartToken',responseData.cartToken);
+      setIsPromoApplied(true);
+      alert(`The promo code ${promoCodeInput} was successfully applied!`)
+      setIsRequestPending(false);
+    }catch(err){
+      console.log(err);
+      setIsRequestPending(false);
+    };
+  };
+
   const updateGiftMessage = async function(giftMessage:string){
     let tempGiftMessage:string = giftMessage;
     //if the is a gift box was unchecked remove the gift message
     if (!isGiftInput) tempGiftMessage='';
     const response = await fetch(`${getServerUrlPrefix()}/api/shop/giftMessage`,{
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
@@ -200,7 +302,7 @@ export default function CheckoutForm({
               ?
                 <div className='gift-options-form'>
                   <div>
-                    <label>Gift Message For Recipient</label>
+                    <label>Leave A Gift Message (Optional)</label>
                     <textarea maxLength={400} onBlur={(e)=>{updateGiftMessage(e.target.value)}} value={giftMessageInput} onChange={(e)=>{setGiftMessageInput(e.target.value)}} />
                   </div>
                 </div>
@@ -208,8 +310,18 @@ export default function CheckoutForm({
                 null
             }
           </div>
+          <h3>Promo Code</h3>
+          <div className="promo-code-wrapper">
+            <input value={promoCodeInput} onChange={(e)=>{setPromoCodeInput(e.target.value.toUpperCase())}} type='text' />
+            {
+              isPromoApplied ===false ?
+                <button type='button' onClick={()=>{handleApplyPromoCode()}}>Apply</button>
+              :
+                <button type='button' onClick={()=>{handleRemovePromoCode()}}>Remove</button>
+            }
+          </div>
           <div className="payment-form-button-container">
-            <CartSummary paymentIntentToken={clientSecret} address={address} setPaymentIntentToken={setClientSecret} isCheckoutView={true} />
+            <CartSummary isPromoApplied={isPromoApplied} paymentIntentToken={clientSecret} address={address} setPaymentIntentToken={setClientSecret} isCheckoutView={true} />
             <button disabled={isLoading || !stripe || !elements} id="submit">
               <span id="button-text">
                 {isLoading ? <div className="spinner" id="spinner"></div> : "Pay Now"}

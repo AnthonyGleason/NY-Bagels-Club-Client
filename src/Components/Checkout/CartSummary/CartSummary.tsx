@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Address, Cart } from '../../../Interfaces/interfaces';
 import { emptyCart, fetchAndHandleCart, getCartItems, populateTaxCalculation  } from '../../../Helpers/cart';
 import './CartSummary.css';
-import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import { useNavigate } from 'react-router-dom';
 import { verifyLoginToken } from '../../../Helpers/auth';
 import Sidebar from '../../Home/Sidebar/Sidebar';
@@ -11,9 +10,11 @@ export default function CartSummary({
   isCheckoutView,
   address,
   paymentIntentToken,
-  setPaymentIntentToken
+  setPaymentIntentToken,
+  isPromoApplied
 }:{
   isCheckoutView:boolean,
+  isPromoApplied?:boolean,
   paymentIntentToken?:string,
   address?:Address,
   setPaymentIntentToken?:Function
@@ -31,6 +32,11 @@ export default function CartSummary({
     fetchAndHandleCart(setCart);
     verifyLoginToken(setIsSignedIn);
   },[]);
+
+  useEffect(()=>{
+    fetchAndHandleCart(setCart);
+    verifyLoginToken(setIsSignedIn);
+  },[isPromoApplied]);
 
   //when the cart is updated, update the total price of all items in the cart
   useEffect(()=>{
@@ -50,7 +56,7 @@ export default function CartSummary({
         paymentIntentToken && //ensure a token exists
         setPaymentIntentToken //allows us to dynamically update the payment intent should stripe issue the user a new one
       ) populateTaxCalculation(address,paymentIntentToken,setCartSubtotalPrice,setTaxPrice,setPaymentIntentToken);
-  },[address]) 
+  },[address, isPromoApplied]);
 
   //handle empty shopping cart
   if (cart.items.length===0){
@@ -98,8 +104,8 @@ export default function CartSummary({
             <span><strong>Basket Subtotal: ${cartSubtotalPrice.toFixed(2)}</strong></span>
           </div>
           <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
-          <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>Checkout</button>
-          {/* <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button> */}
+          {/* <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>Checkout</button> */}
+          <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button>
         </section>
       </>
     );
