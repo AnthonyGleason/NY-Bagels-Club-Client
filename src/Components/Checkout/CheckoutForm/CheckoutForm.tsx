@@ -50,7 +50,7 @@ export default function CheckoutForm({
   const [promoCodeInput,setPromoCodeInput] = useState<string>('');
   const [isPromoApplied,setIsPromoApplied] = useState<boolean>(false);
   const [isRequestPending,setIsRequestPending] = useState<boolean>(false);
- 
+  const [discountAmount,setDiscountAmount] = useState<number>(0);
   //get promo code data on initial load
   useEffect(()=>{
     getPromoCodeData();
@@ -72,11 +72,14 @@ export default function CheckoutForm({
           'Cart-Token': `Bearer ${cartToken}`
         }
       });
-
+      if (!response.ok) throw new Error("Failed to get promo code data for cart. A code is currently not used on the cart.");
       const responseData = await response.json();
       //set discount amount 
+      setDiscountAmount(responseData.discountAmount);
       //set promo code input
+      setPromoCodeInput(responseData.promoCodeName);
       //set is promo applied
+      setIsPromoApplied(responseData.isPromoApplied);
     }catch(err){
       console.log(err);
     };
@@ -215,7 +218,6 @@ export default function CheckoutForm({
       });
       const responseData = await response.json();
       if (!response.ok) throw new Error('An error occured when applying the promo code. Is it valid?');
-      console.log(responseData);
       //set new cart token if applicable
       setClientSecret(responseData.clientSecret);
       localStorage.setItem('cartToken',responseData.cartToken);
@@ -321,7 +323,7 @@ export default function CheckoutForm({
             }
           </div>
           <div className="payment-form-button-container">
-            <CartSummary isPromoApplied={isPromoApplied} paymentIntentToken={clientSecret} address={address} setPaymentIntentToken={setClientSecret} isCheckoutView={true} />
+            <CartSummary discountAmount={discountAmount} isPromoApplied={isPromoApplied} paymentIntentToken={clientSecret} address={address} setPaymentIntentToken={setClientSecret} isCheckoutView={true} />
             <button disabled={isLoading || !stripe || !elements} id="submit">
               <span id="button-text">
                 {isLoading ? <div className="spinner" id="spinner"></div> : "Pay Now"}

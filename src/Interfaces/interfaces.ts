@@ -50,6 +50,9 @@ export interface Cart{
   subtotal:number;
   tax:number;
   totalQuantity:number;
+  promoCodeID:string;
+  discountAmount:number;
+  finalPrice:number;
 };
 
 //order

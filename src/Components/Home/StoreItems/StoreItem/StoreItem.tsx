@@ -22,6 +22,7 @@ export default function StoreItem({
   const [itemImgSrc, setItemImgSrc] = useState<string | undefined>();
   const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
   const [selection, setSelection] = useState<string>('');
+
  //handle initial page load
  useEffect(()=>{
     //dynamically import images
@@ -33,18 +34,11 @@ export default function StoreItem({
 
   //whenever the cart is updated update the quantities of items
   useEffect(()=>{
-    switch (selection){
-      case 'four':
-        setFourPackItemQuantity(getItemQuantityFromCart(cart,storeItem.name,selection));
-        break;
-      case 'dozen':
-        setDozenItemQuantity(getItemQuantityFromCart(cart,storeItem.name,selection));
-        break;
-      default:
-        if (storeItem.cat!=='spread') break;
-        //bug warning, adding a selection argument as an empty string causes quantity to not update correctly!
-        setItemQuantity(getItemQuantityFromCart(cart,storeItem.name));
-        break;
+    if (storeItem.cat==='spread'){
+      setItemQuantity(getItemQuantityFromCart(cart,storeItem.name,''));
+    }else if (storeItem.cat==='bagel'){
+      setFourPackItemQuantity(getItemQuantityFromCart(cart,storeItem.name,'four'));
+      setDozenItemQuantity(getItemQuantityFromCart(cart,storeItem.name,'dozen'));
     };
   },[cart]);
 

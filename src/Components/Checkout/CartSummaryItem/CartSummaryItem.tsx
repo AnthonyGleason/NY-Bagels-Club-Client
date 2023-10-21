@@ -24,7 +24,7 @@ export default function CartSummaryItem(
     setCartItemQuantity(cartItem.quantity);
     //update subtotal
     setCartItemSubtotal(getCartItemSubtotal(cartItem))
-  },[cartItem.quantity])
+  },[cartItem.quantity, cartItem])
 
   if (!isCheckoutView){
     return(

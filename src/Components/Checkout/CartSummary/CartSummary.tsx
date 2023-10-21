@@ -1,36 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { Address, Cart } from '../../../Interfaces/interfaces';
-import { emptyCart, fetchAndHandleCart, getCartItems, populateTaxCalculation  } from '../../../Helpers/cart';
+import { emptyCart, fetchAndHandleCart, populateTaxCalculation, requestApplyMembershipPricingToCart  } from '../../../Helpers/cart';
 import './CartSummary.css';
 import { useNavigate } from 'react-router-dom';
 import { verifyLoginToken } from '../../../Helpers/auth';
 import Sidebar from '../../Home/Sidebar/Sidebar';
+import CartSummaryItem from '../CartSummaryItem/CartSummaryItem';
+import PreCheckoutSummary from '../PreCheckoutSummary/PreCheckoutSummary';
 
 export default function CartSummary({
   isCheckoutView,
   address,
   paymentIntentToken,
   setPaymentIntentToken,
-  isPromoApplied
+  isPromoApplied,
+  discountAmount
 }:{
   isCheckoutView:boolean,
   isPromoApplied?:boolean,
   paymentIntentToken?:string,
   address?:Address,
-  setPaymentIntentToken?:Function
+  setPaymentIntentToken?:Function,
+  discountAmount?:number
 }){
   const navigate = useNavigate();
 
   const [isSignedIn,setIsSignedIn] = useState<boolean>(true);
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Cart>(emptyCart);
-  const [cartSubtotalPrice,setCartSubtotalPrice] = useState<number>(0);
+  const [cartTotalPrice,setCartTotalPrice] = useState<number>(0);
   const [taxPrice,setTaxPrice] = useState<number>(0);
 
   //handle initial page load (grab latest cart data);
   useEffect(()=>{
     fetchAndHandleCart(setCart);
     verifyLoginToken(setIsSignedIn);
+    //apply any membership discounts
+    requestApplyMembershipPricingToCart(setCart);
   },[]);
 
   useEffect(()=>{
@@ -40,7 +46,7 @@ export default function CartSummary({
 
   //when the cart is updated, update the total price of all items in the cart
   useEffect(()=>{
-    setCartSubtotalPrice(cart.subtotal);
+    setCartTotalPrice(cart.finalPrice);
   },[cart])
 
   useEffect(()=>{
@@ -55,7 +61,7 @@ export default function CartSummary({
         address.fullName &&
         paymentIntentToken && //ensure a token exists
         setPaymentIntentToken //allows us to dynamically update the payment intent should stripe issue the user a new one
-      ) populateTaxCalculation(address,paymentIntentToken,setCartSubtotalPrice,setTaxPrice,setPaymentIntentToken);
+      ) populateTaxCalculation(address,paymentIntentToken,setCartTotalPrice,setTaxPrice,setPaymentIntentToken);
   },[address, isPromoApplied]);
 
   //handle empty shopping cart
@@ -85,28 +91,13 @@ export default function CartSummary({
           isSignedIn={isSignedIn}
           setIsSignedIn={setIsSignedIn}
         />
-        <section className='cart-summary' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
-          <h3>Basket</h3>
-          <table>
-            <thead>
-              <tr>
-                <th className="item-name">Name</th>
-                <th className="item-quantity">Quantity</th>
-                <th className="item-subtotal">Subtotal</th>
-                <th className="item-remove">Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-              {getCartItems(cart.items,setCart,isCheckoutView)}
-            </tbody>
-          </table>
-          <div className='cart-subtotal'>
-            <span><strong>Basket Subtotal: ${cartSubtotalPrice.toFixed(2)}</strong></span>
-          </div>
-          <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
-          {/* <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>Checkout</button> */}
-          <button onClick={()=>{navigate('/cart/checkout')}}>Checkout</button>
-        </section>
+        <PreCheckoutSummary 
+          isSidebarExpanded = {isSidebarExpanded}
+          setIsSidebarExpanded={setIsSidebarExpanded}
+          cart= {cart}
+          isCheckoutView = {isCheckoutView}
+          setCart = {setCart}
+        />
       </>
     );
   }else{ //is checkout view
@@ -122,13 +113,29 @@ export default function CartSummary({
             </tr>
           </thead>
           <tbody>
-            {getCartItems(cart.items,setCart,isCheckoutView)}
-          </tbody>
+            {
+              cart.items.map((cartItem, index) => {
+                return (
+                  <CartSummaryItem 
+                    key={index}
+                    cartItem={cartItem}
+                    setCart={setCart}
+                    isCheckoutView={isCheckoutView}
+                  />
+                );
+              })
+            }
+        </tbody>
         </table>
         <div className='cart-subtotal'>
-          <span><strong>Basket Subtotal: ${(cartSubtotalPrice - taxPrice).toFixed(2)}</strong></span>
+          <span><strong>Basket Subtotal: ${cart.subtotal.toFixed(2)}</strong></span>
+          {
+            discountAmount && discountAmount > 0 ?
+            <span><strong>Promo Code Savings: -${discountAmount?.toFixed(2)}</strong></span>
+            : null
+          }
           <span><strong>Calculated Tax: ${taxPrice.toFixed(2) || '0.00'}</strong></span>
-          <span><strong>Basket Total: ${(cartSubtotalPrice).toFixed(2)}</strong></span>
+          <span><strong>Basket Total: ${cartTotalPrice.toFixed(2)}</strong></span>
         </div>
       </section>
     )

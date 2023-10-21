@@ -1,4 +1,5 @@
 import { getServerUrlPrefix } from "../Config/clientSettings";
+import { requestApplyMembershipPricingToCart } from "./cart";
 import { isValidEmail } from "./verification";
 
 export const fetchAccountSettings = async function(
@@ -212,6 +213,7 @@ export const submitLogin = async function(emailInput:string,passwordInput:string
     const responseData = await response.json();
     if (responseData.token){
       localStorage.setItem('loginToken',responseData.token);
+      //redirect user back to the last page they were on
       window.history.back();
     }else{
       setErrorMessage(responseData.message);

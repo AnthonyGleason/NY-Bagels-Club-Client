@@ -117,7 +117,7 @@ export const handleCartItemInputChange = function(
 export const populateTaxCalculation = async function(
     address:Address,
     paymentIntentToken:string,
-    setCartSubtotalPrice:Function,
+    setCartTotalPrice:Function,
     setTaxPrice:Function,
     setPaymentIntentToken:Function
   ){
@@ -134,7 +134,7 @@ export const populateTaxCalculation = async function(
     })
   });
   const responseData = await response.json();
-  setCartSubtotalPrice(responseData.total/100);
+  setCartTotalPrice(responseData.total/100);
   setTaxPrice(responseData.taxAmount/100);
   if (setPaymentIntentToken) setPaymentIntentToken(responseData.paymentIntentToken);
 };
@@ -163,9 +163,15 @@ export const getItemQuantityFromCart = function(cart:Cart, itemName: string, sel
     // Check if the selection and itemName match
     if (
       cartItem.selection === selection &&
-      (cartItem.itemData.cat === 'bagel' || cartItem.itemData.cat === 'spread') &&
+      cartItem.itemData.cat === 'bagel' &&
       cartItem.itemData.name === itemName
     ) {
+      quantity = cartItem.quantity;
+      break; // Exit the loop if the item is found
+    }else if(
+      cartItem.itemData.cat === 'spread' &&
+      cartItem.itemData.name === itemName
+    ){
       quantity = cartItem.quantity;
       break; // Exit the loop if the item is found
     }
@@ -173,29 +179,37 @@ export const getItemQuantityFromCart = function(cart:Cart, itemName: string, sel
   return quantity;
 };
 
-export const getCartItems = function (
-  cart:CartItem[],
-  setCart:Function,
-  isCheckoutView:boolean
-) {
-  // Loop over cart items
-  const cartRows = cart.map((cartItem, index) => {
-    return (
-      <CartSummaryItem 
-        key={index}
-        cartItem={cartItem}
-        setCart={setCart}
-        isCheckoutView={isCheckoutView}
-      />
-    );
-  });
-  // Return the cart rows
-  return cartRows;
-};
 
 export const emptyCart = {
   items: [],
   subtotal: 0,
   tax: 0,
-  totalQuantity: 0
+  totalQuantity: 0,
+  promoCodeID: '',
+  discountAmount: 0,
+  finalPrice: 0
+};
+
+export const requestApplyMembershipPricingToCart = async function(setCart:Function):Promise<void>{
+  const cartToken:string | null = localStorage.getItem('cartToken');
+  const loginToken:string | null = localStorage.getItem('loginToken');
+
+  if (cartToken && loginToken){
+    const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/applyMembershipPricing`,{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      }
+    });
+    if (response.ok){
+      const responseData = await response.json();
+      localStorage.setItem('cartToken',responseData.cartToken);
+      setCart(responseData.cart);
+      console.log('Membership pricing successfully applied!');
+    }else{
+      console.log('User is not a member.');
+    };
+  };
 };
