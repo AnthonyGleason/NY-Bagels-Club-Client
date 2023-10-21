@@ -40,6 +40,11 @@ export default function CartSummary({
   },[]);
 
   useEffect(()=>{
+    //apply any membership discounts (or remove them)
+    requestApplyMembershipPricingToCart(setCart);
+  },[isSignedIn]);
+
+  useEffect(()=>{
     fetchAndHandleCart(setCart);
     verifyLoginToken(setIsSignedIn);
   },[isPromoApplied]);

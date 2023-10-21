@@ -48,31 +48,18 @@ export default function StoreItems({
       {
         storeItems.map((storeItem:SpreadItem | BagelItem)=>{  
           counter+=1;
-          if (storeItem.cat==='bagel'){
-            const price = getUnitPriceFromCartItem(storeItem, 'four');
-            return(
-              <StoreItem
-                key={storeItem._id}
-                storeItem={storeItem}
-                cart={cart}
-                setCart={setCart}
-                isAltTheme={counter%2===0}
-                userTier={userTier}
-              />
-            )
-          }else{
-            const price = getUnitPriceFromCartItem(storeItem);
-            return(
-              <StoreItem
-                key={storeItem._id}
-                storeItem={storeItem}
-                cart={cart}
-                setCart={setCart}
-                isAltTheme={counter%2===0}
-                userTier={userTier}
-              />
-            )
-          };
+          return(
+            <StoreItem
+              key={storeItem._id}
+              storeItem={storeItem}
+              cart={cart}
+              setCart={setCart}
+              isAltTheme={counter%2===0}
+              userTier={userTier}
+              isSignedIn={isSignedIn}
+              setUserTier={setUserTier}
+            />
+          )
         })
       }
     </section>

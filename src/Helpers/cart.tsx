@@ -190,23 +190,23 @@ export const emptyCart = {
   finalPrice: 0
 };
 
-export const requestApplyMembershipPricingToCart = async function(setCart:Function):Promise<void>{
+export const requestApplyMembershipPricingToCart = async function(setCart?:Function):Promise<void>{
   const cartToken:string | null = localStorage.getItem('cartToken');
   const loginToken:string | null = localStorage.getItem('loginToken');
 
-  if (cartToken && loginToken){
+  if (cartToken){
     const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/applyMembershipPricing`,{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
-        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+        'Cart-Token': `Bearer ${cartToken}`,
+        'Authorization': `Bearer ${loginToken}`
       }
     });
     if (response.ok){
       const responseData = await response.json();
       localStorage.setItem('cartToken',responseData.cartToken);
-      setCart(responseData.cart);
+      if (setCart) setCart(responseData.cart);
       console.log('Membership pricing successfully applied!');
     }else{
       console.log('User is not a member.');

@@ -9,12 +9,16 @@ export default function StoreItem({
   setCart,
   isAltTheme,
   userTier,
+  isSignedIn,
+  setUserTier
 }:{
   storeItem: BagelItem | SpreadItem,
   cart:Cart,
   setCart:Function,
   isAltTheme:boolean,
   userTier:string,
+  isSignedIn:boolean,
+  setUserTier:Function
 }){
   const [itemQuantity,setItemQuantity] = useState(0);
   const [fourPackItemQuantity,setFourPackItemQuantity] = useState(0);
@@ -66,7 +70,7 @@ export default function StoreItem({
       return(
         <>
           <span>{userTier} Pricing</span>
-          <span>${calcPriceByUserTier(itemPrice,userTier)}</span>
+          <span>${itemPrice}</span>
         </>
       )
     };
@@ -77,8 +81,8 @@ export default function StoreItem({
       return(
         <>
           <span>{userTier} Pricing</span>
-          <span>Four Pack ${calcPriceByUserTier(fourPackPrice,userTier)}</span>
-          <span>Dozen ${calcPriceByUserTier(dozenPrice,userTier)}</span>
+          <span>Four Pack ${fourPackPrice}</span>
+          <span>Dozen ${dozenPrice}</span>
         </>
       )
     }
@@ -186,6 +190,14 @@ export default function StoreItem({
       break;
   };
 
+  const [bagelFourPackPrice,setBagelFourPackPrice] = useState<number>(bagelItem?.fourPrice || 0);
+  const [bagelDozenPrice,setBagelDozenPrice] = useState<number>(bagelItem?.dozenPrice || 0);
+  const [spreadItemPrice,setSpreadItemPrice] = useState<number>(spreadItem?.price || 0);
+
+  useEffect(()=>{
+    if (!localStorage.getItem('loginToken')) setUserTier('Non-Member');
+  },[isSignedIn])
+
   return(
     <article data-aos='fade-right' id={`item-${storeItem._id}`} className={`store-item ${altThemeClass}`}>
       <p className='item-info'>
@@ -200,14 +212,21 @@ export default function StoreItem({
         {
           spreadItem && spreadItem.cat==='spread'
           ?
-          getCurrentUserSpreadTierPricing(spreadItem.price,userTier)
+            getCurrentUserSpreadTierPricing(
+              parseFloat(calcPriceByUserTier(spreadItemPrice,userTier)),
+              userTier
+            )
           :
             null
         }
         {
           bagelItem && bagelItem.cat==='bagel'
           ?
-            getCurrentUserBagelTierPricing(bagelItem.fourPrice,bagelItem.dozenPrice,userTier)
+            getCurrentUserBagelTierPricing(
+              parseFloat(calcPriceByUserTier(bagelFourPackPrice,userTier)),
+              parseFloat(calcPriceByUserTier(bagelDozenPrice,userTier)),
+              userTier
+            )
           :
             null
         }

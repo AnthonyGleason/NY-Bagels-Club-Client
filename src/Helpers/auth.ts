@@ -1,4 +1,5 @@
 import { getServerUrlPrefix } from "../Config/clientSettings";
+import { requestApplyMembershipPricingToCart } from "./cart";
 
 export const verifyCartToken = async function(setCart:Function):Promise<boolean>{
   const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/verify`,{

@@ -17,8 +17,6 @@ import { motion } from 'framer-motion';
 import { handleLogout, updateAdminStatus, verifyLoginToken } from '../../../Helpers/auth';
 import { toggleExpandMenu } from '../../../Helpers/sidebar';
 import { Cart } from '../../../Interfaces/interfaces';
-import { getItemQuantityFromCart } from '../../../Helpers/cart';
-import { getServerUrlPrefix } from '../../../Config/clientSettings';
 
 export default function Sidebar(
   {
@@ -26,7 +24,7 @@ export default function Sidebar(
     isExpanded,
     setIsExpanded,
     isSignedIn,
-    setIsSignedIn
+    setIsSignedIn,
   }:{
     cart:Cart;
     isExpanded:boolean,
