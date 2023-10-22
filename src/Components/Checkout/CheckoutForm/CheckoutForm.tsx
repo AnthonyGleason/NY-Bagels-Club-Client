@@ -165,6 +165,7 @@ export default function CheckoutForm({
 
   const handleRemovePromoCode = async function(){
     try{
+      setIsRequestPending(true);
       const cartToken:string | null = localStorage.getItem('cartToken');
       const loginToken:string | null = localStorage.getItem('loginToken');
 
@@ -173,22 +174,30 @@ export default function CheckoutForm({
       if (!loginToken) throw new Error('There was an error retrieving the login token. Ensure you are logged in.');
       
       const response = await fetch(`${getServerUrlPrefix()}/api/shop/promoCode`,{
-        method: 'PUT',
+        method: 'DELETE',
         headers:{
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${loginToken}`,
           'Cart-Token': `Bearer ${cartToken}`
-        }
+        },
+        body: JSON.stringify({
+          clientSecret: clientSecret
+        })
       });
       const responseData = await response.json();
       if (!response.ok) throw new Error('An error occured when removing the promo code from your cart.');
-      console.log(responseData);
-
-      //set new cart token if applicable
-
-      //calculate tax if applicable (if shipping info is present or not)
+      //set new client secret if applicable
+      setClientSecret(responseData.clientSecret);
+      //set new cart token in local storage
+      localStorage.setItem('cartToken',responseData.cartToken);
+      //set discount amount 
+      setDiscountAmount(responseData.discountAmount);
+      //set is promo applied
+      setIsPromoApplied(false);
+      setIsRequestPending(false);
     }catch(err){
       console.log(err);
+      setIsRequestPending(false);
     };
   };
   
@@ -220,7 +229,13 @@ export default function CheckoutForm({
       if (!response.ok) throw new Error('An error occured when applying the promo code. Is it valid?');
       //set new cart token if applicable
       setClientSecret(responseData.clientSecret);
+      //set new cart token in local storage
       localStorage.setItem('cartToken',responseData.cartToken);
+
+      //set discount amount 
+      setDiscountAmount(responseData.discountAmount);
+      
+      //set is promo applied
       setIsPromoApplied(true);
       alert(`The promo code ${promoCodeInput} was successfully applied!`)
       setIsRequestPending(false);

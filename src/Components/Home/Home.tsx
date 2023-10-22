@@ -14,6 +14,9 @@ import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
 import { BagelItem, Cart, SpreadItem } from '../../Interfaces/interfaces';
 import Menu from './Menu/Menu';
 import { scrollToID } from '../../Helpers/misc';
+import homeDeliveryImg from '../../Assets/backgrounds/homeDelivery.jpg';
+import starImg from '../../Assets/icons/star-duotone.svg';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home(){
   const [isPageLoaded, setIsPageLoaded] = useState<boolean>(false);
@@ -29,6 +32,8 @@ export default function Home(){
     Aos.init({duration: 2500});
   },[]);
 
+  const navigate = useNavigate();
+  
   if (!isPageLoaded){
     return(
       <HomeLoadingOverlay setIsPageLoaded={setIsPageLoaded} />
@@ -52,7 +57,74 @@ export default function Home(){
           </button>
         </div>
         <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
+          <section data-aos='fade-in' className='banner'>
+            <h3><img src={starImg} alt='star' /> <u>Limited Time Offer!</u> <img src={starImg} alt='star' /></h3>
+            <h4>Enjoy FREE Shipping on All Orders!</h4>
+            <img src={homeDeliveryImg} alt='home delivery' />
+          </section>
+          <h3 className='store-items-heading'>
+            Proudly Delivering 
+            <br />
+            <span className='brendels'>Brendel's Bagels</span> 
+            <br />
+            Nationwide
+          </h3>
           <About />
+          <h3 data-aos='fade-in' className='store-items-heading'>
+            Club Perks
+          </h3>
+          <section className='club-perks'>
+            <div className='club-tiers'>
+              <div data-aos='fade-in' className='gold'>
+                <h3 >
+                  Gold Member
+                  <br />
+                  <br />
+                  $299.95 Billed Annually
+                </h3>
+                <ul>
+                  <li>12 Deliveries of 1 Dozen Bagels for Yourself or a Friend.</li>
+                  <li>5% off Non-Member Pricing.</li>
+                  <li className='club-value'><strong>A $586 Value!</strong>¹</li>
+                </ul>
+              </div>
+              <div data-aos='fade-in' className='platinum'>
+                <h3>
+                  Platinum Member
+                  <br />
+                  <br />
+                  $599.95 Billed Annually
+                </h3>
+                <ul>
+                  <li>26 Deliveries of 1 Dozen Bagels for Yourself or a Friend.</li>
+                  <li>10% off Non-Member Pricing.</li>
+                  <li className='club-value'><strong>A $1224.15 Value!</strong>²</li>
+                </ul>
+              </div>
+              <div data-aos='fade-in' className='diamond'>
+                <h3>
+                  Diamond Member
+                  <br />
+                  <br />
+                  $1199.95 Billed Annually
+                </h3>
+                <ul>
+                  <li>52 Deliveries of 1 Dozen Bagels for Yourself or a Friend.</li>
+                  <li>15% off Non-Member Pricing.</li>
+                  <li>Direct Line to Our Priority Customer Support Team</li>
+                  <li className='club-value'><strong>A $2375 Value!</strong>³</li>
+                </ul>
+              </div>
+            </div>
+            <div className='club-perks-footnotes'>
+              <ul>
+                <li data-aos='fade-in' className='gold'>¹ Value is calculated by 12 deliveries of a dozen bagels each valued at $34.95. We also assume the customer purchases an additional 5 dozens at 5% savings.</li>
+                <li data-aos='fade-in' className='platinum'>² Value is calculated by 26 deliveries of a dozen bagels each valued at $34.95. We also assume the customer purchases an additional 10 dozens at 10% savings.</li>
+                <li data-aos='fade-in' className='diamond'>³ Value is calculated by 52 deliveries of a dozen bagels each valued at $34.95. We also assume the customer purchases an additional 15 dozens at 15% savings.</li>
+              </ul>
+            </div>
+            <button className='home-subscribe-now' type='button' onClick={()=>{navigate('/subscribe')}}>Subscribe Now!</button>
+          </section>
           <Menu storeItems={storeItems} />
           <h3 data-aos='fade-in' className='store-items-heading'>
             A Taste of New York

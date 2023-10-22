@@ -33,6 +33,8 @@
   align-self: flex-end;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding-top: 1em;
 }
 .cart-shipping-note{
   align-self: flex-end;
@@ -85,4 +87,8 @@
   width: 30px;
   height: 30px;
   padding: 0.8em 1em;
+}
+.payment-form-wrapper .cart-summary .cart-subtotal span strong{
+  display: flex;
+  justify-content: space-between;
 }

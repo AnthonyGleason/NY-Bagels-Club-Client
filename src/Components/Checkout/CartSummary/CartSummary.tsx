@@ -133,14 +133,15 @@ export default function CartSummary({
         </tbody>
         </table>
         <div className='cart-subtotal'>
-          <span><strong>Basket Subtotal: ${cart.subtotal.toFixed(2)}</strong></span>
+          <span><strong><span>Basket Subtotal:</span> <span>${cart.subtotal.toFixed(2)}</span></strong></span>
           {
             discountAmount && discountAmount > 0 ?
-            <span><strong>Promo Code Savings: -${discountAmount?.toFixed(2)}</strong></span>
+            <span><strong><span>Promo Code Savings:</span> <span>-${discountAmount?.toFixed(2)}</span></strong></span>
             : null
           }
-          <span><strong>Calculated Tax: ${taxPrice.toFixed(2) || '0.00'}</strong></span>
-          <span><strong>Basket Total: ${cartTotalPrice.toFixed(2)}</strong></span>
+          <span><strong><span>Calculated Tax:</span> <span>${taxPrice.toFixed(2) || '0.00'}</span></strong></span>
+          <span><strong><span>Shipping:</span> <span>Free</span></strong></span>
+          <span><strong><span>Basket Total:</span> <span>${cartTotalPrice.toFixed(2)}</span></strong></span>
         </div>
       </section>
     )

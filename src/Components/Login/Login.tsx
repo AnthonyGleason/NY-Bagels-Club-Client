@@ -49,7 +49,7 @@ export default function Login(){
           }
           <ol>
             <li>
-              <button type='button' onClick={()=>{submitLogin(emailInput,passwordInput,setErrorMessage)}}>Submit</button>
+              <button type='button' onClick={()=>{submitLogin(emailInput,passwordInput,setErrorMessage,navigate)}}>Submit</button>
             </li>
             <li>
               <button type='button' onClick={()=>{navigate('/register')}}>Register</button>

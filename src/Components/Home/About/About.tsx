@@ -13,13 +13,6 @@ export default function About(){
 
   return(
     <section className='about-us'>
-      <h4 data-aos='fade-in'>
-        Proudly Delivering 
-        <br />
-        <span className='brendels'>Brendel's Bagels</span> 
-        <br />
-        Nationwide
-      </h4>
       <p data-aos='fade-in'>
         Crafted with the freshest ingredients, our New York Style bagels are hand-rolled, boiled, and baked for that authentic New York City flavor and texture. With 18 years of bagel-making expertise, Brendel's Bagels & Eatery is your go-to for gourmet food and catering, conveniently serving Long Island and now shipping nationwide. Whether you're a transplant New Yorker, hosting family, or planning a special corporate event, we're here to delight your taste buds.
       </p>

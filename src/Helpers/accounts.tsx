@@ -181,7 +181,7 @@ export const genErrorMessageElement = function(errorMessage:string,){
   );
 };
 
-export const submitLogin = async function(emailInput:string,passwordInput:string,setErrorMessage:Function){
+export const submitLogin = async function(emailInput:string,passwordInput:string,setErrorMessage:Function,navigate:Function){
   try{
     //ensure all inputs are completed
     if (!emailInput || !passwordInput){
@@ -214,7 +214,10 @@ export const submitLogin = async function(emailInput:string,passwordInput:string
     if (responseData.token){
       localStorage.setItem('loginToken',responseData.token);
       //redirect user back to the last page they were on
-      window.history.back();
+      // window.history.back();
+      
+      //in the future i would like to have users redirected to certain pages if they are specified in props but for now we will redirect to the home page
+      navigate('/');
     }else{
       setErrorMessage(responseData.message);
       throw new Error(responseData.message);

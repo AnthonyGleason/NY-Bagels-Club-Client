@@ -199,7 +199,7 @@ export default function StoreItem({
   },[isSignedIn])
 
   return(
-    <article data-aos='fade-right' id={`item-${storeItem._id}`} className={`store-item ${altThemeClass}`}>
+    <article data-aos='fade-in' id={`item-${storeItem._id}`} className={`store-item ${altThemeClass}`}>
       <p className='item-info'>
         <span>{storeItem.name}</span> 
         {
@@ -232,7 +232,7 @@ export default function StoreItem({
         }
       </p>
       <img src={itemImgSrc} alt={`Item ${storeItem._id}`} />
-      <div data-aos='fade-right' className='store-item-buttons'>
+      <div data-aos='fade-in' className='store-item-buttons'>
         <div className='store-item-button-container'>
           {
             getStoreItemButtons()
