@@ -20,7 +20,7 @@ export interface SpreadItem{
 //item
 export interface BagelItem{
   dozenPrice:number,
-  fourPrice:number,
+  sixPrice:number,
   name: string,
   _id: string, // unique id given by mongodb
   cat:string,
@@ -63,7 +63,8 @@ export interface Order{
   totalAmount:number,
   cart:Cart,
   shippingAddress:Address,
+  promoCodeID?:string,
   trackingNumber?:string,
-  giftMessage?:string  
+  giftMessage?:string
   _id: string // unique id given by mongodb
 };

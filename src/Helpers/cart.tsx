@@ -76,9 +76,9 @@ export const fetchAndHandleCart = async function(setCart:Function){
 };
 export const getUnitPriceFromCartItem = function(storeItem:SpreadItem | BagelItem, selection?:string):number{
   let price:number = 0;
-  if (storeItem.cat==='bagel' && selection==='four'){
+  if (storeItem.cat==='bagel' && selection==='six'){
     const tempStoreItem:BagelItem = storeItem as BagelItem;
-    price = tempStoreItem.fourPrice;
+    price = tempStoreItem.sixPrice;
   }else if (storeItem.cat==='bagel' && selection==='dozen'){
     const tempStoreItem:BagelItem = storeItem as BagelItem;
     price = tempStoreItem.dozenPrice;
@@ -140,7 +140,7 @@ export const populateTaxCalculation = async function(
 };
 
 export const getSelectionName = function(cartItem:CartItem){
-  if (cartItem.selection==='four') return 'Four Pack(s)';
+  if (cartItem.selection==='six') return 'Six Pack(s)';
   if (cartItem.selection==='dozen') return 'Dozen(s)';
   if (cartItem.itemData.cat==='spread') return 'One Pound';
   

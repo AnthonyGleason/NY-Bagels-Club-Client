@@ -16,19 +16,24 @@ export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]
 
   return(
     <section>
-      <h3 data-aos='fade-in' id='our-menu' className='our-menu-heading'>Our Menu</h3>
+      <h3 data-aos='fade-in' id='our-menu' className='our-menu-heading our-menu-subscription-wrapper'>
+        <span>Our Menu</span>
+        <span className='our-menu-subscription'>(No Subscription Required For Purchase)</span>
+      </h3>
         <div data-aos='fade-in' className='our-menu'>
           {
             isBagelsVisible===false ?
-              <div className='menu-button-heading'>
+              <div className='menu-button-heading menu-option'>
                 <button onClick={()=>setIsBagelsVisible(true)}>
-                  Bagels
+                  <span className='brendels'>Brendel's</span> Gourmet Bagels
                 </button>
               </div>
             :
             <div className='menu-option'>
               <div>
-                <button onClick={()=>setIsBagelsVisible(false)}>Bagels</button>
+                <button onClick={()=>setIsBagelsVisible(false)}>
+                  <span className='brendels'>Brendel's</span> Gourmet Bagels
+                </button>
               </div>
               {
                 getBagelMenuItems(storeItems)
@@ -37,13 +42,17 @@ export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]
           }
           {
             isSpreadsVisible === false ?
-              <div className='menu-button-heading'>
-                <button onClick={()=>{setIsSpreadsVisible(true)}}>Brendel's Gourmet Spreads</button>
+              <div className='menu-button-heading menu-option'>
+                <button onClick={()=>{setIsSpreadsVisible(true)}}>
+                  <span className='brendels'>Brendel's</span> Gourmet Spreads
+                </button>
               </div>
             :
             <div className='menu-option'>
               <div>
-                <button onClick={()=>{setIsSpreadsVisible(false)}}>Brendel's Gourmet Spreads</button>
+                <button onClick={()=>{setIsSpreadsVisible(false)}}>
+                  <span className='brendels'>Brendel's</span> Gourmet Spreads
+                </button>
               </div>
               {
                 getSpreadMenuItems(storeItems)

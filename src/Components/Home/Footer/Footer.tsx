@@ -18,7 +18,7 @@ export default function Footer(){
         <span>
           © 2023 Gleason Holdings Group LLC
         </span>
-        <span>
+        <span onClick={()=>{window.location.href='https://www.brendelsbagels.com/'}} >
           © 2023 Brendel's Bagels & Eatery of New York.
           <br />
           All rights reserved.

@@ -21,7 +21,7 @@ export default function StoreItem({
   setUserTier:Function
 }){
   const [itemQuantity,setItemQuantity] = useState(0);
-  const [fourPackItemQuantity,setFourPackItemQuantity] = useState(0);
+  const [sixPackItemQuantity,setSixPackItemQuantity] = useState(0);
   const [dozenItemQuantity,setDozenItemQuantity] = useState(0);
   const [itemImgSrc, setItemImgSrc] = useState<string | undefined>();
   const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
@@ -41,7 +41,7 @@ export default function StoreItem({
     if (storeItem.cat==='spread'){
       setItemQuantity(getItemQuantityFromCart(cart,storeItem.name,''));
     }else if (storeItem.cat==='bagel'){
-      setFourPackItemQuantity(getItemQuantityFromCart(cart,storeItem.name,'four'));
+      setSixPackItemQuantity(getItemQuantityFromCart(cart,storeItem.name,'six'));
       setDozenItemQuantity(getItemQuantityFromCart(cart,storeItem.name,'dozen'));
     };
   },[cart]);
@@ -76,12 +76,12 @@ export default function StoreItem({
     };
   };
 
-  const getCurrentUserBagelTierPricing = function(fourPackPrice:number,dozenPrice:number,userTier:string){
+  const getCurrentUserBagelTierPricing = function(sixPackPrice:number,dozenPrice:number,userTier:string){
     if (storeItem.cat==='bagel'){
       return(
         <>
           <span>{userTier} Pricing</span>
-          <span>Four Pack ${fourPackPrice}</span>
+          <span>Six Pack ${sixPackPrice}</span>
           <span>Dozen ${dozenPrice}</span>
         </>
       )
@@ -93,9 +93,9 @@ export default function StoreItem({
       return(
         <>
           <div className='store-item-button-wrapper'>
-            <span>{fourPackItemQuantity} Four Pack(s) in Basket</span>
+            <span>{sixPackItemQuantity} Six Pack(s) in Basket</span>
             <button className='quantity-button' onClick={()=>{
-              const selection:string = 'four';
+              const selection:string = 'six';
               setSelection(selection);
               modifyCart(
                 getItemQuantityFromCart(cart,storeItem.name,selection)+1,
@@ -107,7 +107,7 @@ export default function StoreItem({
               )
             }}>+</button>
             <button className='quantity-button' onClick={()=>{
-              const selection:string = 'four';
+              const selection:string = 'six';
               setSelection(selection);
               modifyCart(
                 getItemQuantityFromCart(cart,storeItem.name,selection)-1,
@@ -190,7 +190,7 @@ export default function StoreItem({
       break;
   };
 
-  const [bagelFourPackPrice,setBagelFourPackPrice] = useState<number>(bagelItem?.fourPrice || 0);
+  const [bagelSixPackPrice,setBagelSixPackPrice] = useState<number>(bagelItem?.sixPrice || 0);
   const [bagelDozenPrice,setBagelDozenPrice] = useState<number>(bagelItem?.dozenPrice || 0);
   const [spreadItemPrice,setSpreadItemPrice] = useState<number>(spreadItem?.price || 0);
 
@@ -223,7 +223,7 @@ export default function StoreItem({
           bagelItem && bagelItem.cat==='bagel'
           ?
             getCurrentUserBagelTierPricing(
-              parseFloat(calcPriceByUserTier(bagelFourPackPrice,userTier)),
+              parseFloat(calcPriceByUserTier(bagelSixPackPrice,userTier)),
               parseFloat(calcPriceByUserTier(bagelDozenPrice,userTier)),
               userTier
             )

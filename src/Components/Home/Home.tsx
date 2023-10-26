@@ -58,11 +58,13 @@ export default function Home(){
         </div>
         <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
           <section data-aos='fade-in' className='banner'>
-            <h3><img src={starImg} alt='star' /> <u>Limited Time Offer!</u> <img src={starImg} alt='star' /></h3>
-            <h4>Enjoy FREE Shipping on All Orders!</h4>
-            <img src={homeDeliveryImg} alt='home delivery' />
+            <div className='limited-offer-wrapper'>
+              <h3><img src={starImg} alt='star' /> <u>Limited Time Offer!</u> <img src={starImg} alt='star' /></h3>
+              <h4>Enjoy FREE Shipping on All Orders!</h4>
+            </div>
+            <img className='home-delivery' src={homeDeliveryImg} alt='home delivery' />
           </section>
-          <h3 className='store-items-heading'>
+          <h3 className='store-items-heading' onClick={()=>{window.location.href='https://www.brendelsbagels.com/'}}>
             Proudly Delivering 
             <br />
             <span className='brendels'>Brendel's Bagels</span> 
@@ -71,58 +73,67 @@ export default function Home(){
           </h3>
           <About />
           <h3 data-aos='fade-in' className='store-items-heading'>
-            Club Perks
+            Join The Club
           </h3>
           <section className='club-perks'>
             <div className='club-tiers'>
               <div data-aos='fade-in' className='gold'>
                 <h3 >
-                  Gold Member
-                  <br />
-                  <br />
-                  $299.95 Billed Annually
+                  <span>Gold Member</span>
+                  <span>$44.95 / Month</span>
                 </h3>
                 <ul>
-                  <li>12 Deliveries of 1 Dozen Bagels for Yourself or a Friend.</li>
-                  <li>5% off Non-Member Pricing.</li>
-                  <li className='club-value'><strong>A $586 Value!</strong>¹</li>
+                  <li>
+                    Enjoy a monthly treat of a <strong>Baker's Dozen (13 Bagels)</strong> for yourself or a friend.
+                  </li>
+                  <li>Personalize your delivery with <strong>your choice of 6 delicious flavors</strong>, and the <strong>13th bagel is <span className='brendels'>Brendel's</span> "Baker's Choice" selection</strong>.</li>
+                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice in every box!</strong></li>
+                  <li><strong>5% off </strong> Non-Member Pricing.</li>
+                  <li><strong>PRIORITY</strong> Mail Shipping on <strong>EVERY</strong> order placed.</li>
+                  <li className='club-value'><strong><span>Gain an Exceptional 34% Value!</span></strong></li>
                 </ul>
               </div>
               <div data-aos='fade-in' className='platinum'>
                 <h3>
-                  Platinum Member
-                  <br />
-                  <br />
-                  $599.95 Billed Annually
+                  <span>Platinum Member</span>
+                  <span>$89.95 / Month</span>
                 </h3>
                 <ul>
-                  <li>26 Deliveries of 1 Dozen Bagels for Yourself or a Friend.</li>
-                  <li>10% off Non-Member Pricing.</li>
-                  <li className='club-value'><strong>A $1224.15 Value!</strong>²</li>
+                  <li>
+                    Enjoy <strong>TWO</strong> monthly treats of a <strong>Baker's Dozen (13 Bagels)</strong> for yourself or a friend.
+                  </li>
+                  <li>Personalize your deliveries with <strong>your choice of 6 delicious flavors</strong>, and the <strong>13th bagel is our <span className='brendels'>Brendel's</span> "Baker's Choice" selection</strong>.</li>
+                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice in every box!</strong></li>
+                  <li><strong>10% off </strong> Non-Member Pricing.</li>
+                  <li><strong>PRIORITY</strong> Mail Shipping on <strong>EVERY</strong> order placed.</li>
+                  <li className='club-value'><strong><span>Gain an Outstanding 40% Value!</span></strong></li>
                 </ul>
               </div>
               <div data-aos='fade-in' className='diamond'>
                 <h3>
-                  Diamond Member
-                  <br />
-                  <br />
-                  $1199.95 Billed Annually
+                  <span>Diamond Member</span>
+                  <span>$179.95 / Month</span>
                 </h3>
                 <ul>
-                  <li>52 Deliveries of 1 Dozen Bagels for Yourself or a Friend.</li>
-                  <li>15% off Non-Member Pricing.</li>
-                  <li>Direct Line to Our Priority Customer Support Team</li>
-                  <li className='club-value'><strong>A $2375 Value!</strong>³</li>
+                  <li>
+                    Enjoy <strong>FOUR</strong> monthly treats of a <strong>Baker's Dozen (13 Bagels)</strong> for yourself or a friend.
+                  </li>
+                  <li>Personalize your deliveries with <strong>your choice of 6 delicious flavors</strong>, and the <strong>13th bagel is <span className='brendels'>Brendel's</span> "Baker's Choice" selection</strong>.</li>
+                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice in every box!</strong></li>
+                  <li><strong>15% off </strong> Non-Member Pricing.</li>
+                  <li><strong>PRIORITY</strong> Mail Shipping on <strong>EVERY</strong> order placed.</li>
+                  <li>Skip the wait, recieve a direct line to our priority customer service team!</li>
+                  <li className='club-value'><strong><span>Gain An Unparalleled 44% Value!</span></strong></li>
                 </ul>
               </div>
             </div>
-            <div className='club-perks-footnotes'>
+            {/* <div className='club-perks-footnotes'>
               <ul>
-                <li data-aos='fade-in' className='gold'>¹ Value is calculated by 12 deliveries of a dozen bagels each valued at $34.95. We also assume the customer purchases an additional 5 dozens at 5% savings.</li>
-                <li data-aos='fade-in' className='platinum'>² Value is calculated by 26 deliveries of a dozen bagels each valued at $34.95. We also assume the customer purchases an additional 10 dozens at 10% savings.</li>
-                <li data-aos='fade-in' className='diamond'>³ Value is calculated by 52 deliveries of a dozen bagels each valued at $34.95. We also assume the customer purchases an additional 15 dozens at 15% savings.</li>
+                <li data-aos='fade-in' className='gold'>¹ Value is calculated for a monthly subscription with a dozen bagels valued at $44.95 and a 1/2 lb gourmet spread valued at $9. We also assume the customer purchases an additional dozen at 5% savings.</li>
+                <li data-aos='fade-in' className='platinum'>² Value is calculated for a year subscription based on 24 deliveries of a baker's dozen bagels each valued at $44.95. We also assume the customer purchases an additional 10 dozens at 10% savings.</li>
+                <li data-aos='fade-in' className='diamond'>³ Value is calculated for a year subscription based on 48 deliveries of a baker's dozen bagels each valued at $44.95. We also assume the customer purchases an additional 15 dozens at 15% savings.</li>
               </ul>
-            </div>
+            </div> */}
             <button className='home-subscribe-now' type='button' onClick={()=>{navigate('/subscribe')}}>Subscribe Now!</button>
           </section>
           <Menu storeItems={storeItems} />

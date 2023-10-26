@@ -1,17 +1,13 @@
 .banner{
   text-align: center;
-  padding: 1.5em 1em 1.5em 1em;
-  font-size: 20px;
+  padding: 1.5em 0em 1.5em 0em;
+  font-size: 22px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #5d1917;
   color: white;
-  gap: 15px;
-  margin-top: 1em;
   font-family: 'Titillum Web';
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 .banner h3{
   display: flex;
@@ -19,15 +15,26 @@
   justify-content: space-between;
   align-items: center;
 }
+.banner .limited-offer-wrapper{
+  background-color: rgb(39, 7, 7);
+  padding: 1em 1em 1em 1em;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 19px;
+}
 .banner h3 img{
-  width: 50px;
+  width: 30px;
 }
 .banner h3 u{
   text-underline-offset: 5px;
+  font-family: 'Courgette';
 }
-.banner img{
+.banner .home-delivery{
   width: 100%;
-  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 .about-us{
   padding: 1em;
@@ -51,6 +58,9 @@
   color: white;
   border-radius: 5px;
   padding: 1em;
+}
+.about-us p span{
+  font-size: 30px;
 }
 .about-us img{
   width: 100%;
@@ -135,8 +145,11 @@
 .club-perks .club-tiers{
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
   font-family: 'Titillium Web';
+}
+.club-perks .brendels{
+  font-size: 28px;
 }
 .club-perks .club-tiers div{
   display: flex;
@@ -144,18 +157,17 @@
   align-items: center;
   padding: 1em;
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.8);
+  flex-direction: column;
 }
 .club-perks .club-tiers ul{
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 5px;
   padding-left: 20px;
-}
-.club-perks .club-tiers ul li{
-  font-size: 18px;
+  list-style-type: circle;
 }
 .club-perks-footnotes ul{
   list-style: none;
@@ -166,7 +178,7 @@
 .club-perks-footnotes ul li{
   padding: 1em;
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 .gold{
   color: #FFEEAA;
@@ -184,6 +196,10 @@
 }
 .club-value{
 }
+.club-value span{
+  font-size: 23px;
+  font-family: 'Courgette';
+}
 .club-value strong{
   width: 100%;
 }
@@ -196,5 +212,15 @@
   font-weight: bold;
   font-family: 'Allura';
   padding: 0.5em 1em;
+  margin-top: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+}
+.gold h3,
+.platinum h3,
+.diamond h3{
+  font-family: 'Courgette';
+  font-size: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }

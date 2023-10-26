@@ -100,7 +100,7 @@ export default function Sidebar(
           <li className='cart'>
             <button onClick={()=>{navigate('/cart')}}>
               <img src={cartImg} alt='cart' />
-              <span>{totalQuantity} Items</span>
+              <span>{totalQuantity || 0} Items</span>
             </button>
           </li>    
           {
