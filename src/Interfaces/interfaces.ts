@@ -60,10 +60,8 @@ export interface Order{
   dateCreated:Date,
   userID:string,
   status:string,
-  totalAmount:number,
   cart:Cart,
   shippingAddress:Address,
-  promoCodeID?:string,
   trackingNumber?:string,
   giftMessage?:string
   _id: string // unique id given by mongodb

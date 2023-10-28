@@ -60,17 +60,17 @@ export default function OrderItem({
               {
                 cart.items.map((cartItem:CartItem,index:number)=>{
                   const getFormattedSelection = function(cat:string, selection?:string):string{
-                      let formattedSelection:string = '';
-                      switch(cat){
-                        case 'spread':
-                          formattedSelection = '1 LB';
-                          break;
-                        case 'bagel':
-                          if (selection==='six') formattedSelection = 'Six Pack';
-                          if (selection==='dozen') formattedSelection = "Baker's Dozen";
-                          break;
-                      }
-                      return formattedSelection;
+                    let formattedSelection:string = '';
+                    switch(cat){
+                      case 'spread':
+                        formattedSelection = '1 LB';
+                        break;
+                      case 'bagel':
+                        if (selection==='six') formattedSelection = 'Six Pack';
+                        if (selection==='dozen') formattedSelection = "Baker's Dozen";
+                        break;
+                    }
+                    return formattedSelection;
                   };
     
                   const formattedSelection:string = getFormattedSelection(cartItem.itemData.cat,cartItem.selection || '');
@@ -88,10 +88,10 @@ export default function OrderItem({
             <h4>Order Costs:</h4>
             <p>
               <span>Basket Subtotal:</span>
-              <span><strong>{order.cart.subtotal.toFixed(2)}</strong></span>
+              <span><strong>${order.cart.subtotal.toFixed(2)}</strong></span>
             </p>
             {
-              order.promoCodeID ? (
+              order.cart.promoCodeID ? (
                 <p>
                   <span>Promo Code Savings:</span>
                   <span><strong>-${order.cart.discountAmount.toFixed(2)}</strong></span>
@@ -108,7 +108,7 @@ export default function OrderItem({
             </p>
             <p>
               <span>Total Cost:</span>
-              <span><strong>${totalAmount}</strong></span>
+              <span><strong>${totalAmount.toFixed(2)}</strong></span>
             </p>
           </div>
           {

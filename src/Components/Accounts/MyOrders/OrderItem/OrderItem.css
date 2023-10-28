@@ -58,6 +58,9 @@
 }
 .order-summary ul{
   padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .order-summary ul li p{
   width: 100%;

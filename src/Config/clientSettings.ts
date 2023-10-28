@@ -1,4 +1,4 @@
-const USE_LOCALHOST:boolean = false;
+const USE_LOCALHOST:boolean = true;
 
 export const IS_MAINTENANCE_MODE:boolean = false;
 export const HOME_LOADING_DELAY:number= 4000 //in milliseconds

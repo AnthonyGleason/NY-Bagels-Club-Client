@@ -6,9 +6,6 @@ import CheckoutForm from './CheckoutForm/CheckoutForm';
 import { useNavigate } from 'react-router-dom';
 import './Checkout.css';
 import loadingImg from '../../Assets/icons/bubble-loading.svg';
-import Sidebar from '../Home/Sidebar/Sidebar';
-import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
-import { Cart } from '../../Interfaces/interfaces';
 
 const stripePromise = loadStripe("pk_test_51MkbRQJ42zMuNqyLhOP6Aluvz4TVAxVFFeofdem3PAvRDUoRzwYxfm0tBeOKYhdCNhbIzSSKeVFdrp7IvVku60Yz001xBUoHhk");
 

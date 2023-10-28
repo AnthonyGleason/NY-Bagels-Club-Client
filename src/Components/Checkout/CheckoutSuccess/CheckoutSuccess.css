@@ -1,0 +1,35 @@
+.checkout-success{
+  text-align: center;
+  padding: 1em;
+}
+.checkout-success-heading-wrapper{
+  color: #5d1917;
+  font-family: 'Courgette';
+  font-size: 4.4vw;
+  font-weight: bolder;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 1em;
+}
+.checkout-success-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  font-family: 'Titillium Web';
+  font-weight: 500;
+  font-size: 20px;
+}
+.checkout-success button{
+  border: 0px solid transparent;
+  border-radius: 8px;
+  background-color: #5d1917;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Allura';
+  padding: 0.5em 1em;
+  margin-top: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+}

@@ -49,7 +49,7 @@ export default function MyOrders(){
               const giftMessage:string = order.giftMessage || '';
               const shippingAddress:Address = order.shippingAddress;
               const status:string = order.status;
-              const totalAmount:number = order.totalAmount/100;
+              const totalAmount:number = order.cart.finalPrice;
               const trackingNumber:string = order.trackingNumber || '';
               return(
                 <OrderItem 
