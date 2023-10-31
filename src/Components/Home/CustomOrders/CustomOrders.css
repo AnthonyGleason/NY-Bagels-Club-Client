@@ -1,0 +1,78 @@
+.custom-orders{
+  padding: 1em;
+  text-align: center;
+  background-image: url('../../../Assets/backgrounds/central-park.jpg');
+  background-size: cover;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.custom-orders-info{
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.custom-orders form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 1.5em;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+}
+
+.custom-orders form .input-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.custom-orders form .input-wrapper input{
+  height: 40px;
+  font-size: 22px;
+  padding-left: 10px;
+}
+
+.custom-orders .error-messages{
+  color: red;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: 'Titillium Web';
+}
+.custom-orders form .input-wrapper textarea{
+  height: 200px;
+  min-height: 50px;
+  min-width: 50px;
+  font-size: 17px;
+  max-width: 100%;
+  padding: 10px;
+}
+
+.custom-orders form .input-wrapper input,
+.custom-orders form .input-wrapper textarea{
+  width: 100%;
+}
+
+.custom-orders form .input-wrapper label{
+  font-size: 30px;
+  font-weight: 600;
+  font-family: 'Allura';
+}
+.custom-orders button{
+  border: 0px solid transparent;
+  color: white;
+  width: 100%;
+  padding: 1em 1.2em;
+  background-color: rgb(93,25,23);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  font-family: 'Allura';
+  font-size: 25px;
+  font-weight: bolder;
+}

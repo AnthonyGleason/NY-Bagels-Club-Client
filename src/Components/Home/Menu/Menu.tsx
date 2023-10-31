@@ -8,9 +8,18 @@ export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]
   //menu states
   const [isBagelsVisible, setIsBagelsVisible] = useState<boolean>(false);
   const [isSpreadsVisible,setIsSpreadsVisible] = useState<boolean>(false);
+  const [isPersonalizeVisible, setIsPersonalizeVisible] = useState<boolean>(true);
 
   //hide other menu options when one option is expanded
   useEffect(()=>{
+    
+    //if any items are expanded hide the personalization menu item
+    if (isBagelsVisible || isSpreadsVisible){
+      setIsPersonalizeVisible(false);
+    }else{
+      setIsPersonalizeVisible(true);
+    };
+
     handleHideMenuElements(isBagelsVisible,isSpreadsVisible);
   },[isBagelsVisible,isSpreadsVisible]);
 
@@ -58,6 +67,16 @@ export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]
                 getSpreadMenuItems(storeItems)
               }
             </div>
+          }
+          {
+            isPersonalizeVisible === true ?
+              <div className='menu-button-heading menu-option'>
+                <button onClick={()=>(scrollToID('custom-orders-header'))}>
+                  <span className='brendels'>Brendel's</span> Made Just For You
+                </button>
+              </div>
+            :
+              null
           }
         </div>
         

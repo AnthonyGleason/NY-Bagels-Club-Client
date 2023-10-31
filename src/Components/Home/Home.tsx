@@ -17,6 +17,7 @@ import { scrollToID } from '../../Helpers/misc';
 import homeDeliveryImg from '../../Assets/backgrounds/homeDelivery.jpg';
 import starImg from '../../Assets/icons/star-duotone.svg';
 import { useNavigate } from 'react-router-dom';
+import CustomOrders from './CustomOrders/CustomOrders';
 
 export default function Home(){
   const [isPageLoaded, setIsPageLoaded] = useState<boolean>(false);
@@ -137,6 +138,10 @@ export default function Home(){
             <button className='home-subscribe-now' type='button' onClick={()=>{navigate('/subscribe')}}>Subscribe Now!</button>
           </section>
           <Menu storeItems={storeItems} />
+          <h3 id='custom-orders-header' data-aos='fade-in' className='store-items-heading'>
+            Create Your Dream Gourmet Bagel
+          </h3>
+          <CustomOrders />
           <h3 data-aos='fade-in' className='store-items-heading'>
             A Taste of New York
             <br />
