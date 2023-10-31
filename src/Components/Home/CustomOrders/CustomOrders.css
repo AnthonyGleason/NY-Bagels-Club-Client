@@ -24,7 +24,9 @@
   background-color: rgba(0, 0, 0, 0.75);
   color: white;
 }
-
+.custom-orders .brendels{
+  font-size: 28px;
+}
 .custom-orders form .input-wrapper{
   display: flex;
   flex-direction: column;
@@ -81,6 +83,6 @@
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.75);
   color: white;
-  font-size: 22px;
-  font-weight: bolder;
+  font-size: 23px;
+  font-family: 'Courgette';
 }
