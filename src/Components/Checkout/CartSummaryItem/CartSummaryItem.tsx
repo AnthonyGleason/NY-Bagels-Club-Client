@@ -51,7 +51,7 @@ export default function CartSummaryItem(
           ${cartItemSubtotal.toFixed(2)}
         </td>
         <td className='item-remove-wrapper'>
-          <button onClick={() => {
+          <button className='button-styled' onClick={() => {
             modifyCart(
               0,
               cartItem.itemData._id,
@@ -74,7 +74,7 @@ export default function CartSummaryItem(
           <span>{cartItemQuantity}</span>
         </td>
         <td className='item-subtotal'>
-          ${parseFloat((cartItem.unitPrice * cartItem.quantity).toString()).toFixed(2)}
+          ${(cartItem.unitPriceInDollars * cartItem.quantity).toFixed(2)}
         </td>
       </tr>
     )

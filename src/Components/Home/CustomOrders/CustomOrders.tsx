@@ -50,22 +50,22 @@ export default function CustomOrders(){
             <div>
               <strong>Please Note:</strong>
               <br />
-              <span className='brendels'>Brendel's</span> personalized bagel orders require a <strong>minimum of TWO</strong> baker's dozens per style requested.
+              <span className='brendels'>Brendel's</span> personalized bagel orders require a <strong>minimum of THREE baker's dozens per style</strong> requested.
             </div>
-            <p>For instance, you can customize your order with three baker's dozens featuring your high school sports team's colors or combine two of our existing flavors!</p>
+            <p><span>As an additional <strong>bonus</strong> for every three baker's dozens ordered we give you <strong>FOUR FREE 1LB spreads of your choice</strong>.</span></p>
             <p>Our staff will review and respond to your request within 24 hours.</p>
           </div>
           <div className='input-wrapper'>
             <label>Your Email</label>
-            <input value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' />
+            <input placeholder='johndoe@example.com' value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' />
           </div>
           <div className='input-wrapper'>
             <label>Desired Quantity</label>
-            <input value={quantityInput} onChange={(e)=>{setQuantityInput(e.target.value)}} />
+            <input placeholder="Three Baker's Dozens" value={quantityInput} onChange={(e)=>{setQuantityInput(e.target.value)}} />
           </div>
           <div className='input-wrapper'>
             <label>Your Request</label>
-            <textarea value={requestInput} onChange={(e)=>{setRequestInput(e.target.value)}}  />
+            <textarea value={requestInput} onChange={(e)=>{setRequestInput(e.target.value)}} placeholder="You can personalize our Bagels to suit your event's theme, whether it's a baby shower, wedding, sports team, school, holiday, or bachelorette / bachelor party. Mix and match from our flavor options and pick your own colors!" />
           </div>
           {
             message ?

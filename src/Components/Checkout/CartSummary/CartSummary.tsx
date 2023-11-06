@@ -51,7 +51,7 @@ export default function CartSummary({
 
   //when the cart is updated, update the total price of all items in the cart
   useEffect(()=>{
-    setCartTotalPrice(cart.finalPrice);
+    setCartTotalPrice(cart.finalPriceInDollars);
   },[cart])
 
   useEffect(()=>{
@@ -133,7 +133,7 @@ export default function CartSummary({
         </tbody>
         </table>
         <div className='cart-subtotal'>
-          <span><strong><span>Basket Subtotal:</span> <span>${cart.subtotal.toFixed(2)}</span></strong></span>
+          <span><strong><span>Basket Subtotal:</span> <span>${cart.subtotalInDollars.toFixed(2)}</span></strong></span>
           {
             discountAmount && discountAmount > 0 ?
             <span><strong><span>Promo Code Savings:</span> <span>-${discountAmount?.toFixed(2)}</span></strong></span>
@@ -142,6 +142,7 @@ export default function CartSummary({
           <span><strong><span>Calculated Tax:</span> <span>${taxPrice.toFixed(2) || '0.00'}</span></strong></span>
           <span><strong><span>Shipping:</span> <span>Free</span></strong></span>
           <span><strong><span>Basket Total:</span> <span>${cartTotalPrice.toFixed(2)}</span></strong></span>
+          <span><strong>Your order will ship on {new Date(cart.desiredShipDate).toDateString()}. If you have selected a holiday it will ship on next available business day.</strong></span>
         </div>
       </section>
     )

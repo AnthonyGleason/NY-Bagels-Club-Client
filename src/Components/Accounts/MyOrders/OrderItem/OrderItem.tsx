@@ -77,7 +77,7 @@ export default function OrderItem({
                   return(
                     <li key={index}>
                       <span>{cartItem.quantity}x {cartItem.itemData.name} ({formattedSelection}):</span>
-                      <span><strong>${(cartItem.unitPrice * cartItem.quantity).toFixed(2)}</strong></span>
+                      <span><strong>${(cartItem.unitPriceInDollars * cartItem.quantity).toFixed(2)}</strong></span>
                     </li>
                   )
                 })
@@ -88,19 +88,19 @@ export default function OrderItem({
             <h4>Order Costs:</h4>
             <p>
               <span>Basket Subtotal:</span>
-              <span><strong>${order.cart.subtotal.toFixed(2)}</strong></span>
+              <span><strong>${order.cart.subtotalInDollars.toFixed(2)}</strong></span>
             </p>
             {
               order.cart.promoCodeID ? (
                 <p>
                   <span>Promo Code Savings:</span>
-                  <span><strong>-${order.cart.discountAmount.toFixed(2)}</strong></span>
+                  <span><strong>-${order.cart.discountAmountInDollars.toFixed(2)}</strong></span>
                 </p>
               ) : null
             }
             <p>
               <span>Calculated Tax:</span>
-              <span><strong>${order.cart.tax}</strong></span>
+              <span><strong>${order.cart.taxInDollars}</strong></span>
             </p>
             <p>
               <span>Shipping Cost:</span>
@@ -122,6 +122,7 @@ export default function OrderItem({
             <div>
               <h4>Tracking Number</h4>
               <p>Check Back Soon!</p>
+              <p>Your selected ship date is <strong>{new Date(order.cart.desiredShipDate).toDateString()}</strong>.</p>
             </div>
           }
           {

@@ -59,6 +59,7 @@
 .custom-orders form .input-wrapper input,
 .custom-orders form .input-wrapper textarea{
   width: 100%;
+  font-family: 'Titillium Web';
 }
 
 .custom-orders form .input-wrapper label{

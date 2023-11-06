@@ -148,7 +148,7 @@ export const getSelectionName = function(cartItem:CartItem){
 };
 
 export const getCartItemSubtotal = function(cartItem:CartItem):number{
-  return cartItem.quantity * cartItem.unitPrice;
+  return cartItem.quantity * cartItem.unitPriceInDollars;
 };
 
 
@@ -182,12 +182,13 @@ export const getItemQuantityFromCart = function(cart:Cart, itemName: string, sel
 
 export const emptyCart = {
   items: [],
-  subtotal: 0,
-  tax: 0,
+  subtotalInDollars: 0,
+  taxInDollars: 0,
   totalQuantity: 0,
   promoCodeID: '',
-  discountAmount: 0,
-  finalPrice: 0
+  discountAmountInDollars: 0,
+  finalPriceInDollars: 0,
+  desiredShipDate: new Date()
 };
 
 export const requestApplyMembershipPricingToCart = async function(setCart?:Function):Promise<void>{

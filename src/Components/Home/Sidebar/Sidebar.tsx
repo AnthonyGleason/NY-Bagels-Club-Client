@@ -119,16 +119,16 @@ export default function Sidebar(
                 </li>
               </>
           }
-          <li className='checkout'>
-            {/* <button onClick={()=>{navigate('/cart/checkout')}}>
+          {/* <li className='checkout'>
+            <button onClick={()=>{navigate('/cart/checkout')}}>
               <img src={creditCardImg} alt='checkout' />
               <span>Checkout</span>
-            </button> */}
+            </button>
             <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>
               <img src={creditCardImg} alt='checkout' />
               <span>Checkout</span>
             </button>
-          </li>
+          </li> */}
           <li>
             <button onClick={()=>{navigate('/subscribe')}}>
               <img src={vipImg} alt='subscribe' />

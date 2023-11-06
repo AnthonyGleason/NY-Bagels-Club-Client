@@ -1,0 +1,47 @@
+.calendar-wrapper button{
+  border: 0px solid transparent;
+  border-radius: 8px;
+  background-color: #5d1917;
+  color: grey;
+  min-width: 30px;
+  min-height: 30px;
+}
+.react-calendar__navigation__prev2-button, .react-calendar__navigation__next2-button{
+  visibility: hidden;
+}
+.calendar-wrapper button:not(:disabled){
+  color: white;
+}
+.react-calendar__navigation{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+}
+.react-calendar__navigation__arrow{
+  font-size: 30px;
+}
+.react-calendar__navigation__label__labelText{
+  color: white;
+  font-size: 20px;
+}
+.calendar-wrapper{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.react-calendar{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.react-calendar abbr{
+  font-size: 20px;
+}
+.react-calendar__month-view__days button{
+  border-radius: 0px;
+  border: 1px solid black;
+}

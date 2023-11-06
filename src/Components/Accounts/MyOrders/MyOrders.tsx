@@ -44,12 +44,12 @@ export default function MyOrders(){
               if (a.dateCreated>b.dateCreated) return -1;
               return 1;
             }).map((order:Order,index:number)=>{
-              const cart:Cart = order.cart;
-              const dateCreated:Date = new Date(order.dateCreated);
+              const orderDate = new Date(order.dateCreated);
+              const dateCreated = new Date(orderDate.getUTCFullYear(), orderDate.getUTCMonth(), orderDate.getUTCDate(), orderDate.getUTCHours(), orderDate.getUTCMinutes(), orderDate.getUTCSeconds());
               const giftMessage:string = order.giftMessage || '';
               const shippingAddress:Address = order.shippingAddress;
               const status:string = order.status;
-              const totalAmount:number = order.cart.finalPrice;
+              const totalAmount:number = order.cart.finalPriceInDollars;
               const trackingNumber:string = order.trackingNumber || '';
               return(
                 <OrderItem 
