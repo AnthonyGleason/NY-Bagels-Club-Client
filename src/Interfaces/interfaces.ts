@@ -67,3 +67,11 @@ export interface Order{
   giftMessage?:string
   _id: string // unique id given by mongodb
 };
+
+//membership
+export interface Membership{
+  renewalDate?: Date,
+  tier: string,
+  userID: string,
+  _id: string //unique id given by mongodb
+};

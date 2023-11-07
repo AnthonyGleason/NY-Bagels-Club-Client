@@ -5,6 +5,7 @@ import { emptyCart, fetchAndHandleCart, getSelectionName } from '../../Helpers/c
 import { Address, BagelItem, Cart, CartItem, Order, SpreadItem, User } from '../../Interfaces/interfaces';
 import { getServerUrlPrefix } from '../../Config/clientSettings';
 import OrderItem from '../Accounts/MyOrders/OrderItem/OrderItem';
+import UserSearchResult from './SearchResults/UserSearchResult';
 
 export default function Admin(){
   const [isAdmin,setIsAdmin] = useState<boolean>(false);
@@ -45,16 +46,55 @@ export default function Admin(){
     getAllPendingOrders();
   },[isAdmin]);
 
+  const handleGetUserSearchResults = async function(){
+    const response = await fetch(`${getServerUrlPrefix()}/api/admin/users/search/${userSearchInput}`,{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      },
+    });
+    const responseData = await response.json();
+    if (responseData.results){
+      setUserSearchResults(responseData.results);
+    }else{
+      setUserSearchResults([]);
+    }
+  };
 
   //get user search results
   useEffect(()=>{
-
+    if (userSearchInput){
+      handleGetUserSearchResults();
+    }else{
+      setUserSearchResults([]);
+    }
   },[userSearchInput]);
+
+  const handleGetOrderSearchResults = async function(){
+    const response = await fetch(`${getServerUrlPrefix()}/api/admin/orders/search/${orderSearchInput}`,{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      },
+    });
+    const responseData = await response.json();
+    if (responseData.results){
+      setOrderSearchResults(responseData.results);
+    }else{
+      setOrderSearchResults([]);
+    };
+  };
 
   //get order search results
   useEffect(()=>{
-
-  },[orderSearchResults]);
+    if (orderSearchInput){
+      handleGetOrderSearchResults();
+    }else{
+      setOrderSearchResults([]);
+    }
+  },[orderSearchInput]);
 
   //update pulls when all pending orders are retrieved
   useEffect(()=>{
@@ -120,7 +160,11 @@ export default function Admin(){
                   {
                     userSearchResults.length>0
                     ?
-                      <li>Search results were found!</li>
+                      userSearchResults.map((user:User,index:number)=>{
+                        return(
+                          <UserSearchResult key={index} user={user} />
+                        )
+                      })
                     :
                       null
                   }
@@ -150,12 +194,55 @@ export default function Admin(){
                   {
                     orderSearchResults.length>0
                     ?
-                      <li>Search results were found!</li>
+                      orderSearchResults.sort((a,b)=>{
+                        if (a.dateCreated>b.dateCreated) return -1;
+                        return 1;
+                      }).map((order:Order,index:number)=>{
+                        const orderDate = new Date(order.dateCreated);
+                        const dateCreated = new Date(orderDate.getUTCFullYear(), orderDate.getUTCMonth(), orderDate.getUTCDate(), orderDate.getUTCHours(), orderDate.getUTCMinutes(), orderDate.getUTCSeconds());
+                        const giftMessage:string = order.giftMessage || '';
+                        const shippingAddress:Address = order.shippingAddress;
+                        const status:string = order.status;
+                        const totalAmount:number = order.cart.finalPriceInDollars;
+                        const trackingNumber:string = order.trackingNumber || '';
+                        return(
+                          <OrderItem 
+                            cart={cart}
+                            dateCreated={dateCreated}
+                            giftMessage={giftMessage}
+                            shippingAddress={shippingAddress}
+                            status={status}
+                            totalAmount={totalAmount}
+                            trackingNumber={trackingNumber}
+                            order={order}
+                            key={index}
+                          />
+                        )
+                      })
                     :
                       null
                   }
                 </ul>
               </div>
+            </section>
+            <section>
+              <h3>Pulls to Cover All Pending Orders</h3>
+              <ul>
+                {
+                  currentPulls
+                  ? 
+                    currentPulls.map((currentPull:CartItem,index:number)=>{
+                      return(
+                        <li key={index}>
+                          <p>{currentPull.itemData.name}</p>
+                          <p>{currentPull.quantity} {getSelectionName(currentPull)}</p>
+                        </li>
+                      )
+                    })
+                  :
+                    null
+                }
+              </ul>
             </section>
             <section>
               <h3>Manage Pending Orders</h3>
@@ -190,25 +277,6 @@ export default function Admin(){
                     })
                   :
                     <li>There are currently no pending orders!</li>
-                }
-              </ul>
-            </section>
-            <section>
-              <h3>Pulls to Cover All Pending Orders</h3>
-              <ul>
-                {
-                  currentPulls
-                  ? 
-                    currentPulls.map((currentPull:CartItem,index:number)=>{
-                      return(
-                        <li key={index}>
-                          <p>{currentPull.itemData.name}</p>
-                          <p>{currentPull.quantity} {getSelectionName(currentPull)}</p>
-                        </li>
-                      )
-                    })
-                  :
-                    null
                 }
               </ul>
             </section>
