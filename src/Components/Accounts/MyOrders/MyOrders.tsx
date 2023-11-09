@@ -51,9 +51,10 @@ export default function MyOrders(){
               const status:string = order.status;
               const totalAmount:number = order.cart.finalPriceInDollars;
               const trackingNumber:string = order.trackingNumber || '';
+              const orderCart:Cart = order.cart;
               return(
                 <OrderItem 
-                  cart={cart}
+                  cart={orderCart}
                   dateCreated={dateCreated}
                   giftMessage={giftMessage}
                   shippingAddress={shippingAddress}

@@ -75,3 +75,15 @@ export interface Membership{
   userID: string,
   _id: string //unique id given by mongodb
 };
+
+export interface PromoCode{
+  code: string,
+  dateOfExpiry:Date,
+  totalAllowedUses?:number,
+  totalTimesUsed:number,
+  createdByUserID:string,
+  description:string,
+  disabled: boolean,
+  perk: string, // for example "Free Shipping", "15% Off", "$25 Off",
+  _id: string //mongodb unique id
+};

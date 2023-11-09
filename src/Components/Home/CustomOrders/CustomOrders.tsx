@@ -50,9 +50,9 @@ export default function CustomOrders(){
             <div>
               <strong>Please Note:</strong>
               <br />
-              <span className='brendels'>Brendel's</span> personalized bagel orders require a <strong>minimum of THREE baker's dozens per style</strong> requested.
+              <span className='brendels'>Brendel's</span> personalized bagel orders have a <strong>$275 MINIMUM and must include at least THREE baker's dozens per style</strong> requested.
             </div>
-            <p><span>As an additional <strong>bonus</strong> for every three baker's dozens ordered we give you <strong>FOUR FREE 1LB spreads of your choice</strong>.</span></p>
+            <p><span>As an additional <strong>bonus</strong> for every three baker's dozens ordered we give you <strong>FOUR FREE 1 LB spreads of your choice</strong>.</span></p>
             <p>Our staff will review and respond to your request within 24 hours.</p>
           </div>
           <div className='input-wrapper'>
