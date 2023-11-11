@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkbrendels_bagels=self.webpackChunkbrendels_bagels||[]).push([[560],{2560:function(e,s,b){e.exports=b.p+"static/media/65203740417b97a661160578.47a2b463c4e4cb54b8ee.jpg"}}]);
