@@ -67,7 +67,7 @@ export default function ProcessingOrderPulls({
   
   if (isProcessingPullsViewExpanded){
     return(
-      <section data-aos='fade-in' className='pending-orders-panel-wrapper'>
+      <section className='pending-orders-panel-wrapper'>
         <h3 onClick={()=>{setIsProcessingPullsViewExpanded(false)}}>
           <img alt='processing' src={pullsImg} />
           <span>Processing Orders Pulls</span>

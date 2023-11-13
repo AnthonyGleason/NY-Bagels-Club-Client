@@ -14,7 +14,7 @@ export default function Footer(){
   },[])
   return(
     <section className='footer'>
-      <article data-aos='fade-in' className='copyright'>
+      <article className='copyright'>
         <span>
           © 2023 Gleason Holdings Group LLC
         </span>
@@ -24,17 +24,19 @@ export default function Footer(){
           All rights reserved.
         </span>
       </article>
-      <article data-aos='fade-in' className='payment-methods'>
+      <article className='payment-methods'>
         <img src={visaIcon} alt='visa' />
         <img src={masterCardIcon} alt='mastercard' />
         <img src={applePayIcon} alt='apple pay' />
         <img src={googlePayIcon} alt='google pay' />
       </article>
-      <article data-aos='fade-in' className='support'>
+      <article className='support'>
         <p>Do you need assistance with an order, or would you like to provide feedback on your experience with us?</p>
         <ul>
-          <li>Phone Number: 123-456-7890</li>
-          <li>Email: <a href="mailto:support@nybagelsclub.com">support@nybagelsclub.com</a></li>
+          <li>Share Your Experience With Us
+            <br />
+            <a href="mailto:support@nybagelsclub.com">support@nybagelsclub.com</a>
+          </li>
         </ul>
         <p>
           <strong>Your satisfaction is our priority!</strong>

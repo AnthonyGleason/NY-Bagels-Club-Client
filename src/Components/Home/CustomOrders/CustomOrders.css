@@ -37,7 +37,7 @@
 
 .custom-orders form .input-wrapper input{
   height: 40px;
-  font-size: 22px;
+  font-size: 20px;
   padding-left: 10px;
 }
 
@@ -86,4 +86,7 @@
   color: white;
   font-size: 23px;
   font-family: 'Courgette';
+}
+.custom-orders .input-wrapper p{
+  font-size: 18px;
 }

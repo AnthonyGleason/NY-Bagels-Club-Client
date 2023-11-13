@@ -41,7 +41,7 @@ export default function UserSearchPanel(){
 
   if (isUserSearchExpanded){
     return(
-      <section data-aos='fade-in'>
+      <section>
         <h3 onClick={()=>{setIsUserSearchExpanded(false)}}>
           <img src={magnifyGlassImg} alt='search' />
           <span>User Search</span>

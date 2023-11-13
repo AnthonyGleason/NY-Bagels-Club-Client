@@ -20,6 +20,8 @@ import MyOrders from './Components/Accounts/MyOrders/MyOrders';
 import AccountSettings from './Components/Accounts/AccountSettings/AccountSettings';
 import ResetPassword from './Components/Accounts/ResetPassword/ResetPassword';
 import Admin from './Components/Admin/Admin';
+import Snowfall from 'react-snowfall';
+import Support from './Components/Support/Support';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -29,6 +31,15 @@ root.render(
   <React.StrictMode>
     <HashRouter>
       <Nav />
+      <Snowfall 
+        style={{
+          position: 'fixed',
+          width: '100vw',
+          height: '100%',
+          zIndex: '100'
+        }}
+        snowflakeCount={3}
+      />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/admin' element={<Admin />} />
@@ -41,6 +52,7 @@ root.render(
         <Route path='/accounts/password/reset/:resetID' element={<ResetPassword />} />
         <Route path='/accounts/orders' element={<MyOrders />} />
         <Route path='/accounts/settings' element={<AccountSettings />} />
+        <Route path='/support' element={<Support />} />
       </Routes>
       <Footer />
     </HashRouter>

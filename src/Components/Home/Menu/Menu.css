@@ -1,59 +1,64 @@
-.our-menu{
-  padding: 1em;
-  padding-top:2em;
-  padding-bottom: 2em;
-  display: flex;
+.our-menu-wrapper{
   height: 100vh;
-  flex-direction: column;
-  font-size: 20px;
-  text-align: center;
-  font-family: 'Titillium Web';
-  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  gap: 20px;
   background-image: url('../../../Assets/backgrounds/menu.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  padding-top: 3em;
+  padding-bottom: 3em;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
-  overflow: scroll;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
 }
-.our-menu::-webkit-scrollbar{
-  display:none;
-}
-.our-menu .menu-option{
+.our-menu-heading{
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  border-radius: 5px;
 }
-.our-menu .menu-option button{
+.our-menu-heading .our-menu-subscription{
+  font-size: 18px;
+}
+.our-menu-cat{
+  padding: 0.8em;
+  border-radius: 8px;
+  background-color: rgba(0,0,0,0.8);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  height: max-content;
+}
+.our-menu-content {
+  height: 100%;
   display: flex;
+  flex-direction: column;
+  padding: 1em;
+  overflow-y: scroll;
+  gap: 25px;
+}
+.our-menu-cat-nav-button{
+  color: white;
+  border: 0px solid black;
+  font-family: 'Allura';
+  font-size: 30px;
+  font-weight: bolder;
+  width: max-content;
+  padding: 0.7em;
+  background-color: transparent;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
 }
-
-.our-menu button{
-  border: 0px solid transparent;
-  color: white;
-  width: 100%;
-  padding: 1em 1.2em;
-  background-color: rgb(93,25,23);
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
-  border-radius: 5px;
-  font-family: 'Allura';
-  font-size: 25px;
-  font-weight: bolder;
-}
-.our-menu-subscription-wrapper{
+.our-menu-cat-content{
   display: flex;
   flex-direction: column;
+  overflow-y: hidden;
 }
-.our-menu-subscription{
-  font-size: 16px;
-}
-.our-menu .brendels{
-  font-size: 28px;
+.our-menu-cat-content button{
+  border: 0px solid transparent;
+  border-radius: 8px;
+  background-color: #5d1917;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Allura';
+  padding: 0.5em 1em;
+  margin-top: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }

@@ -24,7 +24,7 @@ export default function PendingOrders({
 
   if (isPendingOrdersViewExpanded){
     return(
-      <section data-aos='fade-in'>
+      <section>
         <h3 onClick={()=>{setIsPendingOrdersViewExpanded(false)}}>
           <img src={pendingImg} alt='pending orders' />
           <span>Pending Orders</span>

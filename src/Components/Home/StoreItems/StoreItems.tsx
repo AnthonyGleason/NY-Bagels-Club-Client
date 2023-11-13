@@ -46,7 +46,13 @@ export default function StoreItems({
   return(
     <section className='store-items-container'>
       {
-        storeItems.map((storeItem:SpreadItem | BagelItem)=>{  
+        storeItems.sort((a,b)=>{
+          if (a.cat==='bagel' && b.cat!=='bagel'){
+            return -1;
+          }else{
+            return 1;
+          };
+        }).map((storeItem:SpreadItem | BagelItem)=>{  
           counter+=1;
           return(
             <StoreItem

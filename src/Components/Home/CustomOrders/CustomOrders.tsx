@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CustomOrders.css';
 import { isValidEmail } from '../../../Helpers/verification';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
+import {motion} from 'framer-motion';
 
 export default function CustomOrders(){
   const [isEmailSent,setIsEmailSent] = useState<boolean>(false);
@@ -30,7 +31,8 @@ export default function CustomOrders(){
         body: JSON.stringify({
           emailInput: emailInput,
           requestInput: requestInput,
-          quantityInput: quantityInput
+          quantityInput: quantityInput,
+          requestsPackageDeal: isOfferChecked
         })
       });
       if (!response.ok) throw new Error('There was an error sending an email to our staff. Please try again later.')
@@ -41,32 +43,40 @@ export default function CustomOrders(){
       return
     };
   };
+  const [isOfferChecked,setIsOfferChecked] = useState<boolean>(false);
 
   if (!isEmailSent){
     return(
-      <section data-aos='fade-in' className='custom-orders'>
-        <form>
+      <section
+        className='custom-orders'
+      >
+        <motion.form
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{duration: 3.2}}
+          viewport={{once: false}} 
+        >
           <div className='custom-orders-info'>
             <div>
-              <strong>Please Note:</strong>
+              <strong>Special Offer!</strong>
               <br />
-              <span className='brendels'>Brendel's</span> personalized bagel orders have a <strong>$275 MINIMUM and must include at least THREE baker's dozens per style</strong> requested.
+              <span className='brendels'>Brendel's</span> and New York Bagels Club have partnered to create a package deal for custom bagel styles. The package is $275 and comes with three custom baker's dozen's and three 1 lb spreads of your choice.
             </div>
-            <p><span>As an additional <strong>bonus</strong> for every three baker's dozens ordered we give you <strong>FOUR FREE 1 LB spreads of your choice</strong>.</span></p>
-            <p>Our staff will review and respond to your request within 24 hours.</p>
           </div>
           <div className='input-wrapper'>
-            <label>Your Email</label>
-            <input placeholder='johndoe@example.com' value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' />
+            <p>Are you interested in our $275 special offer? (Optional)</p>
+            <input type='checkbox' checked={isOfferChecked} onChange={()=>{setIsOfferChecked(!isOfferChecked)}}/>
           </div>
           <div className='input-wrapper'>
-            <label>Desired Quantity</label>
-            <input placeholder="Three Baker's Dozens" value={quantityInput} onChange={(e)=>{setQuantityInput(e.target.value)}} />
+            <input placeholder='Your Contact Email' value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' />
           </div>
           <div className='input-wrapper'>
-            <label>Your Request</label>
-            <textarea value={requestInput} onChange={(e)=>{setRequestInput(e.target.value)}} placeholder="You can personalize our Bagels to suit your event's theme, whether it's a baby shower, wedding, sports team, school, holiday, or bachelorette / bachelor party. Mix and match from our flavor options and pick your own colors!" />
+            <input placeholder="Desired Quantity" value={quantityInput} onChange={(e)=>{setQuantityInput(e.target.value)}} />
           </div>
+          <div className='input-wrapper'>
+            <textarea value={requestInput} onChange={(e)=>{setRequestInput(e.target.value)}} placeholder="Your Request: You can personalize our Bagels to suit your event's theme, whether it's a baby shower, wedding, sports team, school, holiday, or bachelorette / bachelor party. Mix and match from our flavor options and pick your own colors!" />
+          </div>
+          <p>Our staff will review and respond to your request within 24 hours.</p>
           {
             message ?
               <p className='error-messages'>{message}</p>
@@ -74,13 +84,23 @@ export default function CustomOrders(){
               null
           }
           <button onClick={()=>{handleCustomOrderFormSubmit(setIsEmailSent)}} type='button' className='custom-order-submit-button'>Send Us An Email!</button>
-        </form>
+        </motion.form>
       </section>
     );
   }else{
     return(
-      <section data-aos='fade-in' className='custom-orders'>
-        <div className='custom-orders-email-sent'>We have received your message and will get back to you within 24 hours. Thank you for being a part of the New York Bagels Club Family.</div>
+      <section
+        className='custom-orders'
+      >
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{duration: 3.5}}
+          viewport={{once: false}}  
+          className='custom-orders-email-sent'
+        >
+          We have received your message and will get back to you within 24 hours. Thank you for being a part of the New York Bagels Club Family.
+        </motion.div>
       </section>
     );
   };

@@ -31,7 +31,7 @@
 .footer .support{
   padding: 1em;
   font-size: 17px;
-  gap: 40px;
+  gap: 20px;
   display: flex;
   flex-direction: column;
 }

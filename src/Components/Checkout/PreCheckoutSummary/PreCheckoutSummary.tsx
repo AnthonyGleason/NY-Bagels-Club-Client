@@ -51,6 +51,14 @@ export default function PreCheckoutSummary({
     };
   };
 
+
+  // get tomorrow's date
+  const getTomorrowDate = function(){
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow;
+  };
+
   return(
     <section className='cart-summary' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
       <h3>Basket</h3>
@@ -89,13 +97,14 @@ export default function PreCheckoutSummary({
           tileDisabled={({date}) => ![3, 4].includes(date.getDay())}
           minDetail='month'
           maxDetail='month'
+          minDate={getTomorrowDate()}
         />
         <strong>
           {
             date ?
-            `Your Order Will Ship On  ${date.toDateString()}`
+              `Your order will ship on ${date.toDateString()} or the next available business day.`
             :
-              'Please Select A Wednesday or Thursday'
+              'Please select a Wednesday or Thursday you would like your order shipped on.'
           }
         </strong>
       </div>

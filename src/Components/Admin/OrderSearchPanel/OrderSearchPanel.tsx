@@ -43,7 +43,7 @@ export default function OrderSearchPanel(){
 
   if (isOrderSearchExpanded){
     return(
-      <section data-aos='fade-in' className='order-search-panel-wrapper'>
+      <section className='order-search-panel-wrapper'>
         <h3 onClick={()=>{setIsOrderSearchExpanded(false)}}>
           <img src={magnifyGlassImg} alt='search' />
           <span>Order Search</span>

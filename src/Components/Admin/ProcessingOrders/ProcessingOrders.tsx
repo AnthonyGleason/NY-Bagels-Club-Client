@@ -30,7 +30,7 @@ export default function ProcessingOrders(){
 
   if (isProcessingOrdersExpanded){
     return(
-      <section data-aos='fade-in'>
+      <section>
         <h3 onClick={()=>{setIsProcessingOrdersExpanded(false)}}>
           <img src={gearImg} alt='processing orders' />
           <span>Processing Orders</span>

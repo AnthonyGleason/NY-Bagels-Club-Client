@@ -8,8 +8,6 @@ import HomeLoadingOverlay from './HomeLoadingOverlay/HomeLoadingOverlay';
 import './Home.css';
 import upArrowImg from '../../Assets/icons/arrow-up-outline.svg';
 import foodMenuImg from '../../Assets/icons/foodMenu.svg';
-import Aos from 'aos';
-import "aos/dist/aos.css";
 import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
 import { BagelItem, Cart, SpreadItem } from '../../Interfaces/interfaces';
 import Menu from './Menu/Menu';
@@ -18,6 +16,7 @@ import homeDeliveryImg from '../../Assets/backgrounds/homeDelivery.jpg';
 import starImg from '../../Assets/icons/star-duotone.svg';
 import { useNavigate } from 'react-router-dom';
 import CustomOrders from './CustomOrders/CustomOrders';
+import {motion} from 'framer-motion';
 
 export default function Home(){
   const [isPageLoaded, setIsPageLoaded] = useState<boolean>(false);
@@ -26,22 +25,13 @@ export default function Home(){
   const [storeItems,setStoreItems] = useState<(SpreadItem | BagelItem)[]>([]); 
   const [cart,setCart] = useState<Cart>(emptyCart);
 
-  //handle initial page load
-  useEffect(()=>{
-    fetchAndHandleCart(setCart);
-    //setup fade animation length
-    Aos.init({duration: 2500});
-  },[]);
-
   const navigate = useNavigate();
   
-  if (!isPageLoaded){
-    return(
-      <HomeLoadingOverlay setIsPageLoaded={setIsPageLoaded} />
-    );
-  }else{
-    return(
-      <main className='home'>
+  return(
+    <>
+      {
+        isPageLoaded ?
+        <main className='home'>
         <Sidebar 
           cart={cart}
           isExpanded={isSidebarExpanded} 
@@ -58,27 +48,48 @@ export default function Home(){
           </button>
         </div>
         <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
-          <section data-aos='fade-in' className='banner'>
+          <section
+            className='banner'
+          >
             <div className='limited-offer-wrapper'>
               <h3><img src={starImg} alt='star' /> <u>Limited Time Offer!</u> <img src={starImg} alt='star' /></h3>
               <h4>Enjoy FREE Shipping on All Orders!</h4>
             </div>
             <img className='home-delivery' src={homeDeliveryImg} alt='home delivery' />
           </section>
-          <h3 className='store-items-heading' onClick={()=>{window.location.href='https://www.brendelsbagels.com/'}}>
+          <motion.h3 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 2.5}}
+            viewport={{once: false}}
+            className='store-items-heading' 
+            onClick={()=>{window.location.href='https://www.brendelsbagels.com/'}}
+          >
             Proudly Delivering 
             <br />
             <span className='brendels'>Brendel's Bagels</span> 
             <br />
             Nationwide
-          </h3>
+          </motion.h3>
           <About />
-          <h3 data-aos='fade-in' className='store-items-heading'>
+          <motion.h3 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 2.5}}
+            viewport={{once: false}}
+            className='store-items-heading'
+          >
             Join The Club
-          </h3>
+          </motion.h3>
           <section className='club-perks'>
             <div className='club-tiers'>
-              <div data-aos='fade-in' className='gold'>
+              <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{duration: 2.5}}
+                viewport={{once: false}}
+                className='gold'
+              >
                 <h3 >
                   <span>Gold Member</span>
                   <span>$44.95 / Month</span>
@@ -93,8 +104,14 @@ export default function Home(){
                   <li><strong>PRIORITY</strong> Mail Shipping on <strong>EVERY</strong> order placed.</li>
                   <li className='club-value'><strong><span>Gain an Exceptional 34% Value!</span></strong></li>
                 </ul>
-              </div>
-              <div data-aos='fade-in' className='platinum'>
+              </motion.div>
+              <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{duration: 2.5}}
+                viewport={{once: false}}
+                className='platinum'
+              >
                 <h3>
                   <span>Platinum Member</span>
                   <span>$89.95 / Month</span>
@@ -109,8 +126,14 @@ export default function Home(){
                   <li><strong>PRIORITY</strong> Mail Shipping on <strong>EVERY</strong> order placed.</li>
                   <li className='club-value'><strong><span>Gain an Outstanding 40% Value!</span></strong></li>
                 </ul>
-              </div>
-              <div data-aos='fade-in' className='diamond'>
+              </motion.div>
+              <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{duration: 2.5}}
+              viewport={{once: false}}
+              className='diamond'
+              >
                 <h3>
                   <span>Diamond Member</span>
                   <span>$179.95 / Month</span>
@@ -126,7 +149,7 @@ export default function Home(){
                   <li>Skip the wait, recieve a direct line to our priority customer service team!</li>
                   <li className='club-value'><strong><span>Gain An Unparalleled 44% Value!</span></strong></li>
                 </ul>
-              </div>
+              </motion.div>
             </div>
             {/* <div className='club-perks-footnotes'>
               <ul>
@@ -135,18 +158,26 @@ export default function Home(){
                 <li data-aos='fade-in' className='diamond'>³ Value is calculated for a year subscription based on 48 deliveries of a baker's dozen bagels each valued at $44.95. We also assume the customer purchases an additional 15 dozens at 15% savings.</li>
               </ul>
             </div> */}
-            <button className='home-subscribe-now' type='button' onClick={()=>{navigate('/subscribe')}}>Subscribe Now!</button>
+            <button className='home-subscribe-now' type='button' onClick={()=>{
+              //navigate('/subscribe')
+            }}>
+              Club Memberships
+              <br />
+              Coming Soon!
+            </button>
           </section>
           <Menu storeItems={storeItems} />
-          <h3 id='custom-orders-header' data-aos='fade-in' className='store-items-heading'>
-            Create Your Dream Gourmet Bagel
-          </h3>
-          <CustomOrders />
-          <h3 data-aos='fade-in' className='store-items-heading'>
+          <motion.h3 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 2.5}}
+            viewport={{once: false}}
+            className='store-items-heading'
+          >
             A Taste of New York
             <br />
             to Your Doorstep
-          </h3>
+          </motion.h3>
           <StoreItems 
             isSignedIn={isSignedIn}
             cart={cart}
@@ -154,8 +185,22 @@ export default function Home(){
             storeItems = {storeItems}
             setStoreItems = {setStoreItems}
           />
-        </div>
-      </main>
-    );
-  };
+          <motion.h3 
+            id='custom-orders-header' 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 2.5}}
+            viewport={{once: false}}
+            className='store-items-heading'
+          >
+            Create Your Dream Gourmet Bagel
+          </motion.h3>
+          <CustomOrders />
+          </div>
+        </main>
+      :
+        <HomeLoadingOverlay setIsPageLoaded={setIsPageLoaded} />
+      }
+    </>
+  )
 };

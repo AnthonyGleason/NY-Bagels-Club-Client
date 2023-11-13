@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './StoreItem.css';
 import { BagelItem, Cart, SpreadItem } from '../../../../Interfaces/interfaces';
 import { getItemQuantityFromCart, modifyCart } from '../../../../Helpers/cart';
+import basketImg from '../../../../Assets/icons/cart.svg';
+import { motion, useAnimation } from 'framer-motion';
 
 export default function StoreItem({
   storeItem,
@@ -26,9 +28,31 @@ export default function StoreItem({
   const [itemImgSrc, setItemImgSrc] = useState<string | undefined>();
   const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
   const [selection, setSelection] = useState<string>('');
+  const [isAddToCartShown, setIsAddToCartShown] = useState<boolean>(false);
+  const [isInitialLoad,setIsInitialLoad] = useState<boolean>(true);
 
- //handle initial page load
- useEffect(()=>{
+  const [isAddToCartExpanded,setIsAddToCartExpanded] = useState<boolean>(false);
+  const controls = useAnimation();
+  const myAnimation = async function() {
+    await controls.start({ opacity: 1 });
+    // First animation
+    await controls.start({ opacity: 0 }).then(()=>{
+      setIsAddToCartShown(isAddToCartExpanded);
+    })
+    // Second animation
+    await controls.start({ opacity: 1 });
+  }
+
+  useEffect(()=>{
+    if (!isInitialLoad){
+      myAnimation();
+    }else{
+      setIsInitialLoad(false);
+    }
+  },[isAddToCartExpanded])
+
+  //handle initial page load
+  useEffect(()=>{
     //dynamically import images
     import(`../../../../Assets/storeItems/${storeItem._id}.jpg`)
       .then((module)=>{
@@ -82,7 +106,7 @@ export default function StoreItem({
         <>
           <span>{userTier} Pricing</span>
           <span>Six Pack ${sixPackPrice}</span>
-          <span>Dozen ${dozenPrice}</span>
+          <span>Baker's Dozen ${dozenPrice}</span>
         </>
       )
     }
@@ -105,7 +129,11 @@ export default function StoreItem({
                 setIsRequestPending,
                 selection
               )
-            }}>+</button>
+            }}> 
+              <div>
+                +
+              </div>
+            </button>
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'six';
               setSelection(selection);
@@ -117,7 +145,11 @@ export default function StoreItem({
                 setIsRequestPending,
                 selection
               )
-            }}>-</button>
+            }}>
+              <div>
+                -
+              </div>
+            </button>
           </div>
           <div className='store-item-button-wrapper'>
             <span>{dozenItemQuantity} Dozen(s) in Basket</span>
@@ -132,7 +164,11 @@ export default function StoreItem({
                 setIsRequestPending,
                 selection
               )
-            }}>+</button>
+            }}>
+              <div>
+                +
+              </div>
+            </button>
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'dozen';
               setSelection(selection);
@@ -144,7 +180,11 @@ export default function StoreItem({
                 setIsRequestPending,
                 selection
               )
-            }}>-</button>
+            }}>
+              <div>
+                -
+              </div>
+            </button>
           </div>
         </>
       )
@@ -199,8 +239,17 @@ export default function StoreItem({
   },[isSignedIn])
 
   return(
-    <article data-aos='fade-in' id={`item-${storeItem._id}`} className={`store-item ${altThemeClass}`}>
-      <p className='item-info'>
+    <article 
+      id={`item-${storeItem._id}`} 
+      className={`store-item ${altThemeClass}`}
+    >
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{duration: 2.5}}
+        viewport={{once: false}}
+        className='item-info'
+      >
         <span>{storeItem.name}</span> 
         {
           storeItem.cat==='spread'
@@ -230,15 +279,38 @@ export default function StoreItem({
           :
             null
         }
-      </p>
-      <img src={itemImgSrc} alt={`Item ${storeItem._id}`} />
-      <div data-aos='fade-in' className='store-item-buttons'>
-        <div className='store-item-button-container'>
-          {
-            getStoreItemButtons()
-          }
-        </div>
-      </div>
+      </motion.section>
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{duration: 2.5}}
+        viewport={{once: false}}
+        className='item-content'
+      >
+        <img 
+          className='store-item-home-img' 
+          src={itemImgSrc} alt={`Item ${storeItem._id}`} 
+        />
+        <motion.article
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          animate={controls}
+          viewport={{once: false}}
+          transition={{duration: 0.5, ease: "easeInOut"}}
+          className='store-item-buttons'
+        >
+          <div 
+            className='store-item-button-container'
+          >
+            {
+              isAddToCartShown ?
+                getStoreItemButtons()
+              :
+                <button onClick={()=>{setIsAddToCartExpanded(true)}} className='add-to-basket'><img src={basketImg} /><span>Add To Basket</span></button>
+            }
+          </div>
+        </motion.article>
+      </motion.section>
     </article>
   );
 };

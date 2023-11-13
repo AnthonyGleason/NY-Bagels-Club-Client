@@ -36,7 +36,7 @@ export default function PromoCodePanel(){
 
   if (isPromoCodePanelExpanded){
     return(
-      <section data-aos='fade-in' className='promo-code-panel'>
+      <section className='promo-code-panel'>
         <h3 onClick={()=>{setIsPromoCodePanelExpanded(false)}}>
           <img src={couponImg} alt='promo' />
           <span>View Promo Code Data</span>

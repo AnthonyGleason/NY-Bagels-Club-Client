@@ -152,6 +152,9 @@
 /* promo code panel */
 .promo-code-panel .promo-code-panel-content{
   padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   background-color: rgb(241, 224, 198);
 }
 

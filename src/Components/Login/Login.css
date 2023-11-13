@@ -1,21 +1,34 @@
 .login-wrapper{
   display: flex;
   justify-content: center;
-  padding: 1em;
+  padding: 1.5em;
+  background-image: url('../../Assets/backgrounds/login.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  align-items: center;
 }
 .login{
   font-family: 'Titillium Web';
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 25px;
+  height: max-content;
   max-width: 600px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 8px;
+  padding: 1em;
+  padding-top: 3em;
+  padding-bottom: 3em;
 }
 .login h3{
   font-size: 35px;
   font-family: 'Allura';
   text-align: center;
-  color: black;
+  color: white;
   font-weight: bolder;
 }
 .login div{

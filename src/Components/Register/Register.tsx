@@ -1,13 +1,12 @@
 import React,{useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
-import Aos from 'aos';
-import "aos/dist/aos.css";
 import Sidebar from '../Home/Sidebar/Sidebar';
 import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
 import { Cart } from '../../Interfaces/interfaces';
 import { isValidEmail } from '../../Helpers/verification';
 import { genErrorMessageElement, submitRegister } from '../../Helpers/accounts';
+import {motion} from 'framer-motion';
 
 export default function Register(){
   const [errorMessage,setErrorMessage] = useState<string>('');
@@ -25,8 +24,6 @@ export default function Register(){
   const navigate = useNavigate();
   
   useEffect(()=>{
-    //setup fade animation length
-    Aos.init({duration: 1500});
     fetchAndHandleCart(setCart);
   },[]);
 
@@ -39,28 +36,31 @@ export default function Register(){
         isSignedIn={isSignedIn}
         setIsSignedIn={setIsSignedIn}
       />
-      <section data-aos='fade-in' className='register-wrapper'>
-        <form className='register'>
+      <section 
+        className='register-wrapper'
+      >
+        <motion.form
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{duration: 3}}
+          viewport={{once: false}} 
+          className='register'
+        >
           <h3>Register</h3>
           <div>
-            <label>First Name</label>
-            <input value={firstNameInput} onChange={(e)=>{setFirstNameInput(e.target.value)}} type='text' min={1} required/>
+            <input placeholder='First Name' value={firstNameInput} onChange={(e)=>{setFirstNameInput(e.target.value)}} type='text' min={1} required/>
           </div>
           <div>
-            <label>Last Name</label>
-            <input value={lastNameInput} onChange={(e)=>{setLastNameInput(e.target.value)}} type='text' min={1} required/>
+            <input placeholder='Last Name' value={lastNameInput} onChange={(e)=>{setLastNameInput(e.target.value)}} type='text' min={1} required/>
           </div>
           <div>
-            <label>Email</label>
-            <input value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' required/>
+            <input placeholder='Email' value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' required/>
           </div>
           <div>
-            <label>Password</label>
-            <input value={passwordInput} onChange={(e)=>{setPasswordInput(e.target.value)}} type='password' required/>
+            <input placeholder='Password' value={passwordInput} onChange={(e)=>{setPasswordInput(e.target.value)}} type='password' required/>
           </div>
           <div>
-            <label>Password (again)</label>
-            <input value={passwordConfirmInput} onChange={(e)=>{setPasswordConfirmInput(e.target.value)}} type='password' required/>
+            <input placeholder='Password (Again)' value={passwordConfirmInput} onChange={(e)=>{setPasswordConfirmInput(e.target.value)}} type='password' required/>
           </div>
           {
             genErrorMessageElement(errorMessage)
@@ -82,7 +82,8 @@ export default function Register(){
               <button type='button' onClick={()=>{navigate('/login')}}>Login</button>
             </li>
           </ol>
-        </form>
+          <h4>New York Bagels Club is commited to your privacy and will not share your contact information with third parties.</h4>
+        </motion.form>
       </section>
     </>
   );

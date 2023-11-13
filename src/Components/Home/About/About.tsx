@@ -1,22 +1,25 @@
 import React, { useEffect } from 'react';
 import storefrontImg from '../../../Assets/storefront.jpeg'
-import Aos from 'aos';
-import "aos/dist/aos.css";
+import {motion} from 'framer-motion';
 
 export default function About(){
 
-  //handle initial page load
-  useEffect(()=>{
-    //setup fade animation length
-    Aos.init({duration: 2500});
-  },[]);
-
   return(
     <section className='about-us'>
-      <p data-aos='fade-in'>
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{duration: 3}}
+        viewport={{once: false}}
+      >
         Crafted with the freshest ingredients, our New York Style bagels are hand-rolled, kettled, baked and vaccum sealed to lock in that authentic New York City flavor and texture. With 18 years of bagel-making expertise, <span className='brendels'>Brendel's</span> Bagels & Eatery is your go-to for gourmet food and catering, conveniently serving Long Island and now shipping nationwide. Whether you're a transplant New Yorker, hosting family, or planning a special corporate event, we're here to delight your taste buds.
-      </p>
-      <img data-aos='fade-in' src={storefrontImg} alt='store front' />
+      </motion.p>
+      <motion.img 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{duration: 3}}
+        src={storefrontImg} alt='store front' 
+      />
     </section>
   )
 }

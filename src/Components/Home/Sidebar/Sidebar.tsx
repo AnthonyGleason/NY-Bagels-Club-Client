@@ -10,10 +10,11 @@ import settingsImg from '../../../Assets/icons/settings.svg';
 import creditCardImg from '../../../Assets/icons/creditcard.svg';
 import adminImg from '../../../Assets/icons/admin.svg';
 import homeImg from '../../../Assets/icons/round-home.svg';
+import supportImg from '../../../Assets/icons/support-agent.svg';
 
 import './Sidebar.css';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import { handleLogout, updateAdminStatus, verifyLoginToken } from '../../../Helpers/auth';
 import { toggleExpandMenu } from '../../../Helpers/sidebar';
 import { Cart } from '../../../Interfaces/interfaces';
@@ -36,12 +37,35 @@ export default function Sidebar(
   const [hasAudioPlayed,setHasAudioPlayed] = useState<boolean>(false);
   const [totalQuantity,setTotalQuantity] = useState<number>(cart.totalQuantity || 0);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const [showExpandedMenu, setShowExpandedMenu] = useState<boolean>(false);
+  const [isInitialLoad,setIsInitialLoad] = useState<boolean>(true);
 
+  const navigate = useNavigate();
+  const controls = useAnimation();
+  
   //check if user is logged in and login token is valid on initial page load
   useEffect(()=>{
     verifyLoginToken(setIsSignedIn);
   },[])
+
+  const myAnimation = async function() {
+    await controls.start({ x: 0 });
+    // First animation
+    await controls.start({ x: '100%' }).then(()=>{
+      const tempElement = document.querySelector('#sidebar');
+      //reversed because the state was already changed to trigger this function
+      if (isExpanded){
+        tempElement?.classList.remove('sidebar-closed');
+        tempElement?.classList.add('sidebar-expanded');
+      }else if (!isExpanded){
+        tempElement?.classList.remove('sidebar-expanded');
+        tempElement?.classList.add('sidebar-closed');
+      };
+      setShowExpandedMenu(isExpanded);
+    });
+    // Second animation
+    await controls.start({ x: 0 });
+  }
 
   //when the user signs in verify admin status for admin panel
   useEffect(()=>{
@@ -53,138 +77,150 @@ export default function Sidebar(
     setTotalQuantity(cart.totalQuantity);
   },[cart])
 
-  //sidebar is expanded
-  if (isExpanded){
-    return(
-      <motion.section 
-        className='sidebar-expanded'
-        initial={{ right: -200 }}
-        animate={{ right: isExpanded ? 0 : -200 }}
-        transition={{ duration: 0.5 }}
-      >
+  useEffect(()=>{
+    if (!isInitialLoad){
+      myAnimation();
+    }else{
+      setIsInitialLoad(false);
+    };
+  },[isExpanded]);
+
+  return (
+    <motion.section 
+      id='sidebar' 
+      className='sidebar-closed'
+      initial={{ x: 0 }}
+      animate={controls}
+      transition={{ duration: 0.2, ease: "easeInOut" }}
+    >
+      {showExpandedMenu ? (
         <ol className='sidebar-nav'>
           <li>
-            <button className='sidebar-expand-toggle' onClick={()=>{
-              toggleExpandMenu(
-                hasAudioPlayed,
-                setHasAudioPlayed,
-                isExpanded,
-                setIsExpanded
-              )
-            }}>
-              <img src={menuImg} alt='expand sidebar menu' /> 
+            <button
+              className='sidebar-expand-toggle'
+              onClick={() =>{
+                  toggleExpandMenu(
+                    hasAudioPlayed,
+                    setHasAudioPlayed,
+                    isExpanded,
+                    setIsExpanded
+                  );
+                }
+              }
+            >
+              <img src={menuImg} alt='expand sidebar menu' />
             </button>
           </li>
           <li className='home-sidebar-button'>
-            <button onClick={()=>{navigate('/')}}>
+            <button onClick={() => navigate('/')}>
               <img src={homeImg} alt='home' />
-              <span>Home</span> 
+              <span>Home</span>
             </button>
           </li>
-          {
-            isAdmin===false
-            ?
-            // user is not an admin
-             null
-            :
-            // user is an admin
-              <>
-                <li>
-                  <button onClick={()=>{navigate('/admin')}}>
-                    <img src={adminImg} alt='admin panel' />
-                    <span>Admin</span>
-                  </button> 
-                </li>
-              </>
-          }
+          {isAdmin === false ? null : (
+            <>
+              <li>
+                <button onClick={() => navigate('/admin')}>
+                  <img src={adminImg} alt='admin panel' />
+                  <span>Admin</span>
+                </button>
+              </li>
+            </>
+          )}
           <li className='cart'>
-            <button onClick={()=>{navigate('/cart')}}>
+            <button onClick={() => navigate('/cart')}>
               <img src={cartImg} alt='cart' />
               <span>{totalQuantity || 0} Items</span>
             </button>
-          </li>    
-          {
-            isSignedIn===false 
-            ?
-            // user is not signed in
-             null
-            :
-            // user is signed in
-              <>
-                <li>
-                  <button onClick={()=>{navigate('/accounts/orders')}}>
-                    <img src={ordersImg} alt='my orders' />
-                    <span>Orders</span>
-                  </button> 
-                </li>
-              </>
-          }
+          </li>
+          {isSignedIn === false ? null : (
+            <>
+              <li>
+                <button onClick={() => navigate('/accounts/orders')}>
+                  <img src={ordersImg} alt='my orders' />
+                  <span>Orders</span>
+                </button>
+              </li>
+            </>
+          )}
           {/* <li className='checkout'>
-            <button onClick={()=>{navigate('/cart/checkout')}}>
+            <button onClick={() => navigate('/cart/checkout')}>
               <img src={creditCardImg} alt='checkout' />
               <span>Checkout</span>
             </button>
-            <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>
+            <button onClick={() => alert("We appreciate your interest...")}>
               <img src={creditCardImg} alt='checkout' />
               <span>Checkout</span>
             </button>
           </li> */}
           <li>
-            <button onClick={()=>{navigate('/subscribe')}}>
+            <button
+              onClick={() =>
+                alert(
+                  "We appreciate your interest joining the New York Bagels Club Family! Our subscriptions are not available for purchase yet. We expect to launch sometime towards the end of November. If you have questions please email our support team!"
+                )
+              }
+            >
               <img src={vipImg} alt='subscribe' />
               <span>Subscribe</span>
             </button>
-          </li>  
-          {
-            isSignedIn===false 
-            ?
-            // user is not signed in
+          </li>
+          {isSignedIn === false ? (
             <>
               <li>
-                <button onClick={()=>{navigate('/login')}}>
+                <button onClick={() => navigate('/login')}>
                   <img src={loginImg} alt='login' />
                   <span>Login</span>
                 </button>
               </li>
               <li>
-                <button onClick={()=>{navigate('/register')}}>
+                <button onClick={() => navigate('/register')}>
                   <img src={registerImg} alt='register' />
                   <span>Register</span>
                 </button>
               </li>
-            </> 
-            :
-            // user is signed in
+            </>
+          ) : (
             <>
               <li>
-                <button onClick={()=>{navigate('/accounts/settings')}}>
+                <button onClick={() => navigate('/accounts/settings')}>
                   <img src={settingsImg} alt='account settings' />
                   <span>Settings</span>
-                </button> 
+                </button>
               </li>
               <li>
-                <button onClick={()=>{handleLogout(setIsSignedIn)}}>
+                <button onClick={() => handleLogout(setIsSignedIn)}>
                   <img src={logoutImg} alt='logout' />
                   <span>Logout</span>
-                </button> 
+                </button>
               </li>
             </>
-          }
+          )}
+          <li>
+            <button onClick={() => navigate('/support')}>
+              <img src={supportImg} alt='support' />
+              <span>Support</span>
+            </button>
+          </li>
         </ol>
-      </motion.section>
-    );
-  }else{
-    return(
-      <section className='sidebar-closed'>
-        <button className='sidebar-expand-toggle' onClick={()=>{toggleExpandMenu(
-            hasAudioPlayed,
-            setHasAudioPlayed,
-            isExpanded,
-            setIsExpanded
-        )}}>
-          <img src={menuImg} alt='expand sidebar menu' /> 
-        </button>
-      </section>
-    );
-  }
+      ) : (
+        <>
+          <button
+            className='sidebar-expand-toggle'
+            onClick={() =>{
+                toggleExpandMenu(
+                  hasAudioPlayed,
+                  setHasAudioPlayed,
+                  isExpanded,
+                  setIsExpanded
+                );
+              }
+            }
+          >
+            <img src={menuImg} alt='expand sidebar menu' />
+          </button>
+        </>
+      )}
+    </motion.section>
+  );  
 }

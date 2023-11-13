@@ -121,3 +121,6 @@
   border: 1px solid black;
   border-radius: 5px;
 }
+.calendar-wrapper .react-calendar__tile--active{
+  background-color: #D3B683;
+}

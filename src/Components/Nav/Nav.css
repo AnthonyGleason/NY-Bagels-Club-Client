@@ -1,6 +1,6 @@
 .nav{
   padding-top: 70px;
-  padding-bottom: 1em;
+  padding-bottom: 3em;
   text-align: center;
 }
 .nav button{
@@ -10,15 +10,14 @@
   font-family: 'Courgette';
   border: 0px solid transparent;
   background-color: transparent;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 .nav button h3{
   gap: 5px;
   display: flex;
   flex-direction: column;
-  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 .nav button h3 span:nth-child(2){
   font-family: 'Titillium Web';
   font-size: 7vw;
-  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }

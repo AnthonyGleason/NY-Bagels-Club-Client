@@ -142,7 +142,7 @@ export default function CartSummary({
           <span><strong><span>Calculated Tax:</span> <span>${taxPrice.toFixed(2) || '0.00'}</span></strong></span>
           <span><strong><span>Shipping:</span> <span>Free</span></strong></span>
           <span><strong><span>Basket Total:</span> <span>${cartTotalPrice.toFixed(2)}</span></strong></span>
-          <span><strong>Your order will ship on {new Date(cart.desiredShipDate).toDateString()}. If you have selected a holiday it will ship on next available business day.</strong></span>
+          <span><strong>Your order will ship on {new Date(cart.desiredShipDate).toDateString()} or the next available business day.</strong></span>
         </div>
       </section>
     )

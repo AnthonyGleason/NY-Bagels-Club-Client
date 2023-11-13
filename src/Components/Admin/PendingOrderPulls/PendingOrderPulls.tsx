@@ -67,7 +67,7 @@ export default function PendingOrderPulls({
   
   if (isPendingPullsViewExpanded){
     return(
-      <section data-aos='fade-in' className='pending-orders-panel-wrapper'>
+      <section className='pending-orders-panel-wrapper'>
         <h3 onClick={()=>{setIsPendingPullsViewExpanded(false)}}>
           <img src={pullsImg} alt='pulls' />
           <span>Pending Orders Pulls</span>

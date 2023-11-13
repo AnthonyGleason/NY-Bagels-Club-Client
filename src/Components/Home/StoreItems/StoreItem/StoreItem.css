@@ -11,6 +11,8 @@
   background-image: url('../../../../Assets/backgrounds/wood-grain-alt.jpg');
   background-size: contain;
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.5);
+  padding-top: 3em;
+  padding-bottom: 3em;
 }
 .store-item .item-info{
   padding: 1em;
@@ -34,13 +36,14 @@
   flex-direction: column;
   width: 100%;
 }
-.store-item img{
+.store-item .store-item-home-img{
   width: 100%;
   border-radius: 5px;
   max-width: 800px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 .store-item-buttons{
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -55,8 +58,11 @@
   margin: 0.5em;
   color: white;
   background-color: rgba(0,0,0,0.8);
+  /* if overflow-y is not hidden the complete dropdown will be shown
+  before framer motion completes its animation */
+  overflow-y: hidden;
 }
-.store-item-buttons button{
+.store-item-buttons .quantity-button{
   background-color: #5d1917;
   border-radius: 8px;
   color: white;
@@ -66,6 +72,32 @@
   font-size: 30px;
   width: 70px;
   height: 70px;
+}
+.store-item-buttons .quantity-button:focus{
+  outline: none;
+}
+.store-item-buttons .add-to-basket{
+  background-color: #5d1917;
+  border-radius: 8px;
+  color: white;
+  border: 0px solid transparent;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4em;
+  font-family: 'Allura';
+  font-weight: bolder;
+  letter-spacing: 3px;
+  gap: 20px;
+}
+.store-item-buttons .add-to-basket span{
+  margin-top: 5px;
+}
+.store-item-buttons .add-to-basket img{
+  max-width: 40px;
+  flex-grow: 1;
 }
 .store-item-button-wrapper{
   display: grid;
@@ -87,4 +119,10 @@
 }
 .alt-store-item{
   background-image: url('../../../../Assets/backgrounds/wood-grain.jpg');
+}
+.item-content{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }

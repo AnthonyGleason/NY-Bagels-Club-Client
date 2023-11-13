@@ -1,16 +1,15 @@
 import React,{useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-import Aos from 'aos';
-import "aos/dist/aos.css";
 import Sidebar from '../Home/Sidebar/Sidebar';
 import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
 import { Cart } from '../../Interfaces/interfaces';
 import { genErrorMessageElement, handleForgotPassword, submitLogin } from '../../Helpers/accounts';
+import { motion } from 'framer-motion';
 
 export default function Login(){
   const navigate = useNavigate();
-
+  
   const [errorMessage,setErrorMessage] = useState<string>('');
   const [emailInput,setEmailInput] = useState<string>('');
   const [passwordInput,setPasswordInput] = useState<string>('');
@@ -19,8 +18,6 @@ export default function Login(){
   const [cart,setCart] = useState<Cart>(emptyCart);
 
   useEffect(()=>{
-    //setup fade animation length
-    Aos.init({duration: 1500});
     fetchAndHandleCart(setCart);
   },[]);
   
@@ -34,15 +31,21 @@ export default function Login(){
         setIsSignedIn={setIsSignedIn}
       />
       <section className='login-wrapper'>
-        <form data-aos='fade-in' className='login'>
+        <motion.form 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{duration: 3}}
+          viewport={{once: false}}
+          className='login'
+        >
           <h3>Login</h3>
           <div>
-            <label>Email</label>
-            <input value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' required/>
+            {/* <label>Email</label> */}
+            <input placeholder={'Email'} value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' required/>
           </div>
           <div>
-            <label>Password</label>
-            <input value={passwordInput} onChange={(e)=>{setPasswordInput(e.target.value)}} type='password' required/>
+            {/* <label>Password</label> */}
+            <input placeholder={'Password'} value={passwordInput} onChange={(e)=>{setPasswordInput(e.target.value)}} type='password' required/>
           </div>
           {
             genErrorMessageElement(errorMessage)
@@ -58,7 +61,7 @@ export default function Login(){
               <button type='button' onClick={()=>{handleForgotPassword(emailInput,setErrorMessage)}}>Forgot Password</button>
             </li>
           </ol>
-        </form>
+        </motion.form>
       </section>
     </>
   )

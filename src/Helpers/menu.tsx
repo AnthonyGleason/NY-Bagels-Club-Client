@@ -8,9 +8,7 @@ export const getBagelMenuItems = function(storeItems:(BagelItem | SpreadItem)[])
     return 1;
   }).map((bagelItem:BagelItem,index:number)=>{
     return(
-      <div key={index}>
-        <button onClick={()=>{scrollToID(`item-${bagelItem._id}`)}}>{bagelItem.name}</button>
-      </div>
+        <button key={index} onClick={()=>{scrollToID(`item-${bagelItem._id}`)}}>{bagelItem.name}</button>
       )
   });
   return allItems;
@@ -23,9 +21,7 @@ export const getSpreadMenuItems = function(storeItems:(BagelItem | SpreadItem)[]
     return 1;
   }).map((spreadItem:SpreadItem,index:number)=>{
     return(
-      <div key={index}>
-        <button onClick={()=>{scrollToID(`item-${spreadItem._id}`)}}>{spreadItem.name}</button>
-      </div>
+        <button key={index} onClick={()=>{scrollToID(`item-${spreadItem._id}`)}}>{spreadItem.name}</button>
       )
   });
   return allItems;
