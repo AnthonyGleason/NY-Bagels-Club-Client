@@ -2,25 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { Address, Cart, CartItem, Order } from '../../../Interfaces/interfaces';
 import AdminOrderItem from '../AdminOrderItem/AdminOrderItem';
 import pendingImg from '../../../Assets/icons/flag-solid.svg';
-import Aos from 'aos';
-import "aos/dist/aos.css";
+import { getAllPendingOrders } from '../../../Helpers/admin';
 
 export default function PendingOrders({
-  currentPulls,
-  setCurrentPulls,
-  setAllPendingOrders,
-  allPendingOrders
+  allOrders,
+  setAllOrders
 }:{
-  currentPulls:CartItem[],
-  setCurrentPulls:Function,
-  setAllPendingOrders:Function,
-  allPendingOrders: Order[]
+  allOrders: Order[],
+  setAllOrders:Function
 }){
   const [isPendingOrdersViewExpanded,setIsPendingOrdersViewExpanded] = useState<boolean>(false);
+  const [allPendingOrders,setAllPendingOrders] = useState<Order[]>([]);
+
   useEffect(()=>{
-    //setup fade animation length
-    Aos.init({duration: 2500});
-  },[])
+    //set pending orders state
+    const allPendingOrders:Order[] = allOrders.filter((order:Order)=>{
+      if (order.status==='Pending') return 1;
+    });
+    setAllPendingOrders(allPendingOrders);
+  },[allOrders])
 
   if (isPendingOrdersViewExpanded){
     return(
@@ -37,25 +37,11 @@ export default function PendingOrders({
                 if (a.dateCreated>b.dateCreated) return -1;
                 return 1;
               }).map((order:Order,index:number)=>{
-                const orderDate = new Date(order.dateCreated);
-                const dateCreated = new Date(orderDate.getUTCFullYear(), orderDate.getUTCMonth(), orderDate.getUTCDate(), orderDate.getUTCHours(), orderDate.getUTCMinutes(), orderDate.getUTCSeconds());
-                const giftMessage:string = order.giftMessage || '';
-                const shippingAddress:Address = order.shippingAddress;
-                const status:string = order.status;
-                const totalAmount:number = order.cart.finalPriceInDollars;
-                const trackingNumber:string = order.trackingNumber || '';
-                const orderCart:Cart = order.cart;
-                
                 return(
                   <AdminOrderItem
-                    cart={orderCart}
-                    dateCreated={dateCreated}
-                    giftMessage={giftMessage}
-                    shippingAddress={shippingAddress}
-                    status={status}
-                    totalAmount={totalAmount}
-                    trackingNumber={trackingNumber}
-                    order={order}
+                    allOrders={allOrders}
+                    setAllOrders={setAllOrders}
+                    orderItem={order}
                     key={index}
                   />
                 )
@@ -68,7 +54,7 @@ export default function PendingOrders({
     );
   }else{
     return(
-      <section data-aos='fade-in'>
+      <section>
         <h3 onClick={()=>{setIsPendingOrdersViewExpanded(true)}}>
           <img src={pendingImg} alt='pending orders' />
           <span>Pending Orders</span>

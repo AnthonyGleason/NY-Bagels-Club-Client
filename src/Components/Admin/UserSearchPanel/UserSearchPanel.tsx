@@ -3,8 +3,6 @@ import { User } from '../../../Interfaces/interfaces';
 import UserSearchResult from '../SearchResults/UserSearchResult';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import magnifyGlassImg from '../../../Assets/icons/magnifying-glass.svg'
-import Aos from 'aos';
-import "aos/dist/aos.css";
 
 export default function UserSearchPanel(){
   const [userSearchResults,setUserSearchResults] = useState<User[]>([]);
@@ -26,9 +24,6 @@ export default function UserSearchPanel(){
       setUserSearchResults([]);
     }
   };
-  useEffect(()=>{
-    Aos.init({duration: 2500});
-  },[])
 
   //get user search results
   useEffect(()=>{
@@ -86,7 +81,7 @@ export default function UserSearchPanel(){
     );
   }else{
     return(
-      <section data-aos='fade-in'>
+      <section>
         <h3 onClick={()=>{setIsUserSearchExpanded(true)}}>
           <img src={magnifyGlassImg} alt='search' />
           <span>User Search</span>

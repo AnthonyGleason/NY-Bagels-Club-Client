@@ -12,22 +12,31 @@ export default function CheckoutSuccess(){
   const [order,setOrder] = useState<Order | null>(null);
   const [isSignedIn,setIsSignedIn] = useState<boolean>(false);
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
+  const [failFlag,setFailFlag] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
   const verifyIsLoggedIn = async function(){
     setIsSignedIn(await verifyLoginToken());
   };
-  
-  const fetchMostRecentOrderData = async function(setOrder:Function){
-    const response = await fetch(`${getServerUrlPrefix()}/api/users/orders/mostRecent`,{
-      'headers':{
+
+  const fetchPlacedOrder = async function(setOrder:Function,paymentIntent:string){
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/orders/getByIntent`,{
+      method: 'POST',
+      headers:{
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      }
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
+      },
+      body: JSON.stringify({
+        paymentIntentID: paymentIntent
+      })
     });
     const responseData = await response.json();
-    if (responseData && responseData.orderData) setOrder(responseData.orderData);  
+    if (responseData.orderData){
+      setOrder(responseData.orderData);
+    }else{
+      setFailFlag(true);
+    };
   };
 
   useEffect(()=>{
@@ -35,8 +44,12 @@ export default function CheckoutSuccess(){
     localStorage.removeItem('cartToken');
     //verify the user is logged in
     verifyIsLoggedIn();
-    //fetch the most recent order placed and display it
-    fetchMostRecentOrderData(setOrder)
+
+    //get payment intent token from url params
+    const urlParams = new URLSearchParams(window.location.href);
+    const paymentIntent:string | null= urlParams.get('payment_intent_client_secret');
+    //NOW WE NEED TO SPLIT THE PAYMENT INTENT SECRET SERVERSIDE
+    if (paymentIntent) fetchPlacedOrder(setOrder,paymentIntent);
   },[]);
 
   if (!isSignedIn){
@@ -54,7 +67,14 @@ export default function CheckoutSuccess(){
         </div>
       </>
     )
-  } else if (!order && isSignedIn){
+  } else if (failFlag){
+    //order retrieval failed
+    return(
+      <div>
+        If you are seeing this message it means that an error has occured when processing your order. Usually this occurs because of a card decline or connection issue but in the rare event you were charged and do not see your order please contact our customer support and we will review your account for you.
+      </div>
+    )
+  }else if (!order && isSignedIn){
     return(
       <>
         <Sidebar 
@@ -97,7 +117,7 @@ export default function CheckoutSuccess(){
   }else{
     return(
       <div>
-        An error has occured
+        If you are seeing this message it means that an error has occured when processing your order. Usually this occurs because of a card decline or connection issue but in the rare event you were charged and do not see your order please contact our customer support and we will review your account for you.
       </div>
     )
   }

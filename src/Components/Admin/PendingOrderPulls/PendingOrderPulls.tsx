@@ -3,38 +3,24 @@ import { getSelectionName } from '../../../Helpers/cart';
 import { CartItem, Order } from '../../../Interfaces/interfaces';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import pullsImg from '../../../Assets/icons/pulls.svg';
-import Aos from 'aos';
-import "aos/dist/aos.css";
+import { getAllPendingOrders } from '../../../Helpers/admin';
 
 export default function PendingOrderPulls({
-  setAllPendingOrders,
-  allPendingOrders
+  allOrders
 }:{
-  setAllPendingOrders:Function,
-  allPendingOrders: Order[]
+  allOrders: Order[]
 }){
   const [isPendingPullsViewExpanded,setIsPendingPullsViewExpanded] = useState<boolean>(false);
   const [currentPulls, setCurrentPulls] = useState<CartItem[]>([]);
-  const getAllPendingOrders = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/admin/orders/pending`,{
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      }
+  const [allPendingOrders, setAllPendingOrders] = useState<Order[]>([]);
+  
+  useEffect(()=>{
+    //set pending orders state
+    const allPendingOrders:Order[] = allOrders.filter((order:Order)=>{
+      if (order.status==='Pending') return 1;
     });
-    const responseData = await response.json();
-    setAllPendingOrders(responseData.orders);
-  };
-
-  //get pending orders
-  useEffect(()=>{
-    if (isPendingPullsViewExpanded) getAllPendingOrders();
-  },[isPendingPullsViewExpanded]);
-
-  useEffect(()=>{
-    Aos.init({duration: 2500});
-  },[])
+    setAllPendingOrders(allPendingOrders);
+  },[allOrders])
 
   //update pulls when all pending orders are retrieved
   useEffect(()=>{
@@ -93,7 +79,7 @@ export default function PendingOrderPulls({
     );
   }else{
     return(
-      <section data-aos='fade-in'>
+      <section>
         <h3 onClick={()=>{setIsPendingPullsViewExpanded(true)}}>
           <img src={pullsImg} alt='pulls' />
           <span>Pending Orders Pulls</span>

@@ -50,8 +50,9 @@ export default function MyOrders(){
               const shippingAddress:Address = order.shippingAddress;
               const status:string = order.status;
               const totalAmount:number = order.cart.finalPriceInDollars;
-              const trackingNumber:string = order.trackingNumber || '';
+              const trackingNumberArr:string[] = order.trackingNumberArr || [];
               const orderCart:Cart = order.cart;
+              
               return(
                 <OrderItem 
                   cart={orderCart}
@@ -60,7 +61,7 @@ export default function MyOrders(){
                   shippingAddress={shippingAddress}
                   status={status}
                   totalAmount={totalAmount}
-                  trackingNumber={trackingNumber}
+                  trackingNumberArr={trackingNumberArr}
                   order={order}
                   key={index}
                 />

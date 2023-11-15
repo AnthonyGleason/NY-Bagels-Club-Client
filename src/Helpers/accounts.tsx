@@ -267,8 +267,11 @@ export const submitRegister = async function(
   passwordConfirmInput:string,
   firstNameInput:string,
   lastNameInput:string,
-  setErrorMessage:Function
+  setErrorMessage:Function,
+  isRequestSent:boolean,
+  setIsRequestSent:Function
 ){
+  if (isRequestSent) return;
   try{
     //ensure all inputs are completed
     if (!emailInput || !passwordInput || !passwordConfirmInput || !firstNameInput || !lastNameInput){
@@ -301,15 +304,18 @@ export const submitRegister = async function(
         passwordConfirm: passwordConfirmInput,
       })
     });
-
+    setIsRequestSent(true);
     if (!response.ok) throw new Error('An error has occured when registering the new user.');
 
     const responseData = await response.json();
+
     if (responseData.token){
       localStorage.setItem('loginToken',responseData.token);
+      setIsRequestSent(true);
       window.history.back();
     }else{
       setErrorMessage(responseData.message);
+      setIsRequestSent(false);
     };
     
   }catch(err){

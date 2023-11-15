@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Address, Cart, CartItem, Order } from '../../../../Interfaces/interfaces';
 import './OrderItem.css';
+import OrderTrackingItem from '../OrderTrackingItem/OrderTrackingItem';
 
 export default function OrderItem({
   cart,
@@ -9,7 +10,7 @@ export default function OrderItem({
   shippingAddress,
   status,
   totalAmount,
-  trackingNumber,
+  trackingNumberArr,
   order
 }:{
   cart: Cart,
@@ -18,7 +19,7 @@ export default function OrderItem({
   shippingAddress: Address,
   status:string,
   totalAmount:number,
-  trackingNumber:string,
+  trackingNumberArr:string[],
   order:Order
 }){
   const [isExpanded,setIsExpanded] = useState(false);
@@ -39,10 +40,6 @@ export default function OrderItem({
           <span className='order-id'>Order Number: #{order._id}</span>
         </button>
         <div className='order-info-wrapper'>
-          <div>
-            <h4>Order Status</h4>
-            <p>{status}</p>
-          </div>
           <div>
             <h4>Shipping Address</h4>
             <ul className='order-item-shipping'>
@@ -112,20 +109,6 @@ export default function OrderItem({
             </p>
           </div>
           {
-            trackingNumber!==''
-            ?
-            <div>
-              <h4>Tracking Number</h4>
-              <p>{trackingNumber}</p>
-            </div>
-            : 
-            <div>
-              <h4>Tracking Number</h4>
-              <p>Check Back Soon!</p>
-              <p>Your selected ship date is <strong>{new Date(order.cart.desiredShipDate).toDateString()}</strong>.</p>
-            </div>
-          }
-          {
             giftMessage!==''
             ?
             <div>
@@ -133,6 +116,22 @@ export default function OrderItem({
               <p>{giftMessage}</p>
             </div>
             : null
+          }
+          <div>
+            <h4>Order Status</h4>
+            <p>{status}</p>
+          </div>
+          {
+            trackingNumberArr.length>0 ?
+              trackingNumberArr.map((trackingNumber: string,index:number) => (
+                <OrderTrackingItem index={index} key={index} trackingNumber={trackingNumber} order={order} />
+              ))
+            :
+              <div key="noTracking">
+                <h4>Track Your Order</h4>
+                <p>Check Back Soon!</p>
+                <p>Your selected ship date is <strong>{new Date(order.cart.desiredShipDate).toDateString()}</strong>.</p>
+              </div>
           }
         </div>
       </li>

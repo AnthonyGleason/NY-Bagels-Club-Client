@@ -1,32 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Address, Cart, Order } from '../../../Interfaces/interfaces';
 import AdminOrderItem from '../AdminOrderItem/AdminOrderItem';
-import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import gearImg from '../../../Assets/icons/gear.svg';
-import Aos from 'aos';
-import "aos/dist/aos.css";
 
-export default function ProcessingOrders(){
-  const [allProcessingOrders,setAllProcessingOrders] = useState<Order[]>([]);
+export default function ProcessingOrders({
+  setAllOrders,
+  allOrders
+}:{
+  setAllOrders:Function,
+  allOrders:Order[]
+}){
   const [isProcessingOrdersExpanded,setIsProcessingOrdersExpanded] = useState<boolean>(false);
-
-  const getAllProcessingOrders = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/admin/orders/processing`,{
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      }
-    });
-    const responseData = await response.json();
-    setAllProcessingOrders(responseData.orders);
-  };
+  const [allProcessingOrders,setAllProcessingOrders] = useState<Order[]>([]);
 
   useEffect(()=>{
-    getAllProcessingOrders();
-    //setup fade animation length
-    Aos.init({duration: 2500});
-  },[]);
+    //set processing orders state
+    const allProcessingOrders: Order[] = allOrders.filter((order:Order)=>{
+      if (order.status==='Processing') return 1;
+    });
+    setAllProcessingOrders(allProcessingOrders);
+  },[allOrders]);
 
   if (isProcessingOrdersExpanded){
     return(
@@ -43,24 +36,11 @@ export default function ProcessingOrders(){
                 if (a.dateCreated>b.dateCreated) return -1;
                 return 1;
               }).map((order:Order,index:number)=>{
-                const orderDate = new Date(order.dateCreated);
-                const dateCreated = new Date(orderDate.getUTCFullYear(), orderDate.getUTCMonth(), orderDate.getUTCDate(), orderDate.getUTCHours(), orderDate.getUTCMinutes(), orderDate.getUTCSeconds());
-                const giftMessage:string = order.giftMessage || '';
-                const shippingAddress:Address = order.shippingAddress;
-                const status:string = order.status;
-                const totalAmount:number = order.cart.finalPriceInDollars;
-                const trackingNumber:string = order.trackingNumber || '';
-                const orderCart:Cart = order.cart;
                 return(
                   <AdminOrderItem
-                    cart={orderCart}
-                    dateCreated={dateCreated}
-                    giftMessage={giftMessage}
-                    shippingAddress={shippingAddress}
-                    status={status}
-                    totalAmount={totalAmount}
-                    trackingNumber={trackingNumber}
-                    order={order}
+                    allOrders={allOrders}
+                    orderItem={order}
+                    setAllOrders={setAllOrders}
                     key={index}
                   />
                 )
@@ -73,7 +53,7 @@ export default function ProcessingOrders(){
     );
   }else{
     return(
-      <section data-aos='fade-in'>
+      <section>
         <h3 onClick={()=>{setIsProcessingOrdersExpanded(true)}}>
           <img src={gearImg} alt='processing orders' />
           <span>Processing Orders</span>

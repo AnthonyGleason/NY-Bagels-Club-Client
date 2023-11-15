@@ -21,6 +21,8 @@ export default function Register(){
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Cart>(emptyCart);
 
+  const [isRequestSent,setIsRequestSent] = useState<boolean>(false);
+
   const navigate = useNavigate();
   
   useEffect(()=>{
@@ -74,7 +76,9 @@ export default function Register(){
                   passwordConfirmInput,
                   firstNameInput,
                   lastNameInput,
-                  setErrorMessage
+                  setErrorMessage,
+                  isRequestSent,
+                  setIsRequestSent
                 )
               }}>Submit</button>
             </li>

@@ -3,43 +3,31 @@ import { Address, Cart, Order } from '../../../Interfaces/interfaces';
 import AdminOrderItem from '../AdminOrderItem/AdminOrderItem';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import magnifyGlassImg from '../../../Assets/icons/magnifying-glass.svg'
-import Aos from 'aos';
-import "aos/dist/aos.css";
+import { getAllOrders, handleGetOrderSearchResults } from '../../../Helpers/admin';
 
-export default function OrderSearchPanel(){
+export default function OrderSearchPanel({
+  setAllOrders
+}:{
+  setAllOrders:Function
+}){
   const [orderSearchInput,setOrderSearchInput] = useState<string>('');
   const [orderSearchResults,setOrderSearchResults] = useState<Order[]>([]);
   const [isOrderSearchExpanded,setIsOrderSearchExpanded] = useState<boolean>(false);
 
-  const handleGetOrderSearchResults = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/admin/orders/search/${orderSearchInput}`,{
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      },
-    });
-    const responseData = await response.json();
-    if (responseData.results){
-      setOrderSearchResults(responseData.results);
-    }else{
-      setOrderSearchResults([]);
-    };
-  };
-
-  useEffect(()=>{
-    //setup fade animation length
-    Aos.init({duration: 2500});
-  },[])
-
   //get order search results
   useEffect(()=>{
     if (orderSearchInput){
-      handleGetOrderSearchResults();
+      handleGetOrderSearchResults(orderSearchInput,setOrderSearchResults);
     }else{
       setOrderSearchResults([]);
-    }
+    };
   },[orderSearchInput]);
+
+  //when the search results are updated request all orders to be refetched
+  //so the user doesnt need to refresh the page
+  useEffect(()=>{
+    getAllOrders(setAllOrders);
+  },[orderSearchResults]);
 
   if (isOrderSearchExpanded){
     return(
@@ -73,25 +61,13 @@ export default function OrderSearchPanel(){
                   if (a.dateCreated>b.dateCreated) return -1;
                   return 1;
                 }).map((order:Order,index:number)=>{
-                  const orderDate = new Date(order.dateCreated);
-                  const dateCreated = new Date(orderDate.getUTCFullYear(), orderDate.getUTCMonth(), orderDate.getUTCDate(), orderDate.getUTCHours(), orderDate.getUTCMinutes(), orderDate.getUTCSeconds());
-                  const giftMessage:string = order.giftMessage || '';
-                  const shippingAddress:Address = order.shippingAddress;
-                  const status:string = order.status;
-                  const totalAmount:number = order.cart.finalPriceInDollars;
-                  const trackingNumber:string = order.trackingNumber || '';
-                  const orderCart:Cart = order.cart;
                   return(
                     <AdminOrderItem
-                      cart={orderCart}
-                      dateCreated={dateCreated}
-                      giftMessage={giftMessage}
-                      shippingAddress={shippingAddress}
-                      status={status}
-                      totalAmount={totalAmount}
-                      trackingNumber={trackingNumber}
-                      order={order}
+                      allOrders={orderSearchResults}
+                      setAllOrders={setOrderSearchResults} //incorrect code on purpose fix later
+                      orderItem={order}
                       key={index}
+                      orderSearchInput={orderSearchInput}
                     />
                   )
                 })
@@ -104,7 +80,7 @@ export default function OrderSearchPanel(){
     );
   }else{
     return(
-      <section data-aos='fade-in'>
+      <section>
         <h3 onClick={()=>{setIsOrderSearchExpanded(true)}}>
           <img src={magnifyGlassImg} alt='search' />
           <span>Order Search</span>

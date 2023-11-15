@@ -3,8 +3,6 @@ import { PromoCode } from '../../../Interfaces/interfaces';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import PromoCodeItem from '../PromoCodeItem/PromoCodeItem';
 import couponImg from '../../../Assets/icons/coupon.svg';
-import Aos from 'aos';
-import "aos/dist/aos.css";
 
 export default function PromoCodePanel(){
   const [isPromoCodePanelExpanded,setIsPromoCodePanelExpanded] = useState<boolean>(false);
@@ -24,11 +22,6 @@ export default function PromoCodePanel(){
       setPromoCodeData([]);
     }
   };
-
-  useEffect(()=>{
-    //setup fade animation length
-    Aos.init({duration: 2500});
-  },[])
 
   useEffect(()=>{
     if (isPromoCodePanelExpanded) fetchPromoCodeData()
@@ -54,7 +47,7 @@ export default function PromoCodePanel(){
     );
   }else{
     return(
-      <section data-aos='fade-in' className='promo-code-panel'>
+      <section className='promo-code-panel'>
         <h3 onClick={()=>{setIsPromoCodePanelExpanded(true)}}>
           <img src={couponImg} alt='promo' />
           <span>View Promo Code Data</span>

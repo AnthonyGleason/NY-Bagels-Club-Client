@@ -11,15 +11,13 @@ import OrderSearchPanel from './OrderSearchPanel/OrderSearchPanel';
 import PendingOrders from './PendingOrders/PendingOrders';
 import ProcessingOrderPulls from './ProcessingOrderPulls/ProcessingOrderPulls';
 import PromoCodePanel from './PromoCodePanel/PromoCodePanel';
+import { getAllOrders, getAllPendingOrders } from '../../Helpers/admin';
 
 export default function Admin(){
   const [isAdmin,setIsAdmin] = useState<boolean>(false);
   const [isSignedIn,setIsSignedIn] = useState<boolean>(true);
   
-  const [currentPulls, setCurrentPulls] = useState<CartItem[]>([]);
-  const [allPendingOrders,setAllPendingOrders] = useState<Order[]>([]);
-  const [allProcessingOrders,setAllProcessingOrders] = useState<Order[]>([]);
-
+  const [allOrders, setAllOrders] = useState<Order[]>([]);
   //sidebar states
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Cart>(emptyCart);
@@ -31,6 +29,9 @@ export default function Admin(){
     verifyLoginToken(setIsSignedIn);
   },[]);
 
+  useEffect(()=>{
+    getAllOrders(setAllOrders);
+  },[isSignedIn])
   return(
     <>
       <Sidebar 
@@ -44,21 +45,22 @@ export default function Admin(){
         isAdmin ?
           <main className='admin-panel-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
             <UserSearchPanel />
-            <OrderSearchPanel />
+            <OrderSearchPanel
+              setAllOrders={setAllOrders}
+            />
             <ProcessingOrderPulls 
-              allProcessingOrders={allProcessingOrders} 
-              setAllProcessingOrders={setAllProcessingOrders} 
+              allOrders={allOrders}
             />
             <PendingOrderPulls
-              setAllPendingOrders={setAllPendingOrders}
-              allPendingOrders={allPendingOrders}
+              allOrders={allOrders}
             />
-            <ProcessingOrders />
-            <PendingOrders 
-              currentPulls={currentPulls}
-              setCurrentPulls={setCurrentPulls}
-              setAllPendingOrders={setAllPendingOrders}
-              allPendingOrders={allPendingOrders}
+            <ProcessingOrders 
+              allOrders={allOrders}
+              setAllOrders={setAllOrders}
+            />
+            <PendingOrders
+              allOrders={allOrders}
+              setAllOrders={setAllOrders}
             />
             <PromoCodePanel />
           </main>

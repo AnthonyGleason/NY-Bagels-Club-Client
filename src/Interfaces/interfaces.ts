@@ -63,7 +63,7 @@ export interface Order{
   status:string,
   cart:Cart,
   shippingAddress:Address,
-  trackingNumber?:string,
+  trackingNumberArr?:string[],
   giftMessage?:string
   _id: string // unique id given by mongodb
 };

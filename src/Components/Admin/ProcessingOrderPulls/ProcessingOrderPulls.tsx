@@ -3,38 +3,24 @@ import { getSelectionName } from '../../../Helpers/cart';
 import { CartItem, Order } from '../../../Interfaces/interfaces';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import pullsImg from '../../../Assets/icons/pulls.svg';
-import Aos from 'aos';
-import "aos/dist/aos.css";
+import { getAllProcessingOrders } from '../../../Helpers/admin';
 
 export default function ProcessingOrderPulls({
-  setAllProcessingOrders,
-  allProcessingOrders
+  allOrders,
 }:{
-  setAllProcessingOrders:Function,
-  allProcessingOrders: Order[]
+  allOrders: Order[]
 }){
   const [isProcessingPullsViewExpanded,setIsProcessingPullsViewExpanded] = useState<boolean>(false);
   const [currentPulls, setCurrentPulls] = useState<CartItem[]>([]);
-  const getAllProcessingOrders = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/admin/orders/processing`,{
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      }
-    });
-    const responseData = await response.json();
-    setAllProcessingOrders(responseData.orders);
-  };
+  const [allProcessingOrders,setAllProcessingOrders] = useState<Order[]>([]);
 
   useEffect(()=>{
-    //setup fade animation length
-    Aos.init({duration: 2500});
-  },[])
-  //get processing orders
-  useEffect(()=>{
-    if (isProcessingPullsViewExpanded) getAllProcessingOrders();
-  },[isProcessingPullsViewExpanded]);
+    //set processing orders state
+    const allProcessingOrders: Order[] = allOrders.filter((order:Order)=>{
+      if (order.status==='Processing') return 1;
+    });
+    setAllProcessingOrders(allProcessingOrders);
+  },[allOrders]);
 
   //update pulls when all pending orders are retrieved
   useEffect(()=>{
@@ -93,7 +79,7 @@ export default function ProcessingOrderPulls({
     );
   }else{
     return(
-      <section data-aos='fade-in'>
+      <section>
         <h3 onClick={()=>{setIsProcessingPullsViewExpanded(true)}}>
           <img alt='processing' src={pullsImg} />
           <span>Processing Orders Pulls</span>
