@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.160f5564.css",
-    "main.js": "/static/js/main.eca7f099.js",
+    "main.css": "/static/css/main.fb7021f5.css",
+    "main.js": "/static/js/main.f6bf6b5b.js",
     "static/js/241.bae584ad.chunk.js": "/static/js/241.bae584ad.chunk.js",
     "static/js/811.40160e84.chunk.js": "/static/js/811.40160e84.chunk.js",
     "static/js/211.00862995.chunk.js": "/static/js/211.00862995.chunk.js",
@@ -42,7 +42,6 @@
     "static/media/homeDelivery.jpg": "/static/media/homeDelivery.099f735c987244da4b0b.jpg",
     "static/media/bricks.jpg": "/static/media/bricks.497dc5c3b717486e0d64.jpg",
     "static/media/menu.jpg": "/static/media/menu.b58ac96b66bd43b918b1.jpg",
-    "static/media/storefront.jpeg": "/static/media/storefront.2516ba38ed063391cfd0.jpeg",
     "static/media/central-park.jpg": "/static/media/central-park.e92368631e1ca711831d.jpg",
     "static/media/about.jpg": "/static/media/about.85d3c06be86105dbf2ce.jpg",
     "static/media/order-item.jpg": "/static/media/order-item.5ba136a47c2dc6f77980.jpg",
@@ -73,12 +72,12 @@
     "static/media/logout.svg": "/static/media/logout.f6d2e89e1521811a90b3791f0306a0f0.svg",
     "static/media/foodMenu.svg": "/static/media/foodMenu.00a08210264b7baba829eee519269446.svg",
     "static/media/vip.svg": "/static/media/vip.ed094f904934515e0a14d18d0b4955bf.svg",
-    "main.160f5564.css.map": "/static/css/main.160f5564.css.map",
-    "main.eca7f099.js.map": "/static/js/main.eca7f099.js.map",
+    "main.fb7021f5.css.map": "/static/css/main.fb7021f5.css.map",
+    "main.f6bf6b5b.js.map": "/static/js/main.f6bf6b5b.js.map",
     "787.20178b2a.chunk.js.map": "/static/js/787.20178b2a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.160f5564.css",
-    "static/js/main.eca7f099.js"
+    "static/css/main.fb7021f5.css",
+    "static/js/main.f6bf6b5b.js"
   ]
 }
