@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.2da6dcfa.css",
-    "main.js": "/static/js/main.3c8da49f.js",
+    "main.css": "/static/css/main.160f5564.css",
+    "main.js": "/static/js/main.eca7f099.js",
     "static/js/241.bae584ad.chunk.js": "/static/js/241.bae584ad.chunk.js",
     "static/js/811.40160e84.chunk.js": "/static/js/811.40160e84.chunk.js",
     "static/js/211.00862995.chunk.js": "/static/js/211.00862995.chunk.js",
@@ -39,6 +39,7 @@
     "static/media/club-perks.jpg": "/static/media/club-perks.f6bb5e4c6e0d56dcc983.jpg",
     "static/media/loading.jpg": "/static/media/loading.19483d2288f43f9275ec.jpg",
     "static/media/login.jpg": "/static/media/login.4220dc4ccf1e4192620f.jpg",
+    "static/media/homeDelivery.jpg": "/static/media/homeDelivery.099f735c987244da4b0b.jpg",
     "static/media/bricks.jpg": "/static/media/bricks.497dc5c3b717486e0d64.jpg",
     "static/media/menu.jpg": "/static/media/menu.b58ac96b66bd43b918b1.jpg",
     "static/media/storefront.jpeg": "/static/media/storefront.2516ba38ed063391cfd0.jpeg",
@@ -46,7 +47,6 @@
     "static/media/about.jpg": "/static/media/about.85d3c06be86105dbf2ce.jpg",
     "static/media/order-item.jpg": "/static/media/order-item.5ba136a47c2dc6f77980.jpg",
     "static/media/visa-fill.jpeg": "/static/media/visa-fill.652da96ef883bf9b4404.jpeg",
-    "static/media/homeDelivery.jpg": "/static/media/homeDelivery.29fb6139b188df209b6b.jpg",
     "static/media/pianoNotes.mp3": "/static/media/pianoNotes.16525c148124c63bc426.mp3",
     "static/media/mastercard.svg": "/static/media/mastercard.9ceea7ca5d8665e4dd52f08598efe933.svg",
     "static/media/google-pay.svg": "/static/media/google-pay.7bfeb229d88247630057d0b2dc41ec9d.svg",
@@ -73,12 +73,12 @@
     "static/media/logout.svg": "/static/media/logout.f6d2e89e1521811a90b3791f0306a0f0.svg",
     "static/media/foodMenu.svg": "/static/media/foodMenu.00a08210264b7baba829eee519269446.svg",
     "static/media/vip.svg": "/static/media/vip.ed094f904934515e0a14d18d0b4955bf.svg",
-    "main.2da6dcfa.css.map": "/static/css/main.2da6dcfa.css.map",
-    "main.3c8da49f.js.map": "/static/js/main.3c8da49f.js.map",
+    "main.160f5564.css.map": "/static/css/main.160f5564.css.map",
+    "main.eca7f099.js.map": "/static/js/main.eca7f099.js.map",
     "787.20178b2a.chunk.js.map": "/static/js/787.20178b2a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2da6dcfa.css",
-    "static/js/main.3c8da49f.js"
+    "static/css/main.160f5564.css",
+    "static/js/main.eca7f099.js"
   ]
 }
