@@ -19,6 +19,9 @@
   gap: 10px;
   color: white;
 }
+.react-calendar__tile{
+  height: 60px;
+}
 .react-calendar__navigation__arrow{
   font-size: 30px;
 }
