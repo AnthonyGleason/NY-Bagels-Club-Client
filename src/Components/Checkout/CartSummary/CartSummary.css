@@ -4,6 +4,14 @@
   flex-direction: column;
   gap: 10px;
   padding: 0.8em;
+  justify-content: center;
+  align-items: center;
+}
+.cart-summary-wrapper{
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 #root .cart-summary h3{
   font-size: 35px;
