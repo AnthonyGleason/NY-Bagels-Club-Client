@@ -11,17 +11,26 @@ export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]
 
   return(
     <>
-      <motion.h3 
+      <h3 
+        id='our-menu' 
+        className='our-menu-heading our-menu-subscription-wrapper store-items-heading'
+      >
+        <motion.span
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{duration: 3}}
+        viewport={{once: false}}>
+          Our Menu
+        </motion.span>
+        <motion.span 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{duration: 3}}
         viewport={{once: false}}
-        id='our-menu' 
-        className='our-menu-heading our-menu-subscription-wrapper store-items-heading'
-      >
-        <span>Our Menu</span>
-        <span className='our-menu-subscription'>(No Subscription Required For Purchase)</span>
-      </motion.h3>
+        className='our-menu-subscription'>
+          (No Subscription Required For Purchase)
+        </motion.span>
+      </h3>
       <section id='our-menu' className='our-menu-wrapper'>
         <div className='our-menu-content'>
           <motion.div 

@@ -48,39 +48,78 @@ export default function Home(){
           </button>
         </div>
         <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
-          <section
-            className='banner'
-          >
-            <div className='limited-offer-wrapper'>
-              <h3><img src={starImg} alt='star' /> <u>Limited Time Offer!</u> <img src={starImg} alt='star' /></h3>
-              <h4>Enjoy FREE Shipping on All Orders!</h4>
-            </div>
-            <img className='home-delivery' src={homeDeliveryImg} alt='home delivery' />
-          </section>
-          <motion.h3 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{duration: 2.5}}
-            viewport={{once: false}}
-            className='store-items-heading' 
-            onClick={()=>{window.location.href='https://www.brendelsbagels.com/'}}
-          >
-            Proudly Delivering 
-            <br />
-            <span className='brendels'>Brendel's Bagels</span> 
-            <br />
-            Nationwide
-          </motion.h3>
+          <div className='home-content-row-wrapper'>
+            <section
+              className='banner'
+            >
+              <div 
+                className='limited-offer-wrapper'
+                >
+                <h3>
+                  <img src={starImg} alt='star' />
+                  <motion.span 
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{duration: 2.5}}
+                    viewport={{once: false}}>Limited Time Offer!
+                  </motion.span>
+                  <img src={starImg} alt='star' />
+                </h3>
+                <motion.h4 
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{duration: 2.5}}
+                  viewport={{once: false}}>Enjoy FREE Shipping on All Orders!
+                </motion.h4>
+              </div>
+              <img className='home-delivery' src={homeDeliveryImg} alt='home delivery' />
+            </section>
+            <h3 
+              className='store-items-heading' 
+              id='proudly-delivering'
+              onClick={()=>{window.location.href='https://www.brendelsbagels.com/'}}
+            >
+              <motion.span
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{duration: 2.5}}
+                viewport={{once: false}}
+              >
+                Proudly Delivering
+              </motion.span>
+              <motion.span 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{duration: 2.5}}
+              viewport={{once: false}}
+              className='brendels'
+              >
+                Brendel's Bagels
+              </motion.span> 
+              <motion.span
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{duration: 2.5}}
+                viewport={{once: false}}
+              >
+                Nationwide
+              </motion.span>
+            </h3>
+          </div>
           <About />
-          <motion.h3 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{duration: 2.5}}
-            viewport={{once: false}}
+          <h3 
+            id='join-the-club'
             className='store-items-heading'
           >
-            Join The Club
-          </motion.h3>
+            <motion.span
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{duration: 2.5}}
+              viewport={{once: false}}
+            >
+              Join The Club
+            </motion.span>
+          </h3>
           <section className='club-perks'>
             <div className='club-tiers'>
               <motion.div 
@@ -167,17 +206,26 @@ export default function Home(){
             </button>
           </section>
           <Menu storeItems={storeItems} />
-          <motion.h3 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{duration: 2.5}}
-            viewport={{once: false}}
-            className='store-items-heading'
-          >
-            A Taste of New York
-            <br />
-            to Your Doorstep
-          </motion.h3>
+            <h3 
+              className='store-items-heading'
+            >
+              <motion.span
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{duration: 2.5}}
+                viewport={{once: false}}
+              >
+                A Taste of New York
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{duration: 2.5}}
+                viewport={{once: false}}
+              >
+                to Your Doorstep
+              </motion.span>
+            </h3>
           <StoreItems 
             isSignedIn={isSignedIn}
             cart={cart}

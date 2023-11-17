@@ -41,7 +41,7 @@ export default function StoreItems({
   },[isSignedIn]);
 
 
-  let counter:number = 1;
+  let counter:number = 0;
 
   return(
     <section className='store-items-container'>

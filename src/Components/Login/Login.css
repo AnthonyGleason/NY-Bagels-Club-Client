@@ -32,8 +32,10 @@
   font-weight: bolder;
 }
 .login div{
+  align-items: center;
   display: flex;
   justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   width: 100%;
   gap: 10px;
@@ -60,13 +62,17 @@
   border: 2px solid black;
   font-size: 20px;
   min-height: 50px;
+  max-width: 600px;
+  width: 100%;
 }
 .login ol{
   list-style-type: none;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
   gap: 15px;
+  height: max-content;
+  max-width: 600px;
 }
 .login ol li button{
   border: 0px solid transparent;

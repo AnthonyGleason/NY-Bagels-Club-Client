@@ -23,6 +23,7 @@
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.75);
   color: white;
+  max-width: 700px;
 }
 .custom-orders .brendels{
   font-size: 28px;
@@ -84,8 +85,9 @@
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.75);
   color: white;
-  font-size: 23px;
+  font-size: 35px;
   font-family: 'Courgette';
+  max-width: 700px;
 }
 .custom-orders .input-wrapper p{
   font-size: 18px;

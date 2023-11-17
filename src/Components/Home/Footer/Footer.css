@@ -1,3 +1,7 @@
+.footer *{
+  max-width: 600px;
+  align-self: center;
+}
 .footer{
   width: 100%;
   text-align: center;

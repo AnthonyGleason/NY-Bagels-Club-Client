@@ -29,3 +29,9 @@ button{
 #root .black-background{
   background-color: rgb(0,0,0);
 }
+h3{
+  font-size: 5vw;
+}
+h4{
+  font-size: 4vw;
+}

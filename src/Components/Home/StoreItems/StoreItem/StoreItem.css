@@ -7,9 +7,9 @@
   justify-content: center;
   width: 100%;
   padding: 1.2em;
-  max-width: 800px;
   background-image: url('../../../../Assets/backgrounds/wood-grain-alt.jpg');
-  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.5);
   padding-top: 3em;
   padding-bottom: 3em;
@@ -29,6 +29,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  max-width: 700px;
 }
 .store-item ol{
   display: flex;
@@ -37,9 +38,9 @@
   width: 100%;
 }
 .store-item .store-item-home-img{
+  max-width: 700px;
   width: 100%;
   border-radius: 5px;
-  max-width: 800px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 .store-item-buttons{

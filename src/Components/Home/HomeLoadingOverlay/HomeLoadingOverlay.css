@@ -1,4 +1,4 @@
-.init-load{
+.init-load {
   height: 100vh;
   position: absolute;
   width: 100vw;
@@ -9,25 +9,58 @@
   font-size: 30px;
   font-family: 'Titillium Web';
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 1em;
+  padding: 0.5em;
   gap: 10px;
   font-weight: 500;
   z-index: 97;
   top: 0;
 }
-.loading-content-wrapper{
+
+.loading-content-wrapper {
   z-index: 100;
+  height: max-content;
   background-color: rgba(230, 223, 223, 0.9);
-  padding: 0.5em;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  border-radius: 5px;
+  border-radius: 3px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.init-load-background{
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+  .loading-content-wrapper {
+    padding: 0.8em;
+  }
+  .init-load p {
+    font-size: 25px;
+  }
+  .init-load h1{
+    font-size: 30px;
+  }
+  .init-load h1 span:nth-child(2){
+    font-size: 27px;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 768px) {
+  .loading-content-wrapper {
+    padding: 2em;
+  }
+  .init-load p {
+    font-size: 30px;
+    padding: 0.5em;
+  }
+  .init-load h1{
+    font-size: 40px;
+  }
+  .init-load h1 span:nth-child(2){
+    font-size: 35px;
+  }
+}
+
+.init-load-background {
   background-image: url('../../../Assets/backgrounds/loading.jpg');
   width: 100vw;
   height: 100vh;
@@ -39,40 +72,44 @@
   left: 0;
   z-index: 98;
 }
-.init-load-overlay{
+
+.init-load-overlay {
   height: 100vh;
   width: 100vw;
   position: fixed;
   z-index: 99;
 }
-.init-load p{
-  font-size: 22px;
+
+.init-load p {
   padding: 0.5em;
   font-weight: 500;
   color: black;
+  max-width: 700px;
 }
+
 .init-load p,
 .init-load h1,
-.loading-spinner{
+.loading-spinner {
   text-align: center;
   z-index: 100;
 }
-.init-load h1 span:nth-child(2){
+
+.init-load h1 span:nth-child(2) {
   font-family: 'Titillium Web';
-  font-size: 7vw;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
-.init-load h1{
+
+.init-load h1 {
   color: #5d1917;
-  font-size: 7vw;
   font-weight: bold;
   font-family: 'Courgette';
-  text-wrap: nowrap;
+  white-space: wrap;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
-.init-load .loading-spinner{
+
+.init-load .loading-spinner {
   width: 100%;
   max-width: 70px;
 }
