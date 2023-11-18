@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.fb7021f5.css",
-    "main.js": "/static/js/main.f6bf6b5b.js",
+    "main.css": "/static/css/main.7108abd4.css",
+    "main.js": "/static/js/main.7651dc07.js",
     "static/js/241.bae584ad.chunk.js": "/static/js/241.bae584ad.chunk.js",
     "static/js/811.40160e84.chunk.js": "/static/js/811.40160e84.chunk.js",
     "static/js/211.00862995.chunk.js": "/static/js/211.00862995.chunk.js",
@@ -36,6 +36,7 @@
     "static/media/jpg": "/static/media/650c9f303843aa9fa7ae75cf.00c82fc83fe026e62f04.jpg",
     "static/media/wood-grain.jpg": "/static/media/wood-grain.d876d611ab0cf98050bc.jpg",
     "static/media/register.jpg": "/static/media/register.c5b540a82435ee4ec28e.jpg",
+    "static/media/cart-summary.jpg": "/static/media/cart-summary.aeb57d4f1455b6348610.jpg",
     "static/media/club-perks.jpg": "/static/media/club-perks.f6bb5e4c6e0d56dcc983.jpg",
     "static/media/loading.jpg": "/static/media/loading.19483d2288f43f9275ec.jpg",
     "static/media/login.jpg": "/static/media/login.4220dc4ccf1e4192620f.jpg",
@@ -72,12 +73,12 @@
     "static/media/logout.svg": "/static/media/logout.f6d2e89e1521811a90b3791f0306a0f0.svg",
     "static/media/foodMenu.svg": "/static/media/foodMenu.00a08210264b7baba829eee519269446.svg",
     "static/media/vip.svg": "/static/media/vip.ed094f904934515e0a14d18d0b4955bf.svg",
-    "main.fb7021f5.css.map": "/static/css/main.fb7021f5.css.map",
-    "main.f6bf6b5b.js.map": "/static/js/main.f6bf6b5b.js.map",
+    "main.7108abd4.css.map": "/static/css/main.7108abd4.css.map",
+    "main.7651dc07.js.map": "/static/js/main.7651dc07.js.map",
     "787.20178b2a.chunk.js.map": "/static/js/787.20178b2a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fb7021f5.css",
-    "static/js/main.f6bf6b5b.js"
+    "static/css/main.7108abd4.css",
+    "static/js/main.7651dc07.js"
   ]
 }
