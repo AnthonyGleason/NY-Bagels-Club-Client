@@ -15,11 +15,15 @@
   list-style: none;
   padding: 1em;
   width: 100%;
+  max-width: 700px;
+}
+#root .orders-container h4{
+  font-size: 30px;
 }
 .my-orders-heading{
   color: #5d1917;
   font-family: 'Courgette';
-  font-size: 6vw;
+  font-size: 35px;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   padding: 0.5em;

@@ -108,41 +108,43 @@ export default function CartSummary({
   }else{ //is checkout view
     return(
       <section className='cart-summary checkout-cart-summary'>
-        <h3>Final Basket Summary</h3>
-        <table>
-          <thead>
-            <tr>
-              <th className="item-name">Name</th>
-              <th className="item-quantity">Quantity</th>
-              <th className="item-subtotal">Subtotal</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className='cart-summary-wrapper'>
+          <h3>Final Basket Summary</h3>
+          <table>
+            <thead>
+              <tr>
+                <th className="item-name">Name</th>
+                <th className="item-quantity">Quantity</th>
+                <th className="item-subtotal">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                cart.items.map((cartItem, index) => {
+                  return (
+                    <CartSummaryItem 
+                      key={index}
+                      cartItem={cartItem}
+                      setCart={setCart}
+                      isCheckoutView={isCheckoutView}
+                    />
+                  );
+                })
+              }
+          </tbody>
+          </table>
+          <div className='cart-subtotal'>
+            <span><strong><span>Basket Subtotal:</span> <span>${cart.subtotalInDollars.toFixed(2)}</span></strong></span>
             {
-              cart.items.map((cartItem, index) => {
-                return (
-                  <CartSummaryItem 
-                    key={index}
-                    cartItem={cartItem}
-                    setCart={setCart}
-                    isCheckoutView={isCheckoutView}
-                  />
-                );
-              })
+              discountAmount && discountAmount > 0 ?
+              <span><strong><span>Promo Code Savings:</span> <span>-${discountAmount?.toFixed(2)}</span></strong></span>
+              : null
             }
-        </tbody>
-        </table>
-        <div className='cart-subtotal'>
-          <span><strong><span>Basket Subtotal:</span> <span>${cart.subtotalInDollars.toFixed(2)}</span></strong></span>
-          {
-            discountAmount && discountAmount > 0 ?
-            <span><strong><span>Promo Code Savings:</span> <span>-${discountAmount?.toFixed(2)}</span></strong></span>
-            : null
-          }
-          <span><strong><span>Calculated Tax:</span> <span>${taxPrice.toFixed(2) || '0.00'}</span></strong></span>
-          <span><strong><span>Shipping:</span> <span>Free</span></strong></span>
-          <span><strong><span>Basket Total:</span> <span>${cartTotalPrice.toFixed(2)}</span></strong></span>
-          <span><strong>Your order will ship on {new Date(cart.desiredShipDate).toDateString()} or the next available business day.</strong></span>
+            <span><strong><span>Calculated Tax:</span> <span>${taxPrice.toFixed(2) || '0.00'}</span></strong></span>
+            <span><strong><span>Shipping:</span> <span>Free</span></strong></span>
+            <span><strong><span>Basket Total:</span> <span>${cartTotalPrice.toFixed(2)}</span></strong></span>
+            <span><strong>Your order will ship on {new Date(cart.desiredShipDate).toDateString()} or the next available business day.</strong></span>
+          </div>
         </div>
       </section>
     )

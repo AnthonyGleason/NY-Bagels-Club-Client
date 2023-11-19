@@ -337,11 +337,18 @@ export default function CheckoutForm({
                 <button type='button' onClick={()=>{handleRemovePromoCode()}}>Remove</button>
             }
           </div>
+          <CartSummary 
+            discountAmount={discountAmount} 
+            isPromoApplied={isPromoApplied} 
+            paymentIntentToken={clientSecret} 
+            address={address} 
+            setPaymentIntentToken={setClientSecret} 
+            isCheckoutView={true} 
+          />
           <div className="payment-form-button-container">
-            <CartSummary discountAmount={discountAmount} isPromoApplied={isPromoApplied} paymentIntentToken={clientSecret} address={address} setPaymentIntentToken={setClientSecret} isCheckoutView={true} />
             <button disabled={isLoading || !stripe || !elements} id="submit">
               <span id="button-text">
-                {isLoading ? <div className="spinner" id="spinner"></div> : "Pay Now"}
+                {isLoading ? "Processing..." : "Pay Now"}
               </span>
             </button>
             <button onClick={()=>{navigate('/')}}>

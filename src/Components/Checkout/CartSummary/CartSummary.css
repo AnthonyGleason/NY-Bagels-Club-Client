@@ -6,26 +6,36 @@
   padding: 0.8em;
   justify-content: center;
   align-items: center;
+  color: black;
+}
+#pre-checkout{
   background-image: url('../../../Assets/backgrounds/cart-summary.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  color: white;
   min-height: 100vh;
+  color: white;
 }
+#pre-checkout .cart-summary-wrapper{
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+#pre-checkout h3{
+  color: white;
+}
+
 .cart-summary-wrapper{
-  max-width: 600px;
+  max-width: 700px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: rgba(0, 0, 0, 0.8);
   padding: 1em;
   border-radius: 3px;
 }
-#root .cart-summary h3{
+.cart-summary h3{
   font-size: 35px;
   font-family: 'Allura';
   text-align: center;
-  color: white;
+  color: black;
   font-weight: bolder;
 }
 

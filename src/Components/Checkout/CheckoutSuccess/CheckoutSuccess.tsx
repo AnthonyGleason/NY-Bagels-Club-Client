@@ -52,6 +52,23 @@ export default function CheckoutSuccess(){
     if (paymentIntent) fetchPlacedOrder(setOrder,paymentIntent);
   },[]);
 
+  useEffect(() => {
+    // Page is loading
+    let timeoutId:any;
+  
+    if (!order && isSignedIn) {
+      timeoutId = setTimeout(() => {
+        window.location.reload();
+      }, 5000);
+    }
+  
+    return () => {
+      // Cleanup: Clear the timeout when the component unmounts or when the dependency values change
+      clearTimeout(timeoutId);
+    };
+  }, [order, isSignedIn]);
+  
+
   if (!isSignedIn){
     return(
       <>
@@ -103,7 +120,7 @@ export default function CheckoutSuccess(){
         <div className='checkout-success'>
           <div className='checkout-success-heading-wrapper'>
             <h3>Your Order Has Been Placed!</h3>
-            <h3>Order #{order._id}</h3>
+            <h3>#{order._id}</h3>
           </div>
           <div className='checkout-success-content'>
             <p>Thank you for choosing New York Bagels Club for your purchase. If you have any questions or need assistance with your order, please don't hesitate to reach out. We look forward to delivering your order with care and ensuring your satisfaction. Welcome to the New York Bagels Club family!</p>

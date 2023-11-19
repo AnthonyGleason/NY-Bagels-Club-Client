@@ -60,7 +60,7 @@ export default function PreCheckoutSummary({
   };
 
   return(
-    <section className='cart-summary' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
+    <section id='pre-checkout' className='cart-summary' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
       <div className='cart-summary-wrapper'>
 
         <div className='calendar-wrapper'>

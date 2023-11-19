@@ -26,7 +26,7 @@
 }
 @media screen and (width<768px){
   .support h3{
-    font-size: 30px;
+    font-size: 25px;
   }
 }
 @media screen and (width>=768px){
@@ -36,6 +36,7 @@
 }
 .support h3{
   text-align: center;
+  font-family: 'Titillium Web';
 }
 .support section button{
   width: 100%;

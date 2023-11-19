@@ -40,6 +40,7 @@ export default function Register(){
       />
       <section 
         className='register-wrapper'
+        onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}
       >
         <motion.form
           initial={{ opacity: 0 }}

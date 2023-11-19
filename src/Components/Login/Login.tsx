@@ -30,7 +30,10 @@ export default function Login(){
         isSignedIn={isSignedIn}
         setIsSignedIn={setIsSignedIn}
       />
-      <section className='login-wrapper'>
+      <section 
+        className='login-wrapper'
+        onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}
+      >
         <motion.form 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

@@ -23,7 +23,10 @@ export default function Support(){
         isSignedIn={isSignedIn}
         setIsSignedIn={setIsSignedIn}
       />
-      <main className='support'>
+      <main 
+        className='support'
+        onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}
+      >
         <h3>How May We Assist You?</h3>
         <section className='contact-section'>
           <button onClick={() => setIsContactUsExpanded(!isContactUsExpanded)}>
