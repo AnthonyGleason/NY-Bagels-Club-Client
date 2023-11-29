@@ -27,6 +27,13 @@ export default function Home(){
 
   const navigate = useNavigate();
   
+  //fetch cart data on load 
+  //This fixes a bug where if a user signs into an account after adding things to their cart when they are redirected to the home screen their cart doesnt load till something is added.
+  useEffect(()=>{
+    const cartToken:string | null  = localStorage.getItem('cartToken');
+    if (cartToken) fetchAndHandleCart(setCart);
+  },[]);
+
   return(
     <>
       {

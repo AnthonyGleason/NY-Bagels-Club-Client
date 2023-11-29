@@ -16,7 +16,7 @@ export default function UserSearchResult({user}:{user:User}){
   };
 
   const handleRequestMembershipInfo = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/admin/users/memberships`,{
+    const response = await fetch(`${getServerUrlPrefix()}/api/admin/users/memberships/${user._id}`,{
       method: 'GET',
       headers:{
         'Content-Type': 'application/json',
