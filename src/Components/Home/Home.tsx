@@ -76,7 +76,12 @@ export default function Home(){
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   transition={{duration: 2.5}}
-                  viewport={{once: false}}>Enjoy FREE Shipping on All Orders!
+                  viewport={{once: false}}
+                >
+                  Enjoy FREE Shipping on ALL Orders!
+                  <br />
+                  <br />
+                  This offer includes shipping to Alaska, Guam, Hawaii, Virgin Islands and Puerto Rico!
                 </motion.h4>
               </div>
               <img className='home-delivery' src={homeDeliveryImg} alt='home delivery' />

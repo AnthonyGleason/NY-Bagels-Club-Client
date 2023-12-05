@@ -46,7 +46,7 @@ root.render(
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/subscribe' element={<SubscriptionPage />} />
-        <Route path='/cart/checkout/success' element={<CheckoutSuccess />} />
+        <Route path='/cart/checkout/success/:pendingOrderDocID' element={<CheckoutSuccess />} />
         <Route path='/cart/checkout' element={<Checkout />} />
         <Route path='/cart' element={<CartSummary isCheckoutView={false} />} />
         <Route path='/accounts/password/reset/:resetID' element={<ResetPassword />} />

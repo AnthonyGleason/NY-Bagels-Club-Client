@@ -6,7 +6,7 @@ import { emptyCart } from '../../../Helpers/cart';
 import loadingImg from '../../../Assets/icons/bubble-loading.svg';
 import { verifyLoginToken } from '../../../Helpers/auth';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function CheckoutSuccess(){
   const [order,setOrder] = useState<Order | null>(null);
@@ -15,21 +15,20 @@ export default function CheckoutSuccess(){
   const [failFlag,setFailFlag] = useState<boolean>(false);
 
   const navigate = useNavigate();
-
+  const params = useParams();
+  const pendingOrderDocID:string | undefined = params.pendingOrderDocID;
   const verifyIsLoggedIn = async function(){
     setIsSignedIn(await verifyLoginToken());
   };
 
-  const fetchPlacedOrder = async function(setOrder:Function,paymentIntent:string){
-    const response = await fetch(`${getServerUrlPrefix()}/api/users/orders/getByIntent`,{
-      method: 'POST',
+  const fetchPlacedOrder = async function(setOrder:Function){
+    if (!pendingOrderDocID) return;
+    const response = await fetch(`${getServerUrlPrefix()}/api/shop/orders/checkout/fetchPlacedOrder/${pendingOrderDocID.toString()}`,{
+      method: 'GET',
       headers:{
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
-      },
-      body: JSON.stringify({
-        paymentIntentID: paymentIntent
-      })
+      }
     });
     const responseData = await response.json();
     if (responseData.orderData){
@@ -49,7 +48,7 @@ export default function CheckoutSuccess(){
     const urlParams = new URLSearchParams(window.location.href);
     const paymentIntent:string | null= urlParams.get('payment_intent_client_secret');
     //NOW WE NEED TO SPLIT THE PAYMENT INTENT SECRET SERVERSIDE
-    if (paymentIntent) fetchPlacedOrder(setOrder,paymentIntent);
+    if (!order) fetchPlacedOrder(setOrder);
   },[]);
 
   useEffect(() => {
@@ -118,11 +117,11 @@ export default function CheckoutSuccess(){
           setIsSignedIn={setIsSignedIn}
         />
         <div className='checkout-success'>
-          <div className='checkout-success-heading-wrapper'>
-            <h3>Your Order Has Been Placed!</h3>
-            <h3>#{order._id}</h3>
-          </div>
           <div className='checkout-success-content'>
+            <div className='checkout-success-heading-wrapper'>
+              <h3>Your Order Has Been Placed!</h3>
+              <h3>#{order._id}</h3>
+            </div>
             <p>Thank you for choosing New York Bagels Club for your purchase. If you have any questions or need assistance with your order, please don't hesitate to reach out. We look forward to delivering your order with care and ensuring your satisfaction. Welcome to the New York Bagels Club family!</p>
             <p>To track the status of your order please visit the "My Orders" page.</p>
             <button className='my-orders' onClick={()=>{navigate('/accounts/orders')}}>My Orders</button>

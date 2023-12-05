@@ -97,7 +97,7 @@ export default function OrderItem({
             }
             <p>
               <span>Calculated Tax:</span>
-              <span><strong>${order.cart.taxInDollars}</strong></span>
+              <span><strong>${order.cart.taxInDollars.toFixed(2)}</strong></span>
             </p>
             <p>
               <span>Shipping Cost:</span>

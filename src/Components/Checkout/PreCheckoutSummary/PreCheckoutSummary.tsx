@@ -43,15 +43,29 @@ export default function PreCheckoutSummary({
     updateDesiredShipDate()
   },[date]);
 
-  const handleNavigateCheckout = function(){
+  const handleNavigateCheckout = async function(){
+    let body:any = {};
+    if (isGiftInput){
+      body = {
+        giftMessage: giftMessageInput
+      };
+    };
     if (!date){
       alert('You must select a ship date for your order to proceed.');
     }else{
-      navigate('/cart/checkout');
+      const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-checkout-session`,{
+        method: 'POST',
+        headers:{
+          'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
+          'cart-token': `Bearer ${localStorage.getItem('cartToken')}`,
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(body)
+      });
+      const responseData = await response.json();
+      window.location.href=responseData.sessionUrl;
     };
   };
-
-
   // get tomorrow's date
   const getTomorrowDate = function(){
     const tomorrow = new Date();
@@ -59,10 +73,12 @@ export default function PreCheckoutSummary({
     return tomorrow;
   };
 
+  const [isGiftInput,setIsGiftInput] = useState<boolean>(false);
+  const [giftMessageInput,setGiftMessageInput] = useState<string>('');
+
   return(
     <section id='pre-checkout' className='cart-summary' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
       <div className='cart-summary-wrapper'>
-
         <div className='calendar-wrapper'>
           <h3>Choose Your Ship Date</h3>
           <Calendar 
@@ -112,6 +128,28 @@ export default function PreCheckoutSummary({
         </div>
         <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
         {/* <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>Checkout</button> */}
+        <h3>Is This Order A Gift?</h3>
+          <div className='gift-options-content'>
+            <div className='gift-toggle-container'>
+              <input
+                type='checkbox'
+                checked={isGiftInput}
+                onChange={(e) => setIsGiftInput(e.target.checked)}
+              />
+            </div>
+            {
+              isGiftInput===true
+              ?
+                <div className='gift-options-form'>
+                  <div>
+                    <label>Leave A Gift Message (Optional)</label>
+                    <textarea maxLength={400} value={giftMessageInput} onChange={(e)=>{setGiftMessageInput(e.target.value)}} />
+                  </div>
+                </div>
+              :
+                null
+            }
+          </div>
         <button className='button-styled' onClick={()=>{handleNavigateCheckout()}}>Checkout Now</button>
       </div>
     </section>
