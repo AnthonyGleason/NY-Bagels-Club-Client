@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 //import components
 import Sidebar from './Sidebar/Sidebar';
 import StoreItems from './StoreItems/StoreItems';
@@ -17,6 +17,7 @@ import starImg from '../../Assets/icons/star-duotone.svg';
 import { useNavigate } from 'react-router-dom';
 import CustomOrders from './CustomOrders/CustomOrders';
 import {motion} from 'framer-motion';
+import storeFrontImg from '../../Assets/storefront.jpeg';
 
 export default function Home(){
   const [isPageLoaded, setIsPageLoaded] = useState<boolean>(false);
@@ -25,14 +26,15 @@ export default function Home(){
   const [storeItems,setStoreItems] = useState<(SpreadItem | BagelItem)[]>([]); 
   const [cart,setCart] = useState<Cart>(emptyCart);
 
-  const navigate = useNavigate();
-  
-  //fetch cart data on load 
-  //This fixes a bug where if a user signs into an account after adding things to their cart when they are redirected to the home screen their cart doesnt load till something is added.
+  const isInitialLoad = useRef(true);
+
   useEffect(()=>{
-    const cartToken:string | null  = localStorage.getItem('cartToken');
-    if (cartToken) fetchAndHandleCart(setCart);
-  },[]);
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      const cartToken:string | null  = localStorage.getItem('cartToken');
+      if (cartToken) fetchAndHandleCart(setCart);
+    };
+  },[isInitialLoad]);
 
   return(
     <>
@@ -78,7 +80,7 @@ export default function Home(){
                   transition={{duration: 2.5}}
                   viewport={{once: false}}
                 >
-                  Enjoy FREE Shipping on ALL Orders!
+                  Enjoy FREE Priority Shipping on ALL Orders!
                   <br />
                   <br />
                   This offer includes shipping to Alaska, Guam, Hawaii, Virgin Islands and Puerto Rico!
@@ -89,7 +91,6 @@ export default function Home(){
             <h3 
               className='store-items-heading' 
               id='proudly-delivering'
-              onClick={()=>{window.location.href='https://www.brendelsbagels.com/'}}
             >
               <motion.span
                 initial={{ opacity: 0 }}
@@ -118,6 +119,7 @@ export default function Home(){
               </motion.span>
             </h3>
           </div>
+          <img src={storeFrontImg} alt='brendels store front' className='store-front-img' />
           <About />
           <h3 
             id='join-the-club'

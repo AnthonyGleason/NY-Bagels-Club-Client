@@ -1,21 +1,23 @@
 import { getServerUrlPrefix } from "../Config/clientSettings";
-import { requestApplyMembershipPricingToCart } from "./cart";
 
 export const verifyCartToken = async function(setCart:Function):Promise<boolean>{
-  const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/verify`,{
-    method: 'GET',
-    headers:{
-      'Content-Type': 'application/json',
-      'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
-      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-    }
-  });
-  const responseData = await response.json();
-  if (responseData.isValid){
+  try{
+    const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/verify`,{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      }
+    });
+    if (response.status!==200) throw new Error('No valid cart detected. Either the user does not have a cart token or the token expired.');
+    const responseData = await response.json();
     setCart(responseData.cart);
     return responseData.isValid;
+  }catch(err){
+    console.log(err);
+    return false;
   };
-  return false;
 };
 
 export const requestCartToken = async function(){
@@ -29,11 +31,12 @@ export const requestCartToken = async function(){
   }
 };
 
-export const verifyLoginToken = async function(setIsSignedIn?:Function):Promise<boolean>{
+export const verifyLoginToken = async function(setIsSignedIn?:Function,setIsAdmin?:Function):Promise<boolean>{
   let isValid:boolean = false;
   //handle no login token is present
   if (!localStorage.getItem('loginToken')){
     if (setIsSignedIn) setIsSignedIn(false);
+    if (setIsAdmin) setIsAdmin(false);
     return false;
   };
   try{
@@ -52,11 +55,14 @@ export const verifyLoginToken = async function(setIsSignedIn?:Function):Promise<
     }else{
       isValid=responseData.isValid;
     };
+    if (setIsAdmin && responseData.isAdmin===true) setIsAdmin(true);
+    if (setIsSignedIn) setIsSignedIn(isValid);
+    return isValid;
   }catch(err){
     console.log(err);
+    if (setIsAdmin) setIsAdmin(false);
+    return false;
   };
-  if (setIsSignedIn) setIsSignedIn(isValid);
-  return isValid;
 };
 
 export const handleLogout = async function(setIsSignedIn?:Function){
@@ -73,54 +79,22 @@ export const handleLogout = async function(setIsSignedIn?:Function){
 };
 
 export const getMembershipTier = async function(setMembershipTier?:Function):Promise<string>{
-  //if the user is not signed in (no login token return 'Non-Member')
-  if (!localStorage.getItem('loginToken')) return 'Non-Member';
-  const response = await fetch(`${getServerUrlPrefix()}/api/users/membershipLevel`,{
-    method: 'GET',
-    headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-    }
-  });
-  const responseData = await response.json();
-  if (responseData.membershipLevel){
+  try{
+    if (!localStorage.getItem('loginToken')) throw new Error('You are not signed in');
+    const response = await fetch(`${getServerUrlPrefix()}/api/users/membershipLevel`,{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      }
+    });
+    const responseData = await response.json();
     if (setMembershipTier) setMembershipTier(responseData.membershipLevel);
+    
     return responseData.membershipLevel;
-  }else{
+  }catch(err){
+    console.log(err+', showing non-member pricing');
     if (setMembershipTier) setMembershipTier('Non-Member');
-    return 'Non-Member'
+    return 'Non-Member';
   };
-};
-
-export const getPaymentIntentToken = async function(clientSecret:string,setClientSecret:Function){
-  const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-payment-intent`,{
-    method: 'POST',
-    headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
-      'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
-    },
-    body: JSON.stringify({
-      clientSecret: clientSecret
-    })
-  });
-  const responseData = await response.json();
-  setClientSecret(responseData.paymentIntentToken);
-};
-
-export const updateAdminStatus = async function(setIsAdmin:Function){
-   //only proceed if the user is signed in
-  if (!localStorage.getItem('loginToken')) return;
- 
-  const response = await fetch(`${getServerUrlPrefix()}/api/admin/verifyAdmin`,{
-    method: 'GET',
-    headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-    }
-  });
-  const responseData = await response.json();
-  if (responseData.isAdmin){
-    setIsAdmin(responseData.isAdmin);
-  }
 };

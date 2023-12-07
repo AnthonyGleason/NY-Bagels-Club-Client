@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import CartSummaryItem from '../CartSummaryItem/CartSummaryItem';
 import { Cart } from '../../../Interfaces/interfaces';
 import Calendar from 'react-calendar';
@@ -10,49 +9,25 @@ export default function PreCheckoutSummary({
   isSidebarExpanded,
   setIsSidebarExpanded,
   cart,
-  isCheckoutView,
   setCart
 }:{
   isSidebarExpanded:boolean,
   setIsSidebarExpanded:Function,
   cart:Cart,
-  isCheckoutView:boolean,
   setCart:Function
 }){
-  const navigate = useNavigate();
   const [date,setDate] = useState<Date>();
-
-  const updateDesiredShipDate = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/shipDate`,{
-      method: 'PUT',
-      headers:{
-        'Content-Type': 'application/json',
-        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      },
-      body: JSON.stringify({
-        desiredShipDate: date
-      })
-    });
-    const responseData = await response.json();
-    if (responseData.cartToken) localStorage.setItem('cartToken',responseData.cartToken);
-  };
-
-  useEffect(()=>{
-    //update the date in the mongodb cart
-    updateDesiredShipDate()
-  },[date]);
-
+  const [isGiftInput,setIsGiftInput] = useState<boolean>(false);
+  const [giftMessageInput,setGiftMessageInput] = useState<string>('');
+  
   const handleNavigateCheckout = async function(){
-    let body:any = {};
-    if (isGiftInput){
-      body = {
-        giftMessage: giftMessageInput
-      };
-    };
     if (!date){
       alert('You must select a ship date for your order to proceed.');
     }else{
+      const body = {
+        giftMessage: giftMessageInput || '',
+        shipDate: date
+      };
       const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-checkout-session`,{
         method: 'POST',
         headers:{
@@ -63,18 +38,20 @@ export default function PreCheckoutSummary({
         body:JSON.stringify(body)
       });
       const responseData = await response.json();
-      window.location.href=responseData.sessionUrl;
+      if (response.status!==200){
+        alert('There was an error retrieving your account information. Please sign in again.');
+      }else{
+        window.location.href=responseData.sessionUrl;
+      };
     };
   };
+
   // get tomorrow's date
   const getTomorrowDate = function(){
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     return tomorrow;
   };
-
-  const [isGiftInput,setIsGiftInput] = useState<boolean>(false);
-  const [giftMessageInput,setGiftMessageInput] = useState<string>('');
 
   return(
     <section id='pre-checkout' className='cart-summary' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
@@ -116,7 +93,6 @@ export default function PreCheckoutSummary({
                     key={index}
                     cartItem={cartItem}
                     setCart={setCart}
-                    isCheckoutView={isCheckoutView}
                   />
                 );
               })

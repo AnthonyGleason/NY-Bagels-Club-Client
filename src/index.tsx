@@ -9,8 +9,6 @@ import Footer from './Components/Home/Footer/Footer';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
-import CartSummary from './Components/Checkout/CartSummary/CartSummary';
-import Checkout from './Components/Checkout/Checkout';
 
 //import css
 import './index.css';
@@ -22,6 +20,7 @@ import ResetPassword from './Components/Accounts/ResetPassword/ResetPassword';
 import Admin from './Components/Admin/Admin';
 import Snowfall from 'react-snowfall';
 import Support from './Components/Support/Support';
+import CartSummary from './Components/Checkout/CartSummary/CartSummary';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -47,8 +46,7 @@ root.render(
         <Route path='/register' element={<Register />} />
         <Route path='/subscribe' element={<SubscriptionPage />} />
         <Route path='/cart/checkout/success/:pendingOrderDocID' element={<CheckoutSuccess />} />
-        <Route path='/cart/checkout' element={<Checkout />} />
-        <Route path='/cart' element={<CartSummary isCheckoutView={false} />} />
+        <Route path='/cart' element={<CartSummary />} />
         <Route path='/accounts/password/reset/:resetID' element={<ResetPassword />} />
         <Route path='/accounts/orders' element={<MyOrders />} />
         <Route path='/accounts/settings' element={<AccountSettings />} />

@@ -1,5 +1,4 @@
 import { getServerUrlPrefix } from "../Config/clientSettings";
-import { requestApplyMembershipPricingToCart } from "./cart";
 import { isValidEmail } from "./verification";
 
 export const fetchAccountSettings = async function(
@@ -7,7 +6,6 @@ export const fetchAccountSettings = async function(
   setLastNameInput?:Function,
   setEmailInput?:Function
 ):Promise<void>{
-  
   try{
     //ensure the user is logged in
     const loginToken:string | null = localStorage.getItem('loginToken');

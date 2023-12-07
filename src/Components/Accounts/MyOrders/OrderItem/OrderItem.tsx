@@ -87,14 +87,6 @@ export default function OrderItem({
               <span>Basket Subtotal:</span>
               <span><strong>${order.cart.subtotalInDollars.toFixed(2)}</strong></span>
             </p>
-            {
-              order.cart.promoCodeID ? (
-                <p>
-                  <span>Promo Code Savings:</span>
-                  <span><strong>-${order.cart.discountAmountInDollars.toFixed(2)}</strong></span>
-                </p>
-              ) : null
-            }
             <p>
               <span>Calculated Tax:</span>
               <span><strong>${order.cart.taxInDollars.toFixed(2)}</strong></span>
@@ -103,9 +95,17 @@ export default function OrderItem({
               <span>Shipping Cost:</span>
               <span><strong>Free</strong></span>
             </p>
+            {
+              order.cart.discountAmountInDollars>0 ?
+              <p>
+                <span>Discount Applied:</span>
+                <span><strong>-${order.cart.discountAmountInDollars}</strong></span>
+              </p> :
+              null
+            }
             <p>
               <span>Total Cost:</span>
-              <span><strong>${totalAmount.toFixed(2)}</strong></span>
+              <span><strong>${order.cart.finalPriceInDollars}</strong></span>
             </p>
           </div>
           {

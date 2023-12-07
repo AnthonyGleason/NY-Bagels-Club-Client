@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './CheckoutSuccess.css';
 import {Cart, Order} from '../../../Interfaces/interfaces';
 import Sidebar from '../../Home/Sidebar/Sidebar';
@@ -38,18 +38,19 @@ export default function CheckoutSuccess(){
     };
   };
 
-  useEffect(()=>{
-    //clear the users cart on load
-    localStorage.removeItem('cartToken');
-    //verify the user is logged in
-    verifyIsLoggedIn();
+  const isInitialLoad = useRef(true);
 
-    //get payment intent token from url params
-    const urlParams = new URLSearchParams(window.location.href);
-    const paymentIntent:string | null= urlParams.get('payment_intent_client_secret');
-    //NOW WE NEED TO SPLIT THE PAYMENT INTENT SECRET SERVERSIDE
-    if (!order) fetchPlacedOrder(setOrder);
-  },[]);
+  useEffect(()=>{
+    if (isInitialLoad.current){
+      isInitialLoad.current=false;
+      //clear the users cart on load
+      localStorage.removeItem('cartToken');
+      //verify the user is logged in
+      verifyIsLoggedIn();
+      //NOW WE NEED TO SPLIT THE PAYMENT INTENT SECRET SERVERSIDE
+      if (!order) fetchPlacedOrder(setOrder);
+    }
+  },[isInitialLoad]);
 
   useEffect(() => {
     // Page is loading

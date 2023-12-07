@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './StoreItem.css';
 import { BagelItem, Cart, SpreadItem } from '../../../../Interfaces/interfaces';
 import { getItemQuantityFromCart, modifyCart } from '../../../../Helpers/cart';
@@ -29,7 +29,7 @@ export default function StoreItem({
   const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
   const [selection, setSelection] = useState<string>('');
   const [isAddToCartShown, setIsAddToCartShown] = useState<boolean>(false);
-  const [isInitialLoad,setIsInitialLoad] = useState<boolean>(true);
+  const [didAnimationPlay,setDidAnimationPlay] = useState<boolean>(true);
 
   const [isAddToCartExpanded,setIsAddToCartExpanded] = useState<boolean>(false);
   const controls = useAnimation();
@@ -44,21 +44,26 @@ export default function StoreItem({
   }
 
   useEffect(()=>{
-    if (!isInitialLoad){
+    if (!didAnimationPlay){
       myAnimation();
     }else{
-      setIsInitialLoad(false);
-    }
+      setDidAnimationPlay(false);
+    };
   },[isAddToCartExpanded])
 
   //handle initial page load
+  const isInitialLoad = useRef(true);
+  
   useEffect(()=>{
-    //dynamically import images
-    import(`../../../../Assets/storeItems/${storeItem._id}.jpg`)
-      .then((module)=>{
-        setItemImgSrc(module.default);
-      });
-  },[]);
+    if (isInitialLoad.current){
+      isInitialLoad.current = false;
+      //dynamically import images
+      import(`../../../../Assets/storeItems/${storeItem._id}.jpg`)
+        .then((module)=>{
+          setItemImgSrc(module.default);
+        });
+    };
+  },[isInitialLoad]);
 
   //whenever the cart is updated update the quantities of items
   useEffect(()=>{

@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useRef, useState} from 'react';
 import menuImg from '../../../Assets/icons/menu.svg';
 import registerImg from '../../../Assets/icons/register.svg';
 import loginImg from '../../../Assets/icons/login.svg';
@@ -7,7 +7,6 @@ import logoutImg from '../../../Assets/icons/logout.svg';
 import vipImg from '../../../Assets/icons/vip.svg';
 import ordersImg from '../../../Assets/icons/orders.svg';
 import settingsImg from '../../../Assets/icons/settings.svg';
-import creditCardImg from '../../../Assets/icons/creditcard.svg';
 import adminImg from '../../../Assets/icons/admin.svg';
 import homeImg from '../../../Assets/icons/round-home.svg';
 import supportImg from '../../../Assets/icons/support-agent.svg';
@@ -15,7 +14,7 @@ import supportImg from '../../../Assets/icons/support-agent.svg';
 import './Sidebar.css';
 import { useNavigate } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
-import { handleLogout, updateAdminStatus, verifyLoginToken } from '../../../Helpers/auth';
+import { handleLogout, verifyLoginToken } from '../../../Helpers/auth';
 import { toggleExpandMenu } from '../../../Helpers/sidebar';
 import { Cart } from '../../../Interfaces/interfaces';
 
@@ -38,15 +37,20 @@ export default function Sidebar(
   const [totalQuantity,setTotalQuantity] = useState<number>(cart.totalQuantity || 0);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [showExpandedMenu, setShowExpandedMenu] = useState<boolean>(false);
-  const [isInitialLoad,setIsInitialLoad] = useState<boolean>(true);
+  const [didAnimationPlay,setDidAnimationPlay] = useState<boolean>(true);
 
   const navigate = useNavigate();
   const controls = useAnimation();
   
+  const isInitialLoad = useRef(true);
+  
   //check if user is logged in and login token is valid on initial page load
   useEffect(()=>{
-    verifyLoginToken(setIsSignedIn);
-  },[])
+    if( isInitialLoad.current ){
+      isInitialLoad.current = false;
+      verifyLoginToken(setIsSignedIn,setIsAdmin);
+    };
+  },[isInitialLoad])
 
   const myAnimation = async function() {
     await controls.start({ x: 0 });
@@ -65,12 +69,7 @@ export default function Sidebar(
     });
     // Second animation
     await controls.start({ x: 0 });
-  }
-
-  //when the user signs in verify admin status for admin panel
-  useEffect(()=>{
-    updateAdminStatus(setIsAdmin);
-  },[isSignedIn]);
+  };
 
   //when cart is updated calculate new total quantity
   useEffect(()=>{
@@ -78,10 +77,10 @@ export default function Sidebar(
   },[cart])
 
   useEffect(()=>{
-    if (!isInitialLoad){
+    if (!didAnimationPlay){
       myAnimation();
     }else{
-      setIsInitialLoad(false);
+      setDidAnimationPlay(false);
     };
   },[isExpanded]);
 
@@ -143,16 +142,6 @@ export default function Sidebar(
               </li>
             </>
           )}
-          {/* <li className='checkout'>
-            <button onClick={() => navigate('/cart/checkout')}>
-              <img src={creditCardImg} alt='checkout' />
-              <span>Checkout</span>
-            </button>
-            <button onClick={() => alert("We appreciate your interest...")}>
-              <img src={creditCardImg} alt='checkout' />
-              <span>Checkout</span>
-            </button>
-          </li> */}
           <li>
             <button
               onClick={() =>

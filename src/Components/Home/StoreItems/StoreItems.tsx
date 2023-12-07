@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './StoreItems.css';
 import StoreItem from './StoreItem/StoreItem';
-import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import { getMembershipTier } from '../../../Helpers/auth';
-import { BagelItem, Cart, CartItem, SpreadItem } from '../../../Interfaces/interfaces';
-import { getUnitPriceFromCartItem } from '../../../Helpers/cart';
+import { BagelItem, Cart, SpreadItem } from '../../../Interfaces/interfaces';
+import { fetchAndSetStoreItems } from '../../../Helpers/store';
 
 export default function StoreItems({
     cart,
@@ -20,26 +19,17 @@ export default function StoreItems({
     setStoreItems: Function
   }){
   const [userTier, setUserTier] = useState<string>('Non-Member');
-
-  const fetchAndSetStoreItems = async function(storeItemSetter:Function){
-    const response = await fetch(`${getServerUrlPrefix()}/api/shop/all`,{
-      method: 'GET'
-    });
-    const responseData = await response.json();
-    const allItems: (BagelItem | SpreadItem)[] | null = responseData.allItems;
-    if (allItems) storeItemSetter(responseData.allItems);
-  };
-
-  //get store items on initial load
-  useEffect(()=>{
-    fetchAndSetStoreItems(setStoreItems);
-    getMembershipTier(setUserTier);
-  },[]);
-
-  useEffect(()=>{
-    getMembershipTier(setUserTier);
-  },[isSignedIn]);
-
+  
+  const isInitialLoad = useRef(true);
+  
+  // get store items on initial load
+  useEffect(() => {
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      fetchAndSetStoreItems(setStoreItems);
+      getMembershipTier(setUserTier);
+    };
+  }, [isInitialLoad]);
 
   let counter:number = 0;
 

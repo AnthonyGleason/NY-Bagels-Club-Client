@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Address, Cart, CartItem, Order } from '../../../Interfaces/interfaces';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import './MyOrders.css';
@@ -14,14 +14,19 @@ export default function MyOrders(){
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Cart>(emptyCart);
 
+  const isInitialLoad = useRef(true);
+
   useEffect(()=>{
-    //fetch orders
-    fetchOrders(setOrders);
-    //fetch and set cart
-    fetchAndHandleCart(setCart);
-    //verify login token
-    verifyLoginToken(setIsSignedIn);
-  },[]);
+    if(isInitialLoad){
+      isInitialLoad.current = false;
+      //fetch orders
+      fetchOrders(setOrders);
+      //fetch and set cart
+      fetchAndHandleCart(setCart);
+      //verify login token
+      verifyLoginToken(setIsSignedIn);
+    };
+  },[isInitialLoad]);
 
   return(
     <>

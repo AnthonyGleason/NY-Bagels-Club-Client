@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import Sidebar from '../Home/Sidebar/Sidebar';
@@ -17,9 +17,14 @@ export default function Login(){
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Cart>(emptyCart);
 
+  const isInitialLoad = useRef(true);
+
   useEffect(()=>{
-    fetchAndHandleCart(setCart);
-  },[]);
+    if (isInitialLoad.current){
+      isInitialLoad.current = false;
+      fetchAndHandleCart(setCart);
+    };
+  },[isInitialLoad]);
   
   return(
     <>

@@ -50,7 +50,6 @@ export interface Cart{
   subtotalInDollars:number;
   taxInDollars:number;
   totalQuantity:number;
-  promoCodeID:string;
   discountAmountInDollars:number;
   finalPriceInDollars:number;
   desiredShipDate: Date;
@@ -74,16 +73,4 @@ export interface Membership{
   tier: string,
   userID: string,
   _id: string //unique id given by mongodb
-};
-
-export interface PromoCode{
-  code: string,
-  dateOfExpiry:Date,
-  totalAllowedUses?:number,
-  totalTimesUsed:number,
-  createdByUserID:string,
-  description:string,
-  disabled: boolean,
-  perk: string, // for example "Free Shipping", "15% Off", "$25 Off",
-  _id: string //mongodb unique id
 };

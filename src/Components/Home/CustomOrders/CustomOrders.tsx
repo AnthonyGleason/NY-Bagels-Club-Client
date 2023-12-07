@@ -60,12 +60,14 @@ export default function CustomOrders(){
             <div>
               <strong>Special Offer!</strong>
               <br />
-              <span className='brendels'>Brendel's</span> and New York Bagels Club have partnered to create a package deal for custom bagel styles. The package is $275 and comes with three custom baker's dozen's and three 1 lb spreads of your choice.
+              <span className='brendels'>Brendel's</span> and New York Bagels Club have partnered to create a package deal for custom bagel styles. The package is $295 and comes with four custom baker's dozen's and three 1 lb spreads of your choice.
             </div>
           </div>
           <div className='input-wrapper'>
-            <p>Are you interested in our $275 special offer? (Optional)</p>
-            <input type='checkbox' checked={isOfferChecked} onChange={()=>{setIsOfferChecked(!isOfferChecked)}}/>
+            <p>Are you interested in our $295 special offer? (Optional)</p>
+            <div className='input-wrapper'>
+              <input type='checkbox' checked={isOfferChecked} onChange={()=>{setIsOfferChecked(!isOfferChecked)}}/>
+            </div>
           </div>
           <div className='input-wrapper'>
             <input placeholder='Your Contact Email' value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' />

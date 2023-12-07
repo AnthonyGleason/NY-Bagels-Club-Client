@@ -1,6 +1,5 @@
-import CartSummaryItem from "../Components/Checkout/CartSummaryItem/CartSummaryItem";
 import { getServerUrlPrefix } from "../Config/clientSettings";
-import { Address, BagelItem, Cart, CartItem, SpreadItem } from "../Interfaces/interfaces";
+import { BagelItem, Cart, CartItem, SpreadItem } from "../Interfaces/interfaces";
 import { requestCartToken, verifyCartToken } from "./auth";
 
 export const modifyCart = async function(
@@ -57,13 +56,11 @@ export const modifyCart = async function(
 export const fetchAndHandleCart = async function(setCart:Function){
   try{
     const cartToken:string | null = localStorage.getItem('cartToken');
-
     //if a cart token was not found obtain a fresh one
     if (!cartToken){
       //request a new cart token
       localStorage.setItem('cartToken',await requestCartToken());
     };
-
     //a cart token exists but is invalid
     if (!await verifyCartToken(setCart)){
       localStorage.setItem('cartToken',await requestCartToken());
@@ -72,8 +69,9 @@ export const fetchAndHandleCart = async function(setCart:Function){
     };
   }catch(err){
     console.log(err);
-  }
+  };
 };
+
 export const getUnitPriceFromCartItem = function(storeItem:SpreadItem | BagelItem, selection?:string):number{
   let price:number = 0;
   if (storeItem.cat==='bagel' && selection==='six'){
@@ -114,31 +112,6 @@ export const handleCartItemInputChange = function(
   );
 };
 
-export const populateTaxCalculation = async function(
-    address:Address,
-    paymentIntentToken:string,
-    setCartTotalPrice:Function,
-    setTaxPrice:Function,
-    setPaymentIntentToken:Function
-  ){
-  const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-tax-calculation`,{
-    method: 'POST',
-    headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
-      'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`
-    },
-    body: JSON.stringify({
-      address: address,
-      clientSecret: paymentIntentToken
-    })
-  });
-  const responseData = await response.json();
-  setCartTotalPrice(responseData.total/100);
-  setTaxPrice(responseData.taxAmount/100);
-  if (setPaymentIntentToken) setPaymentIntentToken(responseData.paymentIntentToken);
-};
-
 export const getSelectionName = function(cartItem:CartItem){
   if (cartItem.selection==='six') return 'Six Pack(s)';
   if (cartItem.selection==='dozen') return 'Dozen(s)';
@@ -150,7 +123,6 @@ export const getSelectionName = function(cartItem:CartItem){
 export const getCartItemSubtotal = function(cartItem:CartItem):number{
   return cartItem.quantity * cartItem.unitPriceInDollars;
 };
-
 
 export const getItemQuantityFromCart = function(cart:Cart, itemName: string, selection?: string): number {
   if (!cart || !cart.items) return 0;
@@ -185,7 +157,6 @@ export const emptyCart = {
   subtotalInDollars: 0,
   taxInDollars: 0,
   totalQuantity: 0,
-  promoCodeID: '',
   discountAmountInDollars: 0,
   finalPriceInDollars: 0,
   desiredShipDate: new Date()

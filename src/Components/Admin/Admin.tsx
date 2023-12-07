@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { updateAdminStatus, verifyLoginToken } from '../../Helpers/auth';
+import React, { useEffect, useRef, useState } from 'react';
+import { verifyLoginToken } from '../../Helpers/auth';
 import Sidebar from '../Home/Sidebar/Sidebar';
 import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
 import { Cart, CartItem, Order } from '../../Interfaces/interfaces';
@@ -10,7 +10,6 @@ import UserSearchPanel from './UserSearchPanel/UserSearchPanel';
 import OrderSearchPanel from './OrderSearchPanel/OrderSearchPanel';
 import PendingOrders from './PendingOrders/PendingOrders';
 import ProcessingOrderPulls from './ProcessingOrderPulls/ProcessingOrderPulls';
-import PromoCodePanel from './PromoCodePanel/PromoCodePanel';
 import { getAllOrders, getAllPendingOrders } from '../../Helpers/admin';
 
 export default function Admin(){
@@ -22,12 +21,16 @@ export default function Admin(){
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Cart>(emptyCart);
   
+  const isInitialLoad = useRef(true);
+
   //handle initial page load
   useEffect(()=>{
-    updateAdminStatus(setIsAdmin);
-    fetchAndHandleCart(setCart);
-    verifyLoginToken(setIsSignedIn);
-  },[]);
+    if (isInitialLoad.current){
+      isInitialLoad.current=false;
+      fetchAndHandleCart(setCart);
+      verifyLoginToken(setIsSignedIn,setIsAdmin);
+    };
+  },[isInitialLoad]);
 
   useEffect(()=>{
     getAllOrders(setAllOrders);
@@ -62,7 +65,6 @@ export default function Admin(){
               allOrders={allOrders}
               setAllOrders={setAllOrders}
             />
-            <PromoCodePanel />
           </main>
         :
           <main>You don't have permission to access this content.</main>
