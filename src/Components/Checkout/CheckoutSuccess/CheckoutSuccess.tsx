@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CheckoutSuccess.css';
 import {Cart, Order} from '../../../Interfaces/interfaces';
-import Sidebar from '../../Home/Sidebar/Sidebar';
+import Sidebar from '../../Sidebar/Sidebar';
 import { emptyCart } from '../../../Helpers/cart';
 import loadingImg from '../../../Assets/icons/bubble-loading.svg';
 import { verifyLoginToken } from '../../../Helpers/auth';
@@ -45,6 +45,7 @@ export default function CheckoutSuccess(){
       isInitialLoad.current=false;
       //clear the users cart on load
       localStorage.removeItem('cartToken');
+      localStorage.removeItem('clubCartToken');
       //verify the user is logged in
       verifyIsLoggedIn();
       //NOW WE NEED TO SPLIT THE PAYMENT INTENT SECRET SERVERSIDE

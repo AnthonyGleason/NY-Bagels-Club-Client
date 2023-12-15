@@ -4,6 +4,7 @@ import { Cart } from '../../../Interfaces/interfaces';
 import Calendar from 'react-calendar';
 import './PreCheckoutSummary.css';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
+import '../Checkout.css';
 
 export default function PreCheckoutSummary({
   isSidebarExpanded,

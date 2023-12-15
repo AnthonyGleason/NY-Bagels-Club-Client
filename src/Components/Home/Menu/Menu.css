@@ -35,6 +35,23 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+/* WebKit (Chrome, Safari) custom scrollbar styling */
+.our-menu-content::-webkit-scrollbar{
+  width: 0px; /* Adjust the width as needed */
+}
+
+.our-menu-content::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Make the thumb transparent */
+}
+
+/* Firefox custom scrollbar styling */
+.our-menu-content::-moz-scrollbar {
+  width: 0px; /* Adjust the width as needed */
+}
+
+.our-menu-content::-moz-scrollbar-thumb {
+  background-color: transparent; /* Make the thumb transparent */
+}
 .our-menu-cat-nav-button{
   color: white;
   border: 0px solid black;
@@ -55,6 +72,7 @@
   flex-direction: column;
   overflow-y: hidden;
 }
+
 .our-menu-cat-content button{
   border: 0px solid transparent;
   border-radius: 8px;

@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Address, Cart, CartItem, Order } from '../../../Interfaces/interfaces';
-import { getServerUrlPrefix } from '../../../Config/clientSettings';
+import { Address, Cart, Order } from '../../../Interfaces/interfaces';
 import './MyOrders.css';
-import Sidebar from '../../Home/Sidebar/Sidebar';
+import Sidebar from '../../Sidebar/Sidebar';
 import { emptyCart, fetchAndHandleCart } from '../../../Helpers/cart';
 import { verifyLoginToken } from '../../../Helpers/auth';
 import { fetchOrders } from '../../../Helpers/accounts';
@@ -17,7 +16,7 @@ export default function MyOrders(){
   const isInitialLoad = useRef(true);
 
   useEffect(()=>{
-    if(isInitialLoad){
+    if(isInitialLoad.current){
       isInitialLoad.current = false;
       //fetch orders
       fetchOrders(setOrders);

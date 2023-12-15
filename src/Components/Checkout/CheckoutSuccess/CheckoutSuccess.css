@@ -12,8 +12,17 @@
 .checkout-success > *{
   max-width: 700px;
 }
+@media screen and (width<=768px) {
+  .checkout-success h3{
+    font-size: 21.5px;
+  };
+}
+@media screen and (width>768px) {
+  .checkout-success h3{
+    font-size: 25px;
+  };
+}
 .checkout-success h3{
-  font-size: 25px;
   text-wrap: wrap;
   word-wrap: normal;
   height: max-content;
@@ -21,7 +30,6 @@
 .checkout-success-heading-wrapper{
   color: white;
   font-family: 'Courgette';
-  font-size: 4.4vw;
   font-weight: bolder;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -40,6 +48,7 @@
   background-color: rgba(0, 0, 0, 0.8);
   padding: 1em;
   border-radius: 3px;
+  width: 100%;
 }
 .checkout-success button{
   border: 0px solid transparent;

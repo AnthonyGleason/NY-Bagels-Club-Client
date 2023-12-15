@@ -1,7 +1,10 @@
+//TODO, this route makes multiple requests in the [orderSearchResults useEffect]
+//to fix this pass the order[] and then filter it to the search results or fetch
+//search results only when the search input is not empty
+
 import React, { useEffect, useState } from 'react';
-import { Address, Cart, Order } from '../../../Interfaces/interfaces';
+import { Order } from '../../../Interfaces/interfaces';
 import AdminOrderItem from '../AdminOrderItem/AdminOrderItem';
-import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import magnifyGlassImg from '../../../Assets/icons/magnifying-glass.svg'
 import { getAllOrders, handleGetOrderSearchResults } from '../../../Helpers/admin';
 
@@ -27,7 +30,7 @@ export default function OrderSearchPanel({
   //so the user doesnt need to refresh the page
   useEffect(()=>{
     getAllOrders(setAllOrders);
-  },[orderSearchResults]);
+  },[orderSearchResults,setAllOrders]);
 
   if (isOrderSearchExpanded){
     return(

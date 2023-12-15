@@ -1,7 +1,7 @@
 import React,{useEffect, useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-import Sidebar from '../Home/Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
 import { Cart } from '../../Interfaces/interfaces';
 import { genErrorMessageElement, handleForgotPassword, submitLogin } from '../../Helpers/accounts';

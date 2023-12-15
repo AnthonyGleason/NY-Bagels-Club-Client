@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import './ResetPassword.css';
 import { getResetTokenStatus, handleSubmitForgotPassword } from '../../../Helpers/accounts';
 
@@ -16,7 +15,7 @@ export default function ResetPassword(){
   useEffect(()=>{
     if (!resetID) return;
     getResetTokenStatus(resetID,setIsExpired);
-  },[]);
+  },[resetID]);
 
   if (isExpired){
     return(

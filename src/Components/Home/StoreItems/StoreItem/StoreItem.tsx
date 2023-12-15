@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './StoreItem.css';
-import { BagelItem, Cart, SpreadItem } from '../../../../Interfaces/interfaces';
+import { BagelItem, Cart, PastryItem, Product, SpreadItem } from '../../../../Interfaces/interfaces';
 import { getItemQuantityFromCart, modifyCart } from '../../../../Helpers/cart';
 import basketImg from '../../../../Assets/icons/cart.svg';
 import { motion, useAnimation } from 'framer-motion';
@@ -14,7 +14,7 @@ export default function StoreItem({
   isSignedIn,
   setUserTier
 }:{
-  storeItem: BagelItem | SpreadItem,
+  storeItem: Product,
   cart:Cart,
   setCart:Function,
   isAltTheme:boolean,
@@ -27,7 +27,6 @@ export default function StoreItem({
   const [dozenItemQuantity,setDozenItemQuantity] = useState(0);
   const [itemImgSrc, setItemImgSrc] = useState<string | undefined>();
   const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
-  const [selection, setSelection] = useState<string>('');
   const [isAddToCartShown, setIsAddToCartShown] = useState<boolean>(false);
   const [didAnimationPlay,setDidAnimationPlay] = useState<boolean>(true);
 
@@ -67,7 +66,7 @@ export default function StoreItem({
 
   //whenever the cart is updated update the quantities of items
   useEffect(()=>{
-    if (storeItem.cat==='spread'){
+    if (storeItem.cat==='spread' || storeItem.cat==='pastry'){
       setItemQuantity(getItemQuantityFromCart(cart,storeItem.name,''));
     }else if (storeItem.cat==='bagel'){
       setSixPackItemQuantity(getItemQuantityFromCart(cart,storeItem.name,'six'));
@@ -105,6 +104,17 @@ export default function StoreItem({
     };
   };
 
+  const getCurrentPastryTierPricing = function(itemPrice:number,userTier:string){
+    if (storeItem.cat==='pastry'){
+      return(
+        <>
+          <span>{userTier} Pricing</span>
+          <span>${itemPrice}</span>
+        </>
+      )
+    };
+  };
+
   const getCurrentUserBagelTierPricing = function(sixPackPrice:number,dozenPrice:number,userTier:string){
     if (storeItem.cat==='bagel'){
       return(
@@ -125,14 +135,14 @@ export default function StoreItem({
             <span>{sixPackItemQuantity} Six Pack(s) in Basket</span>
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'six';
-              setSelection(selection);
               modifyCart(
                 getItemQuantityFromCart(cart,storeItem.name,selection)+1,
                 storeItem._id,
                 setCart,
                 isRequestPending,
                 setIsRequestPending,
-                selection
+                selection,
+                false
               )
             }}> 
               <div>
@@ -141,14 +151,14 @@ export default function StoreItem({
             </button>
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'six';
-              setSelection(selection);
               modifyCart(
                 getItemQuantityFromCart(cart,storeItem.name,selection)-1,
                 storeItem._id,
                 setCart,
                 isRequestPending,
                 setIsRequestPending,
-                selection
+                selection,
+                false
               )
             }}>
               <div>
@@ -160,14 +170,14 @@ export default function StoreItem({
             <span>{dozenItemQuantity} Dozen(s) in Basket</span>
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'dozen';
-              setSelection(selection);
               modifyCart(
                 getItemQuantityFromCart(cart,storeItem.name,selection)+1,
                 storeItem._id,
                 setCart,
                 isRequestPending,
                 setIsRequestPending,
-                selection
+                selection,
+                false
               )
             }}>
               <div>
@@ -176,14 +186,14 @@ export default function StoreItem({
             </button>
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'dozen';
-              setSelection(selection);
               modifyCart(
                 getItemQuantityFromCart(cart,storeItem.name,selection)-1,
                 storeItem._id,
                 setCart,
                 isRequestPending,
                 setIsRequestPending,
-                selection
+                selection,
+                false
               )
             }}>
               <div>
@@ -193,7 +203,7 @@ export default function StoreItem({
           </div>
         </>
       )
-    }else if (storeItem.cat==='spread'){
+    }else if (storeItem.cat==='spread' || storeItem.cat ==='pastry'){
       return(
         <div className='store-item-button-wrapper'>
           <span>{itemQuantity} in Basket</span>
@@ -204,7 +214,8 @@ export default function StoreItem({
               setCart,
               isRequestPending,
               setIsRequestPending,
-              ''
+              '',
+              false
             )
           }}>+</button>
           <button className='quantity-button' onClick={()=>{
@@ -214,7 +225,8 @@ export default function StoreItem({
               setCart,
               isRequestPending,
               setIsRequestPending,
-              ''
+              '',
+              false
             )
           }}>-</button>
         </div>
@@ -226,6 +238,8 @@ export default function StoreItem({
   
   let spreadItem:SpreadItem | undefined;
   let bagelItem:BagelItem | undefined;
+  let pastryItem:PastryItem | undefined;
+
   switch (storeItem.cat){
     case 'bagel':
       bagelItem = storeItem as BagelItem;
@@ -233,11 +247,14 @@ export default function StoreItem({
     case 'spread':
       spreadItem = storeItem as SpreadItem;
       break;
+    case 'pastry':
+      pastryItem = storeItem as PastryItem;
   };
 
-  const [bagelSixPackPrice,setBagelSixPackPrice] = useState<number>(bagelItem?.sixPrice || 0);
-  const [bagelDozenPrice,setBagelDozenPrice] = useState<number>(bagelItem?.dozenPrice || 0);
-  const [spreadItemPrice,setSpreadItemPrice] = useState<number>(spreadItem?.price || 0);
+  const bagelSixPackPrice = bagelItem?.sixPrice || 0;
+  const bagelDozenPrice = bagelItem?.dozenPrice || 0;
+  const spreadItemPrice = spreadItem?.price || 0;
+  const pastryItemPrice = pastryItem?.price || 0;
 
   useEffect(()=>{
     if (!localStorage.getItem('loginToken')) setUserTier('Non-Member');
@@ -264,6 +281,13 @@ export default function StoreItem({
             null
         } 
         {
+          storeItem.cat==='pastry'
+          ?
+            'Six Pack'
+          :
+            null
+        }
+        {
           spreadItem && spreadItem.cat==='spread'
           ?
             getCurrentUserSpreadTierPricing(
@@ -279,6 +303,16 @@ export default function StoreItem({
             getCurrentUserBagelTierPricing(
               parseFloat(calcPriceByUserTier(bagelSixPackPrice,userTier)),
               parseFloat(calcPriceByUserTier(bagelDozenPrice,userTier)),
+              userTier
+            )
+          :
+            null
+        }
+        {
+          pastryItem && pastryItem.cat==='pastry'
+          ?
+            getCurrentPastryTierPricing(
+              parseFloat(calcPriceByUserTier(pastryItemPrice,userTier)),
               userTier
             )
           :

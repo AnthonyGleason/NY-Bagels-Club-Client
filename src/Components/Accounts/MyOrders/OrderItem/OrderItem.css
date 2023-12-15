@@ -71,9 +71,23 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  gap: 10px;
+}
+.order-summary ul span{
+  text-align: left;
 }
 .order-costs p{
   display: flex;
   width: 100%;
   justify-content: space-between;
+}
+.order-tracking-visual{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.order-tracking-visual img{
+  width: 70px;
+  border-radius: 4px;
+  padding: 5px;
 }

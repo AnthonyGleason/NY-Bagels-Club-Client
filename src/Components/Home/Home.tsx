@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 //import components
-import Sidebar from './Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import StoreItems from './StoreItems/StoreItems';
 import About from './About/About';
 import HomeLoadingOverlay from './HomeLoadingOverlay/HomeLoadingOverlay';
@@ -27,6 +27,7 @@ export default function Home(){
   const [cart,setCart] = useState<Cart>(emptyCart);
 
   const isInitialLoad = useRef(true);
+  const navigate = useNavigate();
 
   useEffect(()=>{
     if (isInitialLoad.current) {
@@ -152,7 +153,7 @@ export default function Home(){
                     Enjoy a monthly treat of a <strong>Baker's Dozen (13 Bagels)</strong> for yourself or a friend.
                   </li>
                   <li>Personalize your delivery with <strong>your choice of 6 delicious flavors</strong>, and the <strong>13th bagel is <span className='brendels'>Brendel's</span> "Baker's Choice" selection</strong>.</li>
-                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice in every box!</strong></li>
+                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice with every order!</strong></li>
                   <li><strong>5% off </strong> Non-Member Pricing.</li>
                   <li><strong>PRIORITY</strong> Mail Shipping on <strong>EVERY</strong> order placed.</li>
                   <li className='club-value'><strong><span>Gain an Exceptional 34% Value!</span></strong></li>
@@ -174,7 +175,7 @@ export default function Home(){
                     Enjoy <strong>TWO</strong> monthly treats of a <strong>Baker's Dozen (13 Bagels)</strong> for yourself or a friend.
                   </li>
                   <li>Personalize your deliveries with <strong>your choice of 6 delicious flavors</strong>, and the <strong>13th bagel is our <span className='brendels'>Brendel's</span> "Baker's Choice" selection</strong>.</li>
-                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice in every box!</strong></li>
+                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice with every order!</strong></li>
                   <li><strong>10% off </strong> Non-Member Pricing.</li>
                   <li><strong>PRIORITY</strong> Mail Shipping on <strong>EVERY</strong> order placed.</li>
                   <li className='club-value'><strong><span>Gain an Outstanding 40% Value!</span></strong></li>
@@ -196,10 +197,10 @@ export default function Home(){
                     Enjoy <strong>FOUR</strong> monthly treats of a <strong>Baker's Dozen (13 Bagels)</strong> for yourself or a friend.
                   </li>
                   <li>Personalize your deliveries with <strong>your choice of 6 delicious flavors</strong>, and the <strong>13th bagel is <span className='brendels'>Brendel's</span> "Baker's Choice" selection</strong>.</li>
-                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice in every box!</strong></li>
+                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice with every order!</strong></li>
                   <li><strong>15% off </strong> Non-Member Pricing.</li>
                   <li><strong>PRIORITY</strong> Mail Shipping on <strong>EVERY</strong> order placed.</li>
-                  <li>Skip the wait, recieve a direct line to our priority customer service team!</li>
+                  <li>Skip the wait, receive a direct line to our priority customer service team!</li>
                   <li className='club-value'><strong><span>Gain An Unparalleled 44% Value!</span></strong></li>
                 </ul>
               </motion.div>
@@ -212,11 +213,9 @@ export default function Home(){
               </ul>
             </div> */}
             <button className='home-subscribe-now' type='button' onClick={()=>{
-              //navigate('/subscribe')
+              navigate('/subscribe')
             }}>
-              Club Memberships
-              <br />
-              Coming Soon!
+              Subscribe Now!
             </button>
           </section>
           <Menu storeItems={storeItems} />

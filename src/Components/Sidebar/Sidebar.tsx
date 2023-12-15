@@ -1,22 +1,24 @@
 import React,{useEffect, useRef, useState} from 'react';
-import menuImg from '../../../Assets/icons/menu.svg';
-import registerImg from '../../../Assets/icons/register.svg';
-import loginImg from '../../../Assets/icons/login.svg';
-import cartImg from '../../../Assets/icons/cart.svg';
-import logoutImg from '../../../Assets/icons/logout.svg';
-import vipImg from '../../../Assets/icons/vip.svg';
-import ordersImg from '../../../Assets/icons/orders.svg';
-import settingsImg from '../../../Assets/icons/settings.svg';
-import adminImg from '../../../Assets/icons/admin.svg';
-import homeImg from '../../../Assets/icons/round-home.svg';
-import supportImg from '../../../Assets/icons/support-agent.svg';
+import menuImg from '../../Assets/icons/menu.svg';
+import registerImg from '../../Assets/icons/register.svg';
+import loginImg from '../../Assets/icons/login.svg';
+import cartImg from '../../Assets/icons/cart.svg';
+import logoutImg from '../../Assets/icons/logout.svg';
+import vipImg from '../../Assets/icons/vip.svg';
+import ordersImg from '../../Assets/icons/orders.svg';
+import settingsImg from '../../Assets/icons/settings.svg';
+import adminImg from '../../Assets/icons/admin.svg';
+import supportImg from '../../Assets/icons/support-agent.svg';
+import workImg from '../../Assets/icons/work.svg';
+import shopImg from '../../Assets/icons/shop.svg';
+import starImg from '../../Assets/icons/star-bold-white.svg';
 
 import './Sidebar.css';
 import { useNavigate } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
-import { handleLogout, verifyLoginToken } from '../../../Helpers/auth';
-import { toggleExpandMenu } from '../../../Helpers/sidebar';
-import { Cart } from '../../../Interfaces/interfaces';
+import { getMembershipTier, handleLogout, verifyLoginToken } from '../../Helpers/auth';
+import { toggleExpandMenu } from '../../Helpers/sidebar';
+import { Cart } from '../../Interfaces/interfaces';
 
 export default function Sidebar(
   {
@@ -38,6 +40,7 @@ export default function Sidebar(
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [showExpandedMenu, setShowExpandedMenu] = useState<boolean>(false);
   const [didAnimationPlay,setDidAnimationPlay] = useState<boolean>(true);
+  const [userMembershipTier,setUserMembershipTier] = useState<string>('Non-Member');
 
   const navigate = useNavigate();
   const controls = useAnimation();
@@ -49,8 +52,9 @@ export default function Sidebar(
     if( isInitialLoad.current ){
       isInitialLoad.current = false;
       verifyLoginToken(setIsSignedIn,setIsAdmin);
+      getMembershipTier(setUserMembershipTier);
     };
-  },[isInitialLoad])
+  },[isInitialLoad,setIsSignedIn,setUserMembershipTier])
 
   const myAnimation = async function() {
     await controls.start({ x: 0 });
@@ -82,7 +86,7 @@ export default function Sidebar(
     }else{
       setDidAnimationPlay(false);
     };
-  },[isExpanded]);
+  },[isExpanded,didAnimationPlay]);
 
   return (
     <motion.section 
@@ -112,10 +116,26 @@ export default function Sidebar(
           </li>
           <li className='home-sidebar-button'>
             <button onClick={() => navigate('/')}>
-              <img src={homeImg} alt='home' />
-              <span>Home</span>
+              <img src={shopImg} alt='shop' />
+              <span>Shop</span>
             </button>
           </li>
+          {
+            userMembershipTier === 'Gold Member' ||
+            userMembershipTier === 'Platinum Member' ||
+            userMembershipTier === 'Diamond Member'
+              ?
+                <>
+                  <li>
+                    <button onClick={() => navigate('/club')}>
+                      <img src={starImg} alt='club member page' />
+                      <span>Club</span>
+                    </button>
+                  </li>
+                </>
+              :
+                null
+          }
           {isAdmin === false ? null : (
             <>
               <li>
@@ -145,9 +165,7 @@ export default function Sidebar(
           <li>
             <button
               onClick={() =>
-                alert(
-                  "We appreciate your interest joining the New York Bagels Club Family! Our subscriptions are not available for purchase yet. We expect to launch sometime towards the end of November. If you have questions please email our support team!"
-                )
+                navigate('/subscribe')
               }
             >
               <img src={vipImg} alt='subscribe' />
@@ -189,6 +207,12 @@ export default function Sidebar(
             <button onClick={() => navigate('/support')}>
               <img src={supportImg} alt='support' />
               <span>Support</span>
+            </button>
+          </li>
+          <li>
+            <button onClick={()=>navigate('/careers')}>
+              <img src={workImg} alt='careers' />
+              <span>Careers</span>
             </button>
           </li>
         </ol>

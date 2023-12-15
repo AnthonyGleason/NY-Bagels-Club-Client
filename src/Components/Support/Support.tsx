@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Support.css';
 import {motion} from 'framer-motion';
-import Sidebar from '../Home/Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import { Cart } from '../../Interfaces/interfaces';
-import { emptyCart } from '../../Helpers/cart';
+import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
 
 export default function Support(){
   const [isContactUsExpanded,setIsContactUsExpanded] = useState<boolean>(false);
-  const [isPriorityExpanded,setIsPriorityExpanded] = useState<boolean>(false)
   const [isFaqExpanded,setIsFaqExpanded] = useState<boolean>(false)
 
   const [isSignedIn,setIsSignedIn] = useState<boolean>(true);
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Cart>(emptyCart);
+
+  const isInitialLoad = useRef(true);
+  
+  useEffect(()=>{
+    if (isInitialLoad.current){
+      isInitialLoad.current=false;
+      fetchAndHandleCart(setCart);
+    };
+  },[isInitialLoad]);
 
   return(
     <>

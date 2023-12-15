@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Address, Cart, CartItem, Order } from '../../../Interfaces/interfaces';
 import AdminTrackingItem from '../AdminTrackingItem/AdminTrackingItem';
 import { getAllOrders, updateOrder } from '../../../Helpers/admin';
+import { getSelectionName } from '../../../Helpers/cart';
 
 export default function AdminOrderItem({
   orderItem,
@@ -82,28 +83,14 @@ export default function AdminOrderItem({
             </ul>
           </div>
           <div className='order-summary'>
-            <h4>Order Summary</h4>
+            <h4>Item Summary</h4>
             <ul>
               {
                 cart.items.map((cartItem:CartItem,index:number)=>{
-                  const getFormattedSelection = function(cat:string, selection?:string):string{
-                    let formattedSelection:string = '';
-                    switch(cat){
-                      case 'spread':
-                        formattedSelection = '1 LB';
-                        break;
-                      case 'bagel':
-                        if (selection==='six') formattedSelection = 'Six Pack';
-                        if (selection==='dozen') formattedSelection = "Baker's Dozen";
-                        break;
-                    }
-                    return formattedSelection;
-                  };
-    
-                  const formattedSelection:string = getFormattedSelection(cartItem.itemData.cat,cartItem.selection || '');
+                  const formattedSelection:string = getSelectionName(cartItem);
                   return(
                     <li key={index}>
-                      <span>{cartItem.quantity}x {cartItem.itemData.name} ({formattedSelection}):</span>
+                      <span>{cartItem.quantity}x {cartItem.itemData.name}, {formattedSelection}:</span>
                       <span><strong>${(cartItem.unitPriceInDollars * cartItem.quantity).toFixed(2)}</strong></span>
                     </li>
                   )

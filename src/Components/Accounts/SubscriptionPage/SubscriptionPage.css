@@ -1,5 +1,30 @@
 .pricing-table{
-  padding: 1em;
-  background-color: white;
-  border-radius: 5px;
+  background-color: #270707;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.pricing-table stripe-pricing-table,
+.pricing-table-home stripe-pricing-table{
+  width: 100%;
+  padding: 2em;
+}
+.pricing-table stripe-pricing-table *,
+.pricing-table-home stripe-pricing-table *{
+  text-align: center;
+}
+.pricing-table-home{
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+  background-color: #270707;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.PricingTable.is-whiteButtonText .PriceColumn-button{
+  display: none;
 }

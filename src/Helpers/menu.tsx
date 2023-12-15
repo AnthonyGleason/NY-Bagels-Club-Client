@@ -1,4 +1,4 @@
-import { BagelItem, SpreadItem } from "../Interfaces/interfaces";
+import { BagelItem, PastryItem, SpreadItem } from "../Interfaces/interfaces";
 import { scrollToID } from "./misc";
 
 export const getBagelMenuItems = function(storeItems:(BagelItem | SpreadItem)[]){
@@ -22,6 +22,19 @@ export const getSpreadMenuItems = function(storeItems:(BagelItem | SpreadItem)[]
   }).map((spreadItem:SpreadItem,index:number)=>{
     return(
         <button key={index} onClick={()=>{scrollToID(`item-${spreadItem._id}`)}}>{spreadItem.name}</button>
+      )
+  });
+  return allItems;
+};
+
+export const getPastryMenuItems = function(storeItems:(BagelItem | SpreadItem)[]){
+  const pastryItems:PastryItem[] = storeItems.filter(item => item.cat === 'pastry') as PastryItem[];
+  const allItems = pastryItems.sort((a:PastryItem,b:PastryItem)=>{
+    if (a.name<b.name) return -1;
+    return 1;
+  }).map((pastryItem:PastryItem,index:number)=>{
+    return(
+        <button key={index} onClick={()=>{scrollToID(`item-${pastryItem._id}`)}}>{pastryItem.name}</button>
       )
   });
   return allItems;

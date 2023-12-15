@@ -52,9 +52,9 @@ export default function UserSearchResult({user}:{user:User}){
             <p>Is Banned: <strong>{user.frozen.toString()}</strong></p>
             <p>Membership ID: <strong>#{membershipInfo._id}</strong></p>
             <p>Membership Tier: <strong>{membershipInfo.tier}</strong></p>
-            <p>Membership Renewal Date: <strong>
+            <p>Membership Expiration Date: <strong>
               {
-               membershipInfo.renewalDate ? new Date(membershipInfo.renewalDate).toLocaleDateString() : 'N/A'
+               membershipInfo.expirationDate ? new Date(membershipInfo.expirationDate).toLocaleDateString() : 'N/A'
               }</strong>
             </p>
           </>

@@ -41,7 +41,7 @@ export default function HomeLoadingOverlay(
           :
           <>
             <p data-aos='fade-in'>
-              Authentic New York City Style Bagels Directly From the Heart of Long Island to Your Doorstep!
+              Vacuum-Sealed Authentic New York City Style Bagels Directly From the Heart of Long Island to Your Doorstep!
             </p>
             <img data-aos='fade-in' className='loading-spinner' src={bubbleLoadingImg} alt='loading' />
           </>

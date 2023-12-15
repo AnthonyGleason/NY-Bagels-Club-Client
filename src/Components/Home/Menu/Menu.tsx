@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { BagelItem, SpreadItem } from '../../../Interfaces/interfaces';
+import { BagelItem, PastryItem, SpreadItem } from '../../../Interfaces/interfaces';
 import './Menu.css';
 import { scrollToID } from '../../../Helpers/misc';
-import { getBagelMenuItems, getSpreadMenuItems } from '../../../Helpers/menu';
+import { getBagelMenuItems, getPastryMenuItems, getSpreadMenuItems } from '../../../Helpers/menu';
 import { motion } from 'framer-motion';
 
-export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]}){
+export default function Menu({storeItems}:{storeItems:PastryItem[]}){
   const [isBagelsExpanded, setIsBagelsExpanded] = useState<boolean>(false);
   const [isSpreadsExpanded,setIsSpreadsExpanded] = useState<boolean>(false);
-
+  const [isPastriesExpanded,setIsPastriesExpanded] = useState<boolean>(false);
   return(
     <>
       <h3 
@@ -50,6 +50,27 @@ export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]
               { getBagelMenuItems(storeItems)}
             </motion.div>
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 3}}
+            viewport={{once: true}} 
+            className='our-menu-cat'
+          >
+            <button className='our-menu-cat-nav-button' onClick={()=>{isPastriesExpanded ? setIsPastriesExpanded(false) : setIsPastriesExpanded(true)}}>
+              <span className='brendels'>Brendel's</span><span>Gourmet Pasteries</span>
+            </button>
+            <motion.div 
+              initial={{ height: 0}}
+              animate={{ height: isPastriesExpanded? "auto" : 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className='our-menu-cat-content'
+            >
+              {getPastryMenuItems(storeItems)}
+            </motion.div>
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -67,6 +88,7 @@ export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]
               {getSpreadMenuItems(storeItems)}
             </motion.div>
           </motion.div>
+
           <motion.div 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -75,6 +97,7 @@ export default function Menu({storeItems}:{storeItems:(BagelItem | SpreadItem)[]
             className='our-menu-cat'>
             <button className='our-menu-cat-nav-button' onClick={()=>{scrollToID('custom-orders-header')}}><span className='brendels'>Brendel's</span><span>Made Just For You</span></button>
           </motion.div>
+          
         </div>
       </section>
     </>

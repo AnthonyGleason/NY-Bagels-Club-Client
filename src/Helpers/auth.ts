@@ -1,12 +1,13 @@
 import { getServerUrlPrefix } from "../Config/clientSettings";
 
-export const verifyCartToken = async function(setCart:Function):Promise<boolean>{
+export const verifyCartToken = async function(setCart:Function, isClub?:boolean):Promise<boolean>{
+  const cartTokenKey = isClub ? 'clubCartToken' : 'cartToken';
   try{
     const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/verify`,{
       method: 'GET',
       headers:{
         'Content-Type': 'application/json',
-        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
+        'Cart-Token': `Bearer ${localStorage.getItem(cartTokenKey)}`,
         'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
       }
     });
@@ -20,9 +21,15 @@ export const verifyCartToken = async function(setCart:Function):Promise<boolean>
   };
 };
 
-export const requestCartToken = async function(){
+export const requestCartToken = async function(isClub:boolean){
   const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts`,{
-    method: 'POST'
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json',
+    },
+    body:JSON.stringify({
+      isClub: isClub
+    })
   });
   const responseData = await response.json();
   if (responseData.cartToken){
@@ -31,7 +38,7 @@ export const requestCartToken = async function(){
   }
 };
 
-export const verifyLoginToken = async function(setIsSignedIn?:Function,setIsAdmin?:Function):Promise<boolean>{
+export const verifyLoginToken = async function(setIsSignedIn?:Function,setIsAdmin?:Function,setUserID?:Function):Promise<boolean>{
   let isValid:boolean = false;
   //handle no login token is present
   if (!localStorage.getItem('loginToken')){
@@ -57,6 +64,7 @@ export const verifyLoginToken = async function(setIsSignedIn?:Function,setIsAdmi
     };
     if (setIsAdmin && responseData.isAdmin===true) setIsAdmin(true);
     if (setIsSignedIn) setIsSignedIn(isValid);
+    if (setUserID) setUserID(responseData.userID);
     return isValid;
   }catch(err){
     console.log(err);
@@ -78,7 +86,11 @@ export const handleLogout = async function(setIsSignedIn?:Function){
   localStorage.removeItem('loginToken');
 };
 
-export const getMembershipTier = async function(setMembershipTier?:Function):Promise<string>{
+export const getMembershipTier = async function(
+    setMembershipTier?:Function,
+    setRemainingDeliveries?:Function,
+    setExpirationDate?:Function
+  ):Promise<string>{
   try{
     if (!localStorage.getItem('loginToken')) throw new Error('You are not signed in');
     const response = await fetch(`${getServerUrlPrefix()}/api/users/membershipLevel`,{
@@ -90,7 +102,8 @@ export const getMembershipTier = async function(setMembershipTier?:Function):Pro
     });
     const responseData = await response.json();
     if (setMembershipTier) setMembershipTier(responseData.membershipLevel);
-    
+    if (setRemainingDeliveries) setRemainingDeliveries(responseData.remainingDeliveries);
+    if (setExpirationDate) setExpirationDate(new Date(responseData.expirationDate).toDateString());
     return responseData.membershipLevel;
   }catch(err){
     console.log(err+', showing non-member pricing');

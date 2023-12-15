@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Address, Cart, CartItem, Order } from '../../../../Interfaces/interfaces';
 import './OrderItem.css';
 import OrderTrackingItem from '../OrderTrackingItem/OrderTrackingItem';
+import { getSelectionName } from '../../../../Helpers/cart';
+import orderPendingImg from '../../../../Assets/icons/order-pending.svg';
+import orderProcessingImg from '../../../../Assets/icons/order-processing.svg';
+import orderShippedImg from '../../../../Assets/icons/order-shipped.svg';
 
 export default function OrderItem({
   cart,
@@ -23,6 +27,22 @@ export default function OrderItem({
   order:Order
 }){
   const [isExpanded,setIsExpanded] = useState(false);
+  const getOrderLevel = function(){
+    switch(status.toLowerCase()){
+      case 'pending':
+        return 0;
+      case 'processing':
+        return 1;
+      case 'shipped':
+        return 2;
+      default:
+        return 0;
+    };
+  };
+  const orderLevel = getOrderLevel();
+  const pendingOrderColor = orderLevel>=0 ? '#006400' : 'grey';
+  const processingOrderColor = orderLevel>=1 ? '#006400' : 'grey';
+  const shippedOrderColor = orderLevel>=2 ? '#006400' : 'grey';
 
   const toggleExpandOrderItem = function(isExpanded:boolean, setIsExpanded:Function){
     if (isExpanded){
@@ -52,28 +72,14 @@ export default function OrderItem({
             </ul>
           </div>
           <div className='order-summary'>
-            <h4>Order Summary</h4>
+            <h4>Item Summary</h4>
             <ul>
               {
                 cart.items.map((cartItem:CartItem,index:number)=>{
-                  const getFormattedSelection = function(cat:string, selection?:string):string{
-                    let formattedSelection:string = '';
-                    switch(cat){
-                      case 'spread':
-                        formattedSelection = '1 LB';
-                        break;
-                      case 'bagel':
-                        if (selection==='six') formattedSelection = 'Six Pack';
-                        if (selection==='dozen') formattedSelection = "Baker's Dozen";
-                        break;
-                    }
-                    return formattedSelection;
-                  };
-    
-                  const formattedSelection:string = getFormattedSelection(cartItem.itemData.cat,cartItem.selection || '');
+                  const formattedSelection:string = getSelectionName(cartItem);
                   return(
                     <li key={index}>
-                      <span>{cartItem.quantity}x {cartItem.itemData.name} ({formattedSelection}):</span>
+                      <span>{cartItem.quantity}x {cartItem.itemData.name}, {formattedSelection}:</span>
                       <span><strong>${(cartItem.unitPriceInDollars * cartItem.quantity).toFixed(2)}</strong></span>
                     </li>
                   )
@@ -119,7 +125,12 @@ export default function OrderItem({
           }
           <div>
             <h4>Order Status</h4>
-            <p>{status}</p>
+            <p className='order-tracking-visual'>
+              <img src={orderPendingImg} alt='order pending' style={{backgroundColor: pendingOrderColor}} />
+              <img src={orderProcessingImg} alt='order processing' style={{backgroundColor: processingOrderColor}} />
+              <img src={orderShippedImg} alt='order shipped' style={{backgroundColor: shippedOrderColor}} />
+            </p>
+            <p>Current Status: {status}</p>
           </div>
           {
             trackingNumberArr.length>0 ?

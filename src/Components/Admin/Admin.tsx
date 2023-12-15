@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { verifyLoginToken } from '../../Helpers/auth';
-import Sidebar from '../Home/Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
-import { Cart, CartItem, Order } from '../../Interfaces/interfaces';
+import { Cart, Order } from '../../Interfaces/interfaces';
 import './Admin.css';
 import PendingOrderPulls from './PendingOrderPulls/PendingOrderPulls';
 import ProcessingOrders from './ProcessingOrders/ProcessingOrders';
@@ -10,7 +10,7 @@ import UserSearchPanel from './UserSearchPanel/UserSearchPanel';
 import OrderSearchPanel from './OrderSearchPanel/OrderSearchPanel';
 import PendingOrders from './PendingOrders/PendingOrders';
 import ProcessingOrderPulls from './ProcessingOrderPulls/ProcessingOrderPulls';
-import { getAllOrders, getAllPendingOrders } from '../../Helpers/admin';
+import { getAllOrders } from '../../Helpers/admin';
 
 export default function Admin(){
   const [isAdmin,setIsAdmin] = useState<boolean>(false);
@@ -29,12 +29,10 @@ export default function Admin(){
       isInitialLoad.current=false;
       fetchAndHandleCart(setCart);
       verifyLoginToken(setIsSignedIn,setIsAdmin);
+      getAllOrders(setAllOrders);
     };
   },[isInitialLoad]);
 
-  useEffect(()=>{
-    getAllOrders(setAllOrders);
-  },[isSignedIn])
   return(
     <>
       <Sidebar 

@@ -6,6 +6,7 @@ import visaIcon from '../../../Assets/paymentIcons/visa-fill.jpeg';
 import masterCardIcon from '../../../Assets/paymentIcons/mastercard.svg';
 import Aos from 'aos';
 import "aos/dist/aos.css";
+import supportSmallImg from '../../../Assets/supportSmall.svg';
 
 export default function Footer(){
   useEffect(()=>{
@@ -31,16 +32,17 @@ export default function Footer(){
         <img src={googlePayIcon} alt='google pay' />
       </article>
       <article className='support'>
-        <p>Do you need assistance with an order, or would you like to provide feedback on your experience with us?</p>
-        <ul>
-          <li>Share Your Experience With Us
-            <br />
-            <a href="mailto:support@nybagelsclub.com">support@nybagelsclub.com</a>
-          </li>
-        </ul>
-        <p>
-          <strong>Your satisfaction is our priority!</strong>
-        </p>
+      <p>Do you need assistance with an order, or would you like to provide feedback on your experience with us?</p>
+      <ul>
+        <li>Share Your Experience With Us
+          <br />
+          <a href="mailto:support@nybagelsclub.com">support@nybagelsclub.com</a>
+        </li>
+      </ul>
+      <p>
+        <strong>Your satisfaction is our priority!</strong>
+      </p>
+      <img className='small-business' src={supportSmallImg} alt='support small business' />
       </article>
     </section>
   )

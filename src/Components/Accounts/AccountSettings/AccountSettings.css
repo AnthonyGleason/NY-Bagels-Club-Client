@@ -48,3 +48,9 @@
 .account-settings h4{
   padding: 1em;
 }
+.account-settings-message{
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 1em;
+}

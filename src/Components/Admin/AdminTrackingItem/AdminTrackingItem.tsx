@@ -22,7 +22,7 @@ export default function AdminTrackingItem({
 
   useEffect(()=>{
     setTrackingNumberInput(trackingNumberArr[index]);
-  },[allOrders])
+  },[allOrders,index,trackingNumberArr])
   
   //update the tracking number on the server
   const handleUpdateTrackingNumber = async function(e:any){

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getSelectionName } from '../../../Helpers/cart';
 import { CartItem, Order } from '../../../Interfaces/interfaces';
-import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import pullsImg from '../../../Assets/icons/pulls.svg';
-import { getAllPendingOrders } from '../../../Helpers/admin';
 
 export default function PendingOrderPulls({
   allOrders
@@ -18,9 +16,10 @@ export default function PendingOrderPulls({
     //set pending orders state
     const allPendingOrders:Order[] = allOrders.filter((order:Order)=>{
       if (order.status==='Pending') return 1;
+      return 0;
     });
     setAllPendingOrders(allPendingOrders);
-  },[allOrders])
+  },[allOrders]);
 
   //update pulls when all pending orders are retrieved
   useEffect(()=>{

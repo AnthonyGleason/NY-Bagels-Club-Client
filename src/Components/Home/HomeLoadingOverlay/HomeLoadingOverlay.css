@@ -1,7 +1,6 @@
 .init-load {
   height: 100vh;
   position: absolute;
-  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,13 +13,14 @@
   font-weight: 500;
   z-index: 97;
   top: 0;
+  width: 100%;
 }
 
 .loading-content-wrapper {
   z-index: 100;
   height: max-content;
-  background-color: rgba(230, 223, 223, 0.9);
-  border-radius: 3px;
+  background-color: rgba(255, 251, 231, 0.9);
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;

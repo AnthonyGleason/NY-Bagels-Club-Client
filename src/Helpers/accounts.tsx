@@ -52,7 +52,7 @@ export const applySettingsChanges = async function(
       !lastNameInput ||
       !emailInput ||
       !currentPasswordInput
-    ) throw new Error('The first name, last name, email and current password input fields are required.');
+    ) throw new Error('The first name, last name, email and current password fields are required.');
 
     if (
       !isValidEmail(emailInput)
@@ -183,7 +183,7 @@ export const submitLogin = async function(emailInput:string,passwordInput:string
   try{
     //ensure all inputs are completed
     if (!emailInput || !passwordInput){
-      const errMessage = '* Please ensure both the email and password input fields are completed before submitting this form.';
+      const errMessage = '* Please ensure both the email and password fields are completed before submitting this form.';
       setErrorMessage(errMessage);
       throw new Error(errMessage);
     };
@@ -273,7 +273,7 @@ export const submitRegister = async function(
   try{
     //ensure all inputs are completed
     if (!emailInput || !passwordInput || !passwordConfirmInput || !firstNameInput || !lastNameInput){
-      const errMessage:string = '* Please ensure all input fields are completed before submitting this form.';
+      const errMessage:string = '* Please ensure all fields are completed before submitting this form.';
       setErrorMessage(errMessage);
       throw new Error(errMessage);
     };

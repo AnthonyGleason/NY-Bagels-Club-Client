@@ -6,6 +6,17 @@
   min-width: 30px;
   min-height: 30px;
 }
+.react-calendar__navigation .react-calendar__navigation__arrow{
+  min-width: 50px;
+}
+.react-calendar__navigation .react-calendar__navigation__label{
+  padding: 1em;
+  width: 80px;
+}
+.react-calendar__navigation .react-calendar__navigation__label span{
+  font-size: 18px;
+  font-family: 'Titillium Web';
+}
 .react-calendar__navigation__prev2-button, .react-calendar__navigation__next2-button{
   visibility: hidden;
 }
@@ -21,6 +32,7 @@
   justify-content: center;
   gap: 10px;
   color: white;
+  max-height: 80px;
 }
 .react-calendar__tile{
   height: 60px;
@@ -38,7 +50,6 @@
   flex-direction: column;
   gap: 10px;
 }
-
 .react-calendar{
   display: flex;
   flex-direction: column;

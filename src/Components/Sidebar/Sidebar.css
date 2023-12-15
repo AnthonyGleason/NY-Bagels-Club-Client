@@ -41,7 +41,37 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  overflow-y: scroll;
 }
+/* Hide the default scrollbar for both WebKit and Firefox */
+.sidebar-expanded,
+.sidebar-closed {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+/* WebKit (Chrome, Safari) custom scrollbar styling */
+.sidebar-expanded::-webkit-scrollbar,
+.sidebar-closed::-webkit-scrollbar {
+  width: 0px; /* Adjust the width as needed */
+}
+
+.sidebar-expanded::-webkit-scrollbar-thumb,
+.sidebar-closed::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Make the thumb transparent */
+}
+
+/* Firefox custom scrollbar styling */
+.sidebar-expanded::-moz-scrollbar,
+.sidebar-closed::-moz-scrollbar {
+  width: 0px; /* Adjust the width as needed */
+}
+
+.sidebar-expanded::-moz-scrollbar-thumb,
+.sidebar-closed::-moz-scrollbar-thumb {
+  background-color: transparent; /* Make the thumb transparent */
+}
+
 .sidebar-nav{
   list-style-type: none;
   text-align: center;

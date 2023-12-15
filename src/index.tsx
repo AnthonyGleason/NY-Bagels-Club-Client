@@ -9,6 +9,7 @@ import Footer from './Components/Home/Footer/Footer';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
+import Club from './Components/Club/Club';
 
 //import css
 import './index.css';
@@ -21,6 +22,7 @@ import Admin from './Components/Admin/Admin';
 import Snowfall from 'react-snowfall';
 import Support from './Components/Support/Support';
 import CartSummary from './Components/Checkout/CartSummary/CartSummary';
+import Careers from './Components/Careers/Careers';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -47,9 +49,11 @@ root.render(
         <Route path='/subscribe' element={<SubscriptionPage />} />
         <Route path='/cart/checkout/success/:pendingOrderDocID' element={<CheckoutSuccess />} />
         <Route path='/cart' element={<CartSummary />} />
+        <Route path='/club' element={<Club />} />
         <Route path='/accounts/password/reset/:resetID' element={<ResetPassword />} />
         <Route path='/accounts/orders' element={<MyOrders />} />
         <Route path='/accounts/settings' element={<AccountSettings />} />
+        <Route path='/careers' element={<Careers />} />
         <Route path='/support' element={<Support />} />
       </Routes>
       <Footer />

@@ -10,7 +10,7 @@
   justify-content: space-between;
   flex-direction: column;
   padding: 1em;
-  padding-bottom: 4em;
+  padding-bottom: 8em;
 }
 .footer .copyright{
   padding: 0.4em;
@@ -46,4 +46,7 @@
 }
 .footer .support a{
   color: black;
+}
+.small-business{
+  width: 250px;
 }

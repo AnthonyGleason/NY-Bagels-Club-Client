@@ -3,7 +3,7 @@ import { Cart } from '../../../Interfaces/interfaces';
 import { emptyCart, fetchAndHandleCart, requestApplyMembershipPricingToCart  } from '../../../Helpers/cart';
 import './CartSummary.css';
 import { verifyLoginToken } from '../../../Helpers/auth';
-import Sidebar from '../../Home/Sidebar/Sidebar';
+import Sidebar from '../../Sidebar/Sidebar';
 import CartSummaryItem from '../CartSummaryItem/CartSummaryItem';
 import PreCheckoutSummary from '../PreCheckoutSummary/PreCheckoutSummary';
 

@@ -10,7 +10,6 @@ export default function CustomOrders(){
   const [requestInput,setRequestInput] = useState<string>('');
   const [quantityInput,setQuantityInput] = useState<string>('');
   const [message,setMessage] = useState<string>('');
-
   const handleCustomOrderFormSubmit = async function(setIsEmailSent:Function){
     //verify inputs
     try{
@@ -65,18 +64,18 @@ export default function CustomOrders(){
           </div>
           <div className='input-wrapper'>
             <p>Are you interested in our $295 special offer? (Optional)</p>
-            <div className='input-wrapper'>
-              <input type='checkbox' checked={isOfferChecked} onChange={()=>{setIsOfferChecked(!isOfferChecked)}}/>
-            </div>
+            <p className='offer-input-wrapper'>
+              <input className='checkbox' type='checkbox' checked={isOfferChecked} onChange={()=>{setIsOfferChecked(!isOfferChecked)}}/>
+            </p>
           </div>
           <div className='input-wrapper'>
-            <input placeholder='Your Contact Email' value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' />
+            <input className='text-box' placeholder='Your Contact Email' value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' />
           </div>
           <div className='input-wrapper'>
-            <input placeholder="Desired Quantity" value={quantityInput} onChange={(e)=>{setQuantityInput(e.target.value)}} />
+            <input className='text-box' placeholder="Desired Quantity" value={quantityInput} onChange={(e)=>{setQuantityInput(e.target.value)}} />
           </div>
           <div className='input-wrapper'>
-            <textarea value={requestInput} onChange={(e)=>{setRequestInput(e.target.value)}} placeholder="Your Request: You can personalize our Bagels to suit your event's theme, whether it's a baby shower, wedding, sports team, school, holiday, or bachelorette / bachelor party. Mix and match from our flavor options and pick your own colors!" />
+            <textarea className='text-box' value={requestInput} onChange={(e)=>{setRequestInput(e.target.value)}} placeholder="Your Request: You can personalize our Bagels to suit your event's theme, whether it's a baby shower, wedding, sports team, school, holiday, or bachelorette / bachelor party. Mix and match from our flavor options and pick your own colors!" />
           </div>
           <p>Our staff will review and respond to your request within 24 hours.</p>
           {

@@ -40,6 +40,7 @@
   height: 40px;
   font-size: 20px;
   padding-left: 10px;
+  min-width: 40px;
 }
 
 .custom-orders .error-messages{
@@ -57,12 +58,10 @@
   padding: 10px;
 }
 
-.custom-orders form .input-wrapper input,
-.custom-orders form .input-wrapper textarea{
+.custom-orders form .input-wrapper .text-box{
   width: 100%;
   font-family: 'Titillium Web';
 }
-
 .custom-orders form .input-wrapper label{
   font-size: 30px;
   font-weight: 600;
@@ -91,4 +90,10 @@
 }
 .custom-orders .input-wrapper p{
   font-size: 18px;
+}
+.offer-input-wrapper{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
