@@ -1,40 +1,45 @@
 .custom-orders{
   padding: 1em;
   text-align: center;
-  background-image: url('../../../Assets/backgrounds/central-park.jpg');
   background-size: cover;
   min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Titillium Web';
+  background-color: #200b0b;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  position: relative;
 }
 .custom-orders-info{
   font-size: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  border-bottom: 2px solid white;
+  padding-bottom: 1em;
 }
 .custom-orders form{
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 20px;
   padding: 1.5em;
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.75);
   color: white;
   max-width: 700px;
 }
 .custom-orders .brendels{
   font-size: 28px;
 }
-.custom-orders form .input-wrapper{
+
+:not(.custom-orders form) > .input-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   gap: 10px;
 }
+.custom-orders form .input-wrapper:first-child {
+  display: flex;
+}
+
 
 .custom-orders form .input-wrapper input{
   height: 40px;
@@ -75,14 +80,15 @@
   background-color: rgb(93,25,23);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
   border-radius: 5px;
-  font-family: 'Allura';
-  font-size: 25px;
+  font-family: 'Courgette';
+  font-size: 20px;
+  letter-spacing: 1.5px;
   font-weight: bolder;
 }
 .custom-orders-email-sent{
   padding: 2em;
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(27,7,7,0.95);
   color: white;
   font-size: 35px;
   font-family: 'Courgette';
@@ -96,4 +102,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.custom-orders-checkbox-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.custom-orders p:first-child{
+  font-family: 'Courgette';
+  color: beige;
+  font-size: 20px;
 }

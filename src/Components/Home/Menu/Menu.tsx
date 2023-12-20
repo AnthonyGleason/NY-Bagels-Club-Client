@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BagelItem, PastryItem, SpreadItem } from '../../../Interfaces/interfaces';
+import {  PastryItem } from '../../../Interfaces/interfaces';
 import './Menu.css';
 import { scrollToID } from '../../../Helpers/misc';
 import { getBagelMenuItems, getPastryMenuItems, getSpreadMenuItems } from '../../../Helpers/menu';
@@ -9,6 +9,7 @@ export default function Menu({storeItems}:{storeItems:PastryItem[]}){
   const [isBagelsExpanded, setIsBagelsExpanded] = useState<boolean>(false);
   const [isSpreadsExpanded,setIsSpreadsExpanded] = useState<boolean>(false);
   const [isPastriesExpanded,setIsPastriesExpanded] = useState<boolean>(false);
+  
   return(
     <>
       <h3 
@@ -18,17 +19,9 @@ export default function Menu({storeItems}:{storeItems:PastryItem[]}){
         <motion.span
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{duration: 3}}
+        transition={{duration: 2.5}}
         viewport={{once: false}}>
           Our Menu
-        </motion.span>
-        <motion.span 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{duration: 3}}
-        viewport={{once: false}}
-        className='our-menu-subscription'>
-          (No Subscription Required For Purchase)
         </motion.span>
       </h3>
       <section id='our-menu' className='our-menu-wrapper'>
@@ -59,7 +52,7 @@ export default function Menu({storeItems}:{storeItems:PastryItem[]}){
             className='our-menu-cat'
           >
             <button className='our-menu-cat-nav-button' onClick={()=>{isPastriesExpanded ? setIsPastriesExpanded(false) : setIsPastriesExpanded(true)}}>
-              <span className='brendels'>Brendel's</span><span>Gourmet Pasteries</span>
+              <span className='brendels'>Brendel's</span><span>Gourmet Pastries</span>
             </button>
             <motion.div 
               initial={{ height: 0}}
@@ -97,7 +90,6 @@ export default function Menu({storeItems}:{storeItems:PastryItem[]}){
             className='our-menu-cat'>
             <button className='our-menu-cat-nav-button' onClick={()=>{scrollToID('custom-orders-header')}}><span className='brendels'>Brendel's</span><span>Made Just For You</span></button>
           </motion.div>
-          
         </div>
       </section>
     </>

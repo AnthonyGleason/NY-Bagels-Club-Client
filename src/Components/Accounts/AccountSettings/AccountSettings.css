@@ -4,6 +4,8 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  background-color: #270707;
+  color: white;
 }
 .account-settings > *{
   max-width: 700px;
@@ -25,7 +27,8 @@
   flex-grow: 1;
 }
 .account-settings h4{
-  font-size: 30px;
+  font-size: 18px;
+  border-top: 2px solid white;
 }
 .account-settings input{
   padding: 1em;
@@ -50,7 +53,7 @@
 }
 .account-settings-message{
   text-align: center;
-  font-size: 25px;
+  font-size: 23px;
   font-weight: bold;
   padding: 1em;
 }

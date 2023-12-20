@@ -4,7 +4,6 @@ import { emptyCart, fetchAndHandleCart, requestApplyMembershipPricingToCart  } f
 import './CartSummary.css';
 import { verifyLoginToken } from '../../../Helpers/auth';
 import Sidebar from '../../Sidebar/Sidebar';
-import CartSummaryItem from '../CartSummaryItem/CartSummaryItem';
 import PreCheckoutSummary from '../PreCheckoutSummary/PreCheckoutSummary';
 
 export default function CartSummary(){
@@ -22,7 +21,7 @@ export default function CartSummary(){
       //apply any membership discounts
       requestApplyMembershipPricingToCart(setCart);
     };
-  },[isInitialLoad]);
+  },[]);
 
   //handle empty shopping cart
   if (cart.items.length===0){

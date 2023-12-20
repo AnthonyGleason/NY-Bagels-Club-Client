@@ -59,7 +59,7 @@ export default function CartSummaryItem(
             false
           );
         }}>
-          <img src={removeImg} alt='remove from cart' />
+          <img src={removeImg} alt='remove from cart' loading="lazy" />
         </button>
       </td>
     </tr>

@@ -29,7 +29,7 @@ export default function Register(){
       isInitialLoad.current=false;
       fetchAndHandleCart(setCart);
     };
-  },[isInitialLoad]);
+  },[]);
 
   return(
     <>

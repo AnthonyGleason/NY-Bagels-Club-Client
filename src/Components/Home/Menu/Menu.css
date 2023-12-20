@@ -1,6 +1,6 @@
 .our-menu-wrapper{
   height: 100vh;
-  background-image: url('../../../Assets/backgrounds/menu.jpg');
+  background-image: url('../../../Assets/backgrounds/menu.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -13,18 +13,19 @@
   flex-direction: column;
 }
 .our-menu-heading .our-menu-subscription{
-  font-size: 18px;
+  font-size: 24px;
 }
 .our-menu-cat{
   padding: 0.8em;
   border-radius: 8px;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(27,7,7,0.95);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
   height: max-content;
   width: 700px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-bottom: 2em;
 }
 .our-menu-content {
   height: 100%;
@@ -78,10 +79,17 @@
   border-radius: 8px;
   background-color: #5d1917;
   color: white;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
-  font-family: 'Allura';
+  font-family: 'Titillium Web';
   padding: 0.5em 1em;
   margin-top: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+}
+/* #our-menu span:nth-of-type(1){
+  font-size: 24px;
+} */
+.our-menu-cat-nav-button span:nth-of-type(2){
+  font-family: 'Courgette';
+  font-size: 25px;
 }

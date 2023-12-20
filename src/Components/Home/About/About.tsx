@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import storefrontImg from '../../../Assets/storefront.jpeg'
-import {motion} from 'framer-motion';
+import {easeIn, easeInOut, easeOut, motion} from 'framer-motion';
 
 export default function About(){
 
@@ -9,10 +7,10 @@ export default function About(){
       <motion.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{duration: 3}}
+        transition={{duration: 2.5, ease: easeInOut }}
         viewport={{once: false}}
       >
-        Crafted with the freshest ingredients, our New York Style bagels are hand-rolled, kettled, baked and vaccum sealed to lock in that authentic New York City flavor and texture. With 18 years of bagel-making expertise, <span className='brendels'>Brendel's</span> is your go-to for gourmet food and catering, conveniently serving Long Island and now shipping nationwide. Whether you're a transplant New Yorker, hosting family, or planning a special corporate event, we're here to delight your taste buds.
+        Experience the genuine flavors of New York with our expertly hand-rolled, kettled, and freshly baked New York Bagels. Crafted with the finest ingredients, precision, and dedication, Brendel's gourmet delights are cherished across Long Island, New York, for their exceptional quality. To ensure maximum freshness upon arrival at your doorstep, we carefully vacuum-seal all bagels in every order, preserving the distinctive New York flavor. Whether you're a former New Yorker, hosting family gatherings, or organizing a corporate event, choose New York Bagels Club for gourmet cuisine and top-tier catering services.
       </motion.p>
     </section>
   )

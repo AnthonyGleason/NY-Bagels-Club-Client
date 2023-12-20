@@ -1,4 +1,4 @@
-.my-orders{
+/* .my-orders{
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -27,4 +27,88 @@
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   padding: 0.5em;
+} */
+
+.guest-order-tracking h3{
+  color: white;
+  font-family: 'Courgette';
+  font-weight: bolder;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding: 1em;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  background-color: rgb(39, 7, 7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.guest-order-tracking{
+  min-height: 80vh;
+  background-color: #270707;
+  padding: 2em;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.guest-order-tracking-form{
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 2em;
+  max-width: 600px;
+}
+.guest-order-tracking-form div{
+  gap: 15px;
+  justify-content: center;
+  font-family: 'Titillium Web';
+  font-size: 18px;
+  width: 100%;
+}
+.guest-order-tracking div label{
+  text-align: center;
+}
+.guest-order-tracking .order-item{
+  padding-top: 1.5em;
+  border-top: 2px solid white;
+  margin-top: 1.5em;
+}
+.guest-order-tracking-form div input{
+  width: 75%;
+  padding-left: 1em;
+}
+.guest-order-tracking p{
+  color: white;
+  font-family: 'Titillium Web';
+  font-size: 18px;
+  padding: 1em;
+  text-align: center;
+}
+.search-guest-order-button{
+  border: 0px solid transparent;
+  border-radius: 6px;
+  background-color: #5d1917;
+  width: 100%;
+  color: white;
+  margin-top: 1em;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: 'Allura';
+  max-width: 700px;
+  padding: 0.5em 1em;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+}
+.guest-order-tracking-form .order-input,
+.guest-order-tracking-form .email-input{
+  display: flex;
+  gap: 10px;
+}
+.guest-order-tracking h3{
+  font-size: 22px;
+  padding: 1em 0 0 0;
 }

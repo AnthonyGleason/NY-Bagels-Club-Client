@@ -11,6 +11,7 @@ import OrderSearchPanel from './OrderSearchPanel/OrderSearchPanel';
 import PendingOrders from './PendingOrders/PendingOrders';
 import ProcessingOrderPulls from './ProcessingOrderPulls/ProcessingOrderPulls';
 import { getAllOrders } from '../../Helpers/admin';
+import Nav from '../Nav/Nav';
 
 export default function Admin(){
   const [isAdmin,setIsAdmin] = useState<boolean>(false);
@@ -31,7 +32,7 @@ export default function Admin(){
       verifyLoginToken(setIsSignedIn,setIsAdmin);
       getAllOrders(setAllOrders);
     };
-  },[isInitialLoad]);
+  },[]);
 
   return(
     <>

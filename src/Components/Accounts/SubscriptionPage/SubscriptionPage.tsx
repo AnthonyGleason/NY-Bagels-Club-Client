@@ -64,7 +64,7 @@ export default function SubscriptionPage(){
       //get pricing table info
       fetchPricingTableKeys(setPublishableKey,setPricingTableID);
     };
-  },[isInitialLoad]);
+  },[]);
   
   useEffect(()=>{
     //verify access to page

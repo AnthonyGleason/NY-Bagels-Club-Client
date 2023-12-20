@@ -9,7 +9,6 @@ export default function StoreItem({
   storeItem,
   cart,
   setCart,
-  isAltTheme,
   userTier,
   isSignedIn,
   setUserTier
@@ -17,7 +16,6 @@ export default function StoreItem({
   storeItem: Product,
   cart:Cart,
   setCart:Function,
-  isAltTheme:boolean,
   userTier:string,
   isSignedIn:boolean,
   setUserTier:Function
@@ -32,6 +30,8 @@ export default function StoreItem({
 
   const [isAddToCartExpanded,setIsAddToCartExpanded] = useState<boolean>(false);
   const controls = useAnimation();
+  
+
   const myAnimation = async function() {
     await controls.start({ opacity: 1 });
     // First animation
@@ -57,7 +57,7 @@ export default function StoreItem({
     if (isInitialLoad.current){
       isInitialLoad.current = false;
       //dynamically import images
-      import(`../../../../Assets/storeItems/${storeItem._id}.jpg`)
+      import(`../../../../Assets/storeItems/${storeItem._id}.webp`)
         .then((module)=>{
           setItemImgSrc(module.default);
         });
@@ -73,10 +73,6 @@ export default function StoreItem({
       setDozenItemQuantity(getItemQuantityFromCart(cart,storeItem.name,'dozen'));
     };
   },[cart]);
-
-  const altThemeClass: string = function() {
-    return isAltTheme ? 'alt-store-item' : '';
-  }();
   
   const calcPriceByUserTier = function(itemPrice:number,userTier:string):string{
     switch(userTier){
@@ -87,7 +83,7 @@ export default function StoreItem({
       case 'Platinum Member':
         return (itemPrice-(itemPrice*0.10)).toFixed(2);
       case 'Diamond Member':
-        return (itemPrice-(itemPrice*0.15)).toFixed(2)
+        return (itemPrice-(itemPrice*0.15)).toFixed(2);
       default:
         return (itemPrice).toFixed(2);
     }
@@ -98,7 +94,7 @@ export default function StoreItem({
       return(
         <>
           <span>{userTier} Pricing</span>
-          <span>${itemPrice}</span>
+          <span>One Pound - ${itemPrice.toFixed(2)}</span>
         </>
       )
     };
@@ -109,7 +105,7 @@ export default function StoreItem({
       return(
         <>
           <span>{userTier} Pricing</span>
-          <span>${itemPrice}</span>
+          <span>Six Pack - ${itemPrice.toFixed(2)}</span>
         </>
       )
     };
@@ -120,8 +116,8 @@ export default function StoreItem({
       return(
         <>
           <span>{userTier} Pricing</span>
-          <span>Six Pack ${sixPackPrice}</span>
-          <span>Baker's Dozen ${dozenPrice}</span>
+          <span>Six Pack - ${sixPackPrice.toFixed(2)}</span>
+          <span>Baker's Dozen - ${dozenPrice.toFixed(2)}</span>
         </>
       )
     }
@@ -132,6 +128,22 @@ export default function StoreItem({
       return(
         <>
           <div className='store-item-button-wrapper'>
+            <button className='quantity-button' onClick={()=>{
+              const selection:string = 'six';
+              modifyCart(
+                getItemQuantityFromCart(cart,storeItem.name,selection)-1,
+                storeItem._id,
+                setCart,
+                isRequestPending,
+                setIsRequestPending,
+                selection,
+                false
+              )
+            }}>
+              <div>
+                -
+              </div>
+            </button>
             <span>{sixPackItemQuantity} Six Pack(s) in Basket</span>
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'six';
@@ -149,8 +161,10 @@ export default function StoreItem({
                 +
               </div>
             </button>
+          </div>
+          <div className='store-item-button-wrapper'>
             <button className='quantity-button' onClick={()=>{
-              const selection:string = 'six';
+              const selection:string = 'dozen';
               modifyCart(
                 getItemQuantityFromCart(cart,storeItem.name,selection)-1,
                 storeItem._id,
@@ -165,8 +179,6 @@ export default function StoreItem({
                 -
               </div>
             </button>
-          </div>
-          <div className='store-item-button-wrapper'>
             <span>{dozenItemQuantity} Dozen(s) in Basket</span>
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'dozen';
@@ -184,28 +196,25 @@ export default function StoreItem({
                 +
               </div>
             </button>
-            <button className='quantity-button' onClick={()=>{
-              const selection:string = 'dozen';
-              modifyCart(
-                getItemQuantityFromCart(cart,storeItem.name,selection)-1,
-                storeItem._id,
-                setCart,
-                isRequestPending,
-                setIsRequestPending,
-                selection,
-                false
-              )
-            }}>
-              <div>
-                -
-              </div>
-            </button>
           </div>
         </>
       )
     }else if (storeItem.cat==='spread' || storeItem.cat ==='pastry'){
       return(
         <div className='store-item-button-wrapper'>
+          <button className='quantity-button' onClick={()=>{
+            modifyCart(
+              getItemQuantityFromCart(cart,storeItem.name)-1,
+              storeItem._id,
+              setCart,
+              isRequestPending,
+              setIsRequestPending,
+              '',
+              false
+            )
+          }}>
+            -
+          </button>
           <span>{itemQuantity} in Basket</span>
           <button className='quantity-button' onClick={()=>{
             modifyCart(
@@ -217,18 +226,9 @@ export default function StoreItem({
               '',
               false
             )
-          }}>+</button>
-          <button className='quantity-button' onClick={()=>{
-            modifyCart(
-              getItemQuantityFromCart(cart,storeItem.name)-1,
-              storeItem._id,
-              setCart,
-              isRequestPending,
-              setIsRequestPending,
-              '',
-              false
-            )
-          }}>-</button>
+          }}>
+            +
+          </button>
         </div>
       )
     }else{
@@ -258,67 +258,13 @@ export default function StoreItem({
 
   useEffect(()=>{
     if (!localStorage.getItem('loginToken')) setUserTier('Non-Member');
-  },[isSignedIn])
+  },[isSignedIn,setUserTier])
 
   return(
     <article 
       id={`item-${storeItem._id}`} 
-      className={`store-item ${altThemeClass}`}
+      className={`store-item `}
     >
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{duration: 2.5}}
-        viewport={{once: false}}
-        className='item-info'
-      >
-        <span>{storeItem.name}</span> 
-        {
-          storeItem.cat==='spread'
-          ?
-            'One Pound'
-          :
-            null
-        } 
-        {
-          storeItem.cat==='pastry'
-          ?
-            'Six Pack'
-          :
-            null
-        }
-        {
-          spreadItem && spreadItem.cat==='spread'
-          ?
-            getCurrentUserSpreadTierPricing(
-              parseFloat(calcPriceByUserTier(spreadItemPrice,userTier)),
-              userTier
-            )
-          :
-            null
-        }
-        {
-          bagelItem && bagelItem.cat==='bagel'
-          ?
-            getCurrentUserBagelTierPricing(
-              parseFloat(calcPriceByUserTier(bagelSixPackPrice,userTier)),
-              parseFloat(calcPriceByUserTier(bagelDozenPrice,userTier)),
-              userTier
-            )
-          :
-            null
-        }
-        {
-          pastryItem && pastryItem.cat==='pastry'
-          ?
-            getCurrentPastryTierPricing(
-              parseFloat(calcPriceByUserTier(pastryItemPrice,userTier)),
-              userTier
-            )
-          :
-            null
-        }
-      </motion.section>
       <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -326,10 +272,48 @@ export default function StoreItem({
         viewport={{once: false}}
         className='item-content'
       >
+        <section
+          className='item-info'
+        >
+          <span>{storeItem.name}</span> 
+          {
+            spreadItem && spreadItem.cat==='spread'
+            ?
+              getCurrentUserSpreadTierPricing(
+                parseFloat(calcPriceByUserTier(spreadItemPrice,userTier)),
+                userTier
+              )
+            :
+              null
+          }
+          {
+            bagelItem && bagelItem.cat==='bagel'
+            ?
+              getCurrentUserBagelTierPricing(
+                parseFloat(calcPriceByUserTier(bagelSixPackPrice,userTier)),
+                parseFloat(calcPriceByUserTier(bagelDozenPrice,userTier)),
+                userTier
+              )
+            :
+              null
+          }
+          {
+            pastryItem && pastryItem.cat==='pastry'
+            ?
+              getCurrentPastryTierPricing(
+                parseFloat(calcPriceByUserTier(pastryItemPrice,userTier)),
+                userTier
+              )
+            :
+              null
+          }
+        </section>
         <img 
           className='store-item-home-img' 
-          src={itemImgSrc} alt={`Item ${storeItem._id}`} 
+          id={`#${storeItem._id.toString()}-img`}
+          src={itemImgSrc} alt={`Item ${storeItem._id}`}
         />
+        <p>{storeItem.desc}</p>
         <motion.article
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -340,12 +324,13 @@ export default function StoreItem({
         >
           <div 
             className='store-item-button-container'
+            id={`#${storeItem._id.toString()}-buttons`}
           >
             {
               isAddToCartShown ?
                 getStoreItemButtons()
               :
-                <button onClick={()=>{setIsAddToCartExpanded(true)}} className='add-to-basket'><img src={basketImg} /><span>Add To Basket</span></button>
+                <button onClick={()=>{setIsAddToCartExpanded(true)}} className='add-to-basket'><img src={basketImg} alt='shopping cart basket of items to checkout' /><span>Add To Basket</span></button>
             }
           </div>
         </motion.article>

@@ -6,6 +6,7 @@ import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
 import { Cart } from '../../Interfaces/interfaces';
 import { genErrorMessageElement, handleForgotPassword, submitLogin } from '../../Helpers/accounts';
 import { motion } from 'framer-motion';
+import Nav from '../Nav/Nav';
 
 export default function Login(){
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function Login(){
       isInitialLoad.current = false;
       fetchAndHandleCart(setCart);
     };
-  },[isInitialLoad]);
+  },[]);
   
   return(
     <>

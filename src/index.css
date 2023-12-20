@@ -20,7 +20,7 @@ code {
 }
 #root{
   background-size: contain;
-  background-image: url('./Assets/backgrounds/bricks.jpg');
+  background-image: url('./Assets/backgrounds/bricks.webp');
   min-height: 100vh;
 }
 button{

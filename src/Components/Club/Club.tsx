@@ -6,10 +6,10 @@ import { getMembershipTier, verifyLoginToken } from '../../Helpers/auth';
 import { fetchAndSetStoreItems } from '../../Helpers/store';
 import './Club.css';
 import ClubItem from './ClubItem';
-import Calendar from 'react-calendar';
-import menuSwapImg from '../../Assets/icons/menu-swap.svg';
 import ClubCartItem from './ClubCartItem';
-import {motion} from 'framer-motion';
+import { motion} from 'framer-motion';
+import triangleUpArrowImg from '../../Assets/icons/up-arrow.svg';
+import triangleDownArrowImg from '../../Assets/icons/down-arrow.svg';
 
 export default function Club(){
   const [isSignedIn,setIsSignedIn] = useState<boolean>(false);
@@ -23,9 +23,25 @@ export default function Club(){
   const [date,setDate] = useState<Date>();
   const [isCartExpanded,setIsCartExpanded] = useState<boolean>(false);
   const [isCartValid,setIsCartValid] = useState<boolean>(false);
+  const [isShaking, setShaking] = useState(false);
 
   const isInitialLoad = useRef(true);
   
+  useEffect(() => {
+    if (clubCart) {
+      // Trigger animation when the variable changes
+      setShaking(true);
+
+      // Reset animation after a short delay
+      const timeoutId = setTimeout(() => {
+        setShaking(false);
+      }, 1000); // Adjust the duration as needed
+
+      // Clean up the timeout to avoid memory leaks
+      return () => clearTimeout(timeoutId);
+    }
+  }, [clubCart]);
+
   useEffect(()=>{
     setIsCartValid(isClubCartValid(clubCart));
   },[clubCart]);
@@ -43,14 +59,7 @@ export default function Club(){
       //get a club cart
       fetchAndHandleCart(setClubCart,true);
     };
-  },[isInitialLoad]);
-
-  // get tomorrow's date
-  const getTomorrowDate = function(){
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    return tomorrow;
-  };
+  },[]);
 
   if(
       !isSignedIn
@@ -95,12 +104,15 @@ export default function Club(){
           setIsSignedIn={setIsSignedIn}
         />
         <motion.div
-          animate={{ height: isCartExpanded ? '75vh' : '135px' }}
-          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          animate={{
+            y: isShaking ? [5,0] : 0,
+            height: isCartExpanded ? '75vh' : '135px',
+          }}
+          transition={{ duration: 1, ease: 'easeInOut'  }}
           className={isCartExpanded ? 'club-cart-snapped-expanded' : 'club-cart-snapped-closed'}
         >
           <div className='club-cart-heading'>
-            <img onClick={()=>{setIsCartExpanded(!isCartExpanded)}} src={menuSwapImg} alt='expand menu slider' />
+            <img onClick={()=>{setIsCartExpanded(!isCartExpanded)}} src={isCartExpanded===false ? triangleUpArrowImg : triangleDownArrowImg} alt='expand menu slider' />
             <div className='club-cart-date-wrapper' onClick={()=>{setIsCartExpanded(!isCartExpanded)}}>
             {
               date
@@ -117,7 +129,7 @@ export default function Club(){
                 )
             }
             </div>
-            <button onClick={()=>{handlePlaceClubOrder(cart,isCartValid,deliveriesRemaining,date)}} type='button' className={`club-cart-place-order-button ${isCartValid ? 'club-cart-valid-background' : 'yellow-background'}`}>Place Order</button>
+            <button onClick={()=>{handlePlaceClubOrder(cart,isCartValid,deliveriesRemaining,date)}} type='button' className={`club-cart-place-order-button club-cart-valid-background`}>Place Order</button>
           </div>
           <div className='club-cart-filled-wrapper'>
             <p className={`club-cart-valid ${isCartValid ? 'green' : 'yellow'}`}>
@@ -131,7 +143,7 @@ export default function Club(){
             </p>
           </div>
           {
-            clubCart.items.map((cartItem:CartItem,index:number)=>{
+            clubCart && clubCart.items.map((cartItem:CartItem,index:number)=>{
               return(
                 <ClubCartItem key={index} cartItem={cartItem} setCart={setClubCart} />
               )
@@ -152,14 +164,6 @@ export default function Club(){
           </div>
           <div className='calendar-wrapper'>
             <h3>Choose Your Ship Date</h3>
-            <Calendar 
-              value={date} 
-              onChange={(selectedDate:any)=>{setDate(selectedDate)}}
-              tileDisabled={({date}) => ![3, 4].includes(date.getDay())}
-              minDetail='month'
-              maxDetail='month'
-              minDate={getTomorrowDate()}
-            />
             <strong>
               {
                 date ?
@@ -171,7 +175,7 @@ export default function Club(){
           </div>
           <div className='club-items-container'>
             {
-              storeItems.sort((a, b) => {
+              storeItems && storeItems.sort((a, b) => {
               if (a.cat === 'bagel' && b.cat !== 'bagel') {
                   return -1;
                 } else if (a.cat === 'pastry' && b.cat !== 'bagel' && b.cat !== 'pastry') {

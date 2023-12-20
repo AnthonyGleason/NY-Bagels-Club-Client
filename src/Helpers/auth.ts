@@ -38,7 +38,11 @@ export const requestCartToken = async function(isClub:boolean){
   }
 };
 
-export const verifyLoginToken = async function(setIsSignedIn?:Function,setIsAdmin?:Function,setUserID?:Function):Promise<boolean>{
+export const verifyLoginToken = async function(
+  setIsSignedIn?:Function,
+  setIsAdmin?:Function,
+  setUserID?:Function
+):Promise<boolean>{
   let isValid:boolean = false;
   //handle no login token is present
   if (!localStorage.getItem('loginToken')){

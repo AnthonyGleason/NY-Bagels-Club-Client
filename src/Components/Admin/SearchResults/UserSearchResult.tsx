@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Membership, User } from '../../../Interfaces/interfaces';
-import { toggleExpandMenu } from '../../../Helpers/sidebar';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 
 export default function UserSearchResult({user}:{user:User}){
@@ -15,26 +14,27 @@ export default function UserSearchResult({user}:{user:User}){
     };
   };
 
-  const handleRequestMembershipInfo = async function(){
-    const response = await fetch(`${getServerUrlPrefix()}/api/admin/users/memberships/${user._id}`,{
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
-      }
-    })
-    const responseData = await response.json();
-    if (responseData.membershipDoc){
-      setMembershipInfo(responseData.membershipDoc);
-    }else{
-      setMembershipInfo(null);
-    };
-  };
+ 
 
   //fetch membership doc info for user when menu is expanded
   useEffect(()=>{
+    const handleRequestMembershipInfo = async function(){
+      const response = await fetch(`${getServerUrlPrefix()}/api/admin/users/memberships/${user._id}`,{
+        method: 'GET',
+        headers:{
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+        }
+      })
+      const responseData = await response.json();
+      if (responseData.membershipDoc){
+        setMembershipInfo(responseData.membershipDoc);
+      }else{
+        setMembershipInfo(null);
+      };
+    };
     handleRequestMembershipInfo()
-  },[isUserExpanded])
+  },[isUserExpanded,user._id])
 
   return(
     <li>

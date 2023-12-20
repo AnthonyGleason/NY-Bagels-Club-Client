@@ -187,7 +187,8 @@ export const emptyCart = {
   totalQuantity: 0,
   discountAmountInDollars: 0,
   finalPriceInDollars: 0,
-  desiredShipDate: new Date()
+  desiredShipDate: new Date(),
+  isGuest: false
 };
 
 export const requestApplyMembershipPricingToCart = async function(setCart?:Function):Promise<void>{

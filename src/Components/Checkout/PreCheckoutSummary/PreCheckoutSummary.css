@@ -11,7 +11,7 @@
 }
 .react-calendar__navigation .react-calendar__navigation__label{
   padding: 1em;
-  width: 80px;
+  min-width: 60px;
 }
 .react-calendar__navigation .react-calendar__navigation__label span{
   font-size: 18px;
@@ -35,7 +35,8 @@
   max-height: 80px;
 }
 .react-calendar__tile{
-  height: 60px;
+  height: 40px;
+  width: 10px;
 }
 .react-calendar__navigation__arrow{
   font-size: 30px;
@@ -98,4 +99,62 @@
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02);
   border: 1px solid black;
   padding: 0.5em;
+}
+.calendar-wrapper{
+  border-bottom: 2px solid white;
+  padding: 2em;
+}
+.calendar-wrapper input{
+  min-width: 150px;
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
+  align-self: center;
+  min-height: 35px;
+  color: black;
+  border-radius: 4px;
+  font-size: 15px;
+}
+.cart-shipping-note{
+  padding-bottom: 1em;
+  font-size: 15px;
+}
+.cart-summary .guest-heading{
+  font-family: 'Courgette';
+  font-size: 20px;
+  border-bottom: 2px solid white;
+  padding-bottom: 1em;
+  padding-top: 1em;
+  text-wrap: wrap;
+}
+.basket-wrapper{
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+.basket-wrapper h3{
+  padding-bottom: 0.7em;
+}
+.gift-wrapper{
+  padding: 2em;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#pre-checkout .checkout-secured{
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+  font-size: 20px;
+  gap: 10px;
+  font-family: 'Titillium Web';
+  align-items: center;
+}
+#pre-checkout .checkout-secured .lock-img{
+  width: 25px;
+  margin-bottom: 3px;
+}
+#pre-checkout .checkout-secured img{
+  width: 50px;
 }

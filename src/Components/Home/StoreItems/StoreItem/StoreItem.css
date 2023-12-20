@@ -7,7 +7,7 @@
   justify-content: center;
   width: 100%;
   padding: 1.2em;
-  background-image: url('../../../../Assets/backgrounds/wood-grain-alt.jpg');
+  background-image: url('../../../../Assets/backgrounds/wood-grain-alt.webp');
   background-size: cover;
   background-repeat: no-repeat;
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.5);
@@ -16,20 +16,32 @@
 }
 .store-item .item-info{
   padding: 1em;
-  margin: 0.5em;
-  border-radius: 5px;
-  font-size: 20px;
-  font-family: 'Allura';
+  font-size: 25px;
+  font-family: 'Courgette';
   color: white;
   font-weight: bolder;
-  font-size: 30px;
   width: 100%;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: rgba(0,0,0,0.8);
   display: flex;
   flex-direction: column;
   gap: 6px;
   max-width: 700px;
+}
+.store-item .item-info span:first-child{
+  letter-spacing: 1.5px;
+}
+@media screen and (width<=768px){
+  .store-item .item-info span:not(:first-child){
+    font-size: 19px;
+  }
+}
+@media screen and (width>768px){
+  .store-item .item-info span:not(:first-child){
+    font-size: 21px;
+  }
+}
+.store-item .item-info span:not(:first-child){
+  font-family: 'Titillium Web';
 }
 .store-item ol{
   display: flex;
@@ -40,7 +52,6 @@
 .store-item .store-item-home-img{
   max-width: 700px;
   width: 100%;
-  border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 .store-item-buttons{
@@ -54,11 +65,8 @@
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   font-size: 22px;
   font-family: 'Titillium Web';
-  padding: 1em;
-  border-radius: 5px;
-  margin: 0.5em;
+  padding: 1em 0.5em 1em 0.5em;
   color: white;
-  background-color: rgba(0,0,0,0.8);
   /* if overflow-y is not hidden the complete dropdown will be shown
   before framer motion completes its animation */
   overflow-y: hidden;
@@ -83,18 +91,22 @@
   color: white;
   border: 0px solid transparent;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
-  font-size: 25px;
+  font-size: 23px;
   display: flex;
+  width: 80%;
+  min-width: 200px;
+  max-width: 280px;
+  align-self: center;
   align-items: center;
   justify-content: center;
   padding: 0.4em;
   font-family: 'Allura';
   font-weight: bolder;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   gap: 20px;
 }
 .store-item-buttons .add-to-basket span{
-  margin-top: 5px;
+  margin-top: 4px;
 }
 .store-item-buttons .add-to-basket img{
   max-width: 40px;
@@ -102,7 +114,7 @@
 }
 .store-item-button-wrapper{
   display: grid;
-  grid-template-columns: 1fr 0.5fr 0.5fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
   justify-items: center;
   align-items: center;
@@ -115,15 +127,29 @@
 .store-item-button-container{
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 25px;
   width: 100%;
 }
 .alt-store-item{
-  background-image: url('../../../../Assets/backgrounds/wood-grain.jpg');
+  background-image: url('../../../../Assets/backgrounds/wood-grain.webp');
 }
 .item-content{
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.95);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.7);
+  position: relative;
+  max-width: 600px;
+}
+.store-item-button-wrapper span{
+  font-size: 19px;
+}
+.item-content p{
+  color:white;
+  font-family: 'Titillium Web';
+  padding: 0.5em 1em 0em 1em;
+  font-size: 18px;
 }

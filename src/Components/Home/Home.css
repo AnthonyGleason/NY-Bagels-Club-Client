@@ -12,34 +12,71 @@
     font-size: 22px;
   }
   .banner h3 img{
-    width: 30px;
+    width: 40px;
+  }
+  
+  .banner p{
+    font-size: 18px;
+  }
+
+  .about-us p{
+    font-size: 20px;
+  }
+
+  .home .store-items-heading span:nth-child(2){
+    font-size: 19px;
   }
 }
+
+.banner p{
+  max-width: 500px;
+  align-self: center;
+  line-height: 1.5;
+}
+.banner p span {
+  color: beige;
+  display: inline-block; /* This is important for the border-bottom to take effect */
+}
+
 @media screen and (width>=768px){
   .home-content-row-wrapper{
     display: grid;
-    grid-template-columns: 0.7fr 1fr;
+    grid-template-columns: 1fr 0.7fr;
   }
-  .banner h4{
-    font-size: 22px;
+  .banner p{
+    font-size: 18px;
   }
   .home .store-items-heading,
   .brendels,
   .banner h3,
   .about-us p{
-    font-size: 30px;
+    font-size: 24px;
   }
   .banner h3 img{
     width: 50px;
   }
+  .about-us p{
+    font-size: 22px;
+  }
+
+  .home .store-items-heading span:nth-child(2){
+    font-size: 21px;
+  }
+  .banner{
+    padding: 2em 1.5em 2em 1.5em;
+  }
 }
+
 .store-front-img{
   height: 100%;
   width: 100%;
   margin: 0;
   display: block;
-}
-.home-content-row-wrapper{
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 1;
+  object-fit: cover;
+  object-position: 25%;
 }
 .home-content-row-wrapper,
 .heading-color-wrapper{
@@ -47,7 +84,6 @@
 }
 .banner{
   text-align: center;
-  padding: 1.5em 1em 1.5em 1em;
   font-size: 22px;
   display: flex;
   flex-direction: column;
@@ -56,7 +92,15 @@
   color: white;
   font-family: 'Titillum Web';
   gap: 10px;
-  background-color: rgb(83, 19, 19);
+  background-color: #270e0c;
+  padding: 3.5em 1em 3.5em 1em;
+}
+.banner .limited-offer-wrapper h3{
+  max-width: 450px;
+  align-self: center;
+}
+.banner .limited-offer-wrapper h3 span{
+  font-size: 23px;
 }
 .banner h3{
   display: flex;
@@ -65,23 +109,27 @@
   align-items: center;
 }
 .banner .limited-offer-wrapper{
-  background-color: rgb(39, 7, 7);
-  padding: 1em 1em 1em 1em;
   border-radius: 3px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   font-size: 19px;
 }
 .banner h3 span{
   /* text-underline-offset: 5px; */
   font-family: 'Courgette';
+  letter-spacing: 1.5px;
 }
 .banner .home-delivery{
   width: 100%;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
-  border-radius: 3px;
+  max-width: 600px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+}
+.triangle-down-img{
+  width: 50px;
+  margin-top: 1em;
 }
 .about-us{
   padding: 1em;
@@ -90,24 +138,25 @@
   font-family: 'Titillium Web';
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   gap: 20px;
-  min-height: 100vh;
+  min-height: 60vh;
   justify-content: center;
   align-items: center;
   padding-top: 3em;
   padding-bottom: 3em;
-  background-image: url('../../Assets/backgrounds/about.jpg');
+  background-image: url('../../Assets/backgrounds/about.webp');
   background-size: cover;
   background-repeat: no-repeat;
   background-color: rgb(51, 10, 10);
   background-position: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .about-us p{
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(27,7,7,0.95);
   color: white;
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 1em;
   max-width: 1000px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
@@ -120,15 +169,9 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
   max-width: 400px;
 }
-.home .our-menu-heading{
-  color: #5d1917;
-  font-family: 'Courgette';
-  font-weight: bolder;
-  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  padding: 1em;
-}
-.home .store-items-heading{
+.home .store-items-heading{ 
+  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.6), 0px 4px 6px rgba(0, 0, 0, 0.6);
+  position: relative;
   color: white;
   font-family: 'Courgette';
   font-weight: bolder;
@@ -142,13 +185,42 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  letter-spacing: 1.5px;
+}
+#proudly-delivering{
+  min-height: 65vh;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  gap: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+  position: relative;
+}
+.home .store-items-heading span{
+  max-width: 550px;
+}
+.home .store-items-heading span:nth-child(2){
+  font-family: 'Titillium Web';
+  font-weight: normal;
+}
+.view-our-menu{
+  margin-top: 0.5em;
+}
+.our-menu-subscription{
+  width: 75%;
+  margin-top: 10px;
+  font-family: 'Titillium Web';
+  font-size: 20px;
+  color: beige;
 }
 .brendels{
   font-family: 'Allura';
-  color: red;
-  font-size: 30px;
+  color: rgb(255, 71, 71);
+  font-size: 33px;
   font-weight: bolder;
-  padding: 0.2em;
+  padding: 0.1em;
+  letter-spacing: 1.5px;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 1); 
 }
 .corner-buttons{
   display: flex;
@@ -180,17 +252,25 @@
 .club-perks{
   display: flex;
   text-align: center;
-  padding: 1.5em;
   align-items: center;
   flex-direction: column;
+  /* 
   background-repeat: no-repeat;
-  background-size: cover;
-  font-size: 16px;
-  background-image: url('../../Assets/backgrounds/club-perks.jpg');
-  background-position: center;
-  padding-top: 3em;
-  padding-bottom: 3em;
+  background-size: cover; */
+  font-size: 17px;
+  background-color: #270e0c;
+  /* background-image: url('../../Assets/backgrounds/club-perks.webp');
+  background-position: center; */
+  padding-top: 1em;
+  padding-bottom: 1em;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+}
+.gold,
+.diamond{
+  padding: 1em;
+}
+.platinum{
+  margin: 1em;
 }
 .club-perks .club-tiers{
   display: flex;
@@ -198,27 +278,39 @@
   gap: 20px;
   justify-content: center;
   font-family: 'Titillium Web';
+  margin-right: 10px;
+  padding-bottom: 1em;
+  margin-left: 10px;
+  flex-direction: column;
 }
 .club-perks .brendels{
   font-size: 28px;
+}
+.club-perks .club-tiers li{
+  text-align: left;
+  list-style-type: none;
+}
+.club-perks .club-tiers li::before {
+  content: '\2713'; /* Unicode character for a checkmark */
+  color: rgb(255, 255, 255); /* You can customize the color */
+  font-size: 1.2em; /* You can adjust the size */
+  margin-right: 0.5em; /* Add some space between the checkmark and text */
 }
 .club-perks .club-tiers div{
   display: flex;
   gap: 10px;
   align-items: center;
   max-width: 700px;
-  padding: 1em;
+  padding-top: 1em;
   border-radius: 3px;
-  background-color: rgba(0, 0, 0, 0.75);
   flex-direction: column;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 .club-perks .club-tiers ul{
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 5px;
+  gap: 15px;
   padding-left: 20px;
   list-style-type: circle;
 }
@@ -234,13 +326,20 @@
   background-color: rgba(0, 0, 0, 0.8);
 }
 .gold{
-  color: #FFEEAA;
+  /* color: #FFEEAA; */
+  color: white;
 }
-.platinum{
-  color: #DADADA;
+#root .platinum{
+  /* color: #DADADA; */
+  color: white;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 1.2em;
+  background-color: rgba(129, 112, 112, 0.2);
 }
 .diamond{
-  color: #C0E6F5;
+  /* color: #C0E6F5; */
+  color: white;
 }
 .club-perks-footnotes{
   font-size: 12px;
@@ -252,13 +351,14 @@
 .club-value span{
   font-size: 23px;
   font-family: 'Courgette';
+  letter-spacing: 1.5px;
 }
 .club-value strong{
   width: 100%;
 }
 .home-subscribe-now{
   border: 0px solid transparent;
-  border-radius: 3px;
+  border-radius: 6px;
   background-color: #5d1917;
   width: 100%;
   color: white;
@@ -267,7 +367,6 @@
   font-family: 'Allura';
   max-width: 700px;
   padding: 0.5em 1em;
-  margin-top: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 .gold h3,
@@ -278,4 +377,34 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  letter-spacing: 1.5px;
+}
+.gold h3 span {
+  color: rgb(248, 235, 164);
+}
+
+.diamond h3 span {
+  color: #c3f3fd; /* You can choose a specific shade of blue for diamond */
+}
+
+.platinum h3 span {
+  color: #E5E4E2; /* You can choose a specific shade of gray for platinum */
+}
+.view-our-menu{
+  border: 0px solid transparent;
+  border-radius: 6px;
+  background-color: #5d1917;
+  width: 100%;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Allura';
+  max-width: 700px;
+  padding: 0.5em 1em;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  max-width: 550px;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); 
+}
+.home-content-wrapper{
+  background-color: #270e0c;
 }

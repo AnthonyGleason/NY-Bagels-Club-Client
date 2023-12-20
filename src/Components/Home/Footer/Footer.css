@@ -10,15 +10,19 @@
   justify-content: space-between;
   flex-direction: column;
   padding: 1em;
+  font-family: 'Titillium Web';
   padding-bottom: 8em;
+  background-color: rgba(255, 255, 255, 0.75);
 }
 .footer .copyright{
   padding: 0.4em;
   text-align: center;
-  font-size: 17px;
+  font-size: 18px;
   font-family: 'Titillium Web';
   display: flex;
   flex-direction: column;
+  width: 100%;
+  border-bottom: 2px solid black;
 }
 .footer .payment-methods{
   display: flex;
@@ -32,21 +36,79 @@
   max-width: 50px;
   cursor: pointer;
 }
-.footer .support{
-  padding: 1em;
+.footer .footer-support{
+  padding-top: 1em;
+  padding-bottom: 1em;
   font-size: 17px;
-  gap: 20px;
+  gap: 10px;
   display: flex;
   flex-direction: column;
+  margin-top: 1em;
+  border-top: 2px solid black;
 }
-.footer .support ul{
+.footer .footer-support ul{
   list-style: none;
   display: flex;
   flex-direction: column;
 }
-.footer .support a{
+.footer .footer-support a{
   color: black;
 }
-.small-business{
-  width: 250px;
+
+.footer-icons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid black;
+}
+
+.small-business {
+  max-width: 185px; /* Adjust the percentage as needed */
+  width: 55%;
+  flex-grow: 1;
+}
+
+.miny {
+  max-width: 100px;
+  width: 30%;
+  flex-grow: 1;
+}
+
+#root .footer .cash-app-img{
+  width: 30px;
+  height: 30px;
+}
+.footer-checkout-info{
+  padding: 1em;
+}
+.footer-checkout-info p{
+  font-size: 18px;
+  font-family: 'Titillium Web';
+  font-weight: bold;
+}
+.footer-checkout-info .stripe-footer-img{
+  width: 50px;
+}
+.footer-checkout-info div{
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+.footer-checkout-info .lock-img{
+  width: 30px;
+  margin-bottom: 3px;
+}
+.footer-support-notice{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.always-fresh{
+  color: #4CAF50;
+  font-size: 17px;
+}
+.footer-support-notice .always-fresh-leaf{
+  width: 30px;
 }

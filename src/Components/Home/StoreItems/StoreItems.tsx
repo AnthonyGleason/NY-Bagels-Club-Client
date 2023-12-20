@@ -6,62 +6,58 @@ import { Cart, Product } from '../../../Interfaces/interfaces';
 import { fetchAndSetStoreItems } from '../../../Helpers/store';
 
 export default function StoreItems({
-    cart,
-    setCart,
-    isSignedIn,
-    storeItems,
-    setStoreItems
-  }:{
-    cart: Cart,
-    setCart: Function,
-    isSignedIn: boolean,
-    storeItems: Product[],
-    setStoreItems: Function
-  }){
+  cart,
+  setCart,
+  isSignedIn,
+  storeItems,
+  setStoreItems
+}: {
+  cart: Cart;
+  setCart: Function;
+  isSignedIn: boolean;
+  storeItems: Product[];
+  setStoreItems: Function;
+}) {
   const [userTier, setUserTier] = useState<string>('Non-Member');
-  
   const isInitialLoad = useRef(true);
-  
-  // get store items on initial load
+
+  const sortStoreItems = (a: Product, b: Product) => {
+    if (a.cat === 'bagel' && b.cat !== 'bagel') {
+      return -1;
+    } else if (a.cat === 'pastry' && b.cat !== 'bagel' && b.cat !== 'pastry') {
+      return -1;
+    } else {
+      return 1;
+    }
+  };
+
   useEffect(() => {
     if (isInitialLoad.current) {
       isInitialLoad.current = false;
       fetchAndSetStoreItems(setStoreItems);
       getMembershipTier(setUserTier);
-    };
+    }
   }, [isInitialLoad]);
 
-  let counter:number = 0;
+  const filteredStoreItems = storeItems
+    .filter((item) => {
+      return (item.cat !=='mystery')
+    })
+    .sort(sortStoreItems);
 
-  return(
+  return (
     <section className='store-items-container'>
-     {
-      storeItems.sort((a, b) => {
-        if (a.cat === 'bagel' && b.cat !== 'bagel') {
-            return -1;
-          } else if (a.cat === 'pastry' && b.cat !== 'bagel' && b.cat !== 'pastry') {
-            return -1;
-          } else {
-            return 1;
-          }
-        }).map((storeItem: Product) => {
-          //do not show the mystery bagel
-          if (storeItem.cat==='mystery') return null;
-          counter += 1;
-          return (
-            <StoreItem
-              key={storeItem._id}
-              storeItem={storeItem}
-              cart={cart}
-              setCart={setCart}
-              isAltTheme={counter % 2 === 0}
-              userTier={userTier}
-              isSignedIn={isSignedIn}
-              setUserTier={setUserTier}
-            />
-          );
-        })
-      }
+      {filteredStoreItems.map((storeItem: Product) => (
+        <StoreItem
+          key={storeItem._id}
+          storeItem={storeItem}
+          cart={cart}
+          setCart={setCart}
+          userTier={userTier}
+          isSignedIn={isSignedIn}
+          setUserTier={setUserTier}
+        />
+      ))}
     </section>
-  )
+  );
 }

@@ -33,6 +33,7 @@ export interface Product{
   name: string;
   _id: string;
   cat: string;
+  desc: string;
 };
 
 export interface CartItem{
@@ -49,16 +50,16 @@ export interface CartItem{
   unitPriceInDollars: number,
 };
 
-//address
 export interface Address{
-  line1: string,
-  line2?: string | null,
-  city: string,
-  state: string,
-  postal_code: string,
-  country: string,
+  line1:string,
+  line2?:string,
+  city:string,
+  state:string,
+  postal_code:string,
+  country:string,
   phone: string,
-  fullName: string
+  fullName: string,
+  email:string
 };
 
 export interface Cart{
@@ -69,6 +70,7 @@ export interface Cart{
   discountAmountInDollars:number;
   finalPriceInDollars:number;
   desiredShipDate: Date;
+  isGuest:boolean;
 };
 
 //order

@@ -19,71 +19,96 @@
 .loading-content-wrapper {
   z-index: 100;
   height: max-content;
-  background-color: rgba(255, 251, 231, 0.9);
-  border-radius: 4px;
+  background-color: rgba(27,7,7,0.95);
+  color: white;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 5px;
+  max-width: 800px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  position: fixed;
+  margin: 10px;
+}
+.loading-content-wrapper h3{
+  text-align: center;
+  font-family: 'Courgette';
+  line-height: 1.5;
+  color: white;
 }
 
+.loading-message{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 700px;
+}
+
+.loading-content-wrapper h3{
+  font-size: 1em;
+}
 /* Mobile */
-@media screen and (max-width: 767px) {
+@media screen and (width <= 767px) {
   .loading-content-wrapper {
-    padding: 0.8em;
+    padding: 1.5em 1em 1.5em 1em;
   }
   .init-load p {
-    font-size: 25px;
+    font-size: 20px;
   }
   .init-load h1{
-    font-size: 30px;
+    font-size: 26px;
   }
   .init-load h1 span:nth-child(2){
-    font-size: 27px;
+    font-size: 23px;
+  }
+  .init-load .loading-notice{
+    font-size: 20px;
+  }
+  .loading-message{
+    width: 95%;
   }
 }
 
 /* Desktop */
-@media screen and (min-width: 768px) {
+@media screen and (width > 767px) {
   .loading-content-wrapper {
     padding: 2em;
   }
   .init-load p {
     font-size: 30px;
-    padding: 0.5em;
+    padding: 0.5em; /* Adjusted padding for desktop */
   }
-  .init-load h1{
+  .init-load h1 {
     font-size: 40px;
   }
-  .init-load h1 span:nth-child(2){
+  .init-load h1 span:nth-child(2) {
     font-size: 35px;
+  }
+  .init-load .loading-notice{
+    font-size: 25px;
   }
 }
 
 .init-load-background {
-  background-image: url('../../../Assets/backgrounds/loading.jpg');
-  width: 100vw;
   height: 100vh;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  width: 100%;
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 98;
+  object-fit: cover;
 }
-
-.init-load-overlay {
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  z-index: 99;
+@media screen and (width>1300px) {
+  .init-load-background{
+    width: 100vw;
+  }
 }
-
+.loading-content-wrapper:not(:first-child){
+  color: beige;
+};
 .init-load p {
   padding: 0.5em;
   font-weight: 500;
-  color: black;
   max-width: 700px;
 }
 
@@ -100,7 +125,7 @@
 }
 
 .init-load h1 {
-  color: #5d1917;
+  color: white;
   font-weight: bold;
   font-family: 'Courgette';
   white-space: wrap;
@@ -111,5 +136,25 @@
 
 .init-load .loading-spinner {
   width: 100%;
-  max-width: 70px;
+  max-width: 60px;
+  position: fixed;
+  top: 25px;
+  padding: 0.2em;
+  left: 0;
+  background-color: rgba(27,7,7,0.95);
+  border-radius:0px 6px 6px 0px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+}
+.init-load p{
+  color: white;
+}
+.init-load .loading-notice{
+  text-align: center;
+  padding: 0.2em;
+  color: beige;
+}
+@media screen and (width>768px) {
+  .init-load .loading-notice{
+    max-width: 80%;
+  }
 }

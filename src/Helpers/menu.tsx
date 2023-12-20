@@ -42,7 +42,7 @@ export const getPastryMenuItems = function(storeItems:(BagelItem | SpreadItem)[]
 
 export const handleHideMenuElements = function(isBagelsVisible:boolean,isSpreadsVisible:boolean){
   const buttonHeadingElements:any = document.querySelectorAll('.menu-button-heading');
-  if (isBagelsVisible || isSpreadsVisible && buttonHeadingElements){
+  if ((isBagelsVisible || isSpreadsVisible) && buttonHeadingElements){
     buttonHeadingElements.forEach((buttonHeadingElement:any)=>buttonHeadingElement.style.display='none');
   }else{
     buttonHeadingElements.forEach((buttonHeadingElement:any)=>buttonHeadingElement.style.display='flex');

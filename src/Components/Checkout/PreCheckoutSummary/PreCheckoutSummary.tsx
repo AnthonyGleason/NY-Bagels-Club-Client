@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import CartSummaryItem from '../CartSummaryItem/CartSummaryItem';
 import { Cart } from '../../../Interfaces/interfaces';
-import Calendar from 'react-calendar';
 import './PreCheckoutSummary.css';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import '../Checkout.css';
+import stripeImg from '../../../Assets/icons/stripe.svg';
+import lockImg from '../../../Assets/icons/lock-1.svg';
 
 export default function PreCheckoutSummary({
   isSidebarExpanded,
@@ -17,10 +18,26 @@ export default function PreCheckoutSummary({
   cart:Cart,
   setCart:Function
 }){
-  const [date,setDate] = useState<Date>();
+  const getNextValidDay = function(){
+    const today = new Date();
+    const currentDay = today.getDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
+
+    // Calculate the difference between the current day and the next Wednesday or Thursday
+    const daysUntilNextValidDay = currentDay <= 2 ? 3 - currentDay : 10 - currentDay;
+
+    // Calculate the timestamp of the next Wednesday or Thursday
+    const nextValidDayTimestamp = today.getTime() + daysUntilNextValidDay * 24 * 60 * 60 * 1000;
+    
+    // Create a new Date object for the next Wednesday or Thursday
+    const nextValidDay = new Date(nextValidDayTimestamp);
+    
+    return nextValidDay.toISOString().split('T')[0];
+  };
+
+  const [date,setDate] = useState<string>(getNextValidDay());
   const [isGiftInput,setIsGiftInput] = useState<boolean>(false);
   const [giftMessageInput,setGiftMessageInput] = useState<string>('');
-  
+
   const handleNavigateCheckout = async function(){
     if (!date){
       alert('You must select a ship date for your order to proceed.');
@@ -47,11 +64,28 @@ export default function PreCheckoutSummary({
     };
   };
 
-  // get tomorrow's date
-  const getTomorrowDate = function(){
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    return tomorrow;
+  const validateDate = function (date: string): boolean {
+    const selectedDate = new Date(date);
+    const today = new Date();
+
+    // Check if the day is either Wednesday or Thursday
+    const isWednesdayOrThursday = selectedDate.getDay() === 2 || selectedDate.getDay() === 3;
+
+    // Check if the selected date is today or in the past
+    const isFutureDate = selectedDate > today;
+
+    return isWednesdayOrThursday && isFutureDate;
+  };
+
+    
+  
+  const handleDateChange = function (newDate: string) {
+    const isDateValid = validateDate(newDate);
+    if (isDateValid) {
+      setDate(new Date(newDate).toISOString().split('T')[0]); // Convert the string to a Date object
+    } else {
+      alert('You have selected an invalid date, please select a future Wednesday or Thursday.');
+    }
   };
 
   return(
@@ -59,52 +93,51 @@ export default function PreCheckoutSummary({
       <div className='cart-summary-wrapper'>
         <div className='calendar-wrapper'>
           <h3>Choose Your Ship Date</h3>
-          <Calendar 
-            value={date} 
-            onChange={(selectedDate:any)=>{setDate(selectedDate)}}
-            tileDisabled={({date}) => ![3, 4].includes(date.getDay())}
-            minDetail='month'
-            maxDetail='month'
-            minDate={getTomorrowDate()}
-          />
           <strong>
             {
               date ?
-                `Your order will ship on ${date.toDateString()} or the next available business day.`
+                `Your order will ship on ${new Date(new Date(date).toLocaleString('en-US', { timeZone: 'UTC' })).toDateString()} or the next available business day.`
               :
                 'Please select a Wednesday or Thursday you would like your order shipped on.'
             }
           </strong>
+          <input type='date' 
+            value={date}
+            onChange={(e) => handleDateChange(e.target.value)}
+          />
         </div>
-        <h3>Basket</h3>
-        <table>
-          <thead>
-            <tr>
-              <th className="item-name">Name</th>
-              <th className="item-quantity">Quantity</th>
-              <th className="item-subtotal">Subtotal</th>
-              <th className="item-remove">Remove</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              cart.items.map((cartItem, index) => {
-                return (
-                  <CartSummaryItem 
-                    key={index}
-                    cartItem={cartItem}
-                    setCart={setCart}
-                  />
-                );
-              })
-            }
-          </tbody>
-        </table>
-        <div className='cart-subtotal'>
-          <span><strong>Basket Subtotal: ${cart.subtotalInDollars.toFixed(2)}</strong></span>
+        <div className='basket-wrapper'>  
+          <h3>Basket</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th className="item-name">Name</th>
+                  <th className="item-quantity">Quantity</th>
+                  <th className="item-subtotal">Subtotal</th>
+                  <th className="item-remove">Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  cart.items.map((cartItem, index) => {
+                    return (
+                      <CartSummaryItem 
+                        key={index}
+                        cartItem={cartItem}
+                        setCart={setCart}
+                      />
+                    );
+                  })
+                }
+              </tbody>
+            </table>
+          <div className='cart-subtotal'>
+            <span><strong>Basket Subtotal: ${cart.subtotalInDollars.toFixed(2)}</strong></span>
+            <b className='cart-shipping-note'>We have applied our FREE Priority Shipping offer to your cart. Taxes are calculated at checkout.</b>
+          </div>
         </div>
-        <b className='cart-shipping-note'>Note: Shipping and taxes are calculated at checkout.</b>
         {/* <button onClick={()=>{alert("We appreciate your interest in our delicious bagels! Although we're not officially open yet, we're still accepting orders. Feel free to contact sales@nybagelsclub.com to place any orders.")}}>Checkout</button> */}
+        <div className='gift-wrapper'>
         <h3>Is This Order A Gift?</h3>
           <div className='gift-options-content'>
             <div className='gift-toggle-container'>
@@ -127,6 +160,12 @@ export default function PreCheckoutSummary({
                 null
             }
           </div>
+        </div>
+        <div className='checkout-secured'>
+          <p>Checkout Secured By</p> 
+          <img alt='checkout secured by stripe' className='stripe-footer-img' src={stripeImg} loading="lazy" />
+          <img alt='this website is secured with ssl' className='lock-img' src={lockImg} loading="lazy" />
+        </div>
         <button className='button-styled' onClick={()=>{handleNavigateCheckout()}}>Checkout Now</button>
       </div>
     </section>

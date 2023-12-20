@@ -1,23 +1,24 @@
 import React, {useEffect, useRef, useState} from 'react';
-//import components
-import Sidebar from '../Sidebar/Sidebar';
-import StoreItems from './StoreItems/StoreItems';
-import About from './About/About';
-import HomeLoadingOverlay from './HomeLoadingOverlay/HomeLoadingOverlay';
+
 //import css
 import './Home.css';
 import upArrowImg from '../../Assets/icons/arrow-up-outline.svg';
 import foodMenuImg from '../../Assets/icons/foodMenu.svg';
 import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
 import { BagelItem, Cart, SpreadItem } from '../../Interfaces/interfaces';
-import Menu from './Menu/Menu';
 import { scrollToID } from '../../Helpers/misc';
-import homeDeliveryImg from '../../Assets/backgrounds/homeDelivery.jpg';
+import homeDeliveryImg from '../../Assets/backgrounds/homeDelivery.webp';
 import starImg from '../../Assets/icons/star-duotone.svg';
-import { useNavigate } from 'react-router-dom';
-import CustomOrders from './CustomOrders/CustomOrders';
 import {motion} from 'framer-motion';
-import storeFrontImg from '../../Assets/storefront.jpeg';
+import storeFrontImg from '../../Assets/storefront.webp';
+
+import CustomOrders from './CustomOrders/CustomOrders';
+import Menu from './Menu/Menu';
+import Sidebar from '../Sidebar/Sidebar';
+import StoreItems from './StoreItems/StoreItems';
+import About from './About/About';
+import HomeLoadingOverlay from './HomeLoadingOverlay/HomeLoadingOverlay';
+
 
 export default function Home(){
   const [isPageLoaded, setIsPageLoaded] = useState<boolean>(false);
@@ -27,7 +28,6 @@ export default function Home(){
   const [cart,setCart] = useState<Cart>(emptyCart);
 
   const isInitialLoad = useRef(true);
-  const navigate = useNavigate();
 
   useEffect(()=>{
     if (isInitialLoad.current) {
@@ -37,11 +37,13 @@ export default function Home(){
     };
   },[isInitialLoad]);
 
-  return(
-    <>
-      {
-        isPageLoaded ?
-        <main className='home'>
+  if (isPageLoaded===false){
+    return(
+      <HomeLoadingOverlay setIsPageLoaded={setIsPageLoaded} />
+    )
+  }else{
+    return(
+      <main className='home'>
         <Sidebar 
           cart={cart}
           isExpanded={isSidebarExpanded} 
@@ -51,90 +53,80 @@ export default function Home(){
         />
         <div className='corner-buttons'>
           <button onClick={()=>{scrollToID('our-menu')}} className='scroll-menu-button'>
-            <img src={foodMenuImg} alt='scroll up'/>
+            <img src={foodMenuImg} alt='scroll up' />
           </button>
           <button onClick={()=>{scrollToID('nav')}} className='scroll-up-button'>
-            <img src={upArrowImg} alt='scroll up'/>
+            <img src={upArrowImg} alt='scroll up' />
           </button>
         </div>
+
         <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
-          <div className='home-content-row-wrapper'>
-            <section
-              className='banner'
-            >
-              <div 
-                className='limited-offer-wrapper'
-                >
-                <h3>
-                  <img src={starImg} alt='star' />
-                  <motion.span 
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{duration: 2.5}}
-                    viewport={{once: false}}>Limited Time Offer!
-                  </motion.span>
-                  <img src={starImg} alt='star' />
-                </h3>
-                <motion.h4 
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{duration: 2.5}}
-                  viewport={{once: false}}
-                >
-                  Enjoy FREE Priority Shipping on ALL Orders!
-                  <br />
-                  <br />
-                  This offer includes shipping to Alaska, Guam, Hawaii, Virgin Islands and Puerto Rico!
-                </motion.h4>
-              </div>
-              <img className='home-delivery' src={homeDeliveryImg} alt='home delivery' />
-            </section>
-            <h3 
+          <motion.div 
+            className='home-content-row-wrapper'
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 2.5}}
+            viewport={{once: false}}
+          >
+            <div
               className='store-items-heading' 
               id='proudly-delivering'
             >
-              <motion.span
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{duration: 2.5}}
-                viewport={{once: false}}
+              <span className='brendels'>Now Serving Brendel's</span> 
+              <span>
+                In a close partnership with Brendel's Bakery & Eatery of Long Island, NY, we meticulously curate and ship a selection of gourmet New York City bagels, spreads and pastries nationwide. To meet the highest standards of freshness, our hand-rolled bagels are kettled and vacuum-sealed just two hours after leaving the oven, ensuring we seal in the perfect flavor of a delicious New York Bagel.
+              </span>
+              <button
+                className='view-our-menu' 
+                onClick={()=>{scrollToID('our-menu')}}
               >
-                Proudly Delivering
-              </motion.span>
-              <motion.span 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{duration: 2.5}}
-              viewport={{once: false}}
-              className='brendels'
-              >
-                Brendel's Bagels
-              </motion.span> 
-              <motion.span
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{duration: 2.5}}
-                viewport={{once: false}}
-              >
-                Nationwide
-              </motion.span>
-            </h3>
-          </div>
-          <img src={storeFrontImg} alt='brendels store front' className='store-front-img' />
+                View Our Menu
+              </button>
+            </div>
+            <img src={storeFrontImg} alt='brendels store front' className='store-front-img'  />
+          </motion.div>
+          <motion.section
+            className='banner'
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 2}}
+            viewport={{once: false}}
+          >
+            <div 
+              className='limited-offer-wrapper'
+            >
+              <h3>
+                <img src={starImg} alt='star'  />
+                <span>
+                  Free Priority Shipping!
+                </span>
+                <img src={starImg} alt='star'  />
+              </h3>
+              <p >
+                Enjoy <u>FAST and FREE</u> Priority Mail Shipping nationwide with every order!
+                This offer includes shipping to Alaska, Guam, Hawaii, Virgin Islands and Puerto Rico!
+              </p>
+            </div>
+            <img className='home-delivery' src={homeDeliveryImg} alt='home delivery'  />
+          </motion.section>
           <About />
-          <h3 
+          <motion.h3 
             id='join-the-club'
             className='store-items-heading'
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 2.5}}
+            viewport={{once: false}}
           >
-            <motion.span
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{duration: 2.5}}
-              viewport={{once: false}}
+            <span>
+              Subscriptions Coming Soon!
+            </span>
+            <span
+              className='our-menu-subscription'
             >
-              Join The Club
-            </motion.span>
-          </h3>
+              No Account or Subscription Required to Order
+            </span>
+          </motion.h3>
           <section className='club-perks'>
             <div className='club-tiers'>
               <motion.div 
@@ -146,17 +138,22 @@ export default function Home(){
               >
                 <h3 >
                   <span>Gold Member</span>
-                  <span>$44.95 / Month</span>
+                  <span>$39.95 / Month</span>
                 </h3>
                 <ul>
                   <li>
-                    Enjoy a monthly treat of a <strong>Baker's Dozen (13 Bagels)</strong> for yourself or a friend.
+                    Enjoy a monthly treat of a Baker's Dozen for yourself or a friend.
                   </li>
-                  <li>Personalize your delivery with <strong>your choice of 6 delicious flavors</strong>, and the <strong>13th bagel is <span className='brendels'>Brendel's</span> "Baker's Choice" selection</strong>.</li>
-                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice with every order!</strong></li>
-                  <li><strong>5% off </strong> Non-Member Pricing.</li>
-                  <li><strong>PRIORITY</strong> Mail Shipping on <strong>EVERY</strong> order placed.</li>
-                  <li className='club-value'><strong><span>Gain an Exceptional 34% Value!</span></strong></li>
+                  <li>Personalize your delivery with your choice of 6 delicious flavors.</li>
+                  <li>A 1/2 LB spread included with the fulfillment of monthly subscription orders.</li>
+                  <li>Priority mail shipping included with each monthly subscription order.</li>
+                  <li>5% off Non-Member Pricing.</li>
+                  <p className='club-value'><strong><span>Gain an Exceptional 34% Value!</span></strong></p>
+                  <button className='home-subscribe-now' type='button' onClick={()=>{
+                    //navigate('/subscribe')
+                  }}>
+                    Coming Soon!
+                  </button>
                 </ul>
               </motion.div>
               <motion.div 
@@ -168,77 +165,63 @@ export default function Home(){
               >
                 <h3>
                   <span>Platinum Member</span>
-                  <span>$89.95 / Month</span>
+                  <span>$79.95 / Month</span>
                 </h3>
                 <ul>
-                  <li>
-                    Enjoy <strong>TWO</strong> monthly treats of a <strong>Baker's Dozen (13 Bagels)</strong> for yourself or a friend.
-                  </li>
-                  <li>Personalize your deliveries with <strong>your choice of 6 delicious flavors</strong>, and the <strong>13th bagel is our <span className='brendels'>Brendel's</span> "Baker's Choice" selection</strong>.</li>
-                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice with every order!</strong></li>
-                  <li><strong>10% off </strong> Non-Member Pricing.</li>
-                  <li><strong>PRIORITY</strong> Mail Shipping on <strong>EVERY</strong> order placed.</li>
-                  <li className='club-value'><strong><span>Gain an Outstanding 40% Value!</span></strong></li>
+                  <li>Enjoy two monthly deliveries of a Baker's Dozen for yourself or a friend.</li>
+                  <li>Personalize your delivery with your choice of 6 delicious flavors.</li>
+                  <li>A 1/2 LB spread included with the fulfillment of monthly subscription orders.</li>
+                  <li>Priority mail shipping included with each monthly subscription order.</li>
+                  <li>10% off Non-Member Pricing.</li>
+                  <p className='club-value'><strong><span>Gain an Outstanding 40% Value!</span></strong></p>
+                  <button className='home-subscribe-now' type='button' onClick={()=>{
+                    //navigate('/subscribe')
+                  }}>
+                    Coming Soon!
+                  </button>
                 </ul>
               </motion.div>
               <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{duration: 2.5}}
+                viewport={{once: false}}
+                className='diamond'
+              >
+                <h3>
+                  <span>Diamond Member</span>
+                  <span>$159.95 / Month</span>
+                </h3>
+                <ul>
+                  <li>Enjoy four monthly deliveries of a Baker's Dozen for yourself or a friend.</li>
+                  <li>Personalize your delivery with your choice of 6 delicious flavors.</li>
+                  <li>A 1/2 LB spread included with the fulfillment of monthly subscription orders.</li>
+                  <li>Priority mail shipping included with each monthly subscription order.</li>
+                  <li>15% off Non-Member Pricing</li>
+                  <li>Skip the wait, receive a direct line to our priority customer service team!</li>
+                  <p className='club-value'><strong><span>Gain An Unparalleled 44% Value!</span></strong></p>
+                </ul>
+                <button className='home-subscribe-now' type='button' onClick={()=>{
+                  //navigate('/subscribe')
+                }}>
+                  Coming Soon!
+                </button>
+              </motion.div>
+            </div>
+          </section>  
+          <Menu storeItems={storeItems} />
+          <h3 
+            className='store-items-heading'
+          >
+            <motion.span
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{duration: 2.5}}
               viewport={{once: false}}
-              className='diamond'
-              >
-                <h3>
-                  <span>Diamond Member</span>
-                  <span>$179.95 / Month</span>
-                </h3>
-                <ul>
-                  <li>
-                    Enjoy <strong>FOUR</strong> monthly treats of a <strong>Baker's Dozen (13 Bagels)</strong> for yourself or a friend.
-                  </li>
-                  <li>Personalize your deliveries with <strong>your choice of 6 delicious flavors</strong>, and the <strong>13th bagel is <span className='brendels'>Brendel's</span> "Baker's Choice" selection</strong>.</li>
-                  <li>As an added <strong>bonus</strong>, we'll include a <strong>1/2 LB <span className='brendels'>Brendel's</span> Gourmet Spread of your choice with every order!</strong></li>
-                  <li><strong>15% off </strong> Non-Member Pricing.</li>
-                  <li><strong>PRIORITY</strong> Mail Shipping on <strong>EVERY</strong> order placed.</li>
-                  <li>Skip the wait, receive a direct line to our priority customer service team!</li>
-                  <li className='club-value'><strong><span>Gain An Unparalleled 44% Value!</span></strong></li>
-                </ul>
-              </motion.div>
-            </div>
-            {/* <div className='club-perks-footnotes'>
-              <ul>
-                <li data-aos='fade-in' className='gold'>¹ Value is calculated for a monthly subscription with a dozen bagels valued at $44.95 and a 1/2 lb gourmet spread valued at $9. We also assume the customer purchases an additional dozen at 5% savings.</li>
-                <li data-aos='fade-in' className='platinum'>² Value is calculated for a year subscription based on 24 deliveries of a baker's dozen bagels each valued at $44.95. We also assume the customer purchases an additional 10 dozens at 10% savings.</li>
-                <li data-aos='fade-in' className='diamond'>³ Value is calculated for a year subscription based on 48 deliveries of a baker's dozen bagels each valued at $44.95. We also assume the customer purchases an additional 15 dozens at 15% savings.</li>
-              </ul>
-            </div> */}
-            <button className='home-subscribe-now' type='button' onClick={()=>{
-              navigate('/subscribe')
-            }}>
-              Subscribe Now!
-            </button>
-          </section>
-          <Menu storeItems={storeItems} />
-            <h3 
-              className='store-items-heading'
             >
-              <motion.span
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{duration: 2.5}}
-                viewport={{once: false}}
-              >
-                A Taste of New York
-              </motion.span>
-              <motion.span
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{duration: 2.5}}
-                viewport={{once: false}}
-              >
-                to Your Doorstep
-              </motion.span>
-            </h3>
+              A Taste of New York to Your Doorstep
+            </motion.span>
+          </h3>
           <StoreItems 
             isSignedIn={isSignedIn}
             cart={cart}
@@ -250,18 +233,15 @@ export default function Home(){
             id='custom-orders-header' 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{duration: 2.5}}
+            transition={{duration: 1}}
             viewport={{once: false}}
             className='store-items-heading'
           >
             Create Your Dream Gourmet Bagel
           </motion.h3>
           <CustomOrders />
-          </div>
-        </main>
-      :
-        <HomeLoadingOverlay setIsPageLoaded={setIsPageLoaded} />
-      }
-    </>
-  )
+        </div>
+      </main>
+    )
+  }
 };

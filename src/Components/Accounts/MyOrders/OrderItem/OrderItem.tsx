@@ -26,7 +26,7 @@ export default function OrderItem({
   trackingNumberArr:string[],
   order:Order
 }){
-  const [isExpanded,setIsExpanded] = useState(false);
+  const [isExpanded,setIsExpanded] = useState(true);
   const getOrderLevel = function(){
     switch(status.toLowerCase()){
       case 'pending':
@@ -54,8 +54,8 @@ export default function OrderItem({
 
   if (isExpanded){
     return(
-      <li className='order-item'>
-        <button className='order-item-expand-toggle' onClick={()=>{toggleExpandOrderItem(isExpanded,setIsExpanded)}}>
+      <div className='order-item'>
+        <button className='order-item-expand-toggle'>
           <span className='order-date'>Order Date: {dateCreated.toDateString()}</span>
           <span className='order-id'>Order Number: #{order._id}</span>
         </button>
@@ -105,13 +105,13 @@ export default function OrderItem({
               order.cart.discountAmountInDollars>0 ?
               <p>
                 <span>Discount Applied:</span>
-                <span><strong>-${order.cart.discountAmountInDollars}</strong></span>
+                <span><strong>-${order.cart.discountAmountInDollars.toFixed(2)}</strong></span>
               </p> :
               null
             }
             <p>
               <span>Total Cost:</span>
-              <span><strong>${order.cart.finalPriceInDollars}</strong></span>
+              <span><strong>${order.cart.finalPriceInDollars.toFixed(2)}</strong></span>
             </p>
           </div>
           {
@@ -145,7 +145,7 @@ export default function OrderItem({
               </div>
           }
         </div>
-      </li>
+      </div>
     );
   }else{
     return(

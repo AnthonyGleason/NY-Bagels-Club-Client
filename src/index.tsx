@@ -22,7 +22,6 @@ import Admin from './Components/Admin/Admin';
 import Snowfall from 'react-snowfall';
 import Support from './Components/Support/Support';
 import CartSummary from './Components/Checkout/CartSummary/CartSummary';
-import Careers from './Components/Careers/Careers';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -31,7 +30,6 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <HashRouter>
-      <Nav />
       <Snowfall 
         style={{
           position: 'fixed',
@@ -42,21 +40,124 @@ root.render(
         snowflakeCount={3}
       />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/admin' element={<Admin />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/subscribe' element={<SubscriptionPage />} />
-        <Route path='/cart/checkout/success/:pendingOrderDocID' element={<CheckoutSuccess />} />
-        <Route path='/cart' element={<CartSummary />} />
-        <Route path='/club' element={<Club />} />
-        <Route path='/accounts/password/reset/:resetID' element={<ResetPassword />} />
-        <Route path='/accounts/orders' element={<MyOrders />} />
-        <Route path='/accounts/settings' element={<AccountSettings />} />
-        <Route path='/careers' element={<Careers />} />
-        <Route path='/support' element={<Support />} />
+        <Route path='/' element={
+          <>
+            <Nav />
+            <Home />
+            <Footer />
+          </>
+        } />
+        <Route
+          path='/admin'
+          element={
+            <>
+              <Nav />
+              <Admin />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path='/login'
+          element={
+            <>
+              <Nav />
+              <Login />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path='/register'
+          element={
+            <>
+              <Nav />
+              <Register />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path='/subscribe'
+          element={
+            <>
+              <Nav />
+              <SubscriptionPage />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path='/cart/checkout/success/:pendingOrderDocID'
+          element={
+            <>
+              <Nav />
+              <CheckoutSuccess />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path='/cart'
+          element={
+            <>
+              <Nav />
+              <CartSummary />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path='/club'
+          element={
+            <>
+              <Nav />
+              <Club />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path='/accounts/password/reset/:resetID'
+          element={
+            <>
+              <Nav />
+              <ResetPassword />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path='/accounts/orders'
+          element={
+            <>
+              <Nav />
+              <MyOrders />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path='/accounts/settings'
+          element={
+            <>
+              <Nav />
+              <AccountSettings />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path='/support'
+          element={
+            <>
+              <Nav />
+              <Support />
+              <Footer />
+            </>
+          }
+        />
       </Routes>
-      <Footer />
     </HashRouter>
   </React.StrictMode>
 );

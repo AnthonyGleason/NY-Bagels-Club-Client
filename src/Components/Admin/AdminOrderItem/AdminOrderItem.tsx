@@ -116,7 +116,7 @@ export default function AdminOrderItem({
               order.cart.discountAmountInDollars>0 ?
               <p>
                 <span>Discount Applied:</span>
-                <span><strong>-${order.cart.discountAmountInDollars}</strong></span>
+                <span><strong>-${order.cart.discountAmountInDollars.toFixed(2)}</strong></span>
               </p> :
               null
             }
