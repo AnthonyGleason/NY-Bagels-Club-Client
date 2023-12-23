@@ -1,19 +1,28 @@
 .our-menu-wrapper{
-  height: 100vh;
-  background-image: url('../../../Assets/backgrounds/menu.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  padding-top: 3em;
-  padding-bottom: 3em;
+  height: max-content;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  overflow-y: scroll;
 }
-.our-menu-heading{
-  display: flex;
-  flex-direction: column;
+.menu-background-img{
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  object-fit: cover;
+  z-index: 1;
+}
+#our-menu{
+  position: relative;
+  z-index: 2;
 }
 .our-menu-heading .our-menu-subscription{
   font-size: 24px;
+}
+.our-menu-cat .exit-our-menu{
+  font-family: 'Courgette';
+  display: flex;
+  justify-content: center;
+  padding: 1.5em;
+  font-size: 27px;
 }
 .our-menu-cat{
   padding: 0.8em;
@@ -25,31 +34,38 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-bottom: 2em;
+  padding-bottom: 1em;
 }
 .our-menu-content {
-  height: 100%;
+  max-height: 100vh;
   display: flex;
   padding: 1em;
-  overflow-y: scroll;
   gap: 25px;
   flex-wrap: wrap;
   justify-content: center;
+  z-index: 1;
+  position: relative;
+  overflow-y: scroll;
+  padding-bottom: 25em;
 }
 /* WebKit (Chrome, Safari) custom scrollbar styling */
+.our-menu-wrapper::-webkit-scrollbar,
 .our-menu-content::-webkit-scrollbar{
   width: 0px; /* Adjust the width as needed */
 }
 
+.our-menu-wrapper::-webkit-scrollbar-thumb,
 .our-menu-content::-webkit-scrollbar-thumb {
   background-color: transparent; /* Make the thumb transparent */
 }
 
 /* Firefox custom scrollbar styling */
+.our-menu-wrapper::-moz-scrollbar,
 .our-menu-content::-moz-scrollbar {
   width: 0px; /* Adjust the width as needed */
 }
 
+.our-menu-wrapper::-moz-scrollbar-thumb,
 .our-menu-content::-moz-scrollbar-thumb {
   background-color: transparent; /* Make the thumb transparent */
 }

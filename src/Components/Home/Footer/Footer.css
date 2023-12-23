@@ -1,18 +1,31 @@
-.footer *{
-  max-width: 600px;
-  align-self: center;
-}
 .footer{
+  align-self: center;
+  height: max-content;
+  position: relative;
+  background-size: cover;
+  background-repeat: repeat-y;
+  background-position: center;
+}
+.footer-background {
+  position: absolute;
+  z-index: -1;
   width: 100%;
-  text-align: center;
-  color: black;
+  object-fit: cover;
+  height: 100%;
+}
+.footer-content-wrapper{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
+  align-self: center;
+  justify-self: center;
   padding: 1em;
-  font-family: 'Titillium Web';
-  padding-bottom: 8em;
   background-color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+}
+.footer-content-wrapper > *{
+  max-width: 600px;
 }
 .footer .copyright{
   padding: 0.4em;
@@ -70,6 +83,8 @@
 
 .miny {
   max-width: 100px;
+  max-height: 100px;
+  align-self: center;
   width: 30%;
   flex-grow: 1;
 }

@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#270707" />
-    <meta name='description' content="Free priority shipping nationwide! Explore NYC Bagel flavors with our hand-rolled, kettled, freshly baked bagels, vacuum-sealed for freshness." />
+    <meta name="last-modified" content="">
+    <title>Authentic Fresh New York Bagels Shipped Nationwide - NYBC</title>
+    <meta name='description' content="FREE priority shipping nationwide! Authentic NYC Bagels, hand-rolled, kettled, freshly baked, vacuum-sealed for freshness." />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -22,22 +24,17 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <title>Authentic Fresh New York Bagels Shipped Nationwide - New York Bagels Club</title>
-
-    <!-- Below line automatically requests google to reindex page everytime the site is updated -->
-    <meta name="last-modified" content="">
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-          var currentDate = new Date();
-          var formattedDate = currentDate.toISOString(); // Format the date as required
-          document.querySelector('meta[name="last-modified"]').setAttribute('content', formattedDate);
-      });
-    </script>
+    
+    <!-- the below images are preloaded even on desktop which can slightly slow down the loading of the site -->
+    <link rel="preload" as="image" href="./Assets/homeDelivery-mobile.webp">
+    <link rel="preload" as="image" href="./Assets/about-mobile.webp">
+    <link rel="preload" as="image" href="./Assets/bricks-mobile.webp">
+    <link rel="preload" as="image" href="./Assets/store-mobile.webp">
+    <link rel="preload" href="./styles/fonts.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -49,4 +46,26 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <!-- Below line automatically requests google to reindex page everytime the site is updated -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var currentDate = new Date();
+        var formattedDate = currentDate.toISOString(); // Format the date as required
+        document.querySelector('meta[name="last-modified"]').setAttribute('content', formattedDate);
+    });
+  </script>
+  <!-- for google search engine adds reviews at bottom -->
+  <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "New York Bagels Club",
+        "description": "35 products - ",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "reviewCount": "21"
+        }
+    }
+  </script>
 </html>

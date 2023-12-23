@@ -1,7 +1,15 @@
 .nav{
+  background-size: cover;
+  background-repeat: repeat-y;
+  background-position: center;
+}
+.nav-content{
+  height: 100%;
   padding-top: 70px;
   padding-bottom: 70px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(255, 255, 255, 0.75);
 }
 .nav button{
@@ -12,6 +20,10 @@
   background-color: transparent;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
   font-weight: bold;
+  z-index: 3;
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 @media screen and (width<=768px){
@@ -24,4 +36,11 @@
   .nav button{
     font-size: 60px;
   }
+}
+.nav-background {
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
 }

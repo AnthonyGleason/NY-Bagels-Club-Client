@@ -47,6 +47,7 @@ export default function HomeLoadingOverlay(
         initial='hidden'
         animate='visible'
         variants={loadingVariants}
+        loading='lazy'
       />
       <motion.header initial='hidden' animate='visible' variants={fadeInVariants} className='loading-content-wrapper'>
         <h3 >

@@ -56,11 +56,18 @@ export default function StoreItem({
   useEffect(()=>{
     if (isInitialLoad.current){
       isInitialLoad.current = false;
-      //dynamically import images
-      import(`../../../../Assets/storeItems/${storeItem._id}.webp`)
-        .then((module)=>{
-          setItemImgSrc(module.default);
-        });
+      if (window.innerWidth<450){
+        import (`../../../../Assets/storeItems/mobile/${storeItem._id}.webp`)
+          .then((module)=>{
+            setItemImgSrc(module.default);
+          });
+      }else{
+        //dynamically import images
+        import(`../../../../Assets/storeItems/${storeItem._id}.webp`)
+          .then((module)=>{
+            setItemImgSrc(module.default);
+          });
+      };
     };
   },[isInitialLoad]);
 
@@ -309,9 +316,11 @@ export default function StoreItem({
           }
         </section>
         <img 
+          decoding='async'
           className='store-item-home-img' 
           id={`#${storeItem._id.toString()}-img`}
           src={itemImgSrc} alt={`Item ${storeItem._id}`}
+          loading='lazy'
         />
         <p>{storeItem.desc}</p>
         <motion.article
@@ -330,7 +339,7 @@ export default function StoreItem({
               isAddToCartShown ?
                 getStoreItemButtons()
               :
-                <button onClick={()=>{setIsAddToCartExpanded(true)}} className='add-to-basket'><img src={basketImg} alt='shopping cart basket of items to checkout' /><span>Add To Basket</span></button>
+                <button onClick={()=>{setIsAddToCartExpanded(true)}} className='add-to-basket'><img decoding='async' src={basketImg} alt='shopping cart basket of items to checkout' loading='lazy' /><span>Add To Basket</span></button>
             }
           </div>
         </motion.article>

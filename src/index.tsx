@@ -1,27 +1,28 @@
-import React from 'react';
+import React, {Suspense, lazy} from 'react';
 import ReactDOM from 'react-dom/client';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
-//import components
-import Nav from './Components/Nav/Nav';
-import Footer from './Components/Home/Footer/Footer';
-import Home from './Components/Home/Home';
-import Login from './Components/Login/Login';
-import Register from './Components/Register/Register';
-import Club from './Components/Club/Club';
-
-//import css
 import './index.css';
-import CheckoutSuccess from './Components/Checkout/CheckoutSuccess/CheckoutSuccess';
-import SubscriptionPage from './Components/Accounts/SubscriptionPage/SubscriptionPage';
-import MyOrders from './Components/Accounts/MyOrders/MyOrders';
-import AccountSettings from './Components/Accounts/AccountSettings/AccountSettings';
-import ResetPassword from './Components/Accounts/ResetPassword/ResetPassword';
-import Admin from './Components/Admin/Admin';
-import Snowfall from 'react-snowfall';
-import Support from './Components/Support/Support';
-import CartSummary from './Components/Checkout/CartSummary/CartSummary';
+import upArrowImg from './Assets/icons/arrow-up-outline.svg';
+import { scrollToID } from './Helpers/misc';
+
+//import components
+const Nav = lazy(() => import('./Components/Nav/Nav'));
+const Home = lazy(() => import('./Components/Home/Home'));
+const Login = lazy(() => import('./Components/Login/Login'));
+const Register = lazy(() => import('./Components/Register/Register'));
+const Club = lazy(() => import('./Components/Club/Club'));
+const CheckoutSuccess = lazy(() => import('./Components/Checkout/CheckoutSuccess/CheckoutSuccess'));
+const SubscriptionPage = lazy(() => import('./Components/Accounts/SubscriptionPage/SubscriptionPage'));
+const MyOrders = lazy(() => import('./Components/Accounts/MyOrders/MyOrders'));
+const AccountSettings = lazy(() => import('./Components/Accounts/AccountSettings/AccountSettings'));
+const ResetPassword = lazy(() => import('./Components/Accounts/ResetPassword/ResetPassword'));
+const Admin = lazy(() => import('./Components/Admin/Admin'));
+const Support = lazy(() => import('./Components/Support/Support'));
+const CartSummary = lazy(() => import('./Components/Checkout/CartSummary/CartSummary'));
+const Snowfall = lazy(() => import('react-snowfall'));
+const Footer = lazy(()=>import('./Components/Home/Footer/Footer'));
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -30,131 +31,141 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <HashRouter>
-      <Snowfall 
-        style={{
-          position: 'fixed',
-          width: '100vw',
-          height: '100%',
-          zIndex: '100'
-        }}
-        snowflakeCount={3}
-      />
+      <Suspense>
+        <Snowfall 
+          style={{
+            position: 'fixed',
+            width: '100vw',
+            height: '100%',
+            zIndex: '100'
+          }}
+          snowflakeCount={3}
+        />
+      </Suspense>
       <Routes>
         <Route path='/' element={
-          <>
+          <Suspense>
             <Nav />
             <Home />
             <Footer />
-          </>
+            <div className='corner-buttons'>
+              {/* <button onClick={()=>{scrollToID('our-menu')}} className='scroll-menu-button'>
+                <img decoding='async' src={foodMenuImg} alt='scroll up' loading='lazy' />
+              </button> */}
+              <button onClick={()=>{scrollToID('nav')}} className='scroll-up-button'>
+                <img decoding='async' src={upArrowImg} alt='scroll up' loading='lazy' />
+              </button>
+            </div>
+          </Suspense>
         } />
         <Route
           path='/admin'
           element={
-            <>
-              <Nav />
-              <Admin />
-              <Footer />
-            </>
+              <Suspense>
+                <Nav />
+                <Admin />
+                <Footer />
+              </Suspense>
           }
         />
         <Route
           path='/login'
           element={
-            <>
-              <Nav />
-              <Login />
-              <Footer />
-            </>
+              <Suspense >
+                <Nav />
+                <Login />
+                <Footer />
+              </Suspense>
           }
         />
         <Route
           path='/register'
           element={
-            <>
-              <Nav />
-              <Register />
-              <Footer />
-            </>
+              <Suspense>
+                <Nav />
+                <Register />
+                <Footer />
+              </Suspense>
           }
         />
         <Route
           path='/subscribe'
           element={
-            <>
-              <Nav />
-              <SubscriptionPage />
-              <Footer />
-            </>
+              <Suspense> 
+                <Nav />
+                <SubscriptionPage />
+                <Footer />
+              </Suspense>
           }
         />
         <Route
           path='/cart/checkout/success/:pendingOrderDocID'
           element={
-            <>
-              <Nav />
-              <CheckoutSuccess />
-              <Footer />
-            </>
+              <Suspense>
+                <Nav />
+                <CheckoutSuccess />
+                <Footer />
+              </Suspense>
           }
         />
         <Route
           path='/cart'
           element={
-            <>
-              <Nav />
-              <CartSummary />
-              <Footer />
-            </>
+              <Suspense>
+                <Nav />
+                <CartSummary />
+                <Footer />
+              </Suspense>
           }
         />
         <Route
           path='/club'
           element={
-            <>
-              <Nav />
-              <Club />
-              <Footer />
-            </>
+              <Suspense>
+                <Nav />
+                <Club />
+                <Footer />
+              </Suspense>
           }
         />
         <Route
           path='/accounts/password/reset/:resetID'
           element={
-            <>
-              <Nav />
-              <ResetPassword />
-              <Footer />
-            </>
+              <Suspense>
+                <Nav />
+                <ResetPassword />
+                <Footer />
+              </Suspense>
           }
         />
         <Route
           path='/accounts/orders'
           element={
-            <>
-              <Nav />
-              <MyOrders />
-              <Footer />
-            </>
+              <Suspense>
+                <Nav />
+                <MyOrders />
+                <Footer />
+              </Suspense>
           }
         />
         <Route
           path='/accounts/settings'
           element={
-            <>
-              <Nav />
-              <AccountSettings />
-              <Footer />
-            </>
+              <Suspense>   
+                <Nav />
+                <AccountSettings />
+                <Footer />
+              </Suspense>
           }
         />
         <Route
           path='/support'
           element={
-            <>
-              <Nav />
-              <Support />
-              <Footer />
-            </>
+              <Suspense>
+                <Nav />
+                <Support />
+                <Footer />
+              </Suspense>
           }
         />
       </Routes>

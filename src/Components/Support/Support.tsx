@@ -34,17 +34,22 @@ export default function Support(){
   }
 
   const faqItems = [
-    createFaqItem("What Shipping Carrier Do You Use?", "We use USPS (United States Postal Service) for all shipments."),
-    createFaqItem("Why Has My Order's Tracking Number Stopped Updating?", "During the holiday season, USPS experiences high order volumes, leading to delays in tracking updates. If your tracking number hasn't updated in a few days, please contact us for further assistance."),
-    createFaqItem("When Will My Order Ship?", "We'll ship your order on the requested ship date. If you selected a holiday, we'll process your order on the next available business day."),
+    createFaqItem("What Shipping Carrier Do You Use?", "We use USPS (United States Postal Service) for all shipments. Our commitment to reliable and timely delivery ensures that your order reaches you securely. If you have any specific shipping-related concerns, please contact our customer support for personalized assistance."),
+    createFaqItem("Why Has My Order's Tracking Number Stopped Updating?", "During peak holiday seasons, USPS experiences heightened order volumes, leading to occasional delays in tracking updates. If your tracking number hasn't been updated in the past few days, please don't hesitate to contact our support team for further assistance."),
+    createFaqItem("When Will My Order Ship?", "Your order will be shipped on the selected ship date. If you've chosen a holiday, rest assured that we'll process your order on the next available business day. For any urgent shipping requests or queries, feel free to contact our customer support."),
     createFaqItem("Are Your Bagels Gluten-Free?", "Currently, our bagels are NOT gluten-free."),
     createFaqItem("Are Your Bagels Kosher Certified?", "Currently, our bagels are NOT Kosher certified."),
-    createFaqItem("Are Your Bagels Nut-Free?", "Our bagels are NOT nut-free."),
-    createFaqItem("Why can't I select more than 1 flavor in a six-pack?", "That perk is exclusive to club members only. Consider subscribing to one of our excellent club member tiers to gain access to this perk and more!"),
-    createFaqItem("Will my order be fresh?", "Yes, we are committed to providing fresh gourmet bagels and spreads. We are the only site to vacuum seal all bagels two hours after baking to ensure freshness. If you are unsatisfied with the quality of your order, please contact us, and we will address your concerns promptly."),
-    createFaqItem("Are you a ghost kitchen?", "No, we are an established retail business. Brendel's has three retail locations across Long Island, New York, and primarily ships from their Hauppauge facility."),
-    createFaqItem("Who is baking the bagels?", "Craig Brendel, a hands-on artisan, along with his professional staff, ensure the quality of each bagel meets the highest standards."),
-    createFaqItem("Where do you ship and make your bagels?", "Your order is baked, packed, and shipped from Long Island, New York."),
+    createFaqItem("Are Your Bagels Nut-Free?", "Our bagels are NOT nut-free. If you have specific dietary requirements or allergen concerns, feel free to reach out to our support team for guidance on alternative options."),
+    createFaqItem("Why can't I select more than one flavor in a Baker's Dozen?", "The ability to select multiple flavors in a Baker's Dozen is an exclusive perk for our club members. Consider subscribing to one of our premium club tiers to unlock this benefit and more! Explore the perks of becoming a club member today."),
+    createFaqItem("Will my order be fresh?", "Absolutely! We are dedicated to delivering fresh gourmet bagels, pastries and spreads. Uniquely, we vacuum-seal all bagels just two hours after baking to ensure maximum freshness. If you ever have concerns about the quality of your order, please contact our support team, and we'll promptly address your needs."),
+    createFaqItem("Are you a ghost kitchen?", "No, we are an established retail business. Brendel's proudly operates three retail locations across Long Island, New York, and primarily ships from our Hauppauge facility."),
+    createFaqItem("Who is baking the bagels?", " Craig Brendel, a hands-on artisan, leads our professional baking staff in ensuring that each bagel meets the highest quality standards. Experience the dedication to craftsmanship that sets our bagels apart."),
+    createFaqItem("Where do you ship and make your bagels?", "Your order is baked, packed, and shipped from physical location in Long Island, New York."),
+    createFaqItem("Do you offer international shipping?","Presently, we do NOT offer international shipping but we would love to bring the delicious taste of our bagels to customers around the world. We are planning on shipping internationally to Mexico and Canada but do not have any specific launch date to announce at this time."),
+    createFaqItem("What payment methods do you accept?","We accept a variety of payment methods, including major credit cards, debit cards, and other secure online payment options such as Klarna, Cashapp Pay, Apple Pay, Google Pay and Afterpay."),
+    createFaqItem("How can I modify or cancel my order?"," If you need to make changes to your order or cancel it, please contact our customer support as soon as possible at support@nybagelsclub.com, we'll do our best to accommodate your request, depending on the order processing stage."),
+    createFaqItem("Can I track my order in real-time?","Yes, you can track your order in real-time using the provided tracking number. If you encounter any issues or if the tracking information is not updating, feel free to reach out to our support team for assistance."),
+    createFaqItem("Are there any promotions or discounts available?"," Stay tuned for our latest promotions and discounts. We regularly offer special deals and exclusive discounts to our valued customers. Don't miss out on the chance to enjoy savings on your favorite bagels!"),
   ];
 
   return(

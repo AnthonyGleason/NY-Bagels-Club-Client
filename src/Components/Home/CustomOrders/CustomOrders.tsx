@@ -10,6 +10,8 @@ export default function CustomOrders(){
   const [requestInput,setRequestInput] = useState<string>('');
   const [quantityInput,setQuantityInput] = useState<string>('');
   const [message,setMessage] = useState<string>('');
+  const [isOfferChecked,setIsOfferChecked] = useState<boolean>(false);
+
   const handleCustomOrderFormSubmit = async function(setIsEmailSent:Function){
     //verify inputs
     try{
@@ -42,13 +44,22 @@ export default function CustomOrders(){
       return
     };
   };
-  const [isOfferChecked,setIsOfferChecked] = useState<boolean>(false);
 
   if (!isEmailSent){
     return(
       <section
         className='custom-orders'
       >
+        <motion.h3 
+          id='custom-orders-header' 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{duration: 1}}
+          viewport={{once: false}}
+          className='store-items-heading'
+        >
+          Create Your Dream Gourmet Bagel
+        </motion.h3>
         <motion.form
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -56,20 +67,25 @@ export default function CustomOrders(){
           viewport={{once: false}} 
         >
           <div className='custom-orders-info'>
-              <span className='brendels'>Brendel's Bagels</span> and New York Bagels Club have partnered to create a package deal for custom themed bagel styles. The package is $295 and comes with four custom baker's dozen's and three 1 lb spreads of your choice.
+              <span className='brendels'>Brendel's Bagels</span> and New York Bagels Club have partnered to create a package deal for custom themed bagel styles. The package is $274.95 and comes with four custom baker's dozen's and three 1 lb spreads of your choice.
           </div>
           <div className='input-wrapper custom-orders-checkbox-wrapper'>
-            <p>Are you interested in our $295 special offer? (Optional)</p>
-            <input className='checkbox' type='checkbox' checked={isOfferChecked} onChange={()=>{setIsOfferChecked(!isOfferChecked)}}/>
+            <label htmlFor='specialOfferCheckbox'>
+              <div>Are you interested in our $295 special offer? (Optional)</div>
+              <input id='specialOfferCheckbox' name='specialOfferCheckbox' className='checkbox' type='checkbox' checked={isOfferChecked} onChange={()=>{setIsOfferChecked(!isOfferChecked)}}/>
+            </label>
           </div>
           <div className='input-wrapper'>
-            <input className='text-box' placeholder='Your Contact Email' value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' />
+            <label htmlFor='contactEmail'>Contact Email:</label>
+            <input id='contactEmail' name='contactEmail' className='text-box' placeholder='example@example.com' value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} type='email' />
           </div>
           <div className='input-wrapper'>
-            <input className='text-box' placeholder="Desired Quantity" value={quantityInput} onChange={(e)=>{setQuantityInput(e.target.value)}} />
+            <label htmlFor='desiredQuantity'>Desired Quantity:</label>
+            <input id='desiredQuantity' name='desiredQuantity' className='text-box' placeholder="Four Delicious Baker's Dozen's" value={quantityInput} onChange={(e)=>{setQuantityInput(e.target.value)}} />
           </div>
           <div className='input-wrapper'>
-            <textarea className='text-box' value={requestInput} onChange={(e)=>{setRequestInput(e.target.value)}} placeholder="Your Request: You can personalize our Bagels to suit your event's theme, whether it's a baby shower, wedding, sports team, school, holiday, or bachelorette / bachelor party. Mix and match from our flavor options and pick your own colors!" />
+            <label htmlFor='userRequest'>Your Request:</label>
+            <textarea id='userRequest' name='userRequest' className='text-box' value={requestInput} onChange={(e)=>{setRequestInput(e.target.value)}} placeholder="Hint: You can personalize our Bagels to suit your event's theme, whether it's a baby shower, wedding, sports team, school, holiday, or bachelorette / bachelor party. Mix and match from our flavor options and pick your own colors!" />
           </div>
           <p>Our staff will review and respond to your request within 24 hours.</p>
           {

@@ -66,14 +66,19 @@ export default function PreCheckoutSummary({
 
   const validateDate = function (date: string): boolean {
     const selectedDate = new Date(date);
-    const today = new Date();
-
+  
+    // Format today's date with the "America/New_York" time zone
+    const today = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+  
+    // Format selected date with the "America/New_York" time zone
+    const formattedSelectedDate = new Date(selectedDate.toLocaleString("en-US", { timeZone: "America/New_York" }));
+  
     // Check if the day is either Wednesday or Thursday
-    const isWednesdayOrThursday = selectedDate.getDay() === 2 || selectedDate.getDay() === 3;
-
-    // Check if the selected date is today or in the past
-    const isFutureDate = selectedDate > today;
-
+    const isWednesdayOrThursday = formattedSelectedDate.getDay() === 2 || formattedSelectedDate.getDay() === 3;
+  
+    // Check if the selected date is today or in the future
+    const isFutureDate = formattedSelectedDate.getTime() > new Date(today).getTime();
+  
     return isWednesdayOrThursday && isFutureDate;
   };
 

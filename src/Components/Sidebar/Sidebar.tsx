@@ -4,13 +4,11 @@ import registerImg from '../../Assets/icons/register.svg';
 import loginImg from '../../Assets/icons/login.svg';
 import cartImg from '../../Assets/icons/cart.svg';
 import logoutImg from '../../Assets/icons/logout.svg';
-import vipImg from '../../Assets/icons/vip.svg';
 import ordersImg from '../../Assets/icons/orders.svg';
 import settingsImg from '../../Assets/icons/settings.svg';
 import adminImg from '../../Assets/icons/admin.svg';
 import supportImg from '../../Assets/icons/support-agent.svg';
 import shopImg from '../../Assets/icons/shop.svg';
-import starImg from '../../Assets/icons/star-bold-white.svg';
 
 import './Sidebar.css';
 import { useNavigate } from 'react-router-dom';
@@ -37,7 +35,6 @@ export default function Sidebar(
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [showExpandedMenu, setShowExpandedMenu] = useState<boolean>(false);
   const [didAnimationPlay,setDidAnimationPlay] = useState<boolean>(true);
-  const [userMembershipTier,setUserMembershipTier] = useState<string>('Non-Member');
 
   const navigate = useNavigate();
   const controls = useAnimation();
@@ -49,9 +46,8 @@ export default function Sidebar(
     if( isInitialLoad.current ){
       isInitialLoad.current = false;
       verifyLoginToken(setIsSignedIn,setIsAdmin);
-      getMembershipTier(setUserMembershipTier);
     };
-  },[isInitialLoad,setIsSignedIn,setUserMembershipTier])
+  },[isInitialLoad,setIsSignedIn])
 
   const myAnimation = async function() {
     await controls.start({ x: 0 });
@@ -103,12 +99,12 @@ export default function Sidebar(
                 }
               }
             >
-              <img src={menuImg} alt='expand sidebar menu'  />
+              <img decoding='async' loading='lazy' src={menuImg} alt='expand sidebar menu'  />
             </button>
           </li>
           <li className='home-sidebar-button'>
             <button onClick={() => window.location.href='/'}>
-              <img src={shopImg} alt='shop'  />
+              <img decoding='async' loading='lazy' src={shopImg} alt='shop'  />
               <span>Shop</span>
             </button>
           </li>
@@ -132,7 +128,7 @@ export default function Sidebar(
             <>
               <li>
                 <button onClick={() => navigate('/admin')}>
-                  <img src={adminImg} alt='admin panel'  />
+                  <img decoding='async' loading='lazy' src={adminImg} alt='admin panel'  />
                   <span>Admin</span>
                 </button>
               </li>
@@ -140,13 +136,13 @@ export default function Sidebar(
           )}
           <li className='cart'>
             <button onClick={() => navigate('/cart')}>
-              <img src={cartImg} alt='cart'  />
+              <img decoding='async' loading='lazy' src={cartImg} alt='cart'  />
               <span>{totalQuantity || 0} Items</span>
             </button>
           </li>
           <li>
             <button onClick={() => navigate('/accounts/orders')}>
-              <img src={ordersImg} alt='my orders'  />
+              <img decoding='async' loading='lazy' src={ordersImg} alt='my orders'  />
               <span>Orders</span>
             </button>
           </li>
@@ -164,13 +160,13 @@ export default function Sidebar(
             <>
               <li>
                 <button onClick={() => navigate('/login')}>
-                  <img src={loginImg} alt='login'  />
+                  <img decoding='async' loading='lazy' src={loginImg} alt='login'  />
                   <span>Login</span>
                 </button>
               </li>
               <li>
                 <button onClick={() => navigate('/register')}>
-                  <img src={registerImg} alt='register'  />
+                  <img decoding='async' loading='lazy' src={registerImg} alt='register'  />
                   <span>Register</span>
                 </button>
               </li>
@@ -179,13 +175,13 @@ export default function Sidebar(
             <>
               <li>
                 <button onClick={() => navigate('/accounts/settings')}>
-                  <img src={settingsImg} alt='account settings'  />
+                  <img decoding='async' loading='lazy' src={settingsImg} alt='account settings'  />
                   <span>Settings</span>
                 </button>
               </li>
               <li>
                 <button onClick={() => handleLogout(setIsSignedIn)}>
-                  <img src={logoutImg} alt='logout'  />
+                  <img decoding='async' loading='lazy' src={logoutImg} alt='logout'  />
                   <span>Logout</span>
                 </button>
               </li>
@@ -193,7 +189,7 @@ export default function Sidebar(
           )}
           <li>
             <button onClick={() => navigate('/support')}>
-              <img src={supportImg} alt='support'  />
+              <img decoding='async' loading='lazy' src={supportImg} alt='support'  />
               <span>Support</span>
             </button>
           </li>
@@ -213,7 +209,7 @@ export default function Sidebar(
               }
             }
           >
-            <img src={menuImg} alt='expand sidebar menu'  />
+            <img decoding='async' loading='lazy' src={menuImg} alt='expand sidebar menu'  />
           </button>
         </>
       )}

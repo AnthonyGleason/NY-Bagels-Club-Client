@@ -1,6 +1,12 @@
 .store-items-container{
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  background-color: #270e0c;
+  position: relative;
+  z-index: 3;
+}
+.store-items-container .store-items-heading{
+  width: 100%;
 }
