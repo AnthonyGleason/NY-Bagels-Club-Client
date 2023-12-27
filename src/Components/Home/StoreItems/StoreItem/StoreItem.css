@@ -14,7 +14,7 @@
   flex: 1 1 400px;
 }
 .store-item .item-info{
-  padding: 1em;
+  padding: 0.8em;
   font-size: 25px;
   font-family: 'Courgette';
   color: white;
@@ -147,6 +147,5 @@
 .item-content p{
   color:white;
   font-family: 'Titillium Web';
-  padding: 0.5em 1em 0em 1em;
   font-size: 18px;
 }

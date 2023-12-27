@@ -14,7 +14,8 @@ export default function Support(){
   const [cart,setCart] = useState<Cart>(emptyCart);
 
   const isInitialLoad = useRef(true);
-  
+  let faqItemsCounter = -1;
+
   useEffect(()=>{
     if (isInitialLoad.current){
       isInitialLoad.current=false;
@@ -22,11 +23,10 @@ export default function Support(){
     };
   },[]);
 
-  let counter:number = 0;
-
   function createFaqItem(question:string, answer:string) {
+    faqItemsCounter+=1;
     return (
-      <li key={counter} className='faq-item'>
+      <li key={faqItemsCounter} className='faq-item'>
         <p className='question'>Q: {question}</p>
         <p className='answer'>A: {answer}</p>
       </li>

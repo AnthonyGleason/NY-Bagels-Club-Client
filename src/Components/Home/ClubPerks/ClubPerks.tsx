@@ -4,7 +4,7 @@ import {motion} from 'framer-motion';
 export default function ClubPerks(){
   return(
     <section className='club-perks'>
-      <motion.h3 
+      <motion.h2 
         id='join-the-club'
         className='store-items-heading'
         initial={{ opacity: 0 }}
@@ -12,16 +12,10 @@ export default function ClubPerks(){
         transition={{duration: 2.5}}
         viewport={{once: false}}
       >
-        <span>
-          Subscriptions Coming Soon!
-        </span>
-        <span
-          className='our-menu-subscription'
-        >
-          No Account or Subscription Required to Order
-        </span>
-      </motion.h3>
-      <div className='club-tiers'>
+        <span>Subscriptions Coming Soon!</span>
+        <span className='our-menu-subscription'>No Account or Subscription Required to Order</span>
+      </motion.h2>
+      <article className='club-tiers'>
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -29,10 +23,10 @@ export default function ClubPerks(){
           viewport={{once: false}}
           className='gold'
         >
-          <h3 >
+          <h2>
             <span>Gold Member</span>
             <span>$39.95 / Month</span>
-          </h3>
+          </h2>
           <ul>
             <li>
               Enjoy a monthly treat of a Baker's Dozen for yourself or a friend.
@@ -56,10 +50,10 @@ export default function ClubPerks(){
           viewport={{once: false}}
           className='platinum'
         >
-          <h3>
+          <h2>
             <span>Platinum Member</span>
             <span>$79.95 / Month</span>
-          </h3>
+          </h2>
           <ul>
             <li>Enjoy two monthly deliveries of a Baker's Dozen for yourself or a friend.</li>
             <li>Personalize your delivery with your choice of 6 delicious flavors.</li>
@@ -81,10 +75,10 @@ export default function ClubPerks(){
           viewport={{once: false}}
           className='diamond'
         >
-          <h3>
+          <h2>
             <span>Diamond Member</span>
             <span>$159.95 / Month</span>
-          </h3>
+          </h2>
           <ul>
             <li>Enjoy four monthly deliveries of a Baker's Dozen for yourself or a friend.</li>
             <li>Personalize your delivery with your choice of 6 delicious flavors.</li>
@@ -100,7 +94,7 @@ export default function ClubPerks(){
             Coming Soon!
           </button>
         </motion.div>
-      </div>
+      </article>
     </section>  
   )
 }

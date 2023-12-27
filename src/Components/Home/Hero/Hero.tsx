@@ -4,22 +4,24 @@ import storeFrontDesktopImg from '../../../Assets/store.webp';
 
 export default function Hero(){
   return(
-    <motion.div 
+    <motion.section 
       className='home-content-row-wrapper'
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{duration: 2.5}}
       viewport={{once: false}}
     >
-      <div
+      <article
         className='store-items-heading' 
         id='proudly-delivering'
       >
-        <span className='brendels'>Now Serving Brendel's</span> 
-        <span>
+        <h1>
+          Delicious NYC Bagels Shipped Fresh to You
+        </h1> 
+        <p>
           In a close partnership with Brendel's Bakery & Eatery of Long Island, NY, we meticulously curate and ship a selection of gourmet New York City bagels, spreads and pastries nationwide. To meet the highest standards of freshness, our hand-rolled bagels are kettled and vacuum-sealed just two hours after leaving the oven, ensuring we seal in the perfect flavor of a delicious New York Bagel.
-        </span>
-      </div>
+        </p>
+      </article>
       <img
         decoding='async'
         loading='lazy'
@@ -27,6 +29,6 @@ export default function Hero(){
         className='store-front-img'
         src={window.innerWidth <= 450 ? './Assets/store-mobile.webp' : storeFrontDesktopImg}
       />
-    </motion.div>
+    </motion.section>
   )
 }

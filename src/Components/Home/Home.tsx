@@ -32,32 +32,32 @@ export default function Home(){
   },[isInitialLoad]);
 
   return(
-    <Suspense>
-      <main className='home'>
-          <Sidebar 
-            cart={cart}
-            isExpanded={isSidebarExpanded} 
-            setIsExpanded={setIsSidebarExpanded}
-            isSignedIn={isSignedIn}
-            setIsSignedIn={setIsSignedIn}
-          />
-          <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
-            <Hero />
-            <Banner />
-            <About />
-            {/* <Menu 
-              bagelItems = {bagelItems}
-              pastryItems = {pastryItems} 
-            /> */}
-            <StoreItems 
-              isSignedIn={isSignedIn}
-              cart={cart}
-              setCart={setCart}
-            />
-            <CustomOrders />
-            <ClubPerks />
-          </div>
-      </main>
-    </Suspense>
+    <main
+      className='home'
+    >
+      <Sidebar 
+        cart={cart}
+        isExpanded={isSidebarExpanded} 
+        setIsExpanded={setIsSidebarExpanded}
+        isSignedIn={isSignedIn}
+        setIsSignedIn={setIsSignedIn}
+      />
+      <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
+        <Hero />
+        <Banner />
+        <About />
+        {/* <Menu 
+          bagelItems = {bagelItems}
+          pastryItems = {pastryItems} 
+        /> */}
+        <StoreItems 
+          isSignedIn={isSignedIn}
+          cart={cart}
+          setCart={setCart}
+        />
+        <CustomOrders />
+        <ClubPerks />
+      </div>
+    </main>
   )
 };

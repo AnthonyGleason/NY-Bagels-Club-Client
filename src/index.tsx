@@ -44,7 +44,7 @@ root.render(
       </Suspense>
       <Routes>
         <Route path='/' element={
-          <Suspense>
+          <>
             <Nav />
             <Home />
             <Footer />
@@ -56,7 +56,7 @@ root.render(
                 <img decoding='async' src={upArrowImg} alt='scroll up' loading='lazy' />
               </button>
             </div>
-          </Suspense>
+          </>
         } />
         <Route
           path='/admin'

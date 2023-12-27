@@ -11,9 +11,8 @@ import supportImg from '../../Assets/icons/support-agent.svg';
 import shopImg from '../../Assets/icons/shop.svg';
 
 import './Sidebar.css';
-import { useNavigate } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
-import { getMembershipTier, handleLogout, verifyLoginToken } from '../../Helpers/auth';
+import { handleLogout, verifyLoginToken } from '../../Helpers/auth';
 import { Cart } from '../../Interfaces/interfaces';
 
 export default function Sidebar(
@@ -36,7 +35,6 @@ export default function Sidebar(
   const [showExpandedMenu, setShowExpandedMenu] = useState<boolean>(false);
   const [didAnimationPlay,setDidAnimationPlay] = useState<boolean>(true);
 
-  const navigate = useNavigate();
   const controls = useAnimation();
   
   const isInitialLoad = useRef(true);
@@ -82,7 +80,7 @@ export default function Sidebar(
   },[cart])
 
   return (
-    <motion.section 
+    <motion.aside 
       id='sidebar' 
       className='sidebar-closed'
       initial={{ x: 0 }}
@@ -103,10 +101,10 @@ export default function Sidebar(
             </button>
           </li>
           <li className='home-sidebar-button'>
-            <button onClick={() => window.location.href='/'}>
+            <a href='https://nybagelsclub.com'>
               <img decoding='async' loading='lazy' src={shopImg} alt='shop'  />
-              <span>Shop</span>
-            </button>
+              <span>Home</span>
+            </a>
           </li>
           {/* {
             userMembershipTier === 'Gold Member' ||
@@ -127,24 +125,24 @@ export default function Sidebar(
           {isAdmin === false ? null : (
             <>
               <li>
-                <button onClick={() => navigate('/admin')}>
+                <a href='https://nybagelsclub.com/#/admin'>
                   <img decoding='async' loading='lazy' src={adminImg} alt='admin panel'  />
                   <span>Admin</span>
-                </button>
+                </a>
               </li>
             </>
           )}
           <li className='cart'>
-            <button onClick={() => navigate('/cart')}>
+            <a href='https://nybagelsclub.com/#/cart'>
               <img decoding='async' loading='lazy' src={cartImg} alt='cart'  />
               <span>{totalQuantity || 0} Items</span>
-            </button>
+            </a>
           </li>
           <li>
-            <button onClick={() => navigate('/accounts/orders')}>
+            <a href='https://nybagelsclub.com/#/accounts/orders'>
               <img decoding='async' loading='lazy' src={ordersImg} alt='my orders'  />
               <span>Orders</span>
-            </button>
+            </a>
           </li>
           {/* <li>
             <button
@@ -159,25 +157,25 @@ export default function Sidebar(
           {isSignedIn === false ? (
             <>
               <li>
-                <button onClick={() => navigate('/login')}>
+                <a href='https://nybagelsclub.com/#/login'>
                   <img decoding='async' loading='lazy' src={loginImg} alt='login'  />
                   <span>Login</span>
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigate('/register')}>
+                <a href='https://nybagelsclub.com/#/register'>
                   <img decoding='async' loading='lazy' src={registerImg} alt='register'  />
                   <span>Register</span>
-                </button>
+                </a>
               </li>
             </>
           ) : (
             <>
               <li>
-                <button onClick={() => navigate('/accounts/settings')}>
+                <a href='https://nybagelsclub.com/#/accounts/settings'>
                   <img decoding='async' loading='lazy' src={settingsImg} alt='account settings'  />
                   <span>Settings</span>
-                </button>
+                </a>
               </li>
               <li>
                 <button onClick={() => handleLogout(setIsSignedIn)}>
@@ -188,10 +186,10 @@ export default function Sidebar(
             </>
           )}
           <li>
-            <button onClick={() => navigate('/support')}>
+            <a href='https://nybagelsclub.com/#/support'>
               <img decoding='async' loading='lazy' src={supportImg} alt='support'  />
               <span>Support</span>
-            </button>
+            </a>
           </li>
           {/* <li>
             <button onClick={()=>navigate('/careers')}>
@@ -213,6 +211,6 @@ export default function Sidebar(
           </button>
         </>
       )}
-    </motion.section>
+    </motion.aside>
   );  
 }

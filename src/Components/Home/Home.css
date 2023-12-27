@@ -14,11 +14,11 @@
   }
   .home .store-items-heading,
   .brendels,
-  .banner h3,
+  .banner h2,
   .about-us p{
     font-size: 22px;
   }
-  .banner h3 img{
+  .banner-content-wrapper h2 img{
     width: 40px;
   }
   
@@ -30,21 +30,30 @@
     font-size: 20px;
   }
 
-  .home .store-items-heading span:nth-child(2){
+  .home .store-items-heading p{
     font-size: 19px;
   }
 }
-
+.banner-content-wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .banner p{
   max-width: 500px;
   align-self: center;
   line-height: 1.5;
 }
-.banner p span {
+.banner h2 {
   color: beige;
+  font-family: 'Courgette';
   display: inline-block; /* This is important for the border-bottom to take effect */
 }
-
+.banner{
+  z-index: 6;
+  position: relative;
+  background-color: #270e0c;
+}
 @media screen and (width>=768px){
   .home-content-row-wrapper{
     display: grid;
@@ -66,7 +75,7 @@
     font-size: 22px;
   }
 
-  .home .store-items-heading span:nth-child(2){
+  .home .store-items-heading p{
     font-size: 21px;
   }
   .banner{
@@ -115,6 +124,13 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
+}
+.banner header{
+  display: flex;
+  gap: 10px;
+}
+.banner header img{
+  min-width: 40px;
 }
 .banner .limited-offer-wrapper{
   border-radius: 3px;
@@ -190,6 +206,9 @@
   justify-content: center;
   letter-spacing: 1.5px;
 }
+.home .store-items-heading h1{
+  color: beige;
+}
 #proudly-delivering{
   min-height: 50vh;
   padding-top: 2em;
@@ -198,10 +217,10 @@
   z-index: 4;
   position: relative;
 }
-.home .store-items-heading span{
+.home .store-items-heading p{
   max-width: 550px;
 }
-.home .store-items-heading span:nth-child(2){
+.home .store-items-heading p{
   font-family: 'Titillium Web', 'Arial','sans-serif';
   font-weight: normal;
 }
@@ -215,10 +234,19 @@
   font-size: 20px;
   color: beige;
 }
+@media screen and (width<=768px){
+  .brendels{
+    font-size: 27px;
+  }
+}
+@media screen and (width>768px){
+  .brendels{
+    font-size: 33px;
+  }
+}
 .brendels{
   font-family: 'Allura', 'Arial','sans-serif';
   color: rgb(255, 71, 71);
-  font-size: 33px;
   font-weight: bolder;
   padding: 0.1em;
   letter-spacing: 1.5px;
@@ -390,9 +418,9 @@
   padding: 0.5em 1em;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
-.gold h3,
-.platinum h3,
-.diamond h3{
+.gold h2,
+.platinum h2,
+.diamond h2{
   font-family: 'Courgette', 'Arial','sans-serif';
   font-size: 23px;
   display: flex;
@@ -400,15 +428,15 @@
   gap: 5px;
   letter-spacing: 1.5px;
 }
-.gold h3 span {
+.gold h2 span {
   color: rgb(248, 235, 164);
 }
 
-.diamond h3 span {
+.diamond h2 span {
   color: #c3f3fd; /* You can choose a specific shade of blue for diamond */
 }
 
-.platinum h3 span {
+.platinum h2 span {
   color: #E5E4E2; /* You can choose a specific shade of gray for platinum */
 }
 .view-our-menu{

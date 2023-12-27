@@ -88,7 +88,10 @@ export const fetchAndHandleCart = async function(setCart:Function,isClub?:boolea
 
 export const getUnitPriceFromCartItem = function(storeItem:SpreadItem | BagelItem, selection?:string):number{
   let price:number = 0;
-  if (storeItem.cat==='bagel' && selection==='six'){
+  if (storeItem.cat==='bagel' && selection==='two'){
+    const tempStoreItem:BagelItem = storeItem as BagelItem;
+    price = tempStoreItem.twoPrice;
+  }else if (storeItem.cat==='bagel' && selection==='six'){
     const tempStoreItem:BagelItem = storeItem as BagelItem;
     price = tempStoreItem.sixPrice;
   }else if (storeItem.cat==='bagel' && selection==='dozen'){
@@ -130,7 +133,7 @@ export const handleCartItemInputChange = function(
 
 export const getSelectionName = function(cartItem:CartItem){
   if (cartItem.itemData.cat==='bagel' && cartItem.selection==='six') return 'Six Pack(s)';
-  if (cartItem.itemData.cat==='bagel' && cartItem.selection==='dozen') return 'Dozen(s)';
+  if (cartItem.itemData.cat==='bagel' && cartItem.selection==='dozen') return "Baker's Dozen(s)";
   if (cartItem.itemData.cat==='bagel' && cartItem.selection==='two') return 'Two Pack(s)';
 
   //need to have this first because the current store items without category of spread show 

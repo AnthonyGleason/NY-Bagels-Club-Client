@@ -31,45 +31,44 @@ export default function StoreItems({
   
   return (
     <section id='store' className='store-items-container'>
-      <h3 
+      <motion.h2 
         className='store-items-heading'
         id='store-item-heading'
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{duration: 2.5}}
+        viewport={{once: false}}
       >
-        <motion.span
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{duration: 2.5}}
-          viewport={{once: false}}
-        >
-          A Taste of New York to Your Doorstep
-        </motion.span>
-      </h3>
-      {
-        bagelItems.map((storeItem: Product) => (
-          <StoreItem
-            key={storeItem._id}
-            storeItem={storeItem}
-            cart={cart}
-            setCart={setCart}
-            userTier={userTier}
-            isSignedIn={isSignedIn}
-            setUserTier={setUserTier}
-          />
-        ))
-      }
-      {
-        pastryItems.map((storeItem: Product) => (
-          <StoreItem
-            key={storeItem._id}
-            storeItem={storeItem}
-            cart={cart}
-            setCart={setCart}
-            userTier={userTier}
-            isSignedIn={isSignedIn}
-            setUserTier={setUserTier}
-          />
-        ))
-      }
+        Introducing Brendel's Bagels: New York's Finest Bagels 
+      </motion.h2>
+      <ul>
+        {
+          bagelItems.map((storeItem: Product) => (
+            <StoreItem
+              key={storeItem._id}
+              storeItem={storeItem}
+              cart={cart}
+              setCart={setCart}
+              userTier={userTier}
+              isSignedIn={isSignedIn}
+              setUserTier={setUserTier}
+            />
+          ))
+        }
+        {
+          pastryItems.map((storeItem: Product) => (
+            <StoreItem
+              key={storeItem._id}
+              storeItem={storeItem}
+              cart={cart}
+              setCart={setCart}
+              userTier={userTier}
+              isSignedIn={isSignedIn}
+              setUserTier={setUserTier}
+            />
+          ))
+        }
+      </ul>
     </section>
   );
 }

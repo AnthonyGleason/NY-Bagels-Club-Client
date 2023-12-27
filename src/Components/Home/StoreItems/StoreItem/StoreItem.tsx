@@ -23,6 +23,8 @@ export default function StoreItem({
   const [itemQuantity,setItemQuantity] = useState(0);
   const [sixPackItemQuantity,setSixPackItemQuantity] = useState(0);
   const [dozenItemQuantity,setDozenItemQuantity] = useState(0);
+  const [twoPackQuantity,setTwoPackQuantity] = useState(0);
+
   const [itemImgSrc, setItemImgSrc] = useState<string | undefined>();
   const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
   const [isAddToCartShown, setIsAddToCartShown] = useState<boolean>(false);
@@ -71,6 +73,10 @@ export default function StoreItem({
     };
   },[isInitialLoad]);
 
+  useEffect(()=>{
+    if (!localStorage.getItem('loginToken')) setUserTier('Non-Member');
+  },[isSignedIn,setUserTier])
+
   //whenever the cart is updated update the quantities of items
   useEffect(()=>{
     if (storeItem.cat==='spread' || storeItem.cat==='pastry'){
@@ -78,6 +84,7 @@ export default function StoreItem({
     }else if (storeItem.cat==='bagel'){
       setSixPackItemQuantity(getItemQuantityFromCart(cart,storeItem.name,'six'));
       setDozenItemQuantity(getItemQuantityFromCart(cart,storeItem.name,'dozen'));
+      setTwoPackQuantity(getItemQuantityFromCart(cart,storeItem.name,'two'));
     };
   },[cart]);
   
@@ -118,13 +125,14 @@ export default function StoreItem({
     };
   };
 
-  const getCurrentUserBagelTierPricing = function(sixPackPrice:number,dozenPrice:number,userTier:string){
+  const getCurrentUserBagelTierPricing = function(twoPackPrice:number,sixPackPrice:number,dozenPrice:number,userTier:string){
     if (storeItem.cat==='bagel'){
       return(
         <>
-          <span>{userTier} Pricing</span>
-          <span>Six Pack - ${sixPackPrice.toFixed(2)}</span>
-          <span>Baker's Dozen - ${dozenPrice.toFixed(2)}</span>
+          {/* <span>{userTier} Pricing</span> */}
+          <span>Two Pack (2 Bagels) - ${twoPackPrice.toFixed(2)}</span>
+          <span>Six Pack (6 Bagels) - ${sixPackPrice.toFixed(2)}</span>
+          <span>Baker's Dozen (13 Bagels) - ${dozenPrice.toFixed(2)}</span>
         </>
       )
     }
@@ -134,6 +142,42 @@ export default function StoreItem({
     if (storeItem.cat==='bagel'){
       return(
         <>
+          <div className='store-item-button-wrapper'>
+            <button className='quantity-button' onClick={()=>{
+              const selection:string = 'two';
+              modifyCart(
+                getItemQuantityFromCart(cart,storeItem.name,selection)-1,
+                storeItem._id,
+                setCart,
+                isRequestPending,
+                setIsRequestPending,
+                selection,
+                false
+              )
+            }}>
+              <div>
+                -
+              </div>
+            </button>
+            <span>{twoPackQuantity} Two Pack(s) in Basket</span>
+            <button className='quantity-button' onClick={()=>{
+              const selection:string = 'two';
+              modifyCart(
+                getItemQuantityFromCart(cart,storeItem.name,selection)+1,
+                storeItem._id,
+                setCart,
+                isRequestPending,
+                setIsRequestPending,
+                selection,
+                false
+              )
+            }}> 
+              <div>
+                +
+              </div>
+            </button>
+          </div>
+          
           <div className='store-item-button-wrapper'>
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'six';
@@ -169,6 +213,7 @@ export default function StoreItem({
               </div>
             </button>
           </div>
+
           <div className='store-item-button-wrapper'>
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'dozen';
@@ -186,7 +231,7 @@ export default function StoreItem({
                 -
               </div>
             </button>
-            <span>{dozenItemQuantity} Dozen(s) in Basket</span>
+            <span>{dozenItemQuantity} Baker's Dozen(s) in Basket</span>
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'dozen';
               modifyCart(
@@ -258,17 +303,16 @@ export default function StoreItem({
       pastryItem = storeItem as PastryItem;
   };
 
-  const bagelSixPackPrice = bagelItem?.sixPrice || 0;
-  const bagelDozenPrice = bagelItem?.dozenPrice || 0;
+  const bagelTwoPackPrice:number = bagelItem?.twoPrice || 0;
+  const bagelSixPackPrice:number = bagelItem?.sixPrice || 0;
+  const bagelDozenPrice:number = bagelItem?.dozenPrice || 0;
+  
   const spreadItemPrice = spreadItem?.price || 0;
   const pastryItemPrice = pastryItem?.price || 0;
 
-  useEffect(()=>{
-    if (!localStorage.getItem('loginToken')) setUserTier('Non-Member');
-  },[isSignedIn,setUserTier])
 
   return(
-    <article 
+    <li
       id={`item-${storeItem._id}`} 
       className={`store-item `}
     >
@@ -279,10 +323,10 @@ export default function StoreItem({
         viewport={{once: false}}
         className='item-content'
       >
-        <section
+        <article
           className='item-info'
         >
-          <span>{storeItem.name}</span> 
+          <h2>{storeItem.name}</h2> 
           {
             spreadItem && spreadItem.cat==='spread'
             ?
@@ -297,6 +341,7 @@ export default function StoreItem({
             bagelItem && bagelItem.cat==='bagel'
             ?
               getCurrentUserBagelTierPricing(
+                parseFloat(calcPriceByUserTier(bagelTwoPackPrice,userTier)),
                 parseFloat(calcPriceByUserTier(bagelSixPackPrice,userTier)),
                 parseFloat(calcPriceByUserTier(bagelDozenPrice,userTier)),
                 userTier
@@ -314,21 +359,16 @@ export default function StoreItem({
             :
               null
           }
-        </section>
-        <img 
-          decoding='async'
-          className='store-item-home-img' 
-          id={`#${storeItem._id.toString()}-img`}
-          src={itemImgSrc} alt={`Item ${storeItem._id}`}
-          loading='lazy'
-        />
-        <p>{storeItem.desc}</p>
-        <motion.article
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          animate={controls}
-          viewport={{once: false}}
-          transition={{duration: 0.5, ease: "easeInOut"}}
+          <img 
+            decoding='async'
+            className='store-item-home-img' 
+            id={`#${storeItem._id.toString()}-img`}
+            src={itemImgSrc} alt={`Item ${storeItem._id}`}
+            loading='lazy'
+          />
+          <p>{storeItem.desc}</p>
+        </article>
+        <article
           className='store-item-buttons'
         >
           <div 
@@ -342,8 +382,8 @@ export default function StoreItem({
                 <button onClick={()=>{setIsAddToCartExpanded(true)}} className='add-to-basket'><img decoding='async' src={basketImg} alt='shopping cart basket of items to checkout' loading='lazy' /><span>Add To Basket</span></button>
             }
           </div>
-        </motion.article>
+        </article>
       </motion.section>
-    </article>
+    </li>
   );
 };

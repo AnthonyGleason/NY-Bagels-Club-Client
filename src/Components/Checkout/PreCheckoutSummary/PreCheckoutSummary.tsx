@@ -39,6 +39,11 @@ export default function PreCheckoutSummary({
   const [giftMessageInput,setGiftMessageInput] = useState<string>('');
 
   const handleNavigateCheckout = async function(){
+    if (cart.subtotalInDollars<=25){
+      alert('Your cart must be at least $25 to checkout.');
+      return;
+    };
+
     if (!date){
       alert('You must select a ship date for your order to proceed.');
     }else{

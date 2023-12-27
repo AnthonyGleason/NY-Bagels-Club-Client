@@ -15,53 +15,67 @@ import bricksDesktopImg from '../../../Assets/backgrounds/bricks.webp';
 
 export default function Footer(){
   return(
-    <section style={{backgroundImage: `url('${window.innerWidth<=450 ? './Assets/bricks-mobile.webp' : bricksDesktopImg}')`}} className='footer'>
+    <footer style={{backgroundImage: `url('${window.innerWidth<=450 ? './Assets/bricks-mobile.webp' : bricksDesktopImg}')`}} className='footer'>
       <div className='footer-content-wrapper'>
-        <article className='copyright'>
+
+        <section className='copyright'>
+          <span>© 2023 Gleason Holdings Group LLC</span>
           <span>
-            © 2023 Gleason Holdings Group LLC
-          </span>
-          <span onClick={()=>{window.location.href='https://www.brendelsbagels.com/'}} >
-            © 2023 Brendel's Bagels & Eatery of New York.
+            © 2023 <a href='https://www.brendelsbagels.com/'>Brendel's Bagels & Eatery of New York</a>.
             <br />
             All rights reserved.
           </span>
-        </article>
-        <div className='footer-checkout-info'>
-          <article className='payment-methods'>
-            <img decoding='async' src={visaIcon} alt='visa' loading="lazy" />
-            <img decoding='async' src={masterCardIcon} alt='mastercard' loading="lazy" />
-            <img decoding='async' src={applePayIcon} alt='apple pay' loading="lazy" />
-            <img decoding='async' src={googlePayIcon} alt='google pay' loading="lazy" />
-            <img decoding='async' className='cash-app-img' src={cashAppImg} alt='cash app' loading="lazy" />
-          </article>
-          <div>
+        </section>
+
+        <section className='footer-checkout-info'>
+          <ul className='payment-methods'>
+            <li>
+              <img decoding='async' src={visaIcon} alt='visa' loading="lazy" />
+            </li>
+            <li>
+              <img decoding='async' src={masterCardIcon} alt='mastercard' loading="lazy" />
+            </li>
+            <li>
+              <img decoding='async' src={applePayIcon} alt='apple pay' loading="lazy" />
+            </li>
+            <li>
+              <img decoding='async' src={googlePayIcon} alt='google pay' loading="lazy" />
+            </li>
+            <li>
+              <img decoding='async' className='cash-app-img' src={cashAppImg} alt='cash app' loading="lazy" />
+            </li>
+          </ul>
+
+          <aside>
             <p>Checkout Secured By</p> 
             <img decoding='async' alt='checkout secured by stripe' className='stripe-footer-img' src={stripeImg} loading="lazy" />
             <img decoding='async' alt='secured ssl processing of payments' className='lock-img' src={lockImg} loading="lazy" />
-          </div>
-        </div>
-        <article className='footer-support'>
-          <p>Do you need assistance with an order, or would you like to provide feedback on your experience with us?</p>
-          <ul>
-            <li>Share Your Experience With Us
-              <br />
-              <a href="mailto:support@nybagelsclub.com">support@nybagelsclub.com</a>
-            </li>
-          </ul>
-          <div className='footer-support-notice'>
+          </aside>
+        </section>
+
+        <section className='footer-support'>
+          <p>
+            Do you need assistance with an order, or would you like to provide feedback on your experience with us?
+            <br />
+            <br />
+            <a href="mailto:support@nybagelsclub.com">Share Your Experience With Us!</a>
+            <br />
+            <br />
             <strong>Your satisfaction is our priority!</strong>
+            <br />
             <strong className='always-fresh-notice'>
               Shop confidently! Every order is supported by our <span className='always-fresh'>"Always Fresh" Guarantee.</span>
               <img decoding='async' className='always-fresh-leaf' src={leafImg} alt='always fresh' loading="lazy" />
             </strong>
-          </div>
-        </article>
-        <div className='footer-icons'>
+          </p>
+        </section>
+
+        <section className='footer-icons'>
           <img decoding='async' className='miny'src={minyImg} alt='made in new york' loading="lazy" />
           <img decoding='async' className='small-business' src={supportSmallImg} alt='support small business' loading="lazy" />
-        </div>
+        </section>
+
       </div>
-    </section>
+    </footer>
   )
 }

@@ -86,7 +86,8 @@
   gap: 15px;
   margin: 20px;
 }
-.sidebar-nav button{
+.sidebar-nav button,
+.sidebar-nav a{
   border: 0px solid transparent;
   border-radius: 8px;
   background-color: #5d1917;
@@ -101,8 +102,10 @@
   align-items: center;
   text-align: center;
   gap: 5px;
+  text-decoration: none;
 }
-.sidebar-nav button span{
+.sidebar-nav button span,
+.sidebar-nav a span{
   flex-grow: 1;
 }
 .sidebar-nav li{

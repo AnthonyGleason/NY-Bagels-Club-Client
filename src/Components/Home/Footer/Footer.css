@@ -24,6 +24,12 @@
   background-color: rgba(255, 255, 255, 0.75);
   text-align: center;
 }
+.footer-checkout-info{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .footer-content-wrapper > *{
   max-width: 600px;
 }
@@ -41,13 +47,23 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  width: max-content;
   align-self: center;
   padding: 1em;
+  list-style-type: none;
+  flex-wrap: wrap;
 }
 .footer .payment-methods img{
   max-width: 50px;
   cursor: pointer;
+}
+.footer .payment-methods li{
+  display: flex;
+  width: 50px;
+}
+.footer aside{
+  display: flex;
+  justify-content: center;
+  gap: 5px;
 }
 .footer .footer-support{
   padding-top: 1em;
@@ -100,6 +116,7 @@
   font-size: 18px;
   font-family: 'Titillium Web';
   font-weight: bold;
+  text-wrap: nowrap;
 }
 .footer-checkout-info .stripe-footer-img{
   width: 50px;

@@ -51,12 +51,12 @@ export default function OrderItem({
       setIsExpanded(true);
     };
   };
-
+  
   if (isExpanded){
     return(
       <div className='order-item'>
         <button className='order-item-expand-toggle'>
-          <span className='order-date'>Order Date: {dateCreated.toDateString()}</span>
+          <span className='order-date'>Order Date: {dateCreated.toUTCString().split(' ').slice(0, 4).join(' ')}</span>
           <span className='order-id'>Order Number: #{order._id}</span>
         </button>
         <div className='order-info-wrapper'>
@@ -141,7 +141,7 @@ export default function OrderItem({
               <div key="noTracking">
                 <h4>Track Your Order</h4>
                 <p>Check Back Soon!</p>
-                <p>Your selected ship date is <strong>{new Date(order.cart.desiredShipDate).toDateString()}</strong>.</p>
+                <p>Your selected ship date is <strong>{new Date(order.cart.desiredShipDate).toUTCString().split(' ').slice(0, 4).join(' ')}</strong>.</p>
               </div>
           }
         </div>
@@ -150,7 +150,7 @@ export default function OrderItem({
   }else{
     return(
       <button className='order-item-expand-toggle' onClick={()=>{toggleExpandOrderItem(isExpanded,setIsExpanded)}}>
-        <span className='order-date'>Order Date: {dateCreated.toDateString()}</span>
+        <span className='order-date'>Order Date: {dateCreated.toUTCString().split(' ').slice(0, 4).join(' ')}</span>
         <span className='order-id'>Order Number: #{order._id}</span>
       </button>
     );

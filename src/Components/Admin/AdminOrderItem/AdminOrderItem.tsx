@@ -137,14 +137,14 @@ export default function AdminOrderItem({
                 <p>
                   The customer's selected ship date is 
                   <br />
-                  <strong>{new Date(order.cart.desiredShipDate).toDateString()}</strong>.
+                  <strong>{new Date(order.cart.desiredShipDate).toUTCString().split(' ').slice(0, 4).join(' ')}</strong>.
                 </p>
               </div>
             :
             <div key="noTracking">
               <h4>Tracking</h4>
               <p onClick={()=>{handleAddEmptyTrackingToOrder()}}>Add a tracking number +</p>
-              <p>Your selected ship date is <strong>{new Date(order.cart.desiredShipDate).toDateString()}</strong>.</p>
+              <p>Your selected ship date is <strong>{new Date(order.cart.desiredShipDate).toUTCString().split(' ').slice(0, 4).join(' ')}</strong>.</p>
             </div>
           }
           {
@@ -162,7 +162,7 @@ export default function AdminOrderItem({
   }else{
     return(
       <button className='order-item-expand-toggle' onClick={()=>{setIsExpanded(!isExpanded)}}>
-        <span className='order-date'>Order Date: {dateCreated.toDateString()}</span>
+        <span className='order-date'>Order Date: {dateCreated.toUTCString().split(' ').slice(0, 4).join(' ')}</span>
         <span className='order-id'>Order Number: #{order._id}</span>
       </button>
     );

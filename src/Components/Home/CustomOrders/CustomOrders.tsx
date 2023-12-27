@@ -47,33 +47,26 @@ export default function CustomOrders(){
 
   if (!isEmailSent){
     return(
-      <section
+      <motion.section
         className='custom-orders'
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{duration: 1}}
+        viewport={{once: false}}
       >
-        <motion.h3 
+        <h2 
           id='custom-orders-header' 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{duration: 1}}
-          viewport={{once: false}}
           className='store-items-heading'
         >
           Create Your Dream Gourmet Bagel
-        </motion.h3>
-        <motion.form
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{duration: 3.2}}
-          viewport={{once: false}} 
-        >
+        </h2>
+        <form>
           <div className='custom-orders-info'>
               <span className='brendels'>Brendel's Bagels</span> and New York Bagels Club have partnered to create a package deal for custom themed bagel styles. The package is $274.95 and comes with four custom baker's dozen's and three 1 lb spreads of your choice.
           </div>
           <div className='input-wrapper custom-orders-checkbox-wrapper'>
-            <label htmlFor='specialOfferCheckbox'>
-              <div>Are you interested in our $295 special offer? (Optional)</div>
-              <input id='specialOfferCheckbox' name='specialOfferCheckbox' className='checkbox' type='checkbox' checked={isOfferChecked} onChange={()=>{setIsOfferChecked(!isOfferChecked)}}/>
-            </label>
+            <label htmlFor='specialOfferCheckbox'>Are you interested in our $295 special offer? (Optional)</label>
+            <input id='specialOfferCheckbox' name='specialOfferCheckbox' className='checkbox' type='checkbox' checked={isOfferChecked} onChange={()=>{setIsOfferChecked(!isOfferChecked)}}/>
           </div>
           <div className='input-wrapper'>
             <label htmlFor='contactEmail'>Contact Email:</label>
@@ -95,15 +88,15 @@ export default function CustomOrders(){
               null
           }
           <button onClick={()=>{handleCustomOrderFormSubmit(setIsEmailSent)}} type='button' className='custom-order-submit-button'>Send Us An Email!</button>
-        </motion.form>
-      </section>
+        </form>
+      </motion.section>
     );
   }else{
     return(
       <section
         className='custom-orders'
       >
-        <motion.div
+        <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{duration: 3.5}}
@@ -111,7 +104,7 @@ export default function CustomOrders(){
           className='custom-orders-email-sent'
         >
           We have received your message and will get back to you within 24 hours. Thank you for being a part of the New York Bagels Club Family.
-        </motion.div>
+        </motion.p>
       </section>
     );
   };

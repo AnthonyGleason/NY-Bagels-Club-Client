@@ -17,13 +17,11 @@ export default function Nav(){
       transition={{duration: 1.5}}
       viewport={{once: false}}
     >
-
       <div className='nav-content'>
-        <button onClick={()=>{navigate('/')}}>
-          New York Bagels Club
-          <br />
-          "Always Fresh"
-        </button>
+        <a href='https://www.nybagelsclub.com'>
+          <h1>New York Bagels Club</h1>
+          <h2>"Always Fresh"</h2>
+        </a>
       </div>
     </motion.nav>
   )
