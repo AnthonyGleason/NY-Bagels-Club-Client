@@ -371,9 +371,13 @@ export default function StoreItem({
         <article
           className='store-item-buttons'
         >
-          <div 
+          <motion.div 
             className='store-item-button-container'
             id={`#${storeItem._id.toString()}-buttons`}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 2.5}}
+            viewport={{once: false}}
           >
             {
               isAddToCartShown ?
@@ -381,7 +385,7 @@ export default function StoreItem({
               :
                 <button onClick={()=>{setIsAddToCartExpanded(true)}} className='add-to-basket'><img decoding='async' src={basketImg} alt='shopping cart basket of items to checkout' loading='lazy' /><span>Add To Basket</span></button>
             }
-          </div>
+          </motion.div>
         </article>
       </motion.section>
     </li>
