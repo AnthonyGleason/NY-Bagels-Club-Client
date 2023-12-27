@@ -142,7 +142,13 @@ export default function StoreItem({
     if (storeItem.cat==='bagel'){
       return(
         <>
-          <div className='store-item-button-wrapper'>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 2.5}}
+            viewport={{once: false}}
+            className='store-item-button-wrapper'
+          >
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'two';
               modifyCart(
@@ -176,9 +182,15 @@ export default function StoreItem({
                 +
               </div>
             </button>
-          </div>
+          </motion.div>
           
-          <div className='store-item-button-wrapper'>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 2.5}}
+            viewport={{once: false}}
+            className='store-item-button-wrapper'
+          >
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'six';
               modifyCart(
@@ -212,9 +224,15 @@ export default function StoreItem({
                 +
               </div>
             </button>
-          </div>
+          </motion.div>
 
-          <div className='store-item-button-wrapper'>
+          <motion.div 
+            className='store-item-button-wrapper'
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{duration: 2.5}}
+            viewport={{once: false}}
+          >
             <button className='quantity-button' onClick={()=>{
               const selection:string = 'dozen';
               modifyCart(
@@ -248,7 +266,7 @@ export default function StoreItem({
                 +
               </div>
             </button>
-          </div>
+          </motion.div>
         </>
       )
     }else if (storeItem.cat==='spread' || storeItem.cat ==='pastry'){
@@ -371,13 +389,9 @@ export default function StoreItem({
         <article
           className='store-item-buttons'
         >
-          <motion.div 
+          <div 
             className='store-item-button-container'
             id={`#${storeItem._id.toString()}-buttons`}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{duration: 2.5}}
-            viewport={{once: false}}
           >
             {
               isAddToCartShown ?
@@ -385,7 +399,7 @@ export default function StoreItem({
               :
                 <button onClick={()=>{setIsAddToCartExpanded(true)}} className='add-to-basket'><img decoding='async' src={basketImg} alt='shopping cart basket of items to checkout' loading='lazy' /><span>Add To Basket</span></button>
             }
-          </motion.div>
+          </div>
         </article>
       </motion.section>
     </li>
