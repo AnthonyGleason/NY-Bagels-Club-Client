@@ -65,7 +65,7 @@ export default function CustomOrders(){
               <span className='brendels'>Brendel's Bagels</span> and New York Bagels Club have partnered to create a package deal for custom themed bagel styles. The package is $274.95 and comes with four custom baker's dozen's and three 1 lb spreads of your choice.
           </div>
           <div className='input-wrapper custom-orders-checkbox-wrapper'>
-            <label htmlFor='specialOfferCheckbox'>Are you interested in our $295 special offer? (Optional)</label>
+            <label htmlFor='specialOfferCheckbox'>Are you interested in our special offer? (Optional)</label>
             <input id='specialOfferCheckbox' name='specialOfferCheckbox' className='checkbox' type='checkbox' checked={isOfferChecked} onChange={()=>{setIsOfferChecked(!isOfferChecked)}}/>
           </div>
           <div className='input-wrapper'>

@@ -14,6 +14,7 @@ import './Sidebar.css';
 import { motion, useAnimation } from 'framer-motion';
 import { handleLogout, verifyLoginToken } from '../../Helpers/auth';
 import { Cart } from '../../Interfaces/interfaces';
+import { getClientUrlPrefix } from '../../Config/clientSettings';
 
 export default function Sidebar(
   {
@@ -125,7 +126,7 @@ export default function Sidebar(
           {isAdmin === false ? null : (
             <>
               <li>
-                <a href='https://nybagelsclub.com/#/admin'>
+                <a href={`${getClientUrlPrefix()}/#/admin`}>
                   <img decoding='async' loading='lazy' src={adminImg} alt='admin panel'  />
                   <span>Admin</span>
                 </a>
@@ -133,13 +134,13 @@ export default function Sidebar(
             </>
           )}
           <li className='cart'>
-            <a href='https://nybagelsclub.com/#/cart'>
+            <a href={`${getClientUrlPrefix()}/#/cart`}>
               <img decoding='async' loading='lazy' src={cartImg} alt='cart'  />
               <span>{totalQuantity || 0} Items</span>
             </a>
           </li>
           <li>
-            <a href='https://nybagelsclub.com/#/accounts/orders'>
+            <a href={`${getClientUrlPrefix()}/#/accounts/orders`}>
               <img decoding='async' loading='lazy' src={ordersImg} alt='my orders'  />
               <span>Orders</span>
             </a>
@@ -157,13 +158,13 @@ export default function Sidebar(
           {isSignedIn === false ? (
             <>
               <li>
-                <a href='https://nybagelsclub.com/#/login'>
+                <a href={`${getClientUrlPrefix()}/#/login`}>
                   <img decoding='async' loading='lazy' src={loginImg} alt='login'  />
                   <span>Login</span>
                 </a>
               </li>
               <li>
-                <a href='https://nybagelsclub.com/#/register'>
+                <a href={`${getClientUrlPrefix()}/#/register`}>
                   <img decoding='async' loading='lazy' src={registerImg} alt='register'  />
                   <span>Register</span>
                 </a>
@@ -172,7 +173,7 @@ export default function Sidebar(
           ) : (
             <>
               <li>
-                <a href='https://nybagelsclub.com/#/accounts/settings'>
+                <a href={`${getClientUrlPrefix()}/#/accounts/settings`}>
                   <img decoding='async' loading='lazy' src={settingsImg} alt='account settings'  />
                   <span>Settings</span>
                 </a>
@@ -186,7 +187,7 @@ export default function Sidebar(
             </>
           )}
           <li>
-            <a href='https://nybagelsclub.com/#/support'>
+            <a href={`${getClientUrlPrefix()}/#/support`}>
               <img decoding='async' loading='lazy' src={supportImg} alt='support'  />
               <span>Support</span>
             </a>

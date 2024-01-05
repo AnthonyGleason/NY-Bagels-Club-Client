@@ -3,6 +3,7 @@ import './Nav.css';
 import { useNavigate } from 'react-router-dom';
 import navImg from '../../Assets/backgrounds/bricks.webp';
 import {motion} from 'framer-motion';
+import { getClientUrlPrefix } from '../../Config/clientSettings';
 
 export default function Nav(){
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function Nav(){
       viewport={{once: false}}
     >
       <div className='nav-content'>
-        <a href='https://www.nybagelsclub.com'>
+        <a href={getClientUrlPrefix()}>
           <h1>New York Bagels Club</h1>
           <h2>"Always Fresh"</h2>
         </a>

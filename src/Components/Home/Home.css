@@ -1,7 +1,6 @@
 .home-content-row-wrapper{
-  box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.6), 0px 4px 6px rgba(0, 0, 0, 0.6);
   position: relative;
-  margin-bottom: 8px;
+  z-index: 3;
 }
 .banner-wrapper{
   position: relative;
@@ -23,13 +22,12 @@
   }
   
   .banner p{
-    font-size: 18px;
+    font-size: 19px;
   }
 
   .about-us p{
     font-size: 20px;
   }
-
   .home .store-items-heading p{
     font-size: 19px;
   }
@@ -38,6 +36,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  align-items: center;
+  padding: 1em 1em 1em 1em;
+  grid-area: banner-header;
+  justify-content: center;
 }
 .banner p{
   max-width: 500px;
@@ -54,13 +56,20 @@
   position: relative;
   background-color: #270e0c;
 }
+@media screen and (width<=875px){
+  #root .banner{
+    display: flex;
+    flex-direction: column;
+  }
+}
 @media screen and (width>=768px){
   .home-content-row-wrapper{
     display: grid;
     grid-template-columns: 1fr 0.7fr;
+    grid-template-rows: 1fr;
   }
   .banner p{
-    font-size: 18px;
+    font-size: 19px;
   }
   .home .store-items-heading,
   .brendels,
@@ -79,7 +88,10 @@
     font-size: 21px;
   }
   .banner{
-    padding: 2em 1.5em 2em 1.5em;
+    display: grid;
+    grid-template-columns: 1fr 0.7fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "banner-header banner-img "; 
   }
 }
 
@@ -99,18 +111,12 @@
 .banner{
   text-align: center;
   font-size: 22px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   color: white;
   font-family: 'Titillum Web', 'Arial','sans-serif';
-  gap: 10px;
-  background-color: #270e0c;
-  padding: 1.5em 1em 1.5em 1em;
+  background-color: #270707;
   z-index: 2;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
   position: relative;
+  align-items: center;
 }
 .banner .limited-offer-wrapper h3{
   max-width: 450px;
@@ -131,6 +137,7 @@
 }
 .banner header img{
   min-width: 40px;
+  grid-area: banner-img;
 }
 .banner .limited-offer-wrapper{
   border-radius: 3px;
@@ -147,9 +154,6 @@
 }
 .banner .home-delivery{
   width: 100%;
-  max-width: 600px;
-  border-radius: 4px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 .triangle-down-img{
   width: 50px;
@@ -318,11 +322,9 @@
   gap: 20px;
   justify-content: center;
   font-family: 'Titillium Web', 'Arial','sans-serif';
-  margin-right: 10px;
   padding-bottom: 1em;
-  margin-left: 10px;
   flex-direction: column;
-  background-color: #270e0c;
+  background-color: #200b0b;
   padding-top: 1em;
 }
 .club-perks .brendels{
@@ -456,4 +458,7 @@
 }
 .home-content-wrapper{
   background-color: #270e0c;
+}
+#join-the-club{
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }

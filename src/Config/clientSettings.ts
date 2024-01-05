@@ -11,4 +11,11 @@ export const getServerUrlPrefix = function(){
   };
 };
 
+export const getClientUrlPrefix = function(){
+  if (USE_LOCALHOST){
+    return('http://localhost:3000');
+  }else{
+    return('https://nybagelsclub.com')
+  };
+};
 export const CHECKOUT_SUCCESS_REDIRECT_URL:string = `${getServerUrlPrefix()}/cart/checkout/success`;
