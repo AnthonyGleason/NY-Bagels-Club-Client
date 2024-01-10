@@ -104,6 +104,7 @@
   object-fit: cover;
   object-position: 15%;
   padding: 20px;
+  padding-top: 2em;
 }
 .home-content-row-wrapper,
 .heading-color-wrapper{
