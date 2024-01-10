@@ -103,6 +103,7 @@
   position: relative;
   object-fit: cover;
   object-position: 15%;
+  padding: 20px;
 }
 .home-content-row-wrapper,
 .heading-color-wrapper{
@@ -154,6 +155,9 @@
 }
 .banner .home-delivery{
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 2em;
 }
 .triangle-down-img{
   width: 50px;
