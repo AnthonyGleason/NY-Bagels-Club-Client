@@ -1,46 +1,33 @@
-# Getting Started with Create React App
+# New York Bagels Club Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Introducing New York Bagels Club, your go-to spot for home deliveries of New York Bagels! Our e-commerce site boasts a user-friendly interface powered by React, Framer Motion, Firebase (for web hosting only) and TypeScript, guaranteeing a smooth and enjoyable shopping experience. The site is optimized for search engines with the help of Screaming Frog, ensuring that New York Bagel lovers can easily find us.
 
-## Available Scripts
+Utilizing Stripe as our payment processor, we are able to offer a variety of payment options, including Apple Pay, Google Pay, Cash App, AfterPay, Klarna, Visa, Mastercard, American Express, Discover, and more! These flexibile payment options enables customers to select the payment method that best suits their convenience and preferences.
 
-In the project directory, you can run:
+<h3>Live Site: <a href='https://nybagelsclub.com/'>Press Here</a></h3>
+<h2>Tech Stack:</h2>
+<h3>Front-end:</h3>
+  <span>
+    <img alt="React" height=40rem width=40rem src="https://api.iconify.design/logos/react.svg?download=1" />
+    <img alt="TypeScript" height=40rem width=40rem src="https://api.iconify.design/logos/typescript-icon.svg?download=1" />
+    <img alt="Framer Motion" height=40rem width=40rem src="https://anthonygleason.com/static/media/framer-motion.cd0e8acf350dd639e9e8c999f8539a5e.svg" />
+    <img alt="Firebase" height=40rem width=40rem src="https://anthonygleason.com/static/media/firebase.8d34e0115a9bc6c4475c7e923f77630e.svg" />
+    <img alt="Screaming Frog" height=40rem width=40rem src="https://anthonygleason.com/static/media/screamingFrog.fee9142e7de4b709264fce86bc94d71e.svg" />
+  </span>
+  <p>React, Typescript,Framer Motion, Firebase, Screaming Frog</p>
+<h3>Back-end: <a href='https://www.github.com/AnthonyGleason/NY-Bagels-Club-Server'>View Server</a></h3>
+<h2>Local Installation Instructions:</h2>
+<ol>
+  <li>Clone this repository.</li>
+  <li>Install required dependencies by running the command <code>npm run install</code>.</li>
+  <li>After dependencies install, you can then run the command <code>npm run start</code> to run the client locally.</li>
+  <li>The client will run at <code>localhost</code> port 3000 and connect to the server at <code>localhost</code> port 5000 once the USE_LOCALHOST flag is set to true. To modify this flag you can navigate to the file located at <code>src/clientSettings.tsx</code> and change the line <code>const USE_LOCALHOST = true;</code> to <code>const USE_LOCALHOST = false;</code>.
+  </li>
+</ol>
+<h2>Screenshots:</h2>
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![2024-01-10-121510_2560x3040_scrot](https://github.com/AnthonyGleason/NY-Bagels-Club-Client/assets/87878255/7876a865-74a6-472f-85a8-a27514c85ab7)
+![2024-01-10-121451_2560x3040_scrot](https://github.com/AnthonyGleason/NY-Bagels-Club-Client/assets/87878255/56b96719-39b0-41c8-95b4-1d9b9e711c16)
+![2024-01-10-121550_2560x3040_scrot](https://github.com/AnthonyGleason/NY-Bagels-Club-Client/assets/87878255/e6e9a909-cb88-476e-803e-2d61b86f61ae)
+![2024-01-10-121540_2560x3040_scrot](https://github.com/AnthonyGleason/NY-Bagels-Club-Client/assets/87878255/bc203c9f-f890-4a6e-aa02-f038df029a83)
+![2024-01-10-125033_2560x3040_scrot](https://github.com/AnthonyGleason/NY-Bagels-Club-Client/assets/87878255/ae23eee4-7690-4305-a74a-1d2d7d46b326)
