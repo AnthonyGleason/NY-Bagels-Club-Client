@@ -1,10 +1,10 @@
 {
   "files": {
     "main.css": "/NY-Bagels-Club-Client/static/css/main.2d388c85.css",
-    "main.js": "/NY-Bagels-Club-Client/static/js/main.e4a34b85.js",
+    "main.js": "/NY-Bagels-Club-Client/static/js/main.30e46e7a.js",
     "static/css/3469.a2f38726.chunk.css": "/NY-Bagels-Club-Client/static/css/3469.a2f38726.chunk.css",
     "static/js/3469.d19ae566.chunk.js": "/NY-Bagels-Club-Client/static/js/3469.d19ae566.chunk.js",
-    "static/css/8809.2c0bf638.chunk.css": "/NY-Bagels-Club-Client/static/css/8809.2c0bf638.chunk.css",
+    "static/css/8809.db920449.chunk.css": "/NY-Bagels-Club-Client/static/css/8809.db920449.chunk.css",
     "static/js/8809.0528bab0.chunk.js": "/NY-Bagels-Club-Client/static/js/8809.0528bab0.chunk.js",
     "static/css/1069.773447ff.chunk.css": "/NY-Bagels-Club-Client/static/css/1069.773447ff.chunk.css",
     "static/js/1069.e2efebb6.chunk.js": "/NY-Bagels-Club-Client/static/js/1069.e2efebb6.chunk.js",
@@ -159,10 +159,10 @@
     "static/media/up-arrow.svg": "/NY-Bagels-Club-Client/static/media/up-arrow.49d5d4a0e8b3d38c8d8e11a716d1a863.svg",
     "static/media/down-arrow.svg": "/NY-Bagels-Club-Client/static/media/down-arrow.59e139776c43c103c121fa8b467b3621.svg",
     "main.2d388c85.css.map": "/NY-Bagels-Club-Client/static/css/main.2d388c85.css.map",
-    "main.e4a34b85.js.map": "/NY-Bagels-Club-Client/static/js/main.e4a34b85.js.map",
+    "main.30e46e7a.js.map": "/NY-Bagels-Club-Client/static/js/main.30e46e7a.js.map",
     "3469.a2f38726.chunk.css.map": "/NY-Bagels-Club-Client/static/css/3469.a2f38726.chunk.css.map",
     "3469.d19ae566.chunk.js.map": "/NY-Bagels-Club-Client/static/js/3469.d19ae566.chunk.js.map",
-    "8809.2c0bf638.chunk.css.map": "/NY-Bagels-Club-Client/static/css/8809.2c0bf638.chunk.css.map",
+    "8809.db920449.chunk.css.map": "/NY-Bagels-Club-Client/static/css/8809.db920449.chunk.css.map",
     "8809.0528bab0.chunk.js.map": "/NY-Bagels-Club-Client/static/js/8809.0528bab0.chunk.js.map",
     "1069.773447ff.chunk.css.map": "/NY-Bagels-Club-Client/static/css/1069.773447ff.chunk.css.map",
     "1069.e2efebb6.chunk.js.map": "/NY-Bagels-Club-Client/static/js/1069.e2efebb6.chunk.js.map",
@@ -204,6 +204,6 @@
   },
   "entrypoints": [
     "static/css/main.2d388c85.css",
-    "static/js/main.e4a34b85.js"
+    "static/js/main.30e46e7a.js"
   ]
 }
