@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunknew_york_bagels_club=self.webpackChunknew_york_bagels_club||[]).push([[7330],{7330:(e,a,c)=>{e.exports=c.p+"static/media/650c9f303843aa9fa7ae75cf.c4f508a4a18241c2532f.webp"}}]);

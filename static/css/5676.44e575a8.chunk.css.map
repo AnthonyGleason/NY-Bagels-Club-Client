@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/5676.44e575a8.chunk.css","mappings":"AAAA,cAGE,cAAe,CACf,eAAiB,CAHjB,WAAY,CACZ,iBAGF","sources":["Components/Accounts/ResetPassword/ResetPassword.css"],"sourcesContent":[".pass-expired{\n  padding: 1em;\n  text-align: center;\n  font-size: 22px;\n  font-weight: bold;\n}"],"names":[],"sourceRoot":""}
