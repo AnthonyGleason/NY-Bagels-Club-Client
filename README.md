@@ -5,7 +5,7 @@ Introducing New York Bagels Club, an e-commerce site with the goal of being your
 <br />
 Utilizing Stripe as our payment processor, we are able to offer a variety of payment options, including Apple Pay, Google Pay, Cash App, AfterPay, Klarna, Visa, Mastercard, American Express, Discover, and more! These flexibile payment options enables customers to select the payment method that best suits their convenience and preferences.
 
-<h3>Live Site: <a href='https://nybagelsclub.com/'>Press Here</a></h3>
+<h3>Live Site: <a href='https://anthonygleason.github.io/NY-Bagels-Club-Client/'>Press Here</a></h3>
 <h2>Tech Stack:</h2>
 <h3>Front-end:</h3>
   <span>
