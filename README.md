@@ -1,7 +1,7 @@
 # New York Bagels Club Client
 <h4>Looking for the Server? <a href='https://www.github.com/AnthonyGleason/NY-Bagels-Club-Server'>View Server</a></h4>
 Introducing New York Bagels Club, an e-commerce site with the goal of being your go-to spot for home deliveries of New York Bagels! New York Bagels Club features a user-friendly interface powered by React, Framer Motion, Firebase (for web hosting only) and TypeScript. The site is additionally optimized for search engines with the help of Screaming Frog, ensuring that New York Bagel lovers can easily find us.
-
+<br />
 Utilizing Stripe as our payment processor, we are able to offer a variety of payment options, including Apple Pay, Google Pay, Cash App, AfterPay, Klarna, Visa, Mastercard, American Express, Discover, and more! These flexibile payment options enables customers to select the payment method that best suits their convenience and preferences.
 
 <h3>Live Site: <a href='https://nybagelsclub.com/'>Press Here</a></h3>
