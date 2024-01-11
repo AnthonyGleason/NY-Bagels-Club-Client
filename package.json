@@ -1,7 +1,7 @@
 {
   "name": "new_york_bagels_club",
   "version": "0.1.0",
-  "homepage": "https://nybagelsclub.com",
+  "homepage": "https://nybagelsclub.com/NY-Bagels-Club-Client/",
   "private": true,
   "dependencies": {
     "@stripe/react-stripe-js": "^2.3.0",
@@ -15,7 +15,7 @@
     "@types/react-dom": "^18.2.7",
     "firebase-tools": "^12.6.2",
     "framer-motion": "^10.16.4",
-    "gh-pages": "^6.1.0",
+    "gh-pages": "^6.1.1",
     "preact-compat": "^3.19.0",
     "react": "npm:@preact/compat",
     "react-dom": "npm:@preact/compat",

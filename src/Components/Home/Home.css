@@ -91,7 +91,7 @@
     display: grid;
     grid-template-columns: 1fr 0.7fr;
     grid-template-rows: 1fr;
-    grid-template-areas: "banner-header banner-img "; 
+    grid-template-areas: "banner-img banner-header "; 
   }
 }
 
@@ -103,8 +103,6 @@
   position: relative;
   object-fit: cover;
   object-position: 15%;
-  padding: 20px;
-  padding-top: 2em;
 }
 .home-content-row-wrapper,
 .heading-color-wrapper{
@@ -156,9 +154,6 @@
 }
 .banner .home-delivery{
   width: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 2em;
 }
 .triangle-down-img{
   width: 50px;
@@ -205,9 +200,9 @@
   font-weight: bolder;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   text-align: center;
-  padding: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
   padding-top: 1.5em;
-  padding-bottom: 1.5em;
   background-color: rgb(39, 7, 7);
   display: flex;
   flex-direction: column;
@@ -221,7 +216,6 @@
 #proudly-delivering{
   min-height: 50vh;
   padding-top: 2em;
-  padding-bottom: 2em;
   gap: 10px;
   z-index: 4;
   position: relative;

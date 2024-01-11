@@ -64,8 +64,9 @@ export default function Footer(){
             <strong>Your satisfaction is our priority!</strong>
             <br />
             <strong className='always-fresh-notice'>
-              Shop confidently! Every order is supported by our <span className='always-fresh'>"Always Fresh" Guarantee.</span>
-              <img decoding='async' className='always-fresh-leaf' src={leafImg} alt='always fresh' loading="lazy" />
+              Shop confidently! Every order is supported by our
+              <br />
+              <span className='always-fresh'>"Always Fresh" Guarantee. <img decoding='async' className='always-fresh-leaf' src={leafImg} alt='always fresh' loading="lazy" /></span>
             </strong>
           </p>
         </section>
