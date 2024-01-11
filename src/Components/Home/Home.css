@@ -37,7 +37,7 @@
   flex-direction: column;
   gap: 10px;
   align-items: center;
-  padding: 1em 1em 1em 1em;
+  padding: 1.5em 1em 1.5em 1em;
   grid-area: banner-header;
   justify-content: center;
 }
@@ -69,7 +69,7 @@
     grid-template-rows: 1fr;
   }
   .banner p{
-    font-size: 19px;
+    font-size: 19.5px;
   }
   .home .store-items-heading,
   .brendels,
@@ -135,8 +135,29 @@
   display: flex;
   gap: 10px;
 }
+@media screen and (width<768px){
+  .banner h2,
+  .home .store-items-heading h1{
+    font-size: 20px;
+    align-self: center;
+  }
+  .banner p{
+    font-size: 18px;
+  }
+}
+@media screen and (width>=768px){
+  .banner h2,
+  .home .store-items-heading h1{
+    font-size: 24px;
+    align-self: center;
+  }
+  .banner p,
+  .home .store-items-heading p{
+    font-size: 19.5px;
+  }
+}
 .banner header img{
-  min-width: 40px;
+  min-width: 45px;
   grid-area: banner-img;
 }
 .banner .limited-offer-wrapper{
@@ -200,9 +221,7 @@
   font-weight: bolder;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   text-align: center;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: 1.5em;
+  padding: 1em;
   background-color: rgb(39, 7, 7);
   display: flex;
   flex-direction: column;
@@ -460,4 +479,5 @@
 }
 #join-the-club{
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+  padding: 1em;
 }
