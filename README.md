@@ -13,9 +13,8 @@ Utilizing Stripe as our payment processor, we are able to offer a variety of pay
     <img alt="TypeScript" height=40rem width=40rem src="https://api.iconify.design/logos/typescript-icon.svg?download=1" />
     <img alt="Framer Motion" height=40rem width=40rem src="https://anthonygleason.com/static/media/framer-motion.cd0e8acf350dd639e9e8c999f8539a5e.svg" />
     <img alt="Firebase" height=40rem width=40rem src="https://anthonygleason.com/static/media/firebase.8d34e0115a9bc6c4475c7e923f77630e.svg" />
-    <img alt="Screaming Frog" height=40rem width=40rem src="https://anthonygleason.com/static/media/screamingFrog.fee9142e7de4b709264fce86bc94d71e.svg" />
   </span>
-  <p>React, Typescript,Framer Motion, Firebase, Screaming Frog</p>
+  <p>React, Typescript,Framer Motion, Firebase</p>
 <h3>Back-end: <a href='https://www.github.com/AnthonyGleason/NY-Bagels-Club-Server'>View Server</a></h3>
 <h2>Local Installation Instructions:</h2>
 <ol>
