@@ -210,12 +210,24 @@
   justify-content: center;
   letter-spacing: 1.5px;
 }
+@media screen and (width<450px){
+  .home .store-items-heading h1,
+  .banner h2{
+    font-size: 20px;
+  }
+  .home .store-items-heading p,
+  .banner p{
+    font-size: 18px;
+  }
+}
 .home .store-items-heading h1{
   color: beige;
+  max-width: 550px;
 }
 #proudly-delivering{
   min-height: 50vh;
   padding-top: 2em;
+  padding-bottom: 2em;
   gap: 10px;
   z-index: 4;
   position: relative;

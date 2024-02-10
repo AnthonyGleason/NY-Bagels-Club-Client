@@ -16,7 +16,7 @@ export default function Hero(){
         id='proudly-delivering'
       >
         <h1>
-          Delicious NYC Bagels Shipped Fresh to You
+          The Best New York Bagels Shipped Priority Fresh to You and our Shipping is Always Free
         </h1> 
         <p>
           In a close partnership with Brendel's Bakery & Eatery of Long Island, NY, we meticulously curate and ship a selection of gourmet New York City bagels, spreads and pastries nationwide. To meet the highest standards of freshness, our hand-rolled bagels are kettled and vacuum-sealed just two hours after leaving the oven, ensuring we seal in the perfect flavor of a delicious New York Bagel.
