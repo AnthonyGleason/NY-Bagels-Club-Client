@@ -91,7 +91,7 @@
     display: grid;
     grid-template-columns: 1fr 0.7fr;
     grid-template-rows: 1fr;
-    grid-template-areas: "banner-header banner-img "; 
+    grid-template-areas: "banner-img banner-header"; 
   }
 }
 
@@ -103,8 +103,6 @@
   position: relative;
   object-fit: cover;
   object-position: 15%;
-  padding: 20px;
-  padding-top: 2em;
 }
 .home-content-row-wrapper,
 .heading-color-wrapper{
@@ -156,9 +154,6 @@
 }
 .banner .home-delivery{
   width: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 2em;
 }
 .triangle-down-img{
   width: 50px;
