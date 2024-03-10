@@ -5,6 +5,7 @@ import './Home.css';
 
 import {  Cart} from '../../Interfaces/interfaces';
 import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
+import HomeLoadingOverlay from './HomeLoadingOverlay/HomeLoadingOverlay';
 
 const Sidebar = lazy(()=> import('../Sidebar/Sidebar'));
 const Banner = lazy(()=> import('./Banner/Banner'));
@@ -18,7 +19,7 @@ export default function Home(){
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const [isSidebarExpanded,setIsSidebarExpanded] = useState<boolean>(false);
   const [cart,setCart] = useState<Cart>(emptyCart);
-
+  const [isPageLoaded,setIsPageLoaded] = useState<boolean>(false);
   const isInitialLoad = useRef(true);
 
   useEffect(()=>{
@@ -30,6 +31,8 @@ export default function Home(){
       if (cartToken) fetchAndHandleCart(setCart);
     };
   },[isInitialLoad]);
+
+  if (!isPageLoaded) return(<HomeLoadingOverlay setIsPageLoaded={setIsPageLoaded} />);
 
   return(
     <main
