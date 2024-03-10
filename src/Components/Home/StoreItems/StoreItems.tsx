@@ -55,19 +55,6 @@ export default function StoreItems({
             />
           ))
         }
-        {
-          pastryItems.map((storeItem: Product) => (
-            <StoreItem
-              key={storeItem._id}
-              storeItem={storeItem}
-              cart={cart}
-              setCart={setCart}
-              userTier={userTier}
-              isSignedIn={isSignedIn}
-              setUserTier={setUserTier}
-            />
-          ))
-        }
       </ul>
     </section>
   );

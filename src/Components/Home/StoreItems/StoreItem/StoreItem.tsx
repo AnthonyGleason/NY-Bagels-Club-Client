@@ -327,8 +327,7 @@ export default function StoreItem({
   
   const spreadItemPrice = spreadItem?.price || 0;
   const pastryItemPrice = pastryItem?.price || 0;
-
-
+  
   return(
     <li
       id={`item-${storeItem._id}`} 

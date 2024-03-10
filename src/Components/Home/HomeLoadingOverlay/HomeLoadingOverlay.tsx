@@ -22,11 +22,6 @@ export default function HomeLoadingOverlay(
     setIsPageLoaded:Function
   }
 ){
-  const [sitePass,setSitePass] = useState('');
-  
-  useEffect(()=>{
-    if (sitePass === 'devtest')  setIsPageLoaded(true);
-  },[sitePass]);
 
   useEffect(()=>{
     //redirect user to new url after time has passed
@@ -58,14 +53,13 @@ export default function HomeLoadingOverlay(
         {IS_MAINTENANCE_MODE === true ? (
           <p className='loading-notice' >
             We are undergoing scheduled maintenance and will return shortly. Thank you for your patience!
-            <input placeholder='Enter password to enter' onChange={(e)=>{setSitePass(e.target.value)}} />
           </p>
         ) : (
           <p className='loading-message' >
-            <span>Vacuum-Sealed Authentic New York City Style Bagels Directly From the Heart of Long Island to Your Doorstep!</span>
-            <strong className='loading-notice'>
-              No Account or Subscription Required to Order.
-            </strong>
+            <span>
+              Our club is just about fresh tasting bagels! <span className='loading-notice'>NO monthly subscription required</span> and <span className='loading-notice'>NO hidden fees!</span> Just delicious bagels shipped to your door. 
+              That is the kind of "club" we like.
+            </span>
           </p>         
         )}
       </motion.header>

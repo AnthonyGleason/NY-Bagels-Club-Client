@@ -88,7 +88,7 @@
     font-size: 35px;
   }
   .init-load .loading-notice{
-    font-size: 25px;
+    font-size: 28px;
   }
 }
 
@@ -149,7 +149,6 @@
   color: white;
 }
 .init-load .loading-notice{
-  text-align: center;
   padding: 0.2em;
   color: beige;
 }
