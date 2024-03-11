@@ -22,8 +22,18 @@ export default function PreCheckoutSummary({
     const today = new Date();
     const currentDay = today.getDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
 
-    // Calculate the difference between the current day and the next Wednesday or Thursday
-    const daysUntilNextValidDay = currentDay <= 2 ? 3 - currentDay : 10 - currentDay;
+    //allow mon-thurs
+    const validDays = [1, 2, 3, 4];
+
+    // Find the next valid day
+    let daysUntilNextValidDay = 0;
+    for (let i = 1; i <= 7; i++) {
+        const nextDay = (currentDay + i) % 7;
+        if (validDays.includes(nextDay)) {
+            daysUntilNextValidDay = i;
+            break;
+        }
+    }
 
     // Calculate the timestamp of the next Wednesday or Thursday
     const nextValidDayTimestamp = today.getTime() + daysUntilNextValidDay * 24 * 60 * 60 * 1000;
@@ -94,7 +104,7 @@ export default function PreCheckoutSummary({
     if (isDateValid) {
       setDate(new Date(newDate).toISOString().split('T')[0]); // Convert the string to a Date object
     } else {
-      alert('You have selected an invalid date, please select a future Wednesday or Thursday.');
+      alert('You have selected an invalid date, please select a future Monday, Tuesday, Wednesday or Thursday.');
     }
   };
 
@@ -108,7 +118,7 @@ export default function PreCheckoutSummary({
               date ?
                 `Your order will ship on ${new Date(new Date(date).toLocaleString('en-US', { timeZone: 'UTC' })).toDateString()} or the next available business day.`
               :
-                'Please select a Wednesday or Thursday you would like your order shipped on.'
+                'Please select a Monday, Tuesday, Wednesday or Thursday you would like your order shipped on.'
             }
           </strong>
           <input type='date' 

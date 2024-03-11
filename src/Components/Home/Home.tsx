@@ -32,12 +32,8 @@ export default function Home(){
       if (cartToken) fetchAndHandleCart(setCart);
     };
   },[isInitialLoad]);
-
-  if (!isPageLoaded){
-    return(
-      <HomeLoadingOverlay setIsPageLoaded={setIsPageLoaded}/>
-    );
-  };
+  
+  if (!isPageLoaded) return (<HomeLoadingOverlay setIsPageLoaded={setIsPageLoaded} />)
 
   return(
     <main

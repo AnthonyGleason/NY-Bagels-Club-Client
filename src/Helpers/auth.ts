@@ -110,7 +110,7 @@ export const getMembershipTier = async function(
     if (setExpirationDate) setExpirationDate(new Date(responseData.expirationDate).toDateString());
     return responseData.membershipLevel;
   }catch(err){
-    console.log(err+', showing non-member pricing');
+    console.log('You are not signed in, showing non-member pricing');
     if (setMembershipTier) setMembershipTier('Non-Member');
     return 'Non-Member';
   };
