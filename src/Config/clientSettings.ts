@@ -7,7 +7,7 @@ export const getServerUrlPrefix = function(){
   if (USE_LOCALHOST){
     return('http://localhost:5000');
   }else{
-    return('https://nybc-server-f069d08697f3.herokuapp.com');
+    return('https://nybagelsclub-7eb3cdcd8d53.herokuapp.com');
   };
 };
 
