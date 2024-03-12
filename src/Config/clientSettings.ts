@@ -1,7 +1,7 @@
 const USE_LOCALHOST:boolean = false; //FALSE FOR PRODUCTION
 
 export const IS_MAINTENANCE_MODE:boolean = false;
-export const HOME_LOADING_DELAY:number= 2250 //in milliseconds
+export const HOME_LOADING_DELAY:number= 1800 //in milliseconds
 
 export const getServerUrlPrefix = function(){
   if (USE_LOCALHOST){
