@@ -21,7 +21,6 @@ const ResetPassword = lazy(() => import('./Components/Accounts/ResetPassword/Res
 const Admin = lazy(() => import('./Components/Admin/Admin'));
 const Support = lazy(() => import('./Components/Support/Support'));
 const CartSummary = lazy(() => import('./Components/Checkout/CartSummary/CartSummary'));
-const Snowfall = lazy(() => import('react-snowfall'));
 const Footer = lazy(()=>import('./Components/Home/Footer/Footer'));
 
 const root = ReactDOM.createRoot(
@@ -31,17 +30,6 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <HashRouter>
-      <Suspense>
-        <Snowfall 
-          style={{
-            position: 'fixed',
-            width: '100vw',
-            height: '100%',
-            zIndex: '100'
-          }}
-          snowflakeCount={3}
-        />
-      </Suspense>
       <Routes>
         <Route path='/' element={
           <>
