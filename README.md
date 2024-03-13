@@ -26,7 +26,7 @@ Utilizing Stripe as our payment processor, we are able to offer a variety of pay
 <h2>Screenshots:</h2>
 
 ![2024-01-10-231447_2560x3040_scrot](https://github.com/AnthonyGleason/NY-Bagels-Club-Client/assets/87878255/1ac9ed19-5aba-44ab-b1da-a4a7ee44c6c4)
-![2024-01-10-172847_2560x3040_scrot](https://github.com/AnthonyGleason/NY-Bagels-Club-Client/assets/87878255/c0fe01bd-bf2c-42e1-a17a-c112157448dc)
+![2024-03-13-135858_5120x1600_scrot1](https://github.com/AnthonyGleason/NY-Bagels-Club-Client/assets/87878255/801c7820-498a-4625-91ab-430afd94cf8c)
 ![2024-01-10-231506_2560x3040_scrot](https://github.com/AnthonyGleason/NY-Bagels-Club-Client/assets/87878255/562224bc-8f5f-4568-82ec-f63b67293d45)
 ![2024-01-10-121540_2560x3040_scrot](https://github.com/AnthonyGleason/NY-Bagels-Club-Client/assets/87878255/bc203c9f-f890-4a6e-aa02-f038df029a83)
 ![2024-01-10-125033_2560x3040_scrot](https://github.com/AnthonyGleason/NY-Bagels-Club-Client/assets/87878255/ae23eee4-7690-4305-a74a-1d2d7d46b326)
