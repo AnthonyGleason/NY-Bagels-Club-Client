@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunknew_york_bagels_club=self.webpackChunknew_york_bagels_club||[]).push([[9251],{8632:(e,s,n)=>{n.r(s),n.d(s,{default:()=>a});n.p;var u=n(184);function a(){return window.innerWidth,(0,u.jsx)("section",{className:"about-us"})}}}]);
-//# sourceMappingURL=9251.ba9b02f2.chunk.js.map
