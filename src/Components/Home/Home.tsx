@@ -48,7 +48,7 @@ export default function Home(){
       <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
         <Hero />
         <Banner />
-        {/* <About /> */}
+        <About />
         {/* <Menu 
           bagelItems = {bagelItems}
           pastryItems = {pastryItems} 

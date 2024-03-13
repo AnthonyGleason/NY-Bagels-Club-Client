@@ -4,6 +4,7 @@ import aboutDesktopImg from '../../../Assets/backgrounds/about.webp';
 export default function About(){
   return(
     <section className='about-us'>
+      <img decoding='async' loading='lazy' src={window.innerWidth <= 450 ? './Assets/about-mobile.webp' : aboutDesktopImg} alt='delicious gourmet new york city bagels' />
       {/* <motion.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
