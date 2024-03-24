@@ -27,8 +27,11 @@
   max-width: 700px;
 }
 .store-item .store-item-list{
-  align-content: center;
   text-wrap: wrap;
+  list-style-type:circle;
+}
+.store-item .store-item-list li{
+  align-self: center;
 }
 .store-item .item-info span:first-child{
   letter-spacing: 1.5px;
@@ -57,12 +60,21 @@
   }
 }
 
-@media screen and (max-width: 1450px) and (min-width: 0px) {
+@media screen and (max-width: 1450px) and (min-width: 501px) {
   .store-item-list {
     font-size: 17.5px;
   }
 }
-
+@media screen and (max-width: 500px) and (min-width: 441px){
+  .store-item-list{
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 440px) and (min-width: 0px){
+  .store-item-list{
+    font-size: 13px;
+  }
+}
 .store-item .item-info span:not(:first-child){
   font-family: 'Titillium Web';
 }

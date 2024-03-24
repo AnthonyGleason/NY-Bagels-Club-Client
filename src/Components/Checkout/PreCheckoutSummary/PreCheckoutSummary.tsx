@@ -18,30 +18,34 @@ export default function PreCheckoutSummary({
   cart:Cart,
   setCart:Function
 }){
-  const getNextValidDay = function(){
+  const getNextValidDay = function() {
+    let i = 1; // Start from tomorrow
     const today = new Date();
-    const currentDay = today.getDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
-
-    //allow mon-thurs
-    const validDays = [1, 2, 3, 4];
-
-    // Find the next valid day
-    let daysUntilNextValidDay = 0;
-    for (let i = 1; i <= 7; i++) {
-        const nextDay = (currentDay + i) % 7;
-        if (validDays.includes(nextDay)) {
-            daysUntilNextValidDay = i;
-            break;
+    while (true) {
+        //control loop shouldn't have to scan for more than a week to find a valid day
+        if (i>7) break; 
+        const nextDay = new Date(today.getTime() + i * 24 * 60 * 60 * 1000);
+        if (isDateValid(nextDay.toISOString())) {
+            return nextDay.toISOString().split('T')[0];
         }
+        i++;
     }
+    return '';
+  };
 
-    // Calculate the timestamp of the next Wednesday or Thursday
-    const nextValidDayTimestamp = today.getTime() + daysUntilNextValidDay * 24 * 60 * 60 * 1000;
-    
-    // Create a new Date object for the next Wednesday or Thursday
-    const nextValidDay = new Date(nextValidDayTimestamp);
-    
-    return nextValidDay.toISOString().split('T')[0];
+  const isDateValid = function(date:string):boolean{
+    const selectedDate = new Date(date);
+    // Format today's date with the "America/New_York" time zone
+    const today = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+    // Format selected date with the "America/New_York" time zone
+    const formattedSelectedDate = new Date(selectedDate.toLocaleString("en-US", { timeZone: "America/New_York" }));
+    // Check if the day is either Monday, tuesday, Wednesday or Thursday
+    const isValidDay = formattedSelectedDate.getDay()===0 || formattedSelectedDate.getDay()=== 1 ||formattedSelectedDate.getDay() === 2 || formattedSelectedDate.getDay() === 3;
+
+    // Check if the selected date is today or in the future
+    const isFutureDate = formattedSelectedDate.getTime() > new Date(today).getTime();
+
+    return isValidDay && isFutureDate;
   };
 
   const [date,setDate] = useState<string>(getNextValidDay());
@@ -79,29 +83,10 @@ export default function PreCheckoutSummary({
     };
   };
 
-  const validateDate = function (date: string): boolean {
-    const selectedDate = new Date(date);
-  
-    // Format today's date with the "America/New_York" time zone
-    const today = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
-  
-    // Format selected date with the "America/New_York" time zone
-    const formattedSelectedDate = new Date(selectedDate.toLocaleString("en-US", { timeZone: "America/New_York" }));
-  
-    // Check if the day is either Wednesday or Thursday
-    const isWednesdayOrThursday = formattedSelectedDate.getDay() === 2 || formattedSelectedDate.getDay() === 3;
-  
-    // Check if the selected date is today or in the future
-    const isFutureDate = formattedSelectedDate.getTime() > new Date(today).getTime();
-  
-    return isWednesdayOrThursday && isFutureDate;
-  };
-
     
   
   const handleDateChange = function (newDate: string) {
-    const isDateValid = validateDate(newDate);
-    if (isDateValid) {
+    if (isDateValid(newDate)) {
       setDate(new Date(newDate).toISOString().split('T')[0]); // Convert the string to a Date object
     } else {
       alert('You have selected an invalid date, please select a future Monday, Tuesday, Wednesday or Thursday.');

@@ -4,15 +4,6 @@ export const IS_MAINTENANCE_MODE:boolean = false;
 export const HOME_LOADING_DELAY:number= 4500 //4500 //in milliseconds
 
 
-
-
-
-
-
-
-
-
-
 export const getServerUrlPrefix = function(){
   if (USE_LOCALHOST){
     return('http://localhost:5000');
