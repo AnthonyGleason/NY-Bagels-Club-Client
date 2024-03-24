@@ -418,34 +418,34 @@ export default function StoreItem({
 
           {storeItem.cat === 'bundle' && storeItem.name.includes('Brooklyn') && (
             <ul className='store-item-list'>
+              <li>Two Pack of Brendel's Everything Egg Bagels</li>
+              <li>Two Pack of Brendel's Bacon Egg Bagels</li>
+              <li>Two Pack of Brendel's Everything Bagels</li>
               <li>Two Pack of Brendel's Garlic Bagels</li>
               <li>Two Pack of Brendel's Onion Bagels</li>
-              <li>Two Pack of Brendel's Everything Egg Bagels</li>
-              <li>Two Pack of Brendel's Everything Bagels</li>
               <li>Two Pack of Brendel's Salt Bagels</li>
-              <li>Two Pack of Brendel's Bacon Egg Bagels</li>
             </ul>
           )}
           
           {storeItem.cat === 'bundle' && storeItem.name.includes('Manhattan') && (
             <ul className='store-item-list'>
               <li>Two Pack of Brendel's Cinnamon Raisin Bagels</li>
+              <li>Two Pack of Brendel's Pumpernickel Bagels</li>
+              <li>Two Pack of Brendel's Rainbow Pride Bagels</li>
               <li>Two Pack of Brendel's Apple Walnut Bagels</li>
               <li>Two Pack of Brendel's French Toast Bagels</li>
               <li>Two Pack of Brendel's Blueberry Bagels</li>
-              <li>Two Pack of Brendel's Rainbow Bagels</li>
-              <li>Two Pack of Brendel's Plain Bagels</li>
             </ul>
           )}
 
           {storeItem.cat === 'bundle' && storeItem.name.includes('Long Island') && (
             <ul className='store-item-list'>
-              <li>Two Pack of Brendel's Sesame Bagels</li>
-              <li>Two Pack of Brendel's Poppy Seed Bagels</li>
-              <li>Two Pack of Brendel's Egg Bagels</li>
-              <li>Two Pack of Brendel's Everything Bagels</li>
-              <li>Two Pack of Brendel's Plain Bagels</li>
               <li>Two Pack of Brendel's Cinnamon Raisin Bagels</li>
+              <li>Two Pack of Brendel's Poppy Seed Bagels</li>
+              <li>Two Pack of Brendel's Everything Bagels</li>
+              <li>Two Pack of Brendel's Sesame Bagels</li>
+              <li>Two Pack of Brendel's Plain Bagels</li>
+              <li>Two Pack of Brendel's Egg Bagels</li>
             </ul>
           )}
         </article>
