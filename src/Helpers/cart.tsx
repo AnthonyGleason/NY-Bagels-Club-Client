@@ -136,12 +136,13 @@ export const getSelectionName = function(cartItem:CartItem){
   if (cartItem.itemData.cat==='bagel' && cartItem.selection==='dozen') return "Baker's Dozen(s)";
   if (cartItem.itemData.cat==='bagel' && cartItem.selection==='two') return 'Two Pack(s)';
 
-  //need to have this first because the current store items without category of spread show 
+  //order is important here
   if (cartItem.itemData.cat==='spread' && cartItem.selection==='halflb') return '1/2 LB';
   if (cartItem.itemData.cat==='spread') return 'One Pound';
   
   if (cartItem.itemData.cat==='pastry') return 'Six Pack(s)';
   if (cartItem.itemData.cat==='mystery') return 'Single(s)';
+  if (cartItem.itemData.cat==='bundle') return 'Bundle(s)';
   return 'N/A';
 };
 
@@ -173,6 +174,12 @@ export const getItemQuantityFromCart = function(cart:Cart, itemName: string, sel
       break; // Exit the loop if the item is found
     }else if(
       cartItem.itemData.cat === 'pastry' &&
+      cartItem.itemData.name === itemName
+    ){
+      quantity = cartItem.quantity;
+      break;
+    }else if(
+      cartItem.itemData.cat === 'bundle' &&
       cartItem.itemData.name === itemName
     ){
       quantity = cartItem.quantity;

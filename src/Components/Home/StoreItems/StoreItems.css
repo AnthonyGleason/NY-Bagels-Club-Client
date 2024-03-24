@@ -4,9 +4,14 @@
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  background-color: #270e0c;
   position: relative;
   z-index: 3;
+}
+.store-items-container .item-info ul{
+  flex-direction: column;
+}
+.store-items-container .item-info li{
+  align-self: flex-start;
 }
 .store-items-container .store-items-heading{
   width: 100%;

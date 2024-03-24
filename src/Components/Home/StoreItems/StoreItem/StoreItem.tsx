@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './StoreItem.css';
-import { BagelItem, Cart, PastryItem, Product, SpreadItem } from '../../../../Interfaces/interfaces';
+import { BagelItem, BundleItem, Cart, PastryItem, Product, SpreadItem } from '../../../../Interfaces/interfaces';
 import { getItemQuantityFromCart, modifyCart } from '../../../../Helpers/cart';
 import basketImg from '../../../../Assets/icons/cart.svg';
 import { motion, useAnimation } from 'framer-motion';
@@ -73,13 +73,14 @@ export default function StoreItem({
     };
   },[isInitialLoad]);
 
+  //if no login token is present set the user tier to Non-Member showing Non-Member pricing
   useEffect(()=>{
     if (!localStorage.getItem('loginToken')) setUserTier('Non-Member');
   },[isSignedIn,setUserTier])
 
   //whenever the cart is updated update the quantities of items
   useEffect(()=>{
-    if (storeItem.cat==='spread' || storeItem.cat==='pastry'){
+    if (storeItem.cat==='spread' || storeItem.cat==='pastry' || storeItem.cat==='bundle'){
       setItemQuantity(getItemQuantityFromCart(cart,storeItem.name,''));
     }else if (storeItem.cat==='bagel'){
       setSixPackItemQuantity(getItemQuantityFromCart(cart,storeItem.name,'six'));
@@ -100,7 +101,18 @@ export default function StoreItem({
         return (itemPrice-(itemPrice*0.15)).toFixed(2);
       default:
         return (itemPrice).toFixed(2);
-    }
+    };
+  };
+
+  const getCurrentBundleTierPricing = function(itemPrice:number,userTier:string){
+    if (storeItem.cat==='bundle'){
+      return(
+        <>
+          <span>{userTier} Pricing</span>
+          <span>One Bundle - ${itemPrice.toFixed(2)}</span>
+        </>
+      )
+    };
   };
 
   const getCurrentUserSpreadTierPricing = function(itemPrice:number,userTier:string){
@@ -269,7 +281,7 @@ export default function StoreItem({
           </motion.div>
         </>
       )
-    }else if (storeItem.cat==='spread' || storeItem.cat ==='pastry'){
+    }else if (storeItem.cat==='spread' || storeItem.cat ==='pastry' || storeItem.cat ==='bundle'){
       return(
         <div className='store-item-button-wrapper'>
           <button className='quantity-button' onClick={()=>{
@@ -309,6 +321,7 @@ export default function StoreItem({
   let spreadItem:SpreadItem | undefined;
   let bagelItem:BagelItem | undefined;
   let pastryItem:PastryItem | undefined;
+  let bundleItem:BundleItem | undefined;
 
   switch (storeItem.cat){
     case 'bagel':
@@ -319,6 +332,10 @@ export default function StoreItem({
       break;
     case 'pastry':
       pastryItem = storeItem as PastryItem;
+      break;
+    case 'bundle':
+      bundleItem = storeItem as BundleItem;
+      break;
   };
 
   const bagelTwoPackPrice:number = bagelItem?.twoPrice || 0;
@@ -327,6 +344,7 @@ export default function StoreItem({
   
   const spreadItemPrice = spreadItem?.price || 0;
   const pastryItemPrice = pastryItem?.price || 0;
+  const bundleItemPrice = bundleItem?.price || 0;
   
   return(
     <li
@@ -344,6 +362,16 @@ export default function StoreItem({
           className='item-info'
         >
           <h2>{storeItem.name}</h2> 
+          {
+            bundleItem && bundleItem.cat==='bundle'
+            ?
+            getCurrentBundleTierPricing(
+              parseFloat(calcPriceByUserTier(bundleItemPrice,userTier)),
+              userTier
+            )
+          :
+            null
+          }
           {
             spreadItem && spreadItem.cat==='spread'
             ?
@@ -383,7 +411,43 @@ export default function StoreItem({
             src={itemImgSrc} alt={`Item ${storeItem._id}`}
             loading='lazy'
           />
-          <p>{storeItem.desc}</p>
+          {/* only show item description on non-bundles */}
+          {storeItem.cat !== 'bundle' && (
+            <p>{storeItem.desc}</p>
+          )}
+
+          {storeItem.cat === 'bundle' && storeItem.name.includes('Brooklyn') && (
+            <ul className='store-item-list'>
+              <li>Two Pack of Brendel's Garlic Bagels</li>
+              <li>Two Pack of Brendel's Onion Bagels</li>
+              <li>Two Pack of Brendel's Everything Egg Bagels</li>
+              <li>Two Pack of Brendel's Everything Bagels</li>
+              <li>Two Pack of Brendel's Salt Bagels</li>
+              <li>Two Pack of Brendel's Bacon Egg Bagels</li>
+            </ul>
+          )}
+          
+          {storeItem.cat === 'bundle' && storeItem.name.includes('Manhattan') && (
+            <ul className='store-item-list'>
+              <li>Two Pack of Brendel's Cinnamon Raisin Bagels</li>
+              <li>Two Pack of Brendel's Apple Walnut Bagels</li>
+              <li>Two Pack of Brendel's French Toast Bagels</li>
+              <li>Two Pack of Brendel's Blueberry Bagels</li>
+              <li>Two Pack of Brendel's Rainbow Bagels</li>
+              <li>Two Pack of Brendel's Plain Bagels</li>
+            </ul>
+          )}
+
+          {storeItem.cat === 'bundle' && storeItem.name.includes('Long Island') && (
+            <ul className='store-item-list'>
+              <li>Two Pack of Brendel's Sesame Bagels</li>
+              <li>Two Pack of Brendel's Poppy Seed Bagels</li>
+              <li>Two Pack of Brendel's Egg Bagels</li>
+              <li>Two Pack of Brendel's Everything Bagels</li>
+              <li>Two Pack of Brendel's Plain Bagels</li>
+              <li>Two Pack of Brendel's Cinnamon Raisin Bagels</li>
+            </ul>
+          )}
         </article>
         <article
           className='store-item-buttons'

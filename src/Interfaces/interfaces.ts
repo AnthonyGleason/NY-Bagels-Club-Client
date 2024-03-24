@@ -25,6 +25,9 @@ export interface PastryItem extends Product{
   price: number
 };
 
+export interface BundleItem extends Product{
+  price: number
+};
 export interface MysteryItem extends Product{
   price: number
 };

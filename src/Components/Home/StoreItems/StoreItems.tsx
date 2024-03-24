@@ -20,17 +20,45 @@ export default function StoreItems({
 
   const [bagelItems,setBagelItems] = useState<Product[]>([]);
   const [pastryItems,setPastryItems] = useState<Product[]>([]);
+  const [bundleItems,setBundleItems] = useState<Product[]>([]);
 
   useEffect(() => {
     if (isInitialLoad.current) {
       isInitialLoad.current = false;
       getMembershipTier(setUserTier);
-      fetchAndSetStoreItems(setBagelItems,setPastryItems);
+      fetchAndSetStoreItems(setBagelItems,setPastryItems,setBundleItems);
     }
   }, [isInitialLoad]);
   
   return (
     <section id='store' className='store-items-container'>
+      <motion.h2 
+        className='store-items-heading'
+        id='store-item-heading'
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{duration: 2.5}}
+        viewport={{once: false}}
+      >
+        Gift Ideas Under $40:
+        <br />
+        Explore Our Brendel's Burrough Bundles!
+      </motion.h2>
+      <ul>
+        {
+          bundleItems.map((storeItem: Product)=>(
+            <StoreItem
+              key={storeItem._id}
+              storeItem={storeItem}
+              cart={cart}
+              setCart={setCart}
+              userTier={userTier}
+              isSignedIn={isSignedIn}
+              setUserTier={setUserTier}
+            />
+          ))
+        }
+      </ul>
       <motion.h2 
         className='store-items-heading'
         id='store-item-heading'
