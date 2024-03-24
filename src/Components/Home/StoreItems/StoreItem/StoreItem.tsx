@@ -108,7 +108,7 @@ export default function StoreItem({
     if (storeItem.cat==='bundle'){
       return(
         <>
-          <span>{userTier} Pricing</span>
+          {/* <span>{userTier} Pricing</span> */}
           <span>One Bundle - ${itemPrice.toFixed(2)}</span>
         </>
       )
