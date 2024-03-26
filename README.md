@@ -1,5 +1,4 @@
 # New York Bagels Club Client
-<h4>Looking for the Server? <a href='https://www.github.com/AnthonyGleason/NY-Bagels-Club-Server'>View Server</a></h4>
 Introducing New York Bagels Club, an e-commerce site with the goal of being your go-to spot for home deliveries of New York Bagels! New York Bagels Club features a user-friendly interface powered by React, Framer Motion, Firebase (for web hosting only) and TypeScript. The site is additionally optimized for search engines with the help of Screaming Frog, ensuring that New York Bagel lovers can easily find us.
 <br />
 <br />
@@ -14,13 +13,11 @@ Utilizing Stripe as our payment processor, we are able to offer a variety of pay
     <img alt="Framer Motion" height=40rem width=40rem src="https://anthonygleason.com/static/media/framer-motion.cd0e8acf350dd639e9e8c999f8539a5e.svg" />
   </span>
   <p>React, TypeScript,Framer Motion</p>
-<h3>Back-end: <a href='https://www.github.com/AnthonyGleason/NY-Bagels-Club-Server'>View Server</a></h3>
 <h2>Local Installation Instructions:</h2>
 <ol>
   <li>Clone this repository.</li>
   <li>Install required dependencies by running the command <code>npm run install</code>.</li>
   <li>After dependencies install, you can then run the command <code>npm run start</code> to run the client locally.</li>
-  <li>The client will run at <code>localhost</code> port 3000 and connect to the server at <code>localhost</code> port 5000 once the USE_LOCALHOST flag is set to true. To modify this flag you can navigate to the file located at <code>src/clientSettings.tsx</code> and change the line <code>const USE_LOCALHOST = true;</code> to <code>const USE_LOCALHOST = false;</code>.
   </li>
 </ol>
 <h2>Screenshots:</h2>
