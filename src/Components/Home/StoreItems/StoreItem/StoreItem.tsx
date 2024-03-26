@@ -430,9 +430,9 @@ export default function StoreItem({
           {storeItem.cat === 'bundle' && storeItem.name.includes('Manhattan') && (
             <ul className='store-item-list'>
               <li>Two Pack of Brendel's Cinnamon Raisin Bagels</li>
-              <li>Two Pack of Brendel's Pumpernickel Bagels</li>
               <li>Two Pack of Brendel's Rainbow Pride Bagels</li>
               <li>Two Pack of Brendel's Apple Walnut Bagels</li>
+              <li>Two Pack of Brendel's Pumpernickel Bagels</li>
               <li>Two Pack of Brendel's French Toast Bagels</li>
               <li>Two Pack of Brendel's Blueberry Bagels</li>
             </ul>
