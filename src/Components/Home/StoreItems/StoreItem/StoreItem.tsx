@@ -416,7 +416,7 @@ export default function StoreItem({
             <p>{storeItem.desc}</p>
           )}
 
-          {storeItem.cat === 'bundle' && storeItem.name.includes('Brooklyn') && (
+          {storeItem.cat === 'bundle' && storeItem.name.includes('Savory') && (
             <ul className='store-item-list'>
               <li>Two Pack of Brendel's Everything Egg Bagels</li>
               <li>Two Pack of Brendel's Bacon Egg Bagels</li>
@@ -427,7 +427,7 @@ export default function StoreItem({
             </ul>
           )}
           
-          {storeItem.cat === 'bundle' && storeItem.name.includes('Manhattan') && (
+          {storeItem.cat === 'bundle' && storeItem.name.includes('Sweet') && (
             <ul className='store-item-list'>
               <li>Two Pack of Brendel's Cinnamon Raisin Bagels</li>
               <li>Two Pack of Brendel's Rainbow Pride Bagels</li>
@@ -438,7 +438,7 @@ export default function StoreItem({
             </ul>
           )}
 
-          {storeItem.cat === 'bundle' && storeItem.name.includes('Long Island') && (
+          {storeItem.cat === 'bundle' && storeItem.name.includes('Classic') && (
             <ul className='store-item-list'>
               <li>Two Pack of Brendel's Cinnamon Raisin Bagels</li>
               <li>Two Pack of Brendel's Poppy Seed Bagels</li>
