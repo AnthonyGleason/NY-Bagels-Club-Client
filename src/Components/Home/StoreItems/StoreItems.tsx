@@ -40,13 +40,11 @@ export default function StoreItems({
         transition={{duration: 2.5}}
         viewport={{once: false}}
       >
-        Gift Ideas Under $40:
-        <br />
-        Explore Our Brendel's Burrough Bundles!
+        Introducing Brendel's Bagels: New York's Finest Bagels 
       </motion.h2>
       <ul>
         {
-          bundleItems.map((storeItem: Product)=>(
+          bagelItems.map((storeItem: Product) => (
             <StoreItem
               key={storeItem._id}
               storeItem={storeItem}
@@ -59,6 +57,7 @@ export default function StoreItems({
           ))
         }
       </ul>
+
       <motion.h2 
         className='store-items-heading'
         id='store-item-heading'
@@ -67,11 +66,13 @@ export default function StoreItems({
         transition={{duration: 2.5}}
         viewport={{once: false}}
       >
-        Introducing Brendel's Bagels: New York's Finest Bagels 
+        Gift Ideas Under $40:
+        <br />
+        Explore Our Brendel's Borough Bundles!
       </motion.h2>
       <ul>
         {
-          bagelItems.map((storeItem: Product) => (
+          bundleItems.map((storeItem: Product)=>(
             <StoreItem
               key={storeItem._id}
               storeItem={storeItem}

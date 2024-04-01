@@ -59,8 +59,14 @@ export default function AdminOrderItem({
     return(
       <li className='order-item'>
         <button className='order-item-expand-toggle' onClick={()=>{setIsExpanded(!isExpanded)}}>
-          <span className='order-date'>Order Date: {dateCreated.toDateString()}</span>
-          <span className='order-id'>Order Number: #{order._id}</span>
+          <span className='order-date'>
+            Order Date: <br />
+            {dateCreated.toUTCString().split(' ').slice(0, 4).join(' ')}
+          </span>
+          <span className='order-id'>
+            Order Number: <br />
+            #{order._id}
+          </span>
         </button>
         <div className='order-info-wrapper'>
           <div>
@@ -162,8 +168,14 @@ export default function AdminOrderItem({
   }else{
     return(
       <button className='order-item-expand-toggle' onClick={()=>{setIsExpanded(!isExpanded)}}>
-        <span className='order-date'>Order Date: {dateCreated.toUTCString().split(' ').slice(0, 4).join(' ')}</span>
-        <span className='order-id'>Order Number: #{order._id}</span>
+        <span className='order-date'>
+          Order Date: <br />
+          {dateCreated.toUTCString().split(' ').slice(0, 4).join(' ')}
+        </span>
+        <span className='order-id'>
+          Order Number: <br />
+          #{order._id}
+        </span>
       </button>
     );
   };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Order } from '../../../Interfaces/interfaces';
 import { getAllOrders, updateOrder } from '../../../Helpers/admin';
-import xImg from '../../../Assets/icons/x.svg';
+import xImg from '../../../Assets/icons/x-black.svg';
 
 export default function AdminTrackingItem({
   trackingNumber,
@@ -50,7 +50,7 @@ export default function AdminTrackingItem({
   return(
     <div key={trackingNumber}>
       <h4>Tracking Number #{index+1}</h4>
-      <span>
+      <span className='order-tracking-item'>
         <input placeholder='Tracking Number' value={trackingNumberInput} onChange={(e)=>{setTrackingNumberInput(e.target.value)}} onBlur={(e)=>{handleUpdateTrackingNumber(e)}} />
         <img src={xImg} alt='delete tracking number' onClick={()=>{handleRemoveTrackingNumber()}} />
       </span>

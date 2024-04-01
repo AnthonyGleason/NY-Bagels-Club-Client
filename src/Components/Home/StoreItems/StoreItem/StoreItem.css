@@ -31,7 +31,6 @@
   list-style-type:circle;
 }
 .store-item .store-item-list li{
-  align-self: center;
 }
 .store-item .item-info span:first-child{
   letter-spacing: 1.5px;
@@ -56,23 +55,23 @@
 
 @media screen and (max-width: 1650px) and (min-width: 1450px) {
   .store-item-list {
-    font-size: 18.5px;
+    font-size: 20px;
   }
 }
 
 @media screen and (max-width: 1450px) and (min-width: 501px) {
   .store-item-list {
-    font-size: 17.5px;
+    font-size: 18.5px;
   }
 }
 @media screen and (max-width: 500px) and (min-width: 441px){
   .store-item-list{
-    font-size: 16px;
+    font-size: 17px;
   }
 }
 @media screen and (max-width: 440px) and (min-width: 0px){
   .store-item-list{
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 .store-item .item-info span:not(:first-child){
@@ -184,5 +183,5 @@
   color:white;
   font-family: 'Titillium Web';
   font-size: 18px;
-  padding: 5px;
+  padding: 10px;
 }

@@ -418,34 +418,37 @@ export default function StoreItem({
 
           {storeItem.cat === 'bundle' && storeItem.name.includes('Savory') && (
             <ul className='store-item-list'>
-              <li>Two Pack of Brendel's Everything Egg Bagels</li>
-              <li>Two Pack of Brendel's Bacon Egg Bagels</li>
-              <li>Two Pack of Brendel's Everything Bagels</li>
-              <li>Two Pack of Brendel's Garlic Bagels</li>
-              <li>Two Pack of Brendel's Onion Bagels</li>
-              <li>Two Pack of Brendel's Salt Bagels</li>
+              <li>2 Everything Egg Bagels</li>
+              <li>2 Bacon Egg Bagels</li>
+              <li>2 Everything Bagels</li>
+              <li>2 Garlic Bagels</li>
+              <li>2 Onion Bagels</li>
+              <li>2 Salt Bagels</li>
+              <li>1 Bagel of the Month</li>
             </ul>
           )}
           
           {storeItem.cat === 'bundle' && storeItem.name.includes('Sweet') && (
             <ul className='store-item-list'>
-              <li>Two Pack of Brendel's Cinnamon Raisin Bagels</li>
-              <li>Two Pack of Brendel's Rainbow Pride Bagels</li>
-              <li>Two Pack of Brendel's Apple Walnut Bagels</li>
-              <li>Two Pack of Brendel's Pumpernickel Bagels</li>
-              <li>Two Pack of Brendel's French Toast Bagels</li>
-              <li>Two Pack of Brendel's Blueberry Bagels</li>
+              <li>2 Cinnamon Raisin Bagels</li>
+              <li>2 Rainbow Pride Bagels</li>
+              <li>2 Apple Walnut Bagels</li>
+              <li>2 Pumpernickel Bagels</li>
+              <li>2 French Toast Bagels</li>
+              <li>2 Blueberry Bagels</li>
+              <li>1 Bagel of the Month</li>
             </ul>
           )}
 
           {storeItem.cat === 'bundle' && storeItem.name.includes('Classic') && (
             <ul className='store-item-list'>
-              <li>Two Pack of Brendel's Cinnamon Raisin Bagels</li>
-              <li>Two Pack of Brendel's Poppy Seed Bagels</li>
-              <li>Two Pack of Brendel's Everything Bagels</li>
-              <li>Two Pack of Brendel's Sesame Bagels</li>
-              <li>Two Pack of Brendel's Plain Bagels</li>
-              <li>Two Pack of Brendel's Egg Bagels</li>
+              <li>2 Cinnamon Raisin Bagels</li>
+              <li>2 Poppy Seed Bagels</li>
+              <li>2 Everything Bagels</li>
+              <li>2 Sesame Bagels</li>
+              <li>2 Plain Bagels</li>
+              <li>2 Egg Bagels</li>
+              <li>1 Bagel of the Month</li>
             </ul>
           )}
         </article>

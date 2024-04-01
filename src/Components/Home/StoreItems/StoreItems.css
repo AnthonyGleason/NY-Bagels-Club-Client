@@ -9,6 +9,8 @@
 }
 .store-items-container .item-info ul{
   flex-direction: column;
+  width: max-content;
+  align-self: center;
 }
 .store-items-container .item-info li{
   align-self: flex-start;
