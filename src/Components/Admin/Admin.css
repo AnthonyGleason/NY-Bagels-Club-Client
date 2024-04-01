@@ -22,7 +22,16 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 1vw;
+}
+@media screen and (width<768px) {
+  .admin-panel-wrapper section h3{
+    font-size: 20px;
+  }
+}
+@media screen and (width>=768px) {
+  .admin-panel-wrapper section h3{
+    font-size: 25px;
+  }
 }
 .admin-panel-wrapper section h4{
   font-size: 1.2vw;
@@ -49,7 +58,6 @@
 .user-search-content-wrapper .user-search-input{
   padding-left: 5px;
   padding: 0.5em;
-  font-size: 18px;
 }
 .user-search-content-wrapper ul{
   display: flex;
@@ -77,7 +85,6 @@
 .order-search-content-wrapper .order-search-input{
   padding-left: 5px;
   padding: 0.5em;
-  font-size: 18px;
 }
 .order-search-content-wrapper ul{
   display: flex;
