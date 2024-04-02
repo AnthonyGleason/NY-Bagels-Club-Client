@@ -34,7 +34,7 @@
   }
 }
 .admin-panel-wrapper section h4{
-  font-size: 1.2vw;
+  font-size: 18px;
 }
 .admin-panel-wrapper section h3 img{
   width: 30px;
@@ -113,6 +113,7 @@
 }
 .order-tracking-item{
   display: flex;
+  padding: 10px;
 }
 .order-tracking-item img{
   color: black;
@@ -207,4 +208,9 @@
 .order-search-content .order-item-expand-toggle{
   gap: 20px;
   padding: 15px;
+}
+.order-search-content .order-item{
+  border: 2px solid black;
+  border-radius: 15px;
+  text-align: center;
 }

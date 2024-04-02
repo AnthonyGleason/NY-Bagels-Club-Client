@@ -12,6 +12,8 @@ import PendingOrders from './PendingOrders/PendingOrders';
 import ProcessingOrderPulls from './ProcessingOrderPulls/ProcessingOrderPulls';
 import { getAllOrders } from '../../Helpers/admin';
 import Nav from '../Nav/Nav';
+import RecentOrders from './ShippedOrders/ShippedOrders';
+import ShippedOrders from './ShippedOrders/ShippedOrders';
 
 export default function Admin(){
   const [isAdmin,setIsAdmin] = useState<boolean>(false);
@@ -61,6 +63,10 @@ export default function Admin(){
               setAllOrders={setAllOrders}
             />
             <PendingOrders
+              allOrders={allOrders}
+              setAllOrders={setAllOrders}
+            />
+            <ShippedOrders
               allOrders={allOrders}
               setAllOrders={setAllOrders}
             />
