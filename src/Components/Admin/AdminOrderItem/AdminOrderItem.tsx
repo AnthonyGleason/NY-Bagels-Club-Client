@@ -3,6 +3,7 @@ import { Address, Cart, CartItem, Order } from '../../../Interfaces/interfaces';
 import AdminTrackingItem from '../AdminTrackingItem/AdminTrackingItem';
 import { getAllOrders, updateOrder } from '../../../Helpers/admin';
 import { getSelectionName } from '../../../Helpers/cart';
+import { getServerUrlPrefix } from '../../../Config/clientSettings';
 
 export default function AdminOrderItem({
   orderItem,
@@ -35,6 +36,22 @@ export default function AdminOrderItem({
     tempOrder.trackingNumberArr = trackingNumberArr;
     await updateOrder(tempOrder);
     await getAllOrders(setAllOrders,orderSearchInput);
+  };
+
+  const sendCustomerTracking = async function(){
+    const response = await fetch(`${getServerUrlPrefix()}/api/admin/orders/${order._id.toString()}/sendTracking`,{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+      }
+    });
+
+    if (response.status===200){
+      alert(`Email was sent successfully to customer, ${order.shippingAddress.fullName}.`);
+    }else{
+      alert(`Error: email was NOT sent to customer, ${order.shippingAddress.fullName}. Please try again.`);
+    };
   };
 
   //update order when states change
@@ -158,10 +175,11 @@ export default function AdminOrderItem({
             ?
             <div>
               <h4>Gift Message:</h4>
-              <input value={orderGiftMessageInput} placeholder='Gift Message' onChange={(e)=>{handleUpdateGiftMessage(e.target.value)}} />
+              <p>{orderGiftMessageInput}</p>
             </div>
             : null
           }
+          <button onClick={()=>{sendCustomerTracking()}} className='order-tracking-send-button'>Send Customer Tracking Info</button>
         </div>
       </li>
     );

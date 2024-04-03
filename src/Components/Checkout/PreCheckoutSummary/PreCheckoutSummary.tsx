@@ -39,13 +39,10 @@ export default function PreCheckoutSummary({
     const today = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
     // Format selected date with the "America/New_York" time zone
     const formattedSelectedDate = new Date(selectedDate.toLocaleString("en-US", { timeZone: "America/New_York" }));
-    // Check if the day is either Monday, tuesday, Wednesday or Thursday
-    const isValidDay = formattedSelectedDate.getDay()===0 || formattedSelectedDate.getDay()=== 1 ||formattedSelectedDate.getDay() === 2 || formattedSelectedDate.getDay() === 3;
-
     // Check if the selected date is today or in the future
     const isFutureDate = formattedSelectedDate.getTime() > new Date(today).getTime();
 
-    return isValidDay && isFutureDate;
+    return isFutureDate;
   };
 
   const [date,setDate] = useState<string>(getNextValidDay());

@@ -213,4 +213,14 @@
   border: 2px solid black;
   border-radius: 15px;
   text-align: center;
+  padding: 5px;
+}
+.order-search-content .order-item .order-info-wrapper{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.order-search-content .order-item .order-info-wrapper .order-tracking-send-button{
+  display: flex;
+  justify-content: center;
 }
