@@ -60,7 +60,7 @@ export default function StoreItems({
 
       <motion.h2 
         className='store-items-heading'
-        id='store-item-heading'
+        id='store-item-gift-heading'
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{duration: 2.5}}
@@ -68,7 +68,7 @@ export default function StoreItems({
       >
         Gift Ideas Under $40:
         <br />
-        Explore Our Brendel's Borough Bundles!
+        Explore Our Brendel's Gift Selections!
       </motion.h2>
       <ul>
         {

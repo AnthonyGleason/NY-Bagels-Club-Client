@@ -4,6 +4,8 @@ import { BagelItem, BundleItem, Cart, PastryItem, Product, SpreadItem } from '..
 import { getItemQuantityFromCart, modifyCart } from '../../../../Helpers/cart';
 import basketImg from '../../../../Assets/icons/cart.svg';
 import { motion, useAnimation } from 'framer-motion';
+import { getNextValidDay, handleNavigateCheckout } from '../../../../Helpers/store';
+import { getNextKeyDef } from '@testing-library/user-event/dist/keyboard/getNextKeyDef';
 
 export default function StoreItem({
   storeItem,
@@ -279,39 +281,63 @@ export default function StoreItem({
               </div>
             </button>
           </motion.div>
+          <motion.div
+          className='store-item-checkout-button-wrapper'
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{duration: 2.5}}
+          viewport={{once: false}}
+          >
+            <button onClick={()=>{handleNavigateCheckout(cart,getNextValidDay(),'')}} className='quantity-button checkout-button'>
+              Checkout Now
+            </button>
+          </motion.div>
         </>
       )
     }else if (storeItem.cat==='spread' || storeItem.cat ==='pastry' || storeItem.cat ==='bundle'){
       return(
-        <div className='store-item-button-wrapper'>
-          <button className='quantity-button' onClick={()=>{
-            modifyCart(
-              getItemQuantityFromCart(cart,storeItem.name)-1,
-              storeItem._id,
-              setCart,
-              isRequestPending,
-              setIsRequestPending,
-              '',
-              false
-            )
-          }}>
-            -
-          </button>
-          <span>{itemQuantity} in Basket</span>
-          <button className='quantity-button' onClick={()=>{
-            modifyCart(
-              getItemQuantityFromCart(cart,storeItem.name)+1,
-              storeItem._id,
-              setCart,
-              isRequestPending,
-              setIsRequestPending,
-              '',
-              false
-            )
-          }}>
-            +
-          </button>
-        </div>
+        <>
+          <motion.div
+          className='store-item-checkout-button-wrapper'
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{duration: 2.5}}
+          viewport={{once: false}}
+          >
+            <div className='store-item-button-wrapper'>
+              <button className='quantity-button' onClick={()=>{
+                modifyCart(
+                  getItemQuantityFromCart(cart,storeItem.name)-1,
+                  storeItem._id,
+                  setCart,
+                  isRequestPending,
+                  setIsRequestPending,
+                  '',
+                  false
+                )
+              }}>
+                -
+              </button>
+              <span>{itemQuantity} in Basket</span>
+              <button className='quantity-button' onClick={()=>{
+                modifyCart(
+                  getItemQuantityFromCart(cart,storeItem.name)+1,
+                  storeItem._id,
+                  setCart,
+                  isRequestPending,
+                  setIsRequestPending,
+                  '',
+                  false
+                )
+              }}>
+                +
+              </button>
+            </div>
+            <button onClick={()=>{handleNavigateCheckout(cart,getNextValidDay(),'')}} className='quantity-button checkout-button'>
+              Checkout Now
+            </button>
+          </motion.div>
+        </>
       )
     }else{
       return(<></>);

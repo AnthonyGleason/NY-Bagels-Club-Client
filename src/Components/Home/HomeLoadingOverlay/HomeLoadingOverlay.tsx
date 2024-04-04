@@ -3,8 +3,8 @@ import './HomeLoadingOverlay.css';
 import bubbleLoadingImg from '../../../Assets/icons/bubble-loading-white.svg';
 import { HOME_LOADING_DELAY, IS_MAINTENANCE_MODE } from '../../../Config/clientSettings';
 import {motion} from 'framer-motion';
-import loadingImg from '../../../Assets/backgrounds/loading.webp';
-
+import loadingImgMobile from '../../../Assets/backgrounds/bagels-coffee.webp';
+import loadingImgDesktop from '../../../Assets/backgrounds/loading.webp';
 const loadingVariants = {
   hidden: { x: '-100%' },
   visible: { x:0, transition: { duration: 0.6 } },
@@ -34,7 +34,7 @@ export default function HomeLoadingOverlay(
 
   return(
     <div className='init-load'>
-      <img src={loadingImg} className='init-load-background' sizes='cover'/>
+      <img src={ window.innerWidth>768 ? loadingImgDesktop : loadingImgMobile } className='init-load-background' sizes='cover'/>
       <motion.img
         className='loading-spinner'
         src={bubbleLoadingImg}

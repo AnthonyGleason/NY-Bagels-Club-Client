@@ -31,6 +31,9 @@
   list-style-type:circle;
 }
 .store-item .store-item-list li{
+  font-family: 'Tittilium Web';
+  font-size: 18px;
+  font-weight: bolder;
 }
 .store-item .item-info span:first-child{
   letter-spacing: 1.5px;
@@ -184,4 +187,12 @@
   font-family: 'Titillium Web';
   font-size: 18px;
   padding: 10px;
+}
+.store-item-buttons .store-item-checkout-button-wrapper .quantity-button{
+  width: max-content;
+  font-family: 'Courgette';
+}
+.store-item-buttons .store-item-checkout-button-wrapper .checkout-button{
+  width: 75%;
+  margin: 10px;
 }

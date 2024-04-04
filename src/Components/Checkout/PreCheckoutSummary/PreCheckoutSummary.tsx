@@ -6,6 +6,7 @@ import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import '../Checkout.css';
 import stripeImg from '../../../Assets/icons/stripe.svg';
 import lockImg from '../../../Assets/icons/lock-1.svg';
+import { getNextValidDay, handleNavigateCheckout, isDateValid } from '../../../Helpers/store';
 
 export default function PreCheckoutSummary({
   isSidebarExpanded,
@@ -18,69 +19,10 @@ export default function PreCheckoutSummary({
   cart:Cart,
   setCart:Function
 }){
-  const getNextValidDay = function() {
-    let i = 1; // Start from tomorrow
-    const today = new Date();
-    while (true) {
-        //control loop shouldn't have to scan for more than a week to find a valid day
-        if (i>7) break; 
-        const nextDay = new Date(today.getTime() + i * 24 * 60 * 60 * 1000);
-        if (isDateValid(nextDay.toISOString())) {
-            return nextDay.toISOString().split('T')[0];
-        }
-        i++;
-    }
-    return '';
-  };
-
-  const isDateValid = function(date:string):boolean{
-    const selectedDate = new Date(date);
-    // Format today's date with the "America/New_York" time zone
-    const today = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
-    // Format selected date with the "America/New_York" time zone
-    const formattedSelectedDate = new Date(selectedDate.toLocaleString("en-US", { timeZone: "America/New_York" }));
-    // Check if the selected date is today or in the future
-    const isFutureDate = formattedSelectedDate.getTime() > new Date(today).getTime();
-
-    return isFutureDate;
-  };
 
   const [date,setDate] = useState<string>(getNextValidDay());
   const [isGiftInput,setIsGiftInput] = useState<boolean>(false);
   const [giftMessageInput,setGiftMessageInput] = useState<string>('');
-
-  const handleNavigateCheckout = async function(){
-    if (cart.subtotalInDollars<=25){
-      alert('Your cart must be at least $25 to checkout.');
-      return;
-    };
-
-    if (!date){
-      alert('You must select a ship date for your order to proceed.');
-    }else{
-      const body = {
-        giftMessage: giftMessageInput || '',
-        shipDate: date
-      };
-      const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/create-checkout-session`,{
-        method: 'POST',
-        headers:{
-          'Authorization': `Bearer ${localStorage.getItem('loginToken')}`,
-          'cart-token': `Bearer ${localStorage.getItem('cartToken')}`,
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify(body)
-      });
-      const responseData = await response.json();
-      if (response.status!==200){
-        alert('There was an error retrieving your account information. Please sign in again.');
-      }else{
-        window.location.href=responseData.sessionUrl;
-      };
-    };
-  };
-
-    
   
   const handleDateChange = function (newDate: string) {
     if (isDateValid(newDate)) {
@@ -168,7 +110,7 @@ export default function PreCheckoutSummary({
           <img alt='checkout secured by stripe' className='stripe-footer-img' src={stripeImg} loading="lazy" />
           <img alt='this website is secured with ssl' className='lock-img' src={lockImg} loading="lazy" />
         </div>
-        <button className='button-styled' onClick={()=>{handleNavigateCheckout()}}>Checkout Now</button>
+        <button className='button-styled' onClick={()=>{handleNavigateCheckout(cart,date,giftMessageInput)}}>Checkout Now</button>
       </div>
     </section>
   )

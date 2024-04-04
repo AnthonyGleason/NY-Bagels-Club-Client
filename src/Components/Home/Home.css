@@ -2,6 +2,22 @@
   position: relative;
   z-index: 3;
 }
+.home-order-now{
+  background-color: #5d1917;
+  border-radius: 20px;
+  border: 0px solid white;
+  color: white;
+  font-size: 20px;
+  font-weight: bolder;
+  font-family: 'Tittilium Web';
+  padding: 1em;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
+}
+.home-order-buttons{
+  display: flex;
+  gap: 10px;
+  list-style-type: none;
+}
 .banner-wrapper{
   position: relative;
   background-color: #270e0c;
@@ -29,7 +45,7 @@
     font-size: 20px;
   }
   .home .store-items-heading p{
-    font-size: 19px;
+    font-size: 18px;
   }
 }
 .banner-content-wrapper{
@@ -236,7 +252,7 @@
   }
   .home .store-items-heading p,
   .banner p{
-    font-size: 18px;
+    font-size: 15px;
   }
 }
 .home .store-items-heading h1{

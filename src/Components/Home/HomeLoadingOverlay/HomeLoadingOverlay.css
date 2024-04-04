@@ -19,7 +19,7 @@
 .loading-content-wrapper {
   z-index: 100;
   height: max-content;
-  background-color: rgba(27,7,7,0.95);
+  background-color: rgba(27,7,7,0.7);
   color: white;
   border-radius: 6px;
   display: flex;

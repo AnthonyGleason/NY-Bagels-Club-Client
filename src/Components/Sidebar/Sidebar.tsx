@@ -1,5 +1,5 @@
 import React,{useEffect, useRef, useState} from 'react';
-import menuImg from '../../Assets/icons/menu.svg';
+import menuImg from '../../Assets/icons/shopping-cart.svg';
 import registerImg from '../../Assets/icons/register.svg';
 import loginImg from '../../Assets/icons/login.svg';
 import cartImg from '../../Assets/icons/cart.svg';
