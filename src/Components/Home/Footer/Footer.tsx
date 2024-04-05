@@ -1,16 +1,17 @@
 import React from 'react';
+
 import './Footer.css';
+
 import applePayIcon from '../../../Assets/paymentIcons/apple-pay.svg';
 import googlePayIcon from '../../../Assets/paymentIcons/google-pay.svg';
 import visaIcon from '../../../Assets/paymentIcons/visa-fill.webp';
 import masterCardIcon from '../../../Assets/paymentIcons/mastercard.svg';
-import supportSmallImg from '../../../Assets/supportSmall.svg';
-import minyImg from '../../../Assets/miny.webp';
-import cashAppImg from '../../../Assets/icons/cashapp.svg';
-import stripeImg from '../../../Assets/icons/stripe.svg';
-import lockImg from '../../../Assets/icons/lock-1.svg';
+import supportSmallImg from '../../../Assets/icons/supportSmall.svg';
+import minyImg from '../../../Assets/icons/miny.webp';
+import cashAppImg from '../../../Assets/paymentIcons/cashapp.svg';
+import stripeImg from '../../../Assets/paymentIcons/stripe.svg';
+import lockImg from '../../../Assets/paymentIcons/lock-1.svg';
 import leafImg from '../../../Assets/icons/leaf.svg';
-
 import bricksDesktopImg from '../../../Assets/backgrounds/bricks.webp';
 
 export default function Footer(){
@@ -42,10 +43,9 @@ export default function Footer(){
               <img decoding='async' src={googlePayIcon} alt='google pay' loading="lazy" />
             </li>
             <li>
-              <img decoding='async' className='cash-app-img' src={cashAppImg} alt='cash app' loading="lazy" />
+              <img decoding='async' src={cashAppImg} alt='cash app' loading="lazy" className='cash-app-img' />
             </li>
           </ul>
-
           <aside>
             <p>Checkout Secured By</p> 
             <img decoding='async' alt='checkout secured by stripe' className='stripe-footer-img' src={stripeImg} loading="lazy" />
@@ -54,21 +54,13 @@ export default function Footer(){
         </section>
 
         <section className='footer-support'>
-          <p>
-            Do you need assistance with an order, or would you like to provide feedback on your experience with us?
-            <br />
-            <br />
-            <a href="mailto:support@nybagelsclub.com">Share Your Experience With Us!</a>
-            <br />
-            <br />
-            <strong>Your satisfaction is our priority!</strong>
-            <br />
-            <strong className='always-fresh-notice'>
-              Shop confidently! Every order is supported by our
-              <br />
-              <span className='always-fresh'>"Always Fresh" Guarantee. <img decoding='async' className='always-fresh-leaf' src={leafImg} alt='always fresh' loading="lazy" /></span>
-            </strong>
-          </p>
+          <span>Do you need assistance with an order, or would you like to provide feedback on your experience with us?</span>
+          <a href="mailto:support@nybagelsclub.com">Share Your Experience With Us!</a>
+          <strong>Your satisfaction is our priority!</strong>
+          <strong className='always-fresh-notice'>
+            <span>Shop confidently! Every order is supported by our </span>
+            <span className='always-fresh'>"Always Fresh" Guarantee.</span>
+          </strong>
         </section>
 
         <section className='footer-icons'>

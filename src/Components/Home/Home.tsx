@@ -9,8 +9,6 @@ import HomeLoadingOverlay from './HomeLoadingOverlay/HomeLoadingOverlay';
 
 const Sidebar = lazy(()=> import('../Sidebar/Sidebar'));
 const Banner = lazy(()=> import('./Banner/Banner'));
-const About = lazy(()=> import('./About/About'));
-const ClubPerks = lazy(()=>import('./ClubPerks/ClubPerks'));
 const Hero = lazy(()=>import('./Hero/Hero'));
 const StoreItems = lazy(()=>import('./StoreItems/StoreItems'));
 const CustomOrders = lazy(()=>import('./CustomOrders/CustomOrders'));
@@ -49,19 +47,12 @@ export default function Home(){
       <div className='home-content-wrapper' onClick={()=>{setIsSidebarExpanded(isSidebarExpanded===true ? false: false)}}>
         <Hero />
         <Banner />
-        {/* <img className='home-intro-img' decoding='async' loading='lazy' src={window.innerWidth <= 450 ? './Assets/about-mobile.webp' : aboutDesktopImg} alt='delicious gourmet new york city bagels' /> */}
-        {/* <About /> */}
-        {/* <Menu 
-          bagelItems = {bagelItems}
-          pastryItems = {pastryItems} 
-        /> */}
         <StoreItems 
           isSignedIn={isSignedIn}
           cart={cart}
           setCart={setCart}
         />
         <CustomOrders />
-        {/* <ClubPerks /> */}
       </div>
     </main>
   )

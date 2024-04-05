@@ -4,17 +4,14 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 import './index.css';
-import upArrowImg from './Assets/icons/arrow-up-outline.svg';
-import { scrollToID } from './Helpers/misc';
 
 //import components
+const CornerButtons = lazy(()=> import('./Components/Home/Menu/CornerButtons/CornerButtons'));
 const Nav = lazy(() => import('./Components/Nav/Nav'));
 const Home = lazy(() => import('./Components/Home/Home'));
 const Login = lazy(() => import('./Components/Login/Login'));
 const Register = lazy(() => import('./Components/Register/Register'));
-const Club = lazy(() => import('./Components/Club/Club'));
 const CheckoutSuccess = lazy(() => import('./Components/Checkout/CheckoutSuccess/CheckoutSuccess'));
-const SubscriptionPage = lazy(() => import('./Components/Accounts/SubscriptionPage/SubscriptionPage'));
 const MyOrders = lazy(() => import('./Components/Accounts/MyOrders/MyOrders'));
 const AccountSettings = lazy(() => import('./Components/Accounts/AccountSettings/AccountSettings'));
 const ResetPassword = lazy(() => import('./Components/Accounts/ResetPassword/ResetPassword'));
@@ -31,19 +28,12 @@ root.render(
   <React.StrictMode>
     <HashRouter>
       <Routes>
-        <Route path='/' element={
+        <Route path='/' element={ //not suspending this so page loads in the background
           <>
             <Nav />
             <Home />
             <Footer />
-            <div className='corner-buttons'>
-              {/* <button onClick={()=>{scrollToID('our-menu')}} className='scroll-menu-button'>
-                <img decoding='async' src={foodMenuImg} alt='scroll up' loading='lazy' />
-              </button> */}
-              <button onClick={()=>{scrollToID('nav')}} className='scroll-up-button'>
-                <img decoding='async' src={upArrowImg} alt='scroll up' loading='lazy' />
-              </button>
-            </div>
+            <CornerButtons />
           </>
         } />
         <Route
@@ -77,16 +67,6 @@ root.render(
           }
         />
         <Route
-          path='/subscribe'
-          element={
-              <Suspense> 
-                <Nav />
-                <SubscriptionPage />
-                <Footer />
-              </Suspense>
-          }
-        />
-        <Route
           path='/cart/checkout/success/:pendingOrderDocID'
           element={
               <Suspense>
@@ -102,16 +82,6 @@ root.render(
               <Suspense>
                 <Nav />
                 <CartSummary />
-                <Footer />
-              </Suspense>
-          }
-        />
-        <Route
-          path='/club'
-          element={
-              <Suspense>
-                <Nav />
-                <Club />
                 <Footer />
               </Suspense>
           }

@@ -1,6 +1,6 @@
 import React from 'react';
 import {motion} from 'framer-motion';
-import storeFrontDesktopImg from '../../../Assets/store.webp';
+import storeFrontDesktopImg from '../../../Assets/backgrounds/store.webp';
 import { scrollToID } from '../../../Helpers/misc';
 
 export default function Hero(){

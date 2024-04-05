@@ -1,16 +1,13 @@
 import React from 'react';
 import './Nav.css';
-import { useNavigate } from 'react-router-dom';
-import navImg from '../../Assets/backgrounds/bricks.webp';
+import navBackgroundImg from '../../Assets/backgrounds/bricks.webp';
 import {motion} from 'framer-motion';
 import { getClientUrlPrefix } from '../../Config/clientSettings';
 
 export default function Nav(){
-  const navigate = useNavigate();
-
   return(
     <motion.nav 
-      style={{backgroundImage: `url('${window.innerWidth<=450 ? './Assets/bricks-mobile.webp' : navImg}')`}}
+      style={{backgroundImage: `url('${window.innerWidth<=450 ? './Assets/bricks-mobile.webp' : navBackgroundImg}')`}}
       id='nav' 
       className='nav'
       initial={{ opacity: 0 }}

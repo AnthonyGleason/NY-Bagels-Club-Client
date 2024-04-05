@@ -74,6 +74,7 @@
   flex-direction: column;
   margin-top: 1em;
   border-top: 2px solid black;
+  gap: 10px;
 }
 .footer .footer-support ul{
   list-style: none;

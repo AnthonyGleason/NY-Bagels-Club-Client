@@ -107,22 +107,6 @@ export default function Sidebar(
               <span>Home</span>
             </a>
           </li>
-          {/* {
-            userMembershipTier === 'Gold Member' ||
-            userMembershipTier === 'Platinum Member' ||
-            userMembershipTier === 'Diamond Member'
-              ?
-                <>
-                  <li>
-                    <button onClick={() => navigate('/club')}>
-                      <img src={starImg} alt='club member page'  />
-                      <span>Club</span>
-                    </button>
-                  </li>
-                </>
-              :
-                null
-          } */}
           {isAdmin === false ? null : (
             <>
               <li>
@@ -145,16 +129,6 @@ export default function Sidebar(
               <span>Orders</span>
             </a>
           </li>
-          {/* <li>
-            <button
-              onClick={() =>
-                navigate('/subscribe')
-              }
-            >
-              <img src={vipImg} alt='subscribe' />
-              <span>Subscribe</span>
-            </button>
-          </li> */}
           {isSignedIn === false ? (
             <>
               <li>
@@ -192,12 +166,6 @@ export default function Sidebar(
               <span>Support</span>
             </a>
           </li>
-          {/* <li>
-            <button onClick={()=>navigate('/careers')}>
-              <img src={workImg} alt='careers' />
-              <span>Careers</span>
-            </button>
-          </li> */}
         </ol>
       ) : (
         <>

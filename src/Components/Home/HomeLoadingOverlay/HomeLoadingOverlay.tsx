@@ -3,8 +3,8 @@ import './HomeLoadingOverlay.css';
 import bubbleLoadingImg from '../../../Assets/icons/bubble-loading-white.svg';
 import { HOME_LOADING_DELAY, IS_MAINTENANCE_MODE } from '../../../Config/clientSettings';
 import {motion} from 'framer-motion';
-import loadingImgMobile from '../../../Assets/backgrounds/bagels-coffee.webp';
-import loadingImgDesktop from '../../../Assets/backgrounds/loading.webp';
+import loadingImgMobile from '../../../Assets/backgrounds/loading-mobile.webp';
+import loadingImgDesktop from '../../../Assets/backgrounds/loading-desktop.webp';
 const loadingVariants = {
   hidden: { x: '-100%' },
   visible: { x:0, transition: { duration: 0.6 } },

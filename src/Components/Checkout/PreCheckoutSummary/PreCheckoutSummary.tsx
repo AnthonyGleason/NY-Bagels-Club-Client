@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import CartSummaryItem from '../CartSummaryItem/CartSummaryItem';
 import { Cart } from '../../../Interfaces/interfaces';
 import './PreCheckoutSummary.css';
-import { getServerUrlPrefix } from '../../../Config/clientSettings';
 import '../Checkout.css';
-import stripeImg from '../../../Assets/icons/stripe.svg';
-import lockImg from '../../../Assets/icons/lock-1.svg';
+
+import stripeImg from '../../../Assets/paymentIcons/stripe.svg';
+import lockImg from '../../../Assets/paymentIcons/lock-1.svg';
+
 import { getNextValidDay, handleNavigateCheckout, isDateValid } from '../../../Helpers/store';
 
 export default function PreCheckoutSummary({
