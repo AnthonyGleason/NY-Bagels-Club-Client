@@ -172,7 +172,6 @@ export default function StoreItem({
                 isRequestPending,
                 setIsRequestPending,
                 selection,
-                false
               )
             }}>
               <div>
@@ -189,7 +188,6 @@ export default function StoreItem({
                 isRequestPending,
                 setIsRequestPending,
                 selection,
-                false
               )
             }}> 
               <div>
@@ -214,7 +212,6 @@ export default function StoreItem({
                 isRequestPending,
                 setIsRequestPending,
                 selection,
-                false
               )
             }}>
               <div>
@@ -231,7 +228,6 @@ export default function StoreItem({
                 isRequestPending,
                 setIsRequestPending,
                 selection,
-                false
               )
             }}> 
               <div>
@@ -256,7 +252,6 @@ export default function StoreItem({
                 isRequestPending,
                 setIsRequestPending,
                 selection,
-                false
               )
             }}>
               <div>
@@ -273,7 +268,6 @@ export default function StoreItem({
                 isRequestPending,
                 setIsRequestPending,
                 selection,
-                false
               )
             }}>
               <div>
@@ -313,7 +307,6 @@ export default function StoreItem({
                   isRequestPending,
                   setIsRequestPending,
                   '',
-                  false
                 )
               }}>
                 -
@@ -327,7 +320,6 @@ export default function StoreItem({
                   isRequestPending,
                   setIsRequestPending,
                   '',
-                  false
                 )
               }}>
                 +

@@ -39,7 +39,6 @@ export default function CartSummaryItem(
               isRequestPending,
               setIsRequestPending,
               cartItem.selection || '',
-              false
             )
           }}
         />
@@ -56,7 +55,6 @@ export default function CartSummaryItem(
             isRequestPending,
             setIsRequestPending,
             cartItem.selection || '',
-            false
           );
         }}>
           <img src={removeImg} alt='remove from cart' loading="lazy" />

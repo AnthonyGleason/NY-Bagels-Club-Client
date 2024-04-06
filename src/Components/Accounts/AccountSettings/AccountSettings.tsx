@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { verifyLoginToken } from '../../../Helpers/auth';
 import './AccountSettings.css';
 import Sidebar from '../../Sidebar/Sidebar';
-import { emptyCart, fetchAndHandleCart } from '../../../Helpers/cart';
+import { emptyCart, fetchAndVerifyCart } from '../../../Helpers/cart';
 import { Cart } from '../../../Interfaces/interfaces';
 import { applySettingsChanges, fetchAccountSettings } from '../../../Helpers/accounts';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ export default function AccountSettings(){
   //handle initial page load 
   useEffect(()=>{
     verifyLoginToken(setIsSignedIn);
-    fetchAndHandleCart(setCart);
+    fetchAndVerifyCart(setCart);
   },[]);
 
   useEffect(()=>{

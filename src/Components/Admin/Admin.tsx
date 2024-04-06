@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { verifyLoginToken } from '../../Helpers/auth';
 import Sidebar from '../Sidebar/Sidebar';
-import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
+import { emptyCart, fetchAndVerifyCart } from '../../Helpers/cart';
 import { Cart, Order } from '../../Interfaces/interfaces';
 import './Admin.css';
 import PendingOrderPulls from './PendingOrderPulls/PendingOrderPulls';
@@ -30,7 +30,7 @@ export default function Admin(){
   useEffect(()=>{
     if (isInitialLoad.current){
       isInitialLoad.current=false;
-      fetchAndHandleCart(setCart);
+      fetchAndVerifyCart(setCart);
       verifyLoginToken(setIsSignedIn,setIsAdmin);
       getAllOrders(setAllOrders);
     };

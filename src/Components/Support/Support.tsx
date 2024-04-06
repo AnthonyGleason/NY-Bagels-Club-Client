@@ -3,7 +3,7 @@ import './Support.css';
 import {motion} from 'framer-motion';
 import Sidebar from '../Sidebar/Sidebar';
 import { Cart } from '../../Interfaces/interfaces';
-import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
+import { emptyCart, fetchAndVerifyCart } from '../../Helpers/cart';
 
 export default function Support(){
   const [isContactUsExpanded,setIsContactUsExpanded] = useState<boolean>(true);
@@ -19,7 +19,7 @@ export default function Support(){
   useEffect(()=>{
     if (isInitialLoad.current){
       isInitialLoad.current=false;
-      fetchAndHandleCart(setCart);
+      fetchAndVerifyCart(setCart);
     };
   },[]);
 

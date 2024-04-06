@@ -4,7 +4,7 @@ import React, {Suspense, lazy, useEffect, useRef, useState} from 'react';
 import './Home.css';
 
 import {  Cart} from '../../Interfaces/interfaces';
-import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
+import { emptyCart, fetchAndVerifyCart } from '../../Helpers/cart';
 import HomeLoadingOverlay from './HomeLoadingOverlay/HomeLoadingOverlay';
 
 const Sidebar = lazy(()=> import('../Sidebar/Sidebar'));
@@ -27,7 +27,7 @@ export default function Home(){
 
       const cartToken:string | null  = localStorage.getItem('cartToken');
 
-      if (cartToken) fetchAndHandleCart(setCart);
+      if (cartToken) fetchAndVerifyCart(setCart);
     };
   },[isInitialLoad]);
   

@@ -2,7 +2,7 @@ import React,{useEffect, useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import Sidebar from '../Sidebar/Sidebar';
-import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
+import { emptyCart, fetchAndVerifyCart } from '../../Helpers/cart';
 import { Cart } from '../../Interfaces/interfaces';
 import { genErrorMessageElement, submitRegister } from '../../Helpers/accounts';
 import {motion} from 'framer-motion';
@@ -27,7 +27,7 @@ export default function Register(){
   useEffect(()=>{
     if (isInitialLoad.current){
       isInitialLoad.current=false;
-      fetchAndHandleCart(setCart);
+      fetchAndVerifyCart(setCart);
     };
   },[]);
 

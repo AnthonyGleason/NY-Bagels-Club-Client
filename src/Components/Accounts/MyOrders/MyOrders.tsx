@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Cart, Order } from '../../../Interfaces/interfaces';
 import './MyOrders.css';
 import Sidebar from '../../Sidebar/Sidebar';
-import { emptyCart, fetchAndHandleCart } from '../../../Helpers/cart';
+import { emptyCart, fetchAndVerifyCart } from '../../../Helpers/cart';
 import { verifyLoginToken } from '../../../Helpers/auth';
 import OrderItem from './OrderItem/OrderItem';
 import { getServerUrlPrefix } from '../../../Config/clientSettings';
@@ -23,7 +23,7 @@ export default function MyOrders(){
     if(isInitialLoad.current){
       isInitialLoad.current = false;
       //fetch and set cart
-      fetchAndHandleCart(setCart);
+      fetchAndVerifyCart(setCart);
       //verify login token
       verifyLoginToken(setIsSignedIn);
     };

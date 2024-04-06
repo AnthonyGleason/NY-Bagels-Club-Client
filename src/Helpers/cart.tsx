@@ -1,6 +1,6 @@
 import { getServerUrlPrefix } from "../Config/clientSettings";
 import { BagelItem, Cart, CartItem, SpreadItem } from "../Interfaces/interfaces";
-import { requestCartToken, verifyCartToken } from "./auth";
+import { requestCartToken } from "./auth";
 
 export const modifyCart = async function(
   updatedQuantity:number,
@@ -9,36 +9,26 @@ export const modifyCart = async function(
   isRequestPending:boolean,
   setIsRequestPending:Function,
   selection: string,
-  isClub:boolean
 ){
-  let cartTokenKey:string = '';
-  //handle not a club request & checking for undefined since isClub is optional
-  if (isClub===false){
-    cartTokenKey = 'cartToken';
-  }else{
-    cartTokenKey = 'clubCartToken';
-  };
-
   try{
     //handle request is already pending limited users to 1 request at a time
     if (isRequestPending) throw new Error('A request is already pending. Please wait for the current request to complete.');
     //set request to pending
     setIsRequestPending(true);
     if (!itemID || updatedQuantity<0) throw new Error('One or more required inputs were left blank.');
-    if(!cartTokenKey) throw new Error('Your request for a local storage cart token was invalid. Did you provide a isClub value to this function?');
+    if(!'cartToken') throw new Error('Your request for a local storage cart token was invalid. Did you provide a isClub value to this function?');
     //make a request to the server to update quantity for cart
     const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts`,{
       method: 'PUT',
       headers:{
         'Content-Type': 'application/json',
-        'Cart-Token': `Bearer ${localStorage.getItem(cartTokenKey)}`,
+        'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
         'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
       },
       body: JSON.stringify({
         itemID: itemID,
         updatedQuantity: updatedQuantity,
         selection: selection,
-        isClubCart: isClub || undefined
       })
     });
     if (response.status===510){
@@ -47,15 +37,15 @@ export const modifyCart = async function(
     //if the cart token is invalid request a fresh one and call modifyCart again
     if (response.status===403){ //BUG WARNING IF 403 IS RETURNED WHEN YOU CANT ADD ANYTHING NEW TO YOUR CLUB CART YOU WILL BE CAUGHT IN AN ENDLESS LOOP OF 403 RESPONSES
       //request a new cart token
-      localStorage.setItem(cartTokenKey,await requestCartToken(isClub || false));
-      modifyCart(updatedQuantity,itemID,setCart,isRequestPending,setIsRequestPending,selection,isClub);
+      localStorage.setItem('cartToken',await requestCartToken());
+      modifyCart(updatedQuantity,itemID,setCart,isRequestPending,setIsRequestPending,selection);
     };
     if (!response.ok) throw new Error('An error occurred in the request to update the cart.');
     const responseData = await response.json();
 
     if (responseData.cartToken && responseData.cart){
       //replace the cartToken in localStorage with the updated cartToken
-      localStorage.setItem(cartTokenKey,responseData.cartToken);
+      localStorage.setItem('cartToken',responseData.cartToken);
       //update cart state
       setCart(responseData.cart);
     };
@@ -66,20 +56,42 @@ export const modifyCart = async function(
   };
 };
 
-export const fetchAndHandleCart = async function(setCart:Function,isClub?:boolean){
+export const fetchAndVerifyCart = async function(setCart?:Function){
+  let isCartValid:boolean = false;
   try {
-    const cartTokenKey = isClub ? 'clubCartToken' : 'cartToken';
-    const cartToken: string | null = localStorage.getItem(cartTokenKey);
+    const cartToken: string | null = localStorage.getItem('cartToken');
     // If a cart token was not found, obtain a fresh one
     if (!cartToken) {
       // Request a new cart token
-      localStorage.setItem(cartTokenKey, await requestCartToken(isClub || false));
+      localStorage.setItem('cartToken', await requestCartToken());
     };
+    
+    //ask the server if the cart token is still valid
+    try{
+      const response = await fetch(`${getServerUrlPrefix()}/api/shop/carts/verify`,{
+        method: 'GET',
+        headers:{
+          'Content-Type': 'application/json',
+          'Cart-Token': `Bearer ${localStorage.getItem('cartToken')}`,
+          'Authorization': `Bearer ${localStorage.getItem('loginToken')}`
+        }
+      });
+      if (response.status!==200) throw new Error('No valid cart detected. Either the user does not have a cart token or the token expired.');
+      //cart is valid continue
+      const responseData = await response.json();
+      //set the cart in state if a setter was provided
+      if (setCart) setCart(responseData.cart);
+      isCartValid = true;
+    }catch(err){
+      console.log(err);
+      isCartValid = false;
+    };
+
     // If a cart token exists but is invalid
-    if (!await verifyCartToken(setCart,isClub)) { //NOTE THIS VERIFYCART TOKEN IS SETTING A CART
-      localStorage.setItem(cartTokenKey, await requestCartToken(isClub || false));
+    if (!isCartValid) {
+      localStorage.setItem('cartToken', await requestCartToken());
       // Because a new cart token was requested, set the cart state back to an empty array
-      setCart([]);
+      if (setCart) setCart([]);
     };
   } catch (err) {
     console.log(err);
@@ -112,7 +124,6 @@ export const handleCartItemInputChange = function(
   isRequestPending:boolean,
   setIsRequestPending:Function,
   selection: string,
-  isClub:boolean
 ){ //accepts an event from an input onChange 
   const newVal: number = parseInt(e.target.value);
   //we dont want users to accidently delete their cart so lets prevent that
@@ -127,7 +138,6 @@ export const handleCartItemInputChange = function(
     isRequestPending,
     setIsRequestPending,
     selection,
-    isClub
   );
 };
 

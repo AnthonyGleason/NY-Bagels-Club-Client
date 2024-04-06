@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Cart } from '../../../Interfaces/interfaces';
-import { emptyCart, fetchAndHandleCart, requestApplyMembershipPricingToCart  } from '../../../Helpers/cart';
+import { emptyCart, fetchAndVerifyCart, requestApplyMembershipPricingToCart  } from '../../../Helpers/cart';
 import './CartSummary.css';
 import { verifyLoginToken } from '../../../Helpers/auth';
 import Sidebar from '../../Sidebar/Sidebar';
@@ -16,7 +16,7 @@ export default function CartSummary(){
   useEffect(()=>{
     if (isInitialLoad.current){
       isInitialLoad.current=false;
-      fetchAndHandleCart(setCart);
+      fetchAndVerifyCart(setCart);
       verifyLoginToken(setIsSignedIn);
       //apply any membership discounts
       requestApplyMembershipPricingToCart(setCart);

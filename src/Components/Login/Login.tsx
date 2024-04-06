@@ -2,7 +2,7 @@ import React,{useEffect, useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import Sidebar from '../Sidebar/Sidebar';
-import { emptyCart, fetchAndHandleCart } from '../../Helpers/cart';
+import { emptyCart, fetchAndVerifyCart } from '../../Helpers/cart';
 import { Cart } from '../../Interfaces/interfaces';
 import { genErrorMessageElement, handleForgotPassword, submitLogin } from '../../Helpers/accounts';
 import { motion } from 'framer-motion';
@@ -23,7 +23,7 @@ export default function Login(){
   useEffect(()=>{
     if (isInitialLoad.current){
       isInitialLoad.current = false;
-      fetchAndHandleCart(setCart);
+      fetchAndVerifyCart(setCart);
     };
   },[]);
   
