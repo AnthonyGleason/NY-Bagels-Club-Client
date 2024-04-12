@@ -31,7 +31,7 @@ export default function Hero(){
             <button className='home-order-now' onClick={()=>{handleGiftSelectionsPress()}}>EXPLORE GIFT SELECTIONS</button>
           </li>
           <li>
-            <button className='home-order-now' onClick={()=>{handleOrderNowPress()}}>ORDER NOW</button>
+            <button className='home-order-now' onClick={()=>{handleOrderNowPress()}}>OUR BAGEL SELECTIONS</button>
           </li>
         </ul>
         <p>
