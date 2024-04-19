@@ -63,7 +63,7 @@
   line-height: 1.5;
 }
 .banner h2 {
-  color: beige;
+  color: black;
   font-family: 'Courgette';
   display: inline-block; /* This is important for the border-bottom to take effect */
 }
@@ -127,9 +127,9 @@
 .banner{
   text-align: center;
   font-size: 22px;
-  color: white;
+  color: black;
   font-family: 'Titillum Web', 'Arial','sans-serif';
-  background-color: #270707;
+  background-color: #f0f0f0;
   z-index: 2;
   position: relative;
   align-items: center;
@@ -220,9 +220,23 @@
   object-fit: cover;
   z-index: 1;
 }
-.store-locations-container{
-  display: flex;
-  gap: 15px;
+@media screen and (width<450px) {
+  .store-locations-container{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+@media screen and (width>=451px) {
+  .store-locations-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+  }
+}
+.store-locations-container *{
+  width: 100%;
+  border: 0px solid black;
 }
 .about-us p{
   background-color: rgba(27,7,7,0.95);
@@ -244,7 +258,7 @@
   font-weight: bolder;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   text-align: center;
-  background-color: rgb(39, 7, 7);
+  background-color: #200b0b;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -261,7 +275,7 @@
   }
 }
 .home .store-items-heading h1{
-  color: beige;
+  color: black;
   max-width: 550px;
 }
 #proudly-delivering{
@@ -271,6 +285,18 @@
   z-index: 4;
   padding: 1em;
   position: relative;
+
+  position: relative;
+  color: black;
+  font-family: 'Courgette', 'Arial','sans-serif';
+  font-weight: bolder;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  letter-spacing: 1.5px;
 }
 .home .store-items-heading p{
   max-width: 550px;
@@ -511,7 +537,7 @@
 .home-content-wrapper{
   display: flex;
   flex-direction: column;
-  background-color: #270e0c;
+  background-color: #f0f0f0;
 }
 #join-the-club{
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
