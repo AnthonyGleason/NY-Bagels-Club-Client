@@ -223,14 +223,12 @@
 @media screen and (width<450px) {
   .store-locations-container{
     display: flex;
-    flex-direction: column;
-    gap: 15px;
   }
 }
 @media screen and (width>=451px) {
   .store-locations-container{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 15px;
   }
 }
@@ -253,12 +251,10 @@
 }
 .home .store-items-heading{ 
   position: relative;
-  color: white;
+  color: black;
   font-family: 'Courgette', 'Arial','sans-serif';
   font-weight: bolder;
-  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   text-align: center;
-  background-color: #200b0b;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -537,6 +533,7 @@
   display: flex;
   flex-direction: column;
   background-color: #f0f0f0;
+  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.6), 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 #join-the-club{
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);

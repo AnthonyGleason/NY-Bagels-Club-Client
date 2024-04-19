@@ -6,13 +6,13 @@
   padding: 1em;
   justify-content: center;
   align-items: center;
-  color: white;
-  background-color: #270707;
+  color: black;
+  background-color: #f0f0f0;
   min-height: 60vh;
 }
 #pre-checkout{
   min-height: 100vh;
-  color: white;
+  color: black;
   padding-top: 2em;
   box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.6), 0px 4px 6px rgba(0, 0, 0, 0.6);
   padding-bottom: 2em;
@@ -20,11 +20,11 @@
   z-index: 2;
 }
 #pre-checkout .cart-summary-wrapper{
-  background-color: rgb(39, 7, 7,0.95);
+  background-color: #f0f0f0;
 }
 
 #pre-checkout h3{
-  color: white;
+  color: black;
 }
 
 .cart-summary-wrapper{
@@ -38,7 +38,7 @@
   font-size: 25px;
   font-family: 'Courgette';
   text-align: center;
-  color: white;
+  color: black;
   font-weight: bolder;
 }
 
@@ -50,7 +50,7 @@
 .cart-summary .button-styled{
   border: 0px solid transparent;
   border-radius: 3px;
-  background-color: #5d1917;
+  background-color: #5D1917;
   color: white;
   font-size: 30px;
   font-weight: bold;
